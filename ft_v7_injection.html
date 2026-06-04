@@ -1,0 +1,507 @@
+<style id="ft-v7-styles">
+#page-home .section .lead[style*="max-width:900px"]{margin-top:24px!important;}
+.usecase-page-wrap{width:min(1240px,92vw);margin:0 auto;padding:56px 0 96px;}
+.usecase-hero{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:stretch;margin-bottom:28px;}
+.usecase-visual{border-radius:28px;overflow:hidden;min-height:420px;box-shadow:0 24px 70px rgba(18,56,40,.12);}
+.usecase-visual img{width:100%;height:100%;object-fit:cover;display:block;}
+.usecase-copy{background:#fff;border:1px solid rgba(20,55,42,.10);border-radius:28px;padding:34px;box-shadow:0 20px 60px rgba(18,56,40,.06);display:flex;flex-direction:column;justify-content:center;}
+.usecase-copy .kicker{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#B38B2C;margin-bottom:12px;}
+.usecase-copy h1{font-size:clamp(38px,5vw,68px);line-height:.95;margin:0 0 18px;color:#123828;letter-spacing:-.05em;}
+.usecase-copy .lead{font-size:18px;line-height:1.8;color:#51655d;margin:0 0 22px;}
+.usecase-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.usecase-btns .primary,.usecase-btns .secondary,.ft-inline-button,.ft-modal-submit,.ft-blog-cta{appearance:none;border:none;border-radius:999px;padding:14px 20px;font-weight:800;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease, background .25s ease;color:#123828;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;}
+.usecase-btns .primary,.ft-modal-submit,.ft-blog-cta{background:#0B6F3E;color:#fff;box-shadow:0 16px 36px rgba(11,111,62,.22);}
+.usecase-btns .secondary,.ft-inline-button{background:#F3EEDA;border:1px solid rgba(18,56,40,.12);}
+.usecase-btns .primary:hover,.usecase-btns .secondary:hover,.ft-inline-button:hover,.ft-modal-submit:hover,.ft-blog-cta:hover{transform:translateY(-2px);}
+.usecase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:0 0 18px;}
+.usecase-card,.usecase-note,.ft-info-card,.ft-license-card,.ft-blog-card,.ft-blog-detail,.ft-inline-intro,.ft-ack-band,.ft-contact-panel{background:#fff;border:1px solid rgba(20,55,42,.10);border-radius:24px;box-shadow:0 18px 46px rgba(18,56,40,.06);}
+.usecase-card{padding:24px;}
+.usecase-card h3,.usecase-note h4,.ft-info-card h3,.ft-license-card h3,.ft-contact-panel h3{margin:0 0 12px;color:#123828;font-size:28px;letter-spacing:-.03em;}
+.usecase-card p,.usecase-note p,.ft-info-card p,.ft-license-card p,.ft-blog-card p,.ft-blog-detail p,.ft-inline-intro p,.ft-contact-panel p{margin:0;color:#566961;line-height:1.8;}
+.usecase-media-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:16px 0 18px;}
+.usecase-media-card{position:relative;overflow:hidden;border-radius:24px;background:#123828;min-height:300px;box-shadow:0 24px 60px rgba(18,56,40,.12);transform:translateY(0);transition:transform .38s ease, box-shadow .38s ease;}
+.usecase-media-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,24,17,.05) 0%,rgba(8,24,17,.78) 100%);}
+.usecase-media-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s ease;}
+.usecase-media-card:hover{transform:translateY(-10px);box-shadow:0 34px 70px rgba(18,56,40,.18);}
+.usecase-media-card:hover img{transform:scale(1.08);}
+.usecase-media-copy{position:absolute;left:18px;right:18px;bottom:18px;z-index:2;color:#fff;}
+.usecase-media-copy strong{display:block;font-size:22px;line-height:1.05;margin-bottom:8px;letter-spacing:-.03em;}
+.usecase-media-copy span{display:block;font-size:14px;line-height:1.6;color:rgba(255,255,255,.84);}
+.usecase-mini{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:4px;}
+.usecase-note{padding:24px;}
+.usecase-note h4{font-size:24px;}
+.ft-rich-page .container{width:min(1180px,92vw);}
+.ft-inline-intro{padding:30px 34px;margin-top:-28px;position:relative;z-index:2;}
+.ft-inline-intro strong{display:block;color:#123828;font-size:30px;line-height:1.1;letter-spacing:-.04em;margin-bottom:12px;}
+.ft-info-grid,.ft-license-grid,.ft-blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px;}
+.ft-info-card,.ft-license-card,.ft-blog-card{padding:24px;}
+.ft-info-card ul,.ft-license-card ul{margin:14px 0 0;padding-left:18px;color:#566961;line-height:1.8;}
+.ft-ack-band{margin-top:22px;padding:26px 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;background:linear-gradient(135deg,#0B6F3E 0%,#144932 100%);color:#fff;}
+.ft-ack-band .ft-band-item{padding:18px;border-radius:18px;background:rgba(255,255,255,.06);backdrop-filter:blur(4px);}
+.ft-ack-band strong{display:block;font-size:30px;letter-spacing:-.04em;margin-bottom:8px;}
+.ft-ack-band span{display:block;line-height:1.7;color:rgba(255,255,255,.86);}
+.ft-quote-card{margin-top:22px;padding:28px 30px;border-radius:24px;background:#F4F6F1;border:1px solid rgba(20,55,42,.08);color:#123828;font-size:28px;line-height:1.35;letter-spacing:-.03em;}
+#page-contact .split-feature{align-items:stretch;gap:22px;}
+#page-contact .card{padding:28px;border-radius:24px;box-shadow:0 18px 46px rgba(18,56,40,.06);border:1px solid rgba(20,55,42,.10);}
+.ft-contact-inline-btn{margin-top:16px;}
+.ft-modal-overlay{position:fixed;inset:0;background:rgba(9,28,21,.55);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:9999;}
+.ft-modal-overlay.open{opacity:1;pointer-events:auto;}
+.ft-modal-shell{width:min(920px,96vw);max-height:min(90vh,920px);overflow:auto;background:#fff;border-radius:30px;box-shadow:0 40px 120px rgba(8,24,17,.28);border:1px solid rgba(20,55,42,.08);}
+.ft-modal-head{display:flex;align-items:flex-start;justify-content:space-between;padding:30px 32px 12px;gap:20px;}
+.ft-modal-head h2{margin:0 0 10px;color:#123828;font-size:40px;line-height:.95;letter-spacing:-.05em;}
+.ft-modal-head p{margin:0;color:#5b6d66;line-height:1.8;max-width:620px;}
+.ft-modal-close{appearance:none;border:none;background:#F5F6F2;color:#123828;border-radius:999px;width:46px;height:46px;font-size:24px;cursor:pointer;flex:0 0 auto;}
+.ft-modal-body{padding:0 32px 32px;}
+.ft-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ft-modal-field{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.ft-modal-field label{font-size:14px;font-weight:700;color:#123828;}
+.ft-modal-field input,.ft-modal-field select,.ft-modal-field textarea{width:100%;border:1px solid rgba(18,56,40,.14);border-radius:18px;padding:14px 16px;font:inherit;color:#123828;background:#fff;outline:none;transition:border-color .2s ease, box-shadow .2s ease;}
+.ft-modal-field input:focus,.ft-modal-field select:focus,.ft-modal-field textarea:focus{border-color:#0B6F3E;box-shadow:0 0 0 4px rgba(11,111,62,.12);}
+.ft-modal-field textarea{min-height:150px;resize:vertical;}
+.ft-modal-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:6px;}
+.ft-modal-footnote{color:#5b6d66;font-size:14px;line-height:1.7;max-width:500px;}
+.ft-modal-success{display:none;margin-top:18px;padding:18px 20px;border-radius:18px;background:#F2F8F3;color:#0B6F3E;font-weight:700;}
+.ft-modal-success.show{display:block;}
+.ft-blog-shell{width:min(1180px,92vw);margin:0 auto;padding:54px 0 96px;}
+.ft-blog-feature{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:stretch;}
+.ft-blog-hero{position:relative;overflow:hidden;border-radius:28px;min-height:420px;box-shadow:0 28px 76px rgba(18,56,40,.14);}
+.ft-blog-hero img{width:100%;height:100%;object-fit:cover;display:block;}
+.ft-blog-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,56,40,.04) 10%,rgba(18,56,40,.72) 100%);}
+.ft-blog-hero-copy{position:absolute;left:28px;right:28px;bottom:28px;z-index:2;color:#fff;}
+.ft-blog-hero-copy span{display:inline-block;margin-bottom:12px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.16);backdrop-filter:blur(6px);font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;}
+.ft-blog-hero-copy h1{margin:0 0 12px;font-size:clamp(34px,4.5vw,58px);line-height:.94;letter-spacing:-.05em;}
+.ft-blog-hero-copy p{margin:0;line-height:1.75;color:rgba(255,255,255,.88);max-width:560px;}
+.ft-blog-card{cursor:pointer;transition:transform .28s ease, box-shadow .28s ease,border-color .28s ease;}
+.ft-blog-card:hover,.ft-blog-card.active{transform:translateY(-6px);box-shadow:0 28px 60px rgba(18,56,40,.12);border-color:rgba(11,111,62,.28);}
+.ft-blog-card small{display:block;color:#A6812B;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;}
+.ft-blog-card h3{margin:0 0 10px;color:#123828;font-size:28px;line-height:1.06;letter-spacing:-.03em;}
+.ft-blog-detail{padding:28px 30px;margin-top:22px;}
+.ft-blog-detail h2{margin:0 0 16px;color:#123828;font-size:40px;line-height:.95;letter-spacing:-.04em;}
+.ft-blog-detail .ft-blog-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;}
+.ft-blog-detail .ft-blog-meta span{display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;border-radius:999px;background:#F3F6F2;color:#123828;font-size:13px;font-weight:700;}
+.ft-blog-detail p + p{margin-top:14px;}
+.ft-blog-detail ul{margin:16px 0 0;padding-left:18px;color:#566961;line-height:1.8;}
+@media (max-width:1100px){
+  .usecase-grid,.usecase-media-grid,.ft-info-grid,.ft-license-grid,.ft-blog-grid{grid-template-columns:repeat(2,1fr);}
+  .usecase-hero,.ft-blog-feature{grid-template-columns:1fr;}
+}
+@media (max-width:760px){
+  .usecase-grid,.usecase-media-grid,.usecase-mini,.ft-info-grid,.ft-license-grid,.ft-blog-grid,.ft-ack-band,.ft-modal-grid{grid-template-columns:1fr;}
+  .usecase-page-wrap,.ft-blog-shell{padding:36px 0 74px;}
+  .usecase-visual,.ft-blog-hero{min-height:300px;}
+  .ft-modal-head,.ft-modal-body{padding-left:18px;padding-right:18px;}
+  .ft-modal-head h2{font-size:32px;}
+}
+</style>
+<script id="ft-v7-script">
+(function(){
+  const ASSETS = {
+    logoIcon: 'assets/farmtree-icon.png',
+    investorHero: 'assets/investor-hero-v7_opt.webp',
+    implementerHero: 'assets/implementers-hero-v7_opt.webp',
+    licensesHero: 'assets/licenses-hero-v7_opt.webp',
+    blogHero: 'assets/blog-hero-v7_opt.webp'
+  };
+  const investorMedia = [
+    {img:'assets/investor-card-1_opt.webp', title:'Portfolio clarity', text:'Review assumptions, scenarios and upside in one visual story.'},
+    {img:'assets/investor-card-2_opt.webp', title:'Investment narrative', text:'Turn model outputs into clear conversations for committees and partners.'},
+    {img:'assets/investor-card-3_opt.webp', title:'Scenario dashboards', text:'See finance, carbon and environmental outcomes without noise.'},
+    {img:'assets/investor-card-4_opt.webp', title:'Review sessions', text:'Bring teams together around evidence, not guesswork.'}
+  ];
+  const implementerMedia = [
+    {img:'assets/implementer-card-1_opt.webp', title:'Field observation', text:'Capture local realities with practical notes and structured data.'},
+    {img:'assets/implementer-card-2_opt.webp', title:'Planning sessions', text:'Align teams on the ground before implementation starts.'},
+    {img:'assets/implementer-card-3_opt.webp', title:'Community learning', text:'Create space for feedback, shared priorities and better delivery.'},
+    {img:'assets/implementer-card-4_opt.webp', title:'Partner coordination', text:'Keep programme teams focused on the same picture.'}
+  ];
+  const blogPosts = {
+    fieldnotes:{
+      tag:'Field insight',
+      title:'Turning field data into investment ready insight',
+      read:'6 min read',
+      date:'10 May 2026',
+      body:[
+        'Good investment conversations rarely begin with a polished slide. They begin with field realities, crop choices, labour assumptions, climate context and a team that knows how to connect those facts to decision making. That is where FarmTree creates value.',
+        'When local evidence is structured well, the platform can move beyond a spreadsheet exercise. It becomes a living decision environment that helps teams compare scenarios, question assumptions and show why one pathway is stronger than another. This matters because investors are not only looking for promise. They are looking for confidence.',
+        'A stronger workflow usually starts with three habits. First, gather field observations in a consistent way. Second, document the reasoning behind the scenario choices. Third, present outputs in a format that is easy to discuss. When those habits are in place, reporting becomes calmer, faster and far more persuasive.'
+      ],
+      bullets:['Start from real field evidence', 'Translate assumptions into readable scenarios', 'Present outputs in a way that supports action']
+    },
+    implementers:{
+      tag:'Operations',
+      title:'What implementers need from a planning platform',
+      read:'5 min read',
+      date:'06 May 2026',
+      body:[
+        'Implementers need more than a model. They need a workflow that respects the pace of project delivery. That means practical data capture, simple team coordination and reporting that does not pull people away from the field.',
+        'A useful platform helps programme teams bring scattered information into one rhythm. It supports species selection, planning logic, field learning and communication with partners. The result is not just better documentation. It is better alignment across people who need to make decisions together.',
+        'The most effective digital experiences for implementers feel calm. They surface the right details, reduce duplication and keep every output connected to the work happening on the ground.'
+      ],
+      bullets:['Simplify team coordination', 'Reduce fragmented reporting', 'Keep decisions close to field realities']
+    },
+    cocoa:{
+      tag:'Landscape thinking',
+      title:'Why scenario thinking matters in cocoa landscapes',
+      read:'7 min read',
+      date:'01 May 2026',
+      body:[
+        'Cocoa systems are shaped by uncertainty. Yields, labour, shade trees, income stability and climate resilience all influence whether an intervention remains viable over time. Scenario thinking helps teams explore those choices before they become costly.',
+        'Instead of asking whether one design is perfect, scenario work asks a better question. Which pathway is most credible under the conditions we face. That shift helps organisations compare trade offs with more honesty and more discipline.',
+        'For teams working in cocoa landscapes, the value of modelling is not abstract. It creates space for better design, clearer communication and a more grounded conversation about risk and opportunity.'
+      ],
+      bullets:['Compare different pathways early', 'Understand trade offs before scaling', 'Build more credible stories for partners and funders']
+    },
+    reporting:{
+      tag:'Communication',
+      title:'Designing reports that teams will actually use',
+      read:'4 min read',
+      date:'26 April 2026',
+      body:[
+        'A report should help people move. If it feels heavy, unclear or overcomplicated, it will sit unread. Premium communication is not about adding more pages. It is about shaping the story so the right insight appears at the right moment.',
+        'The strongest reports combine structure and restraint. They use clean language, thoughtful visuals and a sequence that respects how decision makers think. What matters first. What matters next. What creates confidence. That simple discipline turns outputs into practical tools.',
+        'FarmTree has an opportunity to present technical results with more warmth and more elegance. When data feels accessible, teams are more likely to return to it, trust it and act on it.'
+      ],
+      bullets:['Lead with the key message', 'Use visuals that clarify, not decorate', 'Keep tone human and confident']
+    }
+  };
+
+  function whenReady(fn){ if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', fn); } else { fn(); } }
+
+  function renderDiagram(){
+    const target = document.getElementById('diagram');
+    if(!target) return;
+    target.innerHTML = `
+    <svg viewBox="0 0 1440 650" aria-label="FarmTree ecosystem diagram">
+      <defs>
+        <linearGradient id="ftTubeLeft" x1="0" x2="1">
+          <stop offset="0%" stop-color="#7BC16C"/>
+          <stop offset="100%" stop-color="#A7D988"/>
+        </linearGradient>
+        <linearGradient id="ftTubeRight" x1="0" x2="1">
+          <stop offset="0%" stop-color="#9CD181"/>
+          <stop offset="100%" stop-color="#5CA95B"/>
+        </linearGradient>
+      </defs>
+      <circle cx="970" cy="260" r="210" fill="#A8CF8E" opacity=".92"/>
+      <circle cx="970" cy="260" r="198" fill="none" stroke="#C9E1B8" stroke-width="10"/>
+      <circle cx="970" cy="260" r="138" fill="none" stroke="#F4FAF0" stroke-width="5"/>
+      <g opacity=".22" stroke="#2E7B3F" stroke-width="3" stroke-linecap="round">
+        <line x1="870" y1="142" x2="870" y2="182"/><circle cx="870" cy="132" r="8" fill="#2E7B3F"/>
+        <line x1="940" y1="118" x2="940" y2="160"/><circle cx="940" cy="108" r="8" fill="#2E7B3F"/>
+        <line x1="1010" y1="118" x2="1010" y2="160"/><circle cx="1010" cy="108" r="8" fill="#2E7B3F"/>
+        <line x1="1080" y1="144" x2="1080" y2="184"/><circle cx="1080" cy="134" r="8" fill="#2E7B3F"/>
+        <line x1="1120" y1="220" x2="1120" y2="260"/><circle cx="1120" cy="210" r="8" fill="#2E7B3F"/>
+        <line x1="1112" y1="312" x2="1112" y2="352"/><circle cx="1112" cy="302" r="8" fill="#2E7B3F"/>
+        <line x1="1056" y1="390" x2="1056" y2="430"/><circle cx="1056" cy="380" r="8" fill="#2E7B3F"/>
+        <line x1="970" y1="416" x2="970" y2="456"/><circle cx="970" cy="406" r="8" fill="#2E7B3F"/>
+        <line x1="888" y1="392" x2="888" y2="432"/><circle cx="888" cy="382" r="8" fill="#2E7B3F"/>
+        <line x1="826" y1="324" x2="826" y2="364"/><circle cx="826" cy="314" r="8" fill="#2E7B3F"/>
+        <line x1="816" y1="236" x2="816" y2="276"/><circle cx="816" cy="226" r="8" fill="#2E7B3F"/>
+      </g>
+      <path d="M276 252 C350 252 382 220 430 220 L458 220 C484 220 498 252 530 252 C498 252 484 284 458 284 L430 284 C382 284 350 252 276 252Z" fill="url(#ftTubeLeft)" opacity=".98"/>
+      <path d="M610 252 C688 252 720 220 770 220 L798 220 C826 220 842 252 874 252 C842 252 826 284 798 284 L770 284 C720 284 688 252 610 252Z" fill="url(#ftTubeRight)" opacity=".98"/>
+      <g>
+        <circle cx="180" cy="252" r="82" fill="#FFFFFF" stroke="#71B86A" stroke-width="16"/>
+        <circle cx="180" cy="252" r="93" fill="none" stroke="#A7D3A2" stroke-width="8"/>
+      </g>
+      <g transform="translate(180 210) scale(.82)" fill="none" stroke="#596660" stroke-width="4.2">
+        <rect x="-24" y="-6" width="18" height="42"/>
+        <rect x="-1" y="-20" width="18" height="56"/>
+        <rect x="22" y="-4" width="18" height="40"/>
+        <rect x="30" y="-20" width="13" height="13"/>
+      </g>
+      <text x="180" y="282" text-anchor="middle" font-size="21" font-weight="900" fill="#173428">INVESTORS</text>
+      <text x="180" y="312" text-anchor="middle" font-size="16" fill="#173428">buyers and funds</text>
+      <g>
+        <circle cx="520" cy="252" r="78" fill="#FFFFFF" stroke="#71B86A" stroke-width="16"/>
+        <circle cx="520" cy="252" r="89" fill="none" stroke="#A7D3A2" stroke-width="8"/>
+      </g>
+      <image href="${ASSETS.logoIcon}" x="470" y="202" width="100" height="100" preserveAspectRatio="xMidYMid meet"/>
+      <g>
+        <rect x="314" y="182" rx="18" ry="18" width="148" height="34" fill="#FFFFFF"/>
+        <rect x="328" y="230" rx="18" ry="18" width="132" height="34" fill="#FFFFFF"/>
+      </g>
+      <text x="388" y="204" text-anchor="middle" font-size="13" font-weight="800" fill="#2E2E2E">Payments per t aCO₂e</text>
+      <text x="394" y="252" text-anchor="middle" font-size="13" font-weight="800" fill="#2E2E2E">Traceable t aCO₂e</text>
+      <g>
+        <rect x="646" y="156" rx="18" ry="18" width="156" height="34" fill="#FFFFFF"/>
+        <rect x="642" y="204" rx="18" ry="18" width="160" height="34" fill="#FFFFFF"/>
+        <rect x="676" y="252" rx="18" ry="18" width="126" height="34" fill="#FFFFFF"/>
+        <rect x="660" y="300" rx="18" ry="18" width="142" height="34" fill="#FFFFFF"/>
+      </g>
+      <text x="724" y="178" text-anchor="middle" font-size="13" font-weight="800" fill="#2E2E2E">Payments per t aCO₂e</text>
+      <text x="722" y="226" text-anchor="middle" font-size="13" font-weight="800" fill="#2E2E2E">Software as a Service</text>
+      <text x="739" y="274" text-anchor="middle" font-size="13" font-weight="800" fill="#2E2E2E">Real Data</text>
+      <text x="731" y="322" text-anchor="middle" font-size="13" font-weight="800" fill="#2E2E2E">C Sink t aCO₂e</text>
+      <g>
+        <circle cx="970" cy="252" r="86" fill="#FFFFFF" stroke="#3E8B4C" stroke-width="18"/>
+        <circle cx="970" cy="252" r="98" fill="none" stroke="#65AC5B" stroke-width="10" opacity=".92"/>
+      </g>
+      <text x="970" y="246" text-anchor="middle" font-size="21" font-weight="900" fill="#173428">PROJECTS</text>
+      <text x="970" y="278" text-anchor="middle" font-size="16" fill="#173428">farms and landscapes</text>
+      <g>
+        <circle cx="1160" cy="158" r="30" fill="#FFFFFF" stroke="#71B86A" stroke-width="6"/>
+        <circle cx="1184" cy="252" r="30" fill="#FFFFFF" stroke="#71B86A" stroke-width="6"/>
+        <circle cx="1170" cy="356" r="30" fill="#FFFFFF" stroke="#71B86A" stroke-width="6"/>
+        <circle cx="1118" cy="448" r="30" fill="#FFFFFF" stroke="#71B86A" stroke-width="6"/>
+      </g>
+      <text x="1160" y="166" text-anchor="middle" font-size="16" fill="#173428">CO₂</text>
+      <text x="1184" y="261" text-anchor="middle" font-size="24" fill="#173428">€</text>
+      <text x="1170" y="364" text-anchor="middle" font-size="20" fill="#173428">≋</text>
+      <text x="1118" y="455" text-anchor="middle" font-size="18" fill="#173428">♧</text>
+      <g font-size="16" font-weight="900" fill="#173428">
+        <text x="1195" y="162">CARBON</text>
+        <text x="1220" y="257">FINANCE</text>
+        <text x="1206" y="361">HYDROLOGY</text>
+        <text x="1154" y="452">BIODIVERSITY</text>
+      </g>
+    </svg>`;
+  }
+
+  function buildUseCasePage(pageId, cfg){
+    const page = document.getElementById('page-' + pageId);
+    if(!page) return;
+    page.innerHTML = `
+      <div class="usecase-page-wrap">
+        <div class="usecase-hero">
+          <div class="usecase-visual"><img src="${cfg.image}" alt="${cfg.alt}"></div>
+          <div class="usecase-copy">
+            <div class="kicker">${cfg.kicker}</div>
+            <h1>${cfg.title}</h1>
+            <p class="lead">${cfg.lead}</p>
+            <div class="usecase-btns">
+              <button class="primary" type="button" data-ftmodal="request">${cfg.primary}</button>
+              <button class="secondary" type="button" data-page="contact">Contact us</button>
+            </div>
+          </div>
+        </div>
+        <div class="usecase-grid">
+          ${cfg.cards.map(card => `<article class="usecase-card"><h3>${card.h}</h3><p>${card.p}</p></article>`).join('')}
+        </div>
+        <div class="usecase-media-grid">
+          ${cfg.media.map(item => `<article class="usecase-media-card"><img src="${item.img}" alt="${item.title}"><div class="usecase-media-copy"><strong>${item.title}</strong><span>${item.text}</span></div></article>`).join('')}
+        </div>
+        <div class="usecase-mini">
+          <article class="usecase-note"><h4>${cfg.note1.h}</h4><p>${cfg.note1.p}</p></article>
+          <article class="usecase-note"><h4>${cfg.note2.h}</h4><p>${cfg.note2.p}</p></article>
+        </div>
+      </div>`;
+  }
+
+  function enrichAcknowledgements(){
+    const page = document.getElementById('page-acknowledgements');
+    if(!page) return;
+    page.innerHTML = `
+      <div class="subhero"><img alt="Project partnerships and field realities" src="assets/embedded_044_opt.webp"><div class="container"><div class="kicker">Acknowledgements</div><h1>Scientific collaboration, field data and project partnerships</h1></div></div>
+      <section class="section ft-rich-page"><div class="container">
+        <div class="ft-inline-intro"><strong>A shared effort shaped by science, local knowledge and trusted collaboration</strong><p>FarmTree grows stronger when modellers, field teams, researchers, partners and funders work from the same spirit of curiosity and responsibility. This page gives space to the people and organisations that help turn ideas into practical tools, grounded field learning and better decisions.</p></div>
+        <div class="ft-info-grid">
+          <article class="ft-info-card"><h3>Research partners</h3><p>Our work draws strength from scientific thinking, practical testing and a willingness to challenge assumptions with evidence.</p><ul><li>Universities and research groups supporting agroforestry methods</li><li>Specialists contributing modelling logic and scenario design</li><li>Advisors helping strengthen interpretation and review</li></ul></article>
+          <article class="ft-info-card"><h3>Field contributors</h3><p>Local teams and communities provide the context that keeps every output useful, realistic and respectful of place.</p><ul><li>Implementation partners sharing field observations</li><li>Farmer facing teams validating assumptions</li><li>Project staff helping connect data with lived realities</li></ul></article>
+          <article class="ft-info-card"><h3>Funding and support</h3><p>Strategic partners and programmes create room for learning, product refinement and responsible growth.</p><ul><li>Climate and landscape programmes opening collaboration pathways</li><li>Commercial and public partners supporting project development</li><li>Stakeholders who value transparent and evidence based planning</li></ul></article>
+        </div>
+        <div class="ft-ack-band">
+          <div class="ft-band-item"><strong>Science first</strong><span>Methods are strongest when they remain curious, transparent and open to review.</span></div>
+          <div class="ft-band-item"><strong>Field grounded</strong><span>Local knowledge keeps the platform practical and close to real implementation needs.</span></div>
+          <div class="ft-band-item"><strong>Shared learning</strong><span>Partnerships create feedback loops that improve both the tool and the decisions around it.</span></div>
+        </div>
+        <div class="ft-quote-card">“ FarmTree works best when evidence, experience and collaboration meet in the same place. ”</div>
+      </div></section>`;
+  }
+
+  function enrichLicenses(){
+    const page = document.getElementById('page-licenses');
+    if(!page) return;
+    page.innerHTML = `
+      <div class="subhero"><img alt="Responsible use of FarmTree platform and software" src="${ASSETS.licensesHero}"><div class="container"><div class="kicker">Licenses</div><h1>Responsible use of data, models and platform outputs</h1></div></div>
+      <section class="section ft-rich-page"><div class="container">
+        <div class="ft-inline-intro"><strong>A clear software licensing structure builds trust and reduces friction</strong><p>This preview presents a clean licensing framework FarmTree can communicate to clients and partners. It brings together platform access, project use, team onboarding and reporting permissions in language that feels straightforward and professional.</p></div>
+        <div class="ft-license-grid">
+          <article class="ft-license-card"><h3>Platform access licence</h3><p>For organisations using the FarmTree Platform through named user accounts and approved team access.</p><ul><li>Named user seats and role based access</li><li>Secure login and account administration</li><li>Use of dashboards, scenarios and internal workspaces</li></ul></article>
+          <article class="ft-license-card"><h3>Project modelling licence</h3><p>For creating, comparing and refining agroforestry scenarios within a defined project or programme scope.</p><ul><li>Scenario creation and comparison</li><li>Use of model outputs for planning and review</li><li>Project level analysis for internal decision making</li></ul></article>
+          <article class="ft-license-card"><h3>Training and team licence</h3><p>For onboarding teams, enabling repeat use and supporting operational confidence across departments.</p><ul><li>Structured team onboarding</li><li>Training materials and guided sessions</li><li>Support for repeatable workflows and team learning</li></ul></article>
+          <article class="ft-license-card"><h3>Reporting and export licence</h3><p>For preparing client ready reports, partner communication and approved export of project outputs.</p><ul><li>Report generation and presentation use</li><li>Approved export of visuals and result summaries</li><li>Use in proposals, reviews and stakeholder communication</li></ul></article>
+          <article class="ft-license-card"><h3>Data responsibility note</h3><p>Users remain responsible for the quality of project inputs and for applying outputs with professional judgement.</p><ul><li>Input data should be accurate and well documented</li><li>Outputs support decision making, they do not replace it</li><li>Sensitive project data should be handled with care</li></ul></article>
+          <article class="ft-license-card"><h3>Software stack note</h3><p>FarmTree may rely on third party components and libraries released under recognised software licences where relevant.</p><ul><li>Common open source families may include MIT and Apache 2.0</li><li>Any third party obligations should be documented clearly</li><li>Client facing terms can summarise external licence dependencies</li></ul></article>
+        </div>
+      </div></section>`;
+  }
+
+  function ensureBlogPage(){
+    if(document.getElementById('page-blog')) return;
+    const anchor = document.getElementById('page-licenses');
+    if(!anchor) return;
+    const blog = document.createElement('section');
+    blog.className = 'page';
+    blog.id = 'page-blog';
+    anchor.insertAdjacentElement('afterend', blog);
+  }
+
+  function renderBlog(){
+    ensureBlogPage();
+    const page = document.getElementById('page-blog');
+    if(!page) return;
+    page.innerHTML = `
+      <div class="ft-blog-shell">
+        <div class="ft-blog-feature">
+          <div class="ft-blog-hero">
+            <img src="${ASSETS.blogHero}" alt="FarmTree blog insights">
+            <div class="ft-blog-hero-copy"><span>Blog</span><h1>Field notes, platform insights and stories that keep ideas moving</h1><p>This page turns FarmTree thinking into a premium reading experience. It gives space to practical lessons, platform reflections and field inspired stories in a format that feels elegant, clear and easy to explore.</p></div>
+          </div>
+          <div class="ft-contact-panel"><h3>Why this page matters</h3><p>A thoughtful blog helps FarmTree sound more human, more confident and more useful. It gives visitors a reason to stay longer, understand the thinking behind the platform and explore the wider story around agroforestry planning.</p><p style="margin-top:14px">The articles below are designed from themes already present across the website, so the page feels consistent with the rest of the experience.</p><button class="ft-blog-cta" type="button" data-ftmodal="request" style="margin-top:18px">Talk to FarmTree</button></div>
+        </div>
+        <div class="ft-blog-grid">
+          ${Object.entries(blogPosts).map(([key, post], i) => `<article class="ft-blog-card${i===0?' active':''}" data-post="${key}"><small>${post.tag}</small><h3>${post.title}</h3><p>${post.body[0].slice(0,140)}...</p></article>`).join('')}
+        </div>
+        <article class="ft-blog-detail" id="ftBlogDetail"></article>
+      </div>`;
+    updateBlogDetail('fieldnotes');
+  }
+
+  function updateBlogDetail(key){
+    const detail = document.getElementById('ftBlogDetail');
+    const post = blogPosts[key];
+    if(!detail || !post) return;
+    document.querySelectorAll('.ft-blog-card').forEach(card => card.classList.toggle('active', card.getAttribute('data-post')===key));
+    detail.innerHTML = `<div class="ft-blog-meta"><span>${post.tag}</span><span>${post.read}</span><span>${post.date}</span></div><h2>${post.title}</h2>${post.body.map(p=>`<p>${p}</p>`).join('')}<ul>${post.bullets.map(item=>`<li>${item}</li>`).join('')}</ul>`;
+  }
+
+  function addBlogButton(){
+    const companyCard = Array.from(document.querySelectorAll('#mobileMenu .mobile-card')).find(card => /company/i.test((card.querySelector('h4')||{}).textContent || ''));
+    if(companyCard && !companyCard.querySelector('[data-page="blog"]')){
+      const btn = document.createElement('button');
+      btn.setAttribute('data-page','blog');
+      btn.textContent = 'Blog';
+      companyCard.appendChild(btn);
+    }
+  }
+
+  function rewriteRequestButtons(){
+    document.querySelectorAll('[data-page="request"]').forEach(el => {
+      el.removeAttribute('data-page');
+      el.setAttribute('data-ftmodal','request');
+      if(el.tagName === 'A') el.setAttribute('href', '#');
+    });
+  }
+
+  function buildModal(){
+    if(document.getElementById('ftContactModal')) return;
+    const overlay = document.createElement('div');
+    overlay.className = 'ft-modal-overlay';
+    overlay.id = 'ftContactModal';
+    overlay.innerHTML = `
+      <div class="ft-modal-shell" role="dialog" aria-modal="true" aria-labelledby="ftModalTitle">
+        <div class="ft-modal-head">
+          <div><h2 id="ftModalTitle">Request information</h2><p>Tell FarmTree a little about your organisation, your goals and the question you want to discuss. This window opens directly on the page so the experience feels smooth and focused.</p></div>
+          <button class="ft-modal-close" type="button" aria-label="Close form">×</button>
+        </div>
+        <div class="ft-modal-body">
+          <form id="ftModalForm">
+            <div class="ft-modal-grid">
+              <div class="ft-modal-field"><label for="ftName">Full name</label><input id="ftName" type="text" placeholder="Your name"></div>
+              <div class="ft-modal-field"><label for="ftCompany">Company or organisation</label><input id="ftCompany" type="text" placeholder="Company name"></div>
+              <div class="ft-modal-field"><label for="ftEmail">Email address</label><input id="ftEmail" type="email" placeholder="name@company.com"></div>
+              <div class="ft-modal-field"><label for="ftRole">Role</label><input id="ftRole" type="text" placeholder="Your role"></div>
+              <div class="ft-modal-field"><label for="ftInterest">Area of interest</label><select id="ftInterest"><option>FarmTree Platform</option><option>Investment support</option><option>Implementation workflow</option><option>Project reporting</option><option>General question</option></select></div>
+              <div class="ft-modal-field"><label for="ftTiming">Preferred timing</label><input id="ftTiming" type="text" placeholder="This week, next month, flexible"></div>
+            </div>
+            <div class="ft-modal-field"><label for="ftQuestion">Your question or project brief</label><textarea id="ftQuestion" placeholder="Share your question, your project context or the support you need"></textarea></div>
+            <div class="ft-modal-actions"><div class="ft-modal-footnote">A simple human message is enough. FarmTree can follow up with the right next step after reviewing your request.</div><button class="ft-modal-submit" type="submit">Send request</button></div>
+            <div class="ft-modal-success" id="ftModalSuccess">Thank you. Your request is ready to be shared with the FarmTree team.</div>
+          </form>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', function(e){ if(e.target === overlay) closeModal(); });
+    overlay.querySelector('.ft-modal-close').addEventListener('click', closeModal);
+    overlay.querySelector('#ftModalForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const success = overlay.querySelector('#ftModalSuccess');
+      success.classList.add('show');
+      setTimeout(() => { closeModal(); success.classList.remove('show'); this.reset(); }, 1200);
+    });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+  }
+
+  function openModal(){
+    const modal = document.getElementById('ftContactModal');
+    if(modal) modal.classList.add('open');
+  }
+  function closeModal(){
+    const modal = document.getElementById('ftContactModal');
+    if(modal) modal.classList.remove('open');
+  }
+
+  function hookActions(){
+    document.addEventListener('click', function(e){
+      const modalTrigger = e.target.closest('[data-ftmodal="request"]');
+      if(modalTrigger){
+        e.preventDefault();
+        e.stopPropagation();
+        openModal();
+        return;
+      }
+      const postTrigger = e.target.closest('.ft-blog-card[data-post]');
+      if(postTrigger){
+        e.preventDefault();
+        updateBlogDetail(postTrigger.getAttribute('data-post'));
+      }
+    });
+  }
+
+  function init(){
+    renderDiagram();
+    buildUseCasePage('investors', {
+      image: ASSETS.investorHero,
+      alt: 'Investor ready FarmTree workspace',
+      kicker: 'For investors',
+      title: 'Premium insight for climate and agroforestry capital',
+      lead: 'FarmTree helps investors, funds and strategic partners assess agroforestry opportunities with more confidence. The platform connects field realities with a clean decision story, so teams can compare scenarios, understand risk and discuss value with greater clarity.',
+      primary: 'Book an investment review',
+      cards:[
+        {h:'Portfolio clarity', p:'Compare scenarios, assumptions and outcomes across projects, so investment conversations become faster, calmer and more evidence based.'},
+        {h:'Risk framing', p:'Translate agronomic and implementation variables into an investor friendly story around feasibility, confidence and expected value.'},
+        {h:'Board ready outputs', p:'Present commercial, carbon and environmental narratives in a format that supports committees, partners and co investors.'}
+      ],
+      media: investorMedia,
+      note1:{h:'Ideal for', p:'Impact investors, blended finance programmes, family offices, DFIs and climate aligned capital teams looking for a more grounded review process.'},
+      note2:{h:'Typical outcome', p:'A clearer investment story, sharper assumptions and a stronger basis for deciding whether a project should move forward.'}
+    });
+    buildUseCasePage('ngos', {
+      image: ASSETS.implementerHero,
+      alt: 'Implementer field consultation',
+      kicker: 'For implementers',
+      title: 'Built for field teams, partners and programme delivery',
+      lead: 'FarmTree supports implementation teams with practical workflows that connect field evidence, local assumptions and reporting needs. The experience is designed to help teams work with more structure while keeping decisions close to reality on the ground.',
+      primary: 'Explore team workflow',
+      cards:[
+        {h:'Field planning', p:'Structure project assumptions, species choices, labour expectations and scenario logic before implementation starts.'},
+        {h:'Learning loops', p:'Bring field observations, team feedback and practical lessons into a more consistent planning and reporting workflow.'},
+        {h:'Partner communication', p:'Share outputs with donors, internal teams and communities in a clearer and more professional format.'}
+      ],
+      media: implementerMedia,
+      note1:{h:'Ideal for', p:'NGOs, implementation partners, programme coordinators, advisory teams and landscape delivery organisations that need a practical working rhythm.'},
+      note2:{h:'Typical outcome', p:'Less fragmented reporting, clearer field coordination and stronger communication with partners and funders.'}
+    });
+    enrichAcknowledgements();
+    enrichLicenses();
+    renderBlog();
+    addBlogButton();
+    buildModal();
+    rewriteRequestButtons();
+    hookActions();
+    setTimeout(rewriteRequestButtons, 60);
+    setTimeout(rewriteRequestButtons, 300);
+    setTimeout(rewriteRequestButtons, 1000);
+    window.openContactModal = openModal;
+    if(location.hash === '#request'){
+      if(history.replaceState) history.replaceState(null, '', '#contact');
+      openModal();
+    }
+    const contactBtn = document.querySelector('#page-contact .outline-btn, #page-contact [data-ftmodal="request"]');
+    if(contactBtn){ contactBtn.classList.add('ft-contact-inline-btn'); }
+  }
+
+  whenReady(init);
+})();
+</script>
