@@ -79,16 +79,25 @@ const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
     s = await activePage(p);
     assert(`[${label}] repeated route changes end on platform`, s.visible[0] === 'page-platform', JSON.stringify(s));
 
-    // 8) internal mobile navigation (mobile only)
+    // 8) mobile menu Platform button (final product decision 2026-07:
+    //    this is a platform-ENTRY control -> external tool Login;
+    //    the #platform ROUTE itself stays internal, asserted above)
     if (label === 'mobile') {
       await p.evaluate(() => { location.hash = 'home'; });
       await settle(600);
+      const navs = [];
+      await p.setRequestInterception(true);
+      const onReq = r => { if (r.isNavigationRequest() && r.url().startsWith('https://tool.farmtree.earth')) { navs.push(r.url()); r.abort(); } else r.continue(); };
+      p.on('request', onReq);
       await p.evaluate(() => document.getElementById('openMenu')?.click());
       await settle(400);
       await p.evaluate(() => { [...document.querySelectorAll('.mobile-card button')].find(b => b.textContent.trim() === 'Platform')?.click(); });
-      await settle(900);
-      s = await activePage(p);
-      assert('[mobile] menu Platform button', s.visible[0] === 'page-platform', JSON.stringify(s));
+      await settle(800);
+      assert('[mobile] menu Platform button -> external Login',
+        navs.length === 1 && navs[0] === 'https://tool.farmtree.earth/Identity/Account/Login',
+        JSON.stringify(navs));
+      p.off('request', onReq);
+      await p.setRequestInterception(false);
     }
     await p.close();
   }

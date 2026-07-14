@@ -49,6 +49,32 @@
 </script>
 <!-- Non-blocking font CSS: fonts already use display=swap, so render is
      never blocked on this stylesheet. noscript keeps the blocking fallback. -->
+<script id="ft-cta-actions-v1">
+/* Single authoritative CTA actions (final product decision, 2026-07):
+     data-ft-action="platform-login"     -> FarmTree tool login
+     data-ft-action="request-demo"       -> FarmTree tool registration
+     data-ft-action="request-quotation"  -> on-site contact modal
+   Registered in <head> as the FIRST capture-phase click listener and
+   stopping immediate propagation, so no legacy handler can compete:
+   exactly one deterministic action per activation, independent of
+   script execution order. Same-tab navigation (existing approved
+   behavior preserved). */
+(function(){
+  var LOGIN = 'https://tool.farmtree.earth/Identity/Account/Login';
+  var REGISTER = 'https://tool.farmtree.earth/Identity/Account/Register';
+  document.addEventListener('click', function(e){
+    var t = e.target && e.target.closest ? e.target.closest('[data-ft-action]') : null;
+    if(!t) return;
+    e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    var action = t.getAttribute('data-ft-action');
+    if(action === 'platform-login'){ window.location.href = LOGIN; }
+    else if(action === 'request-demo'){ window.location.href = REGISTER; }
+    else if(action === 'request-quotation'){
+      if(typeof window.ftOpenContactModal === 'function') window.ftOpenContactModal();
+    }
+  }, true);
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
 <noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/></noscript>
 <style>
@@ -3029,31 +3055,10 @@ body:not(.ft-perf-idle) .ft-reveal-motion { transition:none !important; animatio
   .usecase-stat-row { grid-template-columns:1fr; }
 }
 </style>
-<script>
-(function(){
-  const demoUrl = 'https://tool.farmtree.earth/Identity/Account/Register';
-  const loginUrl = 'https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F';
-  document.addEventListener('click', function(e){
-    const t = e.target.closest('[data-page], a');
-    if(!t) return;
-    const label = (t.textContent || '').trim().toLowerCase();
-    const page = t.getAttribute('data-page');
-    if(page === 'request' || label.includes('request a demo')){
-      e.preventDefault();
-      e.stopPropagation();
-      window.open(demoUrl, '_blank', 'noopener');
-      return;
-    }
-    if(label === 'farmtree platform' || label === 'platform'){
-      if(t.closest('.overlay-menu') || t.classList.contains('platform-btn')){
-        e.preventDefault();
-        e.stopPropagation();
-        window.open(loginUrl, '_blank', 'noopener');
-      }
-    }
-  }, true);
-})();
-</script>
+<!-- Removed (CTA conflict cleanup, 2026-07): a capture-phase click listener
+     here matched controls by VISIBLE TEXT ('request a demo' / 'farmtree
+     platform') and opened tool.farmtree.earth in a new tab. Superseded by
+     the single authoritative data-ft-action handler (ft-cta-actions-v1). -->
 <style id="final-farzam-safeguards">
 /* Final safeguards */
 .hero .hero-ctas a, .hero .hero-ctas button, .hero-ctas .pill, .slide-cta-row a, .slide-cta-row button {
@@ -3965,11 +3970,8 @@ section.ft-about-feedback {
       window.location.href = PLATFORM_URL;
       return;
     }
-    if(id === 'request' && (txt.indexOf('request') !== -1 || txt.indexOf('demo') !== -1 || txt.indexOf('book') !== -1)){
-      e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-      window.location.href = REQUEST_URL;
-      return;
-    }
+    /* (CTA cleanup 2026-07) text-matched 'request/demo/book' redirect removed —
+       demo CTAs now use the authoritative data-ft-action="request-demo". */
 
     e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
     render(id, {instant:false});
@@ -3998,7 +4000,7 @@ section.ft-about-feedback {
 <button type="button" class="nav-item" data-page="request">Design tool</button></nav>
 <div class="header-actions">
 <button type="button" class="pill contact" data-i18n="contact" data-page="contact">Contact</button>
-<button type="button" class="pill tech" data-page="platform-external">FarmTree Platform</button>
+<button type="button" class="pill tech" data-ft-action="platform-login">FarmTree Platform</button>
 <div role="group" aria-label="Language switcher" class="lang-switcher">
 <button aria-expanded="false" aria-haspopup="true" aria-label="Switch language" class="lang-toggle" type="button">
 <span class="globe">◎</span>
@@ -4021,9 +4023,9 @@ section.ft-about-feedback {
 </div>
 <div class="mobile-grid">
 <div class="mobile-card"><h4>Main</h4><button type="button" data-page="home">Home</button><button type="button" data-page="services">Solutions</button><button type="button" data-page="track">Track Record</button></div>
-<div class="mobile-card"><h4>FarmTree</h4><button type="button" data-page="platform">Platform</button><button type="button" data-page="videos">User Videos</button><button type="button" data-page="cocoa">Cocoa Focus</button></div>
+<div class="mobile-card"><h4>FarmTree</h4><button type="button" data-ft-action="platform-login">Platform</button><button type="button" data-page="videos">User Videos</button><button type="button" data-page="cocoa">Cocoa Focus</button></div>
 <div class="mobile-card"><h4>Company</h4><button type="button" data-page="team">Team</button><button type="button" data-page="vacancies">Vacancies</button><button type="button" data-page="contact">Contact us</button><button type="button" data-page="blog">Blog</button></div>
-<div class="mobile-card"><h4>Forms &amp; Legal</h4><button type="button" data-page="request">Request a demo</button><button type="button" data-page="acknowledgements">Acknowledgements</button><button type="button" data-page="licenses">Licenses</button></div>
+<div class="mobile-card"><h4>Forms &amp; Legal</h4><button type="button" data-ft-action="request-demo">Request a demo</button><button type="button" data-page="acknowledgements">Acknowledgements</button><button type="button" data-page="licenses">Licenses</button></div>
 </div>
 </div>
 <main>
@@ -4036,7 +4038,7 @@ section.ft-about-feedback {
 <div class="kicker" id="heroKicker">AGROFORESTRY INTELLIGENCE</div>
 <h1 id="heroTitle">Make agroforestry measurable, investable and scalable.</h1>
 <p id="heroText">FarmTree helps organisations turn agroforestry complexity into clearer project intelligence for planning, reporting and investment decisions.</p>
-<div class="ft-hero-cta-row"><button type="button" class="cta-link" data-page="request">Request a demo ↗</button><button type="button" class="cta-link secondary" data-page="request">Ask for a quotation ↗</button></div><div class="ft-free-plan-card"><span>Future service</span><strong>Design your own agroforestry system</strong><p>Explore how FarmTree turns agroforestry scenarios into measurable outcomes and investment-ready plans.</p></div>
+<div class="ft-hero-cta-row"><button type="button" class="cta-link" data-ft-action="request-demo">Request a demo ↗</button><button type="button" class="cta-link secondary" data-ft-action="request-quotation">Ask for a quotation ↗</button></div><div class="ft-free-plan-card"><span>Future service</span><strong>Design your own agroforestry system</strong><p>Explore how FarmTree turns agroforestry scenarios into measurable outcomes and investment-ready plans.</p></div>
 </div>
 <div class="hero-controls" role="tablist" aria-label="Hero slides">
 <button type="button" class="hero-dot active" data-slide="0" aria-label="Slide 1: Agroforestry Planning" aria-selected="true" role="tab"></button>
@@ -4097,7 +4099,7 @@ section.ft-about-feedback {
 <div class="kicker">Power to project staff</div>
 <h2 class="mid-title">Make agroforestry planning easier for local teams.</h2>
 <p class="lead">Project staff can learn, in a short time, to make agroforestry investment plans and show farmers different options: costs, benefits, and projected returns.</p>
-<button type="button" class="outline-btn" data-page="platform">See the platform</button>
+<button type="button" class="outline-btn" data-ft-action="platform-login">See the platform</button>
 </div>
 </div>
 </div>
@@ -4151,7 +4153,7 @@ section.ft-about-feedback {
 </div>
 <div class="ft-seg-dots" id="ftSegDots"></div>
 </div>
-</section><section class="ft-partner-statements" id="partner-statements"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Partner perspectives</span><h2>What organisations say about working with FarmTree</h2><p>Selected perspectives from partners across the agroforestry investment and implementation chain.</p></div><div class="ft-statement-grid"><article><h3>Science that travels well</h3><p>"FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything."</p><p class="ft-u-note14">Mathijs de Bruin — TreeScape</p></article><article><h3>Depth where it matters</h3><p>"FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do — and how to communicate that to partners."</p><p class="ft-u-note14">Katharina Lima de Miranda — HRNS</p></article><article><h3>Local scenarios, fast</h3><p>"We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios quickly and confidently."</p><p class="ft-u-note14">Rob Kelly — World Vision Australia</p></article></div></div></section><section class="ft-faq-section" id="faq"><div class="ft-faq-wrap"><div class="ft-faq-head"><span class="ft-section-label">FAQ</span><h2>Questions about agroforestry modelling?</h2><p>Common questions about FarmTree, the platform, and how to get started. Can’t find what you need? Contact us directly.</p></div><div class="ft-faq-grid" id="ftFaqAccordion"><article class="ft-open"><div class="ft-faq-q"><h3>What does FarmTree model?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree models production, carbon, hydrology, soil fertility, labour, economics and other impact indicators — covering 10+ KPIs across a single, interconnected science-based model.</div></div></article><article><div class="ft-faq-q"><h3>Can FarmTree support investment planning?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Yes. FarmTree helps turn project ideas, species assumptions and local data into credible scenarios and investment cases — with outputs that hold up to professional and funder scrutiny.</div></div></article><article><div class="ft-faq-q"><h3>How far ahead can FarmTree project?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree supports 50-year projections for long-term planning, investment cases and project monitoring — aligned with standard agroforestry project lifecycles.</div></div></article><article><div class="ft-faq-q"><h3>Can local project teams use the platform?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Yes. Project staff can learn, in a short time, to prepare agroforestry plans and show farmers different options — reducing dependence on external consultants over time.</div></div></article><article><div class="ft-faq-q"><h3>How do we request a demo or quotation?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Use the "Request a demo" or "Ask for a quotation" button anywhere on the site. The FarmTree team will follow up to discuss your scope, project context, and the right level of support.</div></div></article><article><div class="ft-faq-q"><h3>Which standards does FarmTree align with?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree’s carbon outputs are aligned with Verra VCS and Gold Standard methodologies. For broader ESG and climate reporting, outputs can be structured to support CSRD and MRV frameworks.</div></div></article></div></div></section><section class="section ft-final-cta-feedback"><div class="container ft-u-center"><span class="ft-final-cta-tagline">Make agroforestry measurable, investable and scalable.</span><h2 class="big-title">Ready to build a stronger agroforestry investment case?</h2><p class="lead ft-centered-lead">Request a demo or ask for a quotation. FarmTree will work with you to understand your scope, project context and reporting needs.</p><div class="ft-final-cta-row"><button type="button" class="cta-link" data-page="request">Request a demo</button><button type="button" class="cta-link secondary" data-page="request">Ask for a quotation</button></div></div></section><section class="page" id="page-platform">
+</section><section class="ft-partner-statements" id="partner-statements"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Partner perspectives</span><h2>What organisations say about working with FarmTree</h2><p>Selected perspectives from partners across the agroforestry investment and implementation chain.</p></div><div class="ft-statement-grid"><article><h3>Science that travels well</h3><p>"FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything."</p><p class="ft-u-note14">Mathijs de Bruin — TreeScape</p></article><article><h3>Depth where it matters</h3><p>"FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do — and how to communicate that to partners."</p><p class="ft-u-note14">Katharina Lima de Miranda — HRNS</p></article><article><h3>Local scenarios, fast</h3><p>"We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios quickly and confidently."</p><p class="ft-u-note14">Rob Kelly — World Vision Australia</p></article></div></div></section><section class="ft-faq-section" id="faq"><div class="ft-faq-wrap"><div class="ft-faq-head"><span class="ft-section-label">FAQ</span><h2>Questions about agroforestry modelling?</h2><p>Common questions about FarmTree, the platform, and how to get started. Can’t find what you need? Contact us directly.</p></div><div class="ft-faq-grid" id="ftFaqAccordion"><article class="ft-open"><div class="ft-faq-q"><h3>What does FarmTree model?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree models production, carbon, hydrology, soil fertility, labour, economics and other impact indicators — covering 10+ KPIs across a single, interconnected science-based model.</div></div></article><article><div class="ft-faq-q"><h3>Can FarmTree support investment planning?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Yes. FarmTree helps turn project ideas, species assumptions and local data into credible scenarios and investment cases — with outputs that hold up to professional and funder scrutiny.</div></div></article><article><div class="ft-faq-q"><h3>How far ahead can FarmTree project?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree supports 50-year projections for long-term planning, investment cases and project monitoring — aligned with standard agroforestry project lifecycles.</div></div></article><article><div class="ft-faq-q"><h3>Can local project teams use the platform?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Yes. Project staff can learn, in a short time, to prepare agroforestry plans and show farmers different options — reducing dependence on external consultants over time.</div></div></article><article><div class="ft-faq-q"><h3>How do we request a demo or quotation?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Use the "Request a demo" or "Ask for a quotation" button anywhere on the site. The FarmTree team will follow up to discuss your scope, project context, and the right level of support.</div></div></article><article><div class="ft-faq-q"><h3>Which standards does FarmTree align with?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree’s carbon outputs are aligned with Verra VCS and Gold Standard methodologies. For broader ESG and climate reporting, outputs can be structured to support CSRD and MRV frameworks.</div></div></article></div></div></section><section class="section ft-final-cta-feedback"><div class="container ft-u-center"><span class="ft-final-cta-tagline">Make agroforestry measurable, investable and scalable.</span><h2 class="big-title">Ready to build a stronger agroforestry investment case?</h2><p class="lead ft-centered-lead">Request a demo or ask for a quotation. FarmTree will work with you to understand your scope, project context and reporting needs.</p><div class="ft-final-cta-row"><button type="button" class="cta-link" data-ft-action="request-demo">Request a demo</button><button type="button" class="cta-link secondary" data-ft-action="request-quotation">Ask for a quotation</button></div></div></section><section class="page" id="page-platform">
 <div class="subhero"><img loading="lazy" decoding="async" alt="Planning agroforestry scenarios with stakeholders" src="assets/embedded_025_opt.webp"/><div class="container"><div class="kicker">FarmTree Platform</div><h1>A software model and online interface for agroforestry scenarios</h1><p class="lead" style="color:white;max-width:720px">Design agroforestry scenarios and project carbon, financial and environmental indicators for up to 50 years.</p></div></div>
 <section class="section"><div class="container"><div class="overlap"><div class="overlap-img"><img loading="lazy" decoding="async" alt="Field data for agroforestry modelling" src="assets/embedded_026_opt.webp"/></div><div class="overlap-card"><div class="kicker">Model methodology</div><h2 class="mid-title">Carbon, Production &amp; Finance, Environment and Landscape Tool</h2><p class="lead">The FarmTree model is composed of interconnected sub models simulating soil, nutrients, water, plant growth, production, carbon, labour and finance.</p></div></div><div class="cards"><div class="card"><h3>Carbon</h3><p>Biomass accumulation, carbon stock, Carbon Removal Units and carbon revenue by species.</p></div><div class="card"><h3>Production &amp; Finance</h3><p>Yields, production costs, revenues, cash flows, profitability and labour needs.</p></div><div class="card"><h3>Environment</h3><p>Water balance, soil organic matter, nutrient flows, erosion and biodiversity.</p></div><div class="card"><h3>Landscape Tool</h3><p>Compare multiple project areas and portfolio wide performance.</p></div></div></div></section>
 </section>
@@ -4717,11 +4719,11 @@ section.ft-about-feedback {
 </main>
 <footer class="footer">
 <div class="container">
-<div class="footer-top"><div class="kicker">Take action</div><h2>Join us in growing better agroforestry decisions.</h2><button type="button" class="cta-link" data-page="request">Request a FarmTree demo ↗</button></div>
+<div class="footer-top"><div class="kicker">Take action</div><h2>Join us in growing better agroforestry decisions.</h2><button type="button" class="cta-link" data-ft-action="request-demo">Request a FarmTree demo ↗</button></div>
 <div class="footer-links">
 <div class="footer-logo"><picture><source type="image/webp" srcset="assets/brand/farmtree-logo-primary-320.webp 320w, assets/brand/farmtree-logo-primary-640.webp 640w, assets/brand/farmtree-logo-primary-1024.webp 1024w" sizes="115px"/><img src="assets/brand/farmtree-logo-primary-320.png" srcset="assets/brand/farmtree-logo-primary-320.png 320w, assets/brand/farmtree-logo-primary-640.png 640w, assets/brand/farmtree-logo-primary-1024.png 1024w" sizes="115px" width="320" height="117" alt="FarmTree" loading="lazy" decoding="async"/></picture></div>
 <div><h3>About Us</h3><button type="button" data-page="team">Team</button><button type="button" data-page="vacancies">Vacancies</button><button type="button" data-page="contact">Contact</button><button type="button" data-page="blog">Blog</button></div>
-<div><h3>Platform</h3><button type="button" data-page="platform-external">FarmTree Platform</button><button type="button" data-page="videos">User Videos</button><button type="button" data-page="acknowledgements">Acknowledgements</button><button type="button" data-page="licenses">Licenses</button></div>
+<div><h3>Platform</h3><button type="button" data-ft-action="platform-login">FarmTree Platform</button><button type="button" data-page="videos">User Videos</button><button type="button" data-page="acknowledgements">Acknowledgements</button><button type="button" data-page="licenses">Licenses</button></div>
 <div><h3>FarmTree B.V.</h3><p style="color:white">Plus Ultra Building<br/>Bronland 12C-1<br/>6708 WH Wageningen<br/>info@farmtree.earth</p></div>
 </div>
 <div class="footer-bottom"><span>Copyright © 2026 FarmTree B.V. All rights reserved.</span><div class="socials"><span>in</span><span>◎</span><span>✉</span></div></div>
@@ -5437,7 +5439,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     const heroContent = document.querySelector('#page-home .hero-content') || document.querySelector('#page-home .hero .container') || document.querySelector('#page-home .hero-text');
     if(heroContent && !heroContent.querySelector('.ft-buyer-ctas')){
-      heroContent.insertAdjacentHTML('beforeend','<div class="ft-buyer-ctas"><button type="button" data-page="investors">For investors</button><button type="button" data-page="ngos">For implementers</button><button type="button" data-page="request">Request a demo</button></div>');
+      heroContent.insertAdjacentHTML('beforeend','<div class="ft-buyer-ctas"><button type="button" data-page="investors">For investors</button><button type="button" data-page="ngos">For implementers</button><button type="button" data-ft-action="request-demo">Request a demo</button></div>');
     }
     const h1 = document.querySelector('#page-home .hero h1');
     if(h1){ h1.style.fontSize = 'clamp(56px,8.5vw,116px)'; h1.style.letterSpacing='-.07em'; }
@@ -6034,7 +6036,7 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
     if(heroContent && !heroContent.querySelector('.ft-buyer-ctas')){
       var div = document.createElement('div');
       div.className = 'ft-buyer-ctas';
-      div.innerHTML = '<button data-page="investors" type="button">For investors</button><button data-page="ngos" type="button">For implementers</button><button data-page="request" type="button">Request a demo</button>';
+      div.innerHTML = '<button data-page="investors" type="button">For investors</button><button data-page="ngos" type="button">For implementers</button><button data-ft-action="request-demo" type="button">Request a demo</button>';
       heroContent.appendChild(div);
     }
   }
@@ -6053,7 +6055,7 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
             '<p class="lead">'+cfg.lead+'</p>',
             '<div class="usecase-btns">',
               (cfg.primaryExternal ? '<a class="primary" href="'+cfg.primaryHref+'" target="_blank" rel="noopener">'+cfg.primaryText+'</a>' : '<button class="primary" data-page="'+cfg.primaryHref+'" type="button">'+cfg.primaryText+'</button>'),
-              '<button class="secondary" data-page="request" type="button">Request a demo</button>',
+              '<button class="secondary" data-ft-action="request-demo" type="button">Request a demo</button>',
             '</div>',
           '</div>',
         '</div>',
@@ -6256,15 +6258,9 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
         if(page==='request' || page==='platform-external') { e.preventDefault(); go(page); }
       });
     });
-    document.querySelectorAll('button,a').forEach(el=>{
-      const txt=(el.textContent||'').trim().toLowerCase();
-      if(txt.includes('request a demo') || txt.includes('farmtree demo') || txt.includes('demo aanvragen') || txt.includes('demo anfragen')){
-        el.addEventListener('click',function(e){ e.preventDefault(); window.location.href=requestUrl; });
-      }
-    });
-    document.querySelectorAll('.pill.tech').forEach(el=>{
-      el.addEventListener('click',function(e){ e.preventDefault(); window.location.href=platformUrl; });
-    });
+    /* (CTA cleanup 2026-07) removed: per-element listeners matched by visible
+       text ('request a demo' etc.) and by the .pill.tech class. Demo and
+       platform CTAs are handled solely by ft-cta-actions-v1. */
   }
   // Preload hero images to reduce first-load lag
   function preloadHero(){
@@ -6793,6 +6789,9 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
       if(closeBtn) closeBtn.focus();
     }
   }
+  /* Authoritative quotation action (ft-cta-actions-v1) opens the modal here.
+     buildModal() is idempotent, so this is safe at any time. */
+  window.ftOpenContactModal = function(){ buildModal(); openModal(); };
   function closeModal(){
     const modal = document.getElementById('ftContactModal');
     if(modal) modal.classList.remove('open');
