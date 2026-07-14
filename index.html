@@ -3953,7 +3953,7 @@ section.ft-about-feedback {
 <button class="nav-item" data-page="home">Home</button>
 <button class="nav-item" data-page="request">Design tool</button></nav>
 <div class="header-actions">
-<button class="pill contact" data-i18n="contact" data-page="request">Contact</button>
+<button class="pill contact" data-i18n="contact" data-page="contact">Contact</button>
 <button class="pill tech" data-page="platform">FarmTree Platform</button>
 <div aria-label="Language switcher" class="lang-switcher">
 <button aria-expanded="false" aria-haspopup="true" aria-label="Switch language" class="lang-toggle" type="button">
@@ -4444,6 +4444,7 @@ section.ft-about-feedback {
 <div class="field"><label for="ftReqInterest">What are you interested in?</label><select id="ftReqInterest"><option>FarmTree Platform demo</option><option>Agroforestry investment case</option><option>Cocoa Focus</option><option>Project monitoring</option><option>General question</option></select></div>
 <div class="field"><label for="ftReqMsg">Message</label><textarea id="ftReqMsg" placeholder="Tell us about your project"></textarea></div>
 <button class="pill contact" type="submit" id="ftReqSubmit">Submit request</button>
+<div class="ft-field-err" id="ftReqSubmitErr" style="display:none;color:#ffbf80;font-size:14px;margin-top:12px" role="alert">Sorry — your request could not be sent. Please check your connection and try again.</div>
 </form>
 </div>
 <div id="ftRequestSuccess" style="display:none;padding:80px 0;text-align:center">
@@ -6416,6 +6417,8 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
 .ft-modal-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:6px;}
 .ft-modal-footnote{color:#5b6d66;font-size:14px;line-height:1.7;max-width:500px;}
 .ft-modal-success{display:none;margin-top:18px;padding:18px 20px;border-radius:18px;background:#F2F8F3;color:#0B6F3E;font-weight:700;}
+.ft-modal-error{display:none;margin-top:18px;padding:18px 20px;border-radius:18px;background:#FBF3EC;color:#9A5B1F;font-weight:700;}
+.ft-modal-success.show,.ft-modal-error.show{display:block;}
 .ft-modal-success.show{display:block;}
 .ft-blog-shell{width:min(1180px,92vw);margin:0 auto;padding:54px 0 96px;}
 .ft-blog-feature{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:stretch;}
@@ -6681,7 +6684,8 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
             </div>
             <div class="ft-modal-field"><label for="ftQuestion">Your question or project brief</label><textarea id="ftQuestion" placeholder="Share your question, your project context or the support you need"></textarea></div>
             <div class="ft-modal-actions"><div class="ft-modal-footnote">A simple human message is enough. FarmTree can follow up with the right next step after reviewing your request.</div><button class="ft-modal-submit" type="submit">Send request</button></div>
-            <div class="ft-modal-success" id="ftModalSuccess">Thank you. Your request is ready to be shared with the FarmTree team.</div>
+            <div class="ft-modal-success" id="ftModalSuccess">Thank you. Your request has been sent to the FarmTree team.</div>
+            <div class="ft-modal-error" id="ftModalError" role="alert">Sorry — your request could not be sent. Please check your connection and try again.</div>
           </form>
         </div>
       </div>`;
@@ -6690,9 +6694,29 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
     overlay.querySelector('.ft-modal-close').addEventListener('click', closeModal);
     overlay.querySelector('#ftModalForm').addEventListener('submit', function(e){
       e.preventDefault();
+      const form = this;
       const success = overlay.querySelector('#ftModalSuccess');
-      success.classList.add('show');
-      setTimeout(() => { closeModal(); success.classList.remove('show'); this.reset(); }, 1200);
+      const error = overlay.querySelector('#ftModalError');
+      const submitBtn = overlay.querySelector('.ft-modal-submit');
+      error.classList.remove('show');
+      if(submitBtn) submitBtn.disabled = true;
+      window.ftSubmitLead({
+        form: 'contact-modal',
+        name: (overlay.querySelector('#ftName')||{}).value || '',
+        company: (overlay.querySelector('#ftCompany')||{}).value || '',
+        email: (overlay.querySelector('#ftEmail')||{}).value || '',
+        role: (overlay.querySelector('#ftRole')||{}).value || '',
+        interest: (overlay.querySelector('#ftInterest')||{}).value || '',
+        timing: (overlay.querySelector('#ftTiming')||{}).value || '',
+        question: (overlay.querySelector('#ftQuestion')||{}).value || ''
+      }).then(function(){
+        success.classList.add('show');
+        setTimeout(function(){ closeModal(); success.classList.remove('show'); form.reset(); }, 1200);
+      }).catch(function(){
+        error.classList.add('show');
+      }).finally(function(){
+        if(submitBtn) submitBtn.disabled = false;
+      });
     });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
   }
@@ -8681,7 +8705,6 @@ a:focus:not(:focus-visible) { outline: none; }
 <button type="submit">Save request</button>
 </form>
 </div>
-<div class="ft-chat-note">Prototype mode: leads are saved locally in this preview. Connect Google Calendar, CRM and database after deployment.</div>
 <div class="ft-chat-foot">
 <input autocomplete="off" class="ft-chat-input" id="ftChatInput" placeholder="Write a message..." aria-label="Write a message"/>
 <button aria-label="Send message" class="ft-chat-send" id="ftChatSend">➜</button>
@@ -8702,7 +8725,7 @@ a:focus:not(:focus-visible) { outline: none; }
 
   const answers=[
     {keys:['what does','do','platform'],text:'FarmTree is a software model and online platform for agroforestry scenario planning. It helps teams compare carbon, finance, biodiversity, water and farmer income indicators before and during implementation.'},
-    {keys:['demo','book','appointment','calendar','meeting'],text:'I can help you request a demo. Share your name, email and company, then the FarmTree team can connect it to Google Calendar and CRM once this prototype is deployed.',lead:true},
+    {keys:['demo','book','appointment','calendar','meeting'],text:'I can help you request a demo. Share your name, email and company, and the FarmTree team will follow up with you.',lead:true},
     {keys:['investor','fund','finance','capital'],text:'For investors, FarmTree turns field realities and assumptions into clearer investment narratives, risk framing and portfolio level decision support.'},
     {keys:['implementer','ngo','team','farmer'],text:'For implementers and NGOs, FarmTree supports field planning, data capture, learning loops and partner communication across agroforestry projects.'},
     {keys:['carbon','biodiversity','water','hydrology','income'],text:'FarmTree can model carbon, production and finance, environmental indicators, hydrology, biodiversity and farmer income across long term scenarios.'},
@@ -8736,12 +8759,18 @@ a:focus:not(:focus-visible) { outline: none; }
   form.addEventListener('submit',e=>{
     e.preventDefault();
     const data=Object.fromEntries(new FormData(form).entries());
-    const leads=JSON.parse(localStorage.getItem('farmtree_chat_leads')||'[]');
-    leads.push({...data,createdAt:new Date().toISOString(),page:location.hash||'#home'});
-    localStorage.setItem('farmtree_chat_leads',JSON.stringify(leads));
-    form.classList.remove('open');
-    form.reset();
-    add('Thanks. I saved your request in this local preview. In the live website this can be connected to Google Calendar, CRM and the FarmTree database.','bot');
+    const btn=form.querySelector('button[type="submit"]');
+    if(btn) btn.disabled=true;
+    window.ftSubmitLead({form:'chat-widget',...data,page:location.hash||'#home'})
+      .then(()=>{
+        form.classList.remove('open');
+        form.reset();
+        add('Thanks. Your request has been sent to the FarmTree team — they will follow up with you.','bot');
+      })
+      .catch(()=>{
+        add('Sorry — your request could not be sent right now. Please try again in a moment, or use the contact page.','bot');
+      })
+      .finally(()=>{ if(btn) btn.disabled=false; });
   });
 })();
 </script>
@@ -9065,12 +9094,34 @@ a:focus:not(:focus-visible) { outline: none; }
 
     if(!ok) return;
 
-    /* Show success state */
-    var wrap = document.getElementById('ftRequestFormWrap');
-    var success = document.getElementById('ftRequestSuccess');
-    if(wrap) wrap.style.display = 'none';
-    if(success) success.style.display = 'block';
-    window.scrollTo(0,0);
+    /* Submit to the real endpoint, then show success or error feedback */
+    var btn = document.getElementById('ftReqSubmit');
+    hide('ftReqSubmitErr');
+    if(btn) btn.disabled = true;
+
+    var payload = {
+      form: 'request-page',
+      name: name ? name.value.trim() : '',
+      email: email ? email.value.trim() : '',
+      company: company ? company.value.trim() : '',
+      role: (document.getElementById('ftReqRole')||{}).value || '',
+      phone: (document.getElementById('ftReqPhone')||{}).value || '',
+      website: (document.getElementById('ftReqWeb')||{}).value || '',
+      interest: (document.getElementById('ftReqInterest')||{}).value || '',
+      message: (document.getElementById('ftReqMsg')||{}).value || ''
+    };
+
+    window.ftSubmitLead(payload).then(function(){
+      var wrap = document.getElementById('ftRequestFormWrap');
+      var success = document.getElementById('ftRequestSuccess');
+      if(wrap) wrap.style.display = 'none';
+      if(success) success.style.display = 'block';
+      window.scrollTo(0,0);
+    }).catch(function(){
+      show('ftReqSubmitErr');
+    }).finally(function(){
+      if(btn) btn.disabled = false;
+    });
   });
 })();
 </script>
@@ -11887,6 +11938,23 @@ main > section:not(.page) .ft-section-label{
      Production hardening: accessibility fixes (ft-a11y-fixes-v1)
      Keyboard focus visibility only — no pointer/visual design change.
      ===================================================================== -->
+<script id="ft-form-endpoint-v1">
+/* Production form transport (Formspree).
+   SETUP: create a form at https://formspree.io and replace YOUR_FORM_ID
+   below — one place only. See FORMS.md. While the placeholder is present,
+   submissions fail safely and users see the error state (no fake success). */
+window.FT_FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+window.ftSubmitLead = function(payload){
+  return fetch(window.FT_FORM_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(function(r){
+    if(!r.ok) throw new Error('Form endpoint returned ' + r.status);
+    return r;
+  });
+};
+</script>
 <style id="ft-utility-classes-v1">
 /* Production hardening: repeated static inline styles converted to
    reusable utility classes. Values are verbatim copies of the former
