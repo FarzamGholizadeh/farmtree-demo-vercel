@@ -5546,12 +5546,19 @@ document.addEventListener('DOMContentLoaded', function () {
   counters.forEach(el=>{ const raw=el.textContent.trim(); const n=parse(raw); if(!n) return; el.dataset.final=raw; el.dataset.num=n; el.textContent=raw.replace(/\d+/, '0'); });
   const animateCounter=(el)=>{
     if(el.dataset.done) return; el.dataset.done='1';
-    const final=el.dataset.final, n=parseInt(el.dataset.num,10); let start=null; const dur=1100;
+    const final=el.dataset.final, n=parseInt(el.dataset.num,10);
+    /* Guard: only elements initialised above (digit-bearing, dataset.num/final
+       set) may animate. Non-numeric counters (e.g. "Science-based", "MRV")
+       keep their static text — previously this path threw
+       "Cannot read properties of undefined (reading 'replace')". */
+    if(final===undefined || isNaN(n)) return;
+    let start=null; const dur=1100;
     function tick(ts){ if(!start) start=ts; const p=Math.min((ts-start)/dur,1); const v=Math.round(n*(1-Math.pow(1-p,3))); el.textContent=final.replace(/\d+/, v); if(p<1) requestAnimationFrame(tick); }
     requestAnimationFrame(tick);
   };
   const io=new IntersectionObserver(entries=>entries.forEach(en=>{ if(en.isIntersecting) animateCounter(en.target); }),{threshold:.35});
-  counters.forEach(el=>io.observe(el));
+  /* Observe only counters this script initialised (element-existence guard) */
+  counters.forEach(el=>{ if(el.dataset.num) io.observe(el); });
   // Make hero slides use real project photos and keep layout clean without green blob.
   const heroImgs=["assets/embedded_061.webp","assets/embedded_062.webp"];
   let heroIndex=0; const img=document.querySelector('.hero-img'); const dots=[...document.querySelectorAll('.hero-dot')];
