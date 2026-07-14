@@ -1,0 +1,215 @@
+{
+ "captured": "pre-change",
+ "counts": {
+  "no-inline-styles": 17,
+  "min-height-auto": 10,
+  "text-wrap": 8,
+  "backdrop-filter-order": 1,
+  "meta-theme-color": 1,
+  "link-fetchpriority": 1,
+  "img-fetchpriority": 1,
+  "TOTAL": 39
+ },
+ "items": {
+  "no-inline-styles": [
+   {
+    "line": 4059,
+    "style": "background:var(--green);padding:0;display:flex;align-items:stretch"
+   },
+   {
+    "line": 4060,
+    "style": "margin:18px;flex:1;border-radius:14px"
+   },
+   {
+    "line": 4106,
+    "style": "background-color:var(--cream)"
+   },
+   {
+    "line": 4157,
+    "style": "color:white;max-width:720px"
+   },
+   {
+    "line": 4180,
+    "style": "color:var(--gold);background:rgba(255,255,255,.06);border-color:rgba(255,255,255"
+   },
+   {
+    "line": 4180,
+    "style": "margin-top:32px"
+   },
+   {
+    "line": 4183,
+    "style": "max-width:640px;margin:0 auto 16px"
+   },
+   {
+    "line": 4485,
+    "style": "display:none;color:#ffbf80;font-size:13px;margin-top:6px;display:none"
+   },
+   {
+    "line": 4486,
+    "style": "display:none;color:#ffbf80;font-size:13px;margin-top:6px;display:none"
+   },
+   {
+    "line": 4487,
+    "style": "display:none;color:#ffbf80;font-size:13px;margin-top:6px;display:none"
+   },
+   {
+    "line": 4494,
+    "style": "display:none;color:#ffbf80;font-size:14px;margin-top:12px"
+   },
+   {
+    "line": 4497,
+    "style": "display:none;padding:80px 0;text-align:center"
+   },
+   {
+    "line": 4498,
+    "style": "width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.12);border"
+   },
+   {
+    "line": 4499,
+    "style": "font-family:Manrope,sans-serif;font-size:36px;margin:0 0 16px;color:white"
+   },
+   {
+    "line": 4500,
+    "style": "font-size:18px;color:rgba(255,255,255,.78);max-width:520px;margin:0 auto 32px;li"
+   },
+   {
+    "line": 4512,
+    "style": "max-width:880px"
+   },
+   {
+    "line": 4727,
+    "style": "color:white"
+   }
+  ],
+  "min-height-auto": [
+   {
+    "line": 2155,
+    "context": "min-height: auto;"
+   },
+   {
+    "line": 3144,
+    "context": ".ft-phase-card{min-height:auto!important;}"
+   },
+   {
+    "line": 3156,
+    "context": ".split-feature.reverse .feature-card{padding:54px 0!important;background:transparent!important;box-s"
+   },
+   {
+    "line": 3179,
+    "context": ".overlap-card{padding:34px!important;min-height:auto!important;}"
+   },
+   {
+    "line": 3603,
+    "context": "min-height: auto !important;"
+   },
+   {
+    "line": 7007,
+    "context": "#page-investors .usecase-copy,#page-ngos .usecase-copy{padding:26px;min-height:auto;}"
+   },
+   {
+    "line": 8736,
+    "context": "@media(max-width:900px){.ft-living-ecosystem{min-height:auto;padding:22px;display:grid;gap:14px}.ft-"
+   },
+   {
+    "line": 8736,
+    "context": "@media(max-width:900px){.ft-living-ecosystem{min-height:auto;padding:22px;display:grid;gap:14px}.ft-"
+   },
+   {
+    "line": 8848,
+    "context": "min-height:auto!important;"
+   },
+   {
+    "line": 9422,
+    "context": ".ft-counter-card { min-height: auto !important; }"
+   }
+  ],
+  "text-wrap": [
+   {
+    "line": 2736,
+    "value": "balance"
+   },
+   {
+    "line": 2737,
+    "value": "pretty"
+   },
+   {
+    "line": 2807,
+    "value": "balance"
+   },
+   {
+    "line": 3164,
+    "value": "balance"
+   },
+   {
+    "line": 11619,
+    "value": "balance"
+   },
+   {
+    "line": 11667,
+    "value": "balance"
+   },
+   {
+    "line": 11824,
+    "value": "balance"
+   },
+   {
+    "line": 11972,
+    "value": "balance"
+   }
+  ],
+  "backdrop-filter-order": [
+   {
+    "line": 780,
+    "context": "backdrop-filter: blur(18px) !important; followed by -webkit- (wrong order, multi-line rule)"
+   }
+  ],
+  "meta-theme-color": [
+   {
+    "line": 15
+   }
+  ],
+  "link-fetchpriority": [
+   {
+    "line": 32
+   }
+  ],
+  "img-fetchpriority": [
+   {
+    "line": 4034,
+    "context": "<img fetchpriority=\"high\" alt=\"Agroforestry landscape planning \u2014 tree-based farming systems and land"
+   }
+  ]
+ },
+ "file-metrics": {
+  "index.html-bytes": 695152,
+  "index.html-lines": 12083,
+  "style-blocks": 62,
+  "script-blocks": 44
+ },
+ "lighthouse-baseline": {
+  "mobile": {
+   "perf": 60,
+   "a11y": 100,
+   "bp": 100,
+   "seo": 69,
+   "fcp": "6.1s",
+   "lcp": "17.7s",
+   "tbt": "0ms",
+   "cls": 0
+  },
+  "desktop": {
+   "perf": 83,
+   "a11y": 100,
+   "bp": 100,
+   "seo": 69,
+   "fcp": "0.8s",
+   "lcp": "2.9s",
+   "cls": 0
+  }
+ },
+ "suites-pre-change": {
+  "console-regression": "PASS",
+  "platform-route-regression": "PASS",
+  "cta-regression": "PASS"
+ }
+}
