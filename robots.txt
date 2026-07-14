@@ -1,4 +1,8 @@
+# FarmTree — staging/demo state.
+# The page-level <meta name="robots" content="noindex, nofollow"> in index.html
+# is the authoritative indexing control until production release is approved.
+# At production release: flip that meta to "index, follow"; this file can stay as-is.
 User-agent: *
 Allow: /
 
-Sitemap: https://farmtree-demo-vercel.vercel.app/sitemap.xml
+Sitemap: https://farmtree.earth/sitemap.xml
