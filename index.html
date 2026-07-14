@@ -3228,6 +3228,597 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 #diagram svg,#diagram .ft-living-diagram,#diagram .ft-diagram-hotspot,#diagram .ft-diagram-card,#diagram .ft-diagram-line{display:none!important;}
 @media(max-width:900px){#diagram .ft-simple-diagram{width:94vw!important;border-radius:20px!important}}
 </style>
+<style id="ft-polish-v4">
+/* ═══════════════════════════════════════════════════════════════
+   FarmTree UI Polish v4 — systematic refinements across sections
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── GLOBAL: left-align body text ──────────────────────────── */
+p { text-align: left; }
+.ft-testimonial-card p,
+.ft-faq-left p,
+.ft-faq-answer-inner,
+.ft-commercial-head p,
+.ft-commercial-head.center p { text-align: left !important; }
+.ft-faq-head p { text-align: center !important; }
+
+/* ── HERO: hide placeholder card, re-enable slider ─────────── */
+.ft-free-plan-card { display: none !important; }
+.hero .hero-controls { display: flex !important; gap: 10px !important; }
+.hero .arrow-side {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 46px; height: 46px;
+  border-radius: 50% !important;
+  background: rgba(255,255,255,.13) !important;
+  border: 1px solid rgba(255,255,255,.32) !important;
+  font-size: 20px !important;
+  opacity: 1 !important;
+  transition: background .2s ease;
+}
+.hero .arrow-side:hover { background: rgba(255,255,255,.24) !important; }
+.hero-controls { bottom: 36px !important; }
+.hero-dot { width: 30px !important; height: 3px !important; border-radius: 999px !important; }
+
+/* ── PLATFORM MOCK BLOCK ────────────────────────────────────── */
+.ft-platform-screenshot-block { margin-top: 60px !important; }
+.ft-platform-screenshot-block .overlap-img {
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: center !important;
+}
+
+/* ── MINI STEP CARDS (frame grid) ───────────────────────────── */
+.ft-frame-grid { gap: 20px !important; margin-top: 40px !important; }
+.ft-frame-grid article { padding: 28px 26px !important; border-radius: 22px !important; }
+.ft-frame-grid article span { font-size: 11px !important; letter-spacing: .18em !important; }
+.ft-frame-grid h3 { font-size: 20px !important; margin-bottom: 10px !important; }
+.ft-frame-grid p { font-size: 14px !important; line-height: 1.6 !important; text-align: left !important; }
+
+/* ── DATA FLOW SECTION ──────────────────────────────────────── */
+.ft-p6-flow-section { background: var(--cream); padding: 100px 0 110px; }
+.ft-p6-flow-wrap { width: min(1180px, 88vw); margin: 0 auto; }
+.ft-p6-flow-grid {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center;
+  gap: 0 !important;
+  margin-top: 52px;
+  position: relative;
+}
+/* Connecting line */
+.ft-p6-flow-grid::before {
+  content: "";
+  position: absolute;
+  top: 34px;
+  left: calc(8.33% / 2);
+  right: calc(8.33% / 2);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(33,79,42,.14) 8%, rgba(33,79,42,.14) 92%, transparent);
+  z-index: 0;
+}
+/* Animated pulse travelling left → right */
+.ft-p6-flow-grid::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--gold);
+  z-index: 3;
+  animation: ftFlowPulse 4s cubic-bezier(.4,0,.6,1) infinite;
+}
+@keyframes ftFlowPulse {
+  0%   { left: 4%; opacity: 0; transform: scale(.7); }
+  6%   { opacity: 1; transform: scale(1); }
+  94%  { opacity: 1; transform: scale(1); }
+  100% { left: 93%; opacity: 0; transform: scale(.7); }
+}
+.ft-p6-flow-node {
+  flex: 1;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 10px;
+  position: relative;
+  z-index: 1;
+}
+.ft-p6-flow-icon {
+  width: 68px; height: 68px;
+  border-radius: 50% !important;
+  background: white;
+  border: 1.5px solid rgba(33,79,42,.14);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--green2);
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 2;
+  transition: border-color .25s ease, transform .25s ease, background .25s ease;
+  box-shadow: none !important;
+}
+.ft-p6-flow-node:last-child .ft-p6-flow-icon {
+  background: var(--green) !important;
+  border-color: var(--green) !important;
+  color: white !important;
+}
+.ft-p6-flow-node:hover .ft-p6-flow-icon {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+.ft-p6-flow-node h4 {
+  font-size: 14px !important;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 6px !important;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+}
+.ft-p6-flow-node p {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  color: var(--muted);
+  margin: 0 !important;
+  text-align: center !important;
+}
+@media (max-width: 760px) {
+  .ft-p6-flow-grid { flex-direction: column !important; align-items: flex-start !important; gap: 22px !important; }
+  .ft-p6-flow-grid::before, .ft-p6-flow-grid::after { display: none !important; }
+  .ft-p6-flow-node { flex-direction: row !important; align-items: flex-start !important; text-align: left !important; gap: 16px !important; padding: 0 !important; }
+  .ft-p6-flow-icon { flex-shrink: 0; margin-bottom: 0 !important; }
+  .ft-p6-flow-node p { text-align: left !important; }
+}
+
+/* ── WORKFLOW SECTION ────────────────────────────────────────── */
+.ft-workflow-title {
+  white-space: nowrap !important;
+  max-width: none !important;
+  font-size: clamp(28px, 3.2vw, 48px) !important;
+}
+@media (max-width: 720px) { .ft-workflow-title { white-space: normal !important; } }
+.ft-workflow-four { grid-template-columns: repeat(4, 1fr) !important; }
+.ft-workflow-four article {
+  padding: 30px 26px !important;
+  border-radius: 24px !important;
+  text-align: left !important;
+  display: flex !important;
+  flex-direction: column;
+}
+.ft-workflow-four article span {
+  display: block;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  color: var(--gold) !important;
+  letter-spacing: .2em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 16px !important;
+}
+.ft-workflow-four h3 {
+  font-size: 21px !important;
+  line-height: 1.12 !important;
+  margin: 0 0 10px !important;
+}
+.ft-workflow-four p {
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+  text-align: left !important;
+  color: #4d6258 !important;
+  flex: 1;
+}
+
+/* ── TARGET GRID: How different organisations use FarmTree ────── */
+#target-groups .ft-commercial-head h2 { white-space: normal !important; }
+#target-groups .ft-commercial-head { max-width: 820px; }
+.ft-target-grid {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 24px !important;
+}
+.ft-target-grid article {
+  padding: 0 !important;
+  border-radius: 24px !important;
+  overflow: hidden;
+  display: flex !important;
+  flex-direction: column;
+  border: 1px solid rgba(16,47,35,.10);
+  background: white;
+  transition: transform .25s ease, border-color .25s ease;
+}
+.ft-target-grid article:hover {
+  transform: translateY(-4px);
+  border-color: rgba(211,176,107,.55);
+}
+.ft-target-grid article img {
+  height: 200px !important;
+  border-radius: 0 !important;
+  margin-bottom: 0 !important;
+  flex-shrink: 0;
+}
+.ft-target-grid article h3 {
+  font-size: 20px !important;
+  margin: 20px 24px 10px !important;
+  line-height: 1.15 !important;
+  text-align: left !important;
+  color: #102f23;
+}
+.ft-target-grid article p {
+  margin: 0 24px 4px !important;
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+  text-align: left !important;
+  flex: 1;
+}
+.ft-target-grid article button {
+  margin: 18px 24px 26px !important;
+  align-self: flex-start !important;
+  padding: 11px 18px !important;
+}
+@media (max-width: 880px) { .ft-target-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+@media (max-width: 560px) { .ft-target-grid { grid-template-columns: 1fr !important; } }
+
+/* ── PROOF THEME GRID: Four themes ─────────────────────────── */
+#proof-stories .ft-commercial-head h2 { white-space: normal !important; }
+.ft-proof-theme-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 24px !important;
+}
+.ft-proof-theme-grid article {
+  padding: 36px 32px !important;
+  border-radius: 24px !important;
+  min-height: 220px !important;
+  display: flex !important;
+  flex-direction: column;
+}
+.ft-proof-theme-grid h3 {
+  font-size: 22px !important;
+  line-height: 1.1 !important;
+  margin: 0 0 14px !important;
+  text-align: left !important;
+}
+.ft-proof-theme-grid p {
+  font-size: 15px !important;
+  line-height: 1.68 !important;
+  text-align: left !important;
+  flex: 1;
+}
+.ft-proof-theme-grid button { margin-top: 22px !important; align-self: flex-start !important; }
+@media (max-width: 700px) { .ft-proof-theme-grid { grid-template-columns: 1fr !important; } }
+
+/* ── TESTIMONIALS: remove orb, clean up ────────────────────── */
+.ft-testimonials-orb { display: none !important; }
+.ft-testimonials-section { padding: 100px 0 !important; }
+.ft-testimonials-head { margin-bottom: 48px !important; }
+.ft-testimonials-head .kicker {
+  background: rgba(33,79,42,.08) !important;
+  color: var(--green2) !important;
+}
+.ft-testimonial-card { border-radius: 20px !important; }
+.ft-testimonial-card p { text-align: left !important; }
+.ft-avatar { border-radius: 50% !important; }
+
+/* Cleaner org-name chip on testimonial */
+.ft-stars { font-size: 14px !important; letter-spacing: 2px !important; }
+
+/* ── BUYER GRID: Who uses FarmTree and how ─────────────────── */
+#frank-usecases-pricing .ft-commercial-head h2 { white-space: normal !important; }
+.ft-buyer-grid {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 22px !important;
+}
+.ft-buyer-grid article {
+  padding: 36px 30px !important;
+  border-radius: 28px !important;
+  min-height: 210px !important;
+  display: flex !important;
+  flex-direction: column;
+}
+.ft-buyer-grid h3 { font-size: 24px !important; margin-bottom: 12px !important; }
+.ft-buyer-grid p {
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  text-align: left !important;
+  flex: 1;
+}
+.ft-buyer-grid button { margin-top: 22px !important; align-self: flex-start !important; }
+.ft-pricing-model {
+  border-radius: 24px !important;
+  padding: 32px 36px !important;
+  margin-top: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 28px !important;
+  flex-wrap: wrap;
+  text-align: left !important;
+}
+.ft-pricing-model h3 { margin: 0 !important; font-size: 22px !important; }
+.ft-pricing-model p {
+  margin: 8px 0 0 !important;
+  max-width: 560px;
+  font-size: 15px;
+  line-height: 1.65;
+  text-align: left !important;
+  color: var(--muted);
+}
+.ft-pricing-model button { margin-top: 0 !important; flex-shrink: 0; }
+
+/* ── PARTNER STATEMENTS: remove duplicate quotes ───────────── */
+#partner-statements { display: none !important; }
+
+/* ── FAQ: clean card accordion layout ──────────────────────── */
+.ft-faq-section { padding: 110px 0 120px !important; }
+.ft-faq-wrap { display: block !important; }
+.ft-faq-head {
+  max-width: 820px;
+  margin: 0 auto 52px !important;
+  text-align: center;
+  min-height: auto !important;
+}
+.ft-faq-head h2 {
+  font-size: clamp(34px, 4vw, 56px) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -.05em !important;
+  color: #102F23;
+  margin: 14px 0 16px !important;
+  max-width: 680px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.ft-faq-head p {
+  color: #385B50 !important;
+  font-size: 17px !important;
+  line-height: 1.65 !important;
+  max-width: 600px;
+  margin: 0 auto !important;
+  text-align: center !important;
+}
+.ft-faq-main-button { display: none !important; }
+/* Override old 5-column grid with accordion stack */
+.ft-faq-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  max-width: 820px !important;
+  margin: 0 auto !important;
+  width: 100%;
+}
+.ft-faq-grid article {
+  background: rgba(255,255,255,.82) !important;
+  border: 1px solid rgba(16,47,35,.09) !important;
+  border-radius: 16px !important;
+  padding: 0 !important;
+  cursor: pointer;
+  overflow: hidden !important;
+  transition: border-color .25s ease, background .25s ease !important;
+}
+.ft-faq-grid article:hover { border-color: rgba(211,176,107,.48) !important; background: white !important; }
+.ft-faq-grid article.ft-open { border-color: rgba(211,176,107,.55) !important; background: white !important; }
+.ft-faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 26px;
+  cursor: pointer;
+  user-select: none;
+}
+.ft-faq-q h3 {
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  color: #102F23 !important;
+  margin: 0 !important;
+  line-height: 1.3 !important;
+  flex: 1;
+}
+.ft-faq-toggle {
+  width: 28px; height: 28px; flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(33,79,42,.06);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--green2);
+  font-size: 18px; font-weight: 300; line-height: 1;
+  transition: transform .25s ease, background .25s ease;
+}
+.ft-open .ft-faq-toggle { transform: rotate(45deg); background: rgba(211,176,107,.18); color: #8a6a2a; }
+.ft-faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .32s ease;
+}
+.ft-open .ft-faq-a { max-height: 240px; }
+.ft-faq-a-inner {
+  padding: 0 26px 22px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #385B50;
+  text-align: left;
+}
+
+/* ── FINAL CTA ───────────────────────────────────────────────── */
+.ft-final-cta-feedback { padding: 120px 0 !important; }
+.ft-final-cta-tagline {
+  font-size: 13px !important;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold) !important;
+  margin-bottom: 18px !important;
+  display: block;
+}
+.ft-final-cta-feedback .ft-final-cta-row {
+  justify-content: center;
+  margin-top: 30px !important;
+  gap: 14px !important;
+}
+.ft-final-cta-feedback .cta-link {
+  padding: 16px 30px !important;
+  font-size: 16px !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+}
+.ft-final-cta-feedback .cta-link:not(.secondary) {
+  background: var(--gold) !important;
+  color: #173428 !important;
+  border-color: var(--gold) !important;
+}
+.ft-final-cta-feedback .cta-link.secondary {
+  background: rgba(255,255,255,.12) !important;
+  border-color: rgba(255,255,255,.38) !important;
+  color: white !important;
+}
+</style>
+<style id="ft-polish-v5">
+/* ── Hero: hide injected audience pills ── */
+#page-home .hero-content .ft-buyer-ctas {
+  display: none !important;
+}
+
+/* ── Flow section: remove animated dot, keep static line ── */
+.ft-p6-flow-grid::after {
+  display: none !important;
+}
+
+/* ── Proof stories: let title wrap naturally ── */
+#proof-stories .ft-commercial-head h2 {
+  white-space: normal !important;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Green stats strip: visible only on home page ── */
+body:not(.ft-page-home) .ft-p6-numbers-section,
+body:not(.ft-page-home) #platform-numbers {
+  display: none !important;
+}
+
+/* ── Platform block: tighten bottom spacing after frame grid removed ── */
+.ft-platform-screenshot-block {
+  margin-bottom: 0 !important;
+}
+.ft-about-feedback .section,
+section.ft-about-feedback {
+  padding-bottom: 40px !important;
+}
+
+/* ── Customer segment carousel ── */
+.ft-segments-section {
+  overflow: hidden;
+}
+.ft-seg-carousel-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 48px;
+}
+.ft-seg-viewport {
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+}
+.ft-seg-track {
+  display: flex;
+  gap: 20px;
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+  padding: 4px 2px 16px;
+  will-change: transform;
+}
+.ft-seg-card {
+  flex: 0 0 calc(33.333% - 14px);
+  min-width: 200px;
+  background: #fff;
+  border: 1.5px solid rgba(33,79,42,.1);
+  border-radius: 20px;
+  padding: 28px 26px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color .22s, transform .22s;
+  box-sizing: border-box;
+}
+.ft-seg-card:hover {
+  border-color: rgba(33,79,42,.28) !important;
+  transform: translateY(-3px);
+}
+.ft-seg-num {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.ft-seg-card h3 {
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text);
+  margin: 0;
+}
+.ft-seg-card p {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+.ft-seg-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(33,79,42,.18);
+  background: #fff;
+  color: var(--green);
+  font-size: 22px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, border-color .2s, color .2s;
+  line-height: 1;
+}
+.ft-seg-arrow:hover {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.ft-seg-arrow:disabled {
+  opacity: .35;
+  cursor: default;
+}
+.ft-seg-prev { margin-right: 16px; }
+.ft-seg-next { margin-left: 16px; }
+.ft-seg-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+.ft-seg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(33,79,42,.18);
+  border: none;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+  padding: 0;
+}
+.ft-seg-dot.active {
+  background: var(--green);
+  transform: scale(1.3);
+}
+@media (max-width: 900px) {
+  .ft-seg-card { flex: 0 0 calc(50% - 10px); }
+}
+@media (max-width: 640px) {
+  .ft-seg-card { flex: 0 0 calc(82%); }
+  .ft-seg-arrow { display: none !important; }
+  .ft-seg-prev, .ft-seg-next { margin: 0; }
+}
+</style>
 </head>
 <body>
 <div aria-label="Loading FarmTree website" class="ft-site-loader" id="ftSiteLoader">
@@ -3400,23 +3991,21 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 <div class="green-blob"></div>
 <button class="arrow-side left" id="prevHero">‹</button><button class="arrow-side right" id="nextHero">›</button>
 <div class="hero-content">
-<div class="kicker" id="heroKicker">FarmTree helps to</div>
-<h1 id="heroTitle">Plan and Report on Agroforestry Investments</h1>
-<p id="heroText">You need credible projections showing environmental impact (e.g., carbon) AND economic returns for farmers. Building this evidence base requires specialized expertise, local data, and scientific rigor.</p>
+<div class="kicker" id="heroKicker">AGROFORESTRY INTELLIGENCE</div>
+<h1 id="heroTitle">Make agroforestry measurable, investable and scalable.</h1>
+<p id="heroText">FarmTree helps organisations turn agroforestry complexity into clearer project intelligence for planning, reporting and investment decisions.</p>
 <div class="ft-hero-cta-row"><button class="cta-link" data-page="request">Request a demo ↗</button><button class="cta-link secondary" data-page="request">Ask for a quotation ↗</button></div><div class="ft-free-plan-card"><span>Future service</span><strong>Design your own agroforestry system</strong><p>Reserved homepage position for the future automated agroforestry plan generator.</p></div>
 </div>
 <div class="hero-controls" role="tablist" aria-label="Hero slides">
-<button class="hero-dot active" data-slide="0" aria-label="Slide 1: Agroforestry Planning — GIZ landscape programme" aria-selected="true" role="tab"><span class="hero-dot-fill"></span></button>
-<button class="hero-dot" data-slide="1" aria-label="Slide 2: Science-Based Modelling — ACORN carbon methodology" aria-selected="false" role="tab"><span class="hero-dot-fill"></span></button>
-<button class="hero-dot" data-slide="2" aria-label="Slide 3: Project Teams — field staff and planning support" aria-selected="false" role="tab"><span class="hero-dot-fill"></span></button>
-<button class="hero-dot" data-slide="3" aria-label="Slide 4: Impact Reporting — LOSO Nyando landscape programme" aria-selected="false" role="tab"><span class="hero-dot-fill"></span></button>
+<button class="hero-dot active" data-slide="0" aria-label="Slide 1: Agroforestry Planning" aria-selected="true" role="tab"></button>
+<button class="hero-dot" data-slide="1" aria-label="Slide 2: Science-Based Modelling" aria-selected="false" role="tab"></button>
 </div>
 </div>
 <div class="video-home"></div>
 </section><section class="section ft-about-feedback">
 <div class="container" style="text-align:center">
 <div class="kicker">About FarmTree</div>
-<h2 class="big-title">FarmTree helps you design, de-risk and monitor agroforestry interventions.</h2>
+<h2 class="big-title">Make agroforestry measurable, investable and scalable.</h2>
 <div class="metrics">
 <div class="metric"><div class="metric-icon">◉</div><h3>+10 KPIs</h3><p>Production, carbon, hydrology, soil fertility, nutrition, labour, and economic returns.</p></div>
 <div class="metric"><div class="metric-icon">▦</div><h3>50 years</h3><p>50-year projections for long-term planning, investment cases and project monitoring.</p></div>
@@ -3469,64 +4058,6 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 <button class="outline-btn" data-page="platform">See the platform</button>
 </div>
 </div>
-<div class="ft-frame-grid">
-
-<article>
-<span>01</span><h3>Current land use</h3>
-<div class="ft-p6-ui-card">
-<div class="ft-p6-data-row"><span class="ft-p6-data-row-lbl">Land type</span><span class="ft-p6-data-row-val">Annual crops</span></div>
-<div class="ft-p6-data-row"><span class="ft-p6-data-row-lbl">Tree cover</span><span class="ft-p6-data-row-val">3%</span></div>
-<div class="ft-p6-data-row"><span class="ft-p6-data-row-lbl">Carbon</span><span class="ft-p6-data-row-val">3.2 tCO₂e/ha</span></div>
-<div class="ft-p6-data-row"><span class="ft-p6-data-row-lbl">Status</span><span class="ft-p6-data-row-val" style="color:var(--muted)">Baseline</span></div>
-</div>
-<p>Start with the existing system — crops, trees, soil and land-use history provide the baseline for every scenario.</p>
-</article>
-
-<article>
-<span>02</span><h3>Species and system design</h3>
-<div class="ft-p6-ui-card">
-<div class="ft-p6-chip-row">
-<div class="ft-p6-species-chip active"><div class="ft-p6-chip-dot"></div>Grevillea robusta</div>
-<div class="ft-p6-species-chip"><div class="ft-p6-chip-dot" style="background:var(--muted);opacity:.4"></div>Faidherbia albida</div>
-<div class="ft-p6-species-chip"><div class="ft-p6-chip-dot" style="background:var(--muted);opacity:.4"></div>Leucaena leucocephala</div>
-</div>
-<span class="ft-p6-cafs-note">+900 species in CAFS database</span>
-</div>
-<p>Select tree species, planting densities and agroforestry configurations from the CAFS database — calibrated to your local context.</p>
-</article>
-
-<article>
-<span>03</span><h3>Financial and carbon projection</h3>
-<div class="ft-p6-ui-card">
-<div class="ft-p6-compare-wrap">
-<div class="ft-p6-compare-row">
-<span class="ft-p6-compare-lbl">Baseline</span>
-<div class="ft-p6-compare-track"><div class="ft-p6-compare-fill" style="width:17%"></div></div>
-<span class="ft-p6-compare-num">3.2 t</span>
-</div>
-<div class="ft-p6-compare-row">
-<span class="ft-p6-compare-lbl">Scenario</span>
-<div class="ft-p6-compare-track"><div class="ft-p6-compare-fill active" style="width:100%"></div></div>
-<span class="ft-p6-compare-num">18.7 t</span>
-</div>
-</div>
-</div>
-<p>Model costs, revenues, carbon accumulation and farmer income over time — side by side with the baseline for direct comparison.</p>
-</article>
-
-<article>
-<span>04</span><h3>Agroforestry system</h3>
-<div class="ft-p6-ui-card">
-<div class="ft-p6-kpi-mini-row">
-<div class="ft-p6-kpi-mini-card"><span class="ft-p6-kpi-mini-val">↑485%</span><span class="ft-p6-kpi-mini-lbl">Carbon</span></div>
-<div class="ft-p6-kpi-mini-card"><span class="ft-p6-kpi-mini-val">↑226%</span><span class="ft-p6-kpi-mini-lbl">Income</span></div>
-<div class="ft-p6-kpi-mini-card"><span class="ft-p6-kpi-mini-val">0.86</span><span class="ft-p6-kpi-mini-lbl">Biodiversity</span></div>
-</div>
-</div>
-<p>What the same plot can become after scenario planning — with measurable projections across carbon, income, water and biodiversity.</p>
-</article>
-
-</div>
 </div>
 </section><section class="section ft-home-only-section ft-p6-grid-bg" style="background-color:var(--cream)">
 <div class="container" style="text-align:center">
@@ -3541,62 +4072,8 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 </div>
 </div>
 </section>
-
-<!-- ── Platform in numbers credibility strip ─────────────────── -->
-<div class="ft-p6-numbers-section" id="platform-numbers">
-<div class="ft-p6-numbers-inner">
-<div class="ft-p6-number-item"><span class="ft-p6-number-val">200+</span><span class="ft-p6-number-lbl">Verified species in the CAFS database</span></div>
-<div class="ft-p6-number-item"><span class="ft-p6-number-val">50 yrs</span><span class="ft-p6-number-lbl">Long-term projection horizon</span></div>
-<div class="ft-p6-number-item"><span class="ft-p6-number-val">+10</span><span class="ft-p6-number-lbl">Impact KPIs per scenario</span></div>
-<div class="ft-p6-number-item"><span class="ft-p6-number-val">4</span><span class="ft-p6-number-lbl">Interconnected model domains</span></div>
-<div class="ft-p6-number-item"><span class="ft-p6-number-val">18+</span><span class="ft-p6-number-lbl">Countries with active projects</span></div>
-</div>
-</div>
-
-<!-- ── Data flow section ─────────────────────────────────────── -->
-<section class="ft-p6-flow-section" id="platform-flow">
-<div class="ft-p6-flow-wrap">
-<div style="text-align:center">
-<span class="ft-section-label">How the model connects</span>
-<h2 class="big-title" style="margin:16px 0 10px;font-size:clamp(28px,4vw,56px)">From site data to investor-ready projections</h2>
-<p class="lead ft-centered-lead">FarmTree connects six layers of information into a single, coherent science-based model — producing comparable projections that hold up to professional scrutiny.</p>
-</div>
-<div class="ft-p6-flow-grid">
-<div class="ft-p6-flow-node">
-<div class="ft-p6-flow-icon" title="Site information"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
-<h4>Site information</h4>
-<p>Location, land use, area and plot context</p>
-</div>
-<div class="ft-p6-flow-node">
-<div class="ft-p6-flow-icon" title="Climate data"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg></div>
-<h4>Climate data</h4>
-<p>Temperature, rainfall, humidity and seasonality</p>
-</div>
-<div class="ft-p6-flow-node">
-<div class="ft-p6-flow-icon" title="Soil data"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-<h4>Soil &amp; terrain</h4>
-<p>Soil type, nutrients, water retention and slope</p>
-</div>
-<div class="ft-p6-flow-node">
-<div class="ft-p6-flow-icon" title="Species database"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V12M12 12C12 12 8 8 5 8M12 12C12 12 16 8 19 8M12 12V2"/><path d="M7 18c2-2 4-3 5-6M17 18c-2-2-4-3-5-6"/></svg></div>
-<h4>Species assumptions</h4>
-<p>200+ calibrated species from the CAFS database</p>
-</div>
-<div class="ft-p6-flow-node">
-<div class="ft-p6-flow-icon" title="Scenario modelling"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-<h4>Scenario modelling</h4>
-<p>Baseline vs agroforestry, projected over 50 years</p>
-</div>
-<div class="ft-p6-flow-node">
-<div class="ft-p6-flow-icon" title="Impact reporting" style="color:white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-<h4>Impact reporting</h4>
-<p>Investor-ready outputs aligned with Verra, CSRD</p>
-</div>
-</div>
-</div>
-</section>
-
-<section class="ft-workflow-section" id="workflow"><div class="ft-workflow-inner"><div class="ft-workflow-head"><span class="ft-workflow-kicker">How FarmTree Works</span><h2 class="ft-workflow-title">Four commercial workflow steps</h2></div><div class="ft-workflow-four"><article><span>01</span><h3>Make an investment plan</h3><p>Turn project context, species assumptions and local data into credible farm plans and investment cases.</p></article><article><span>02</span><h3>Invest and implement</h3><p>Use the plan to support decision-making, field implementation and conversations with farmers or partners.</p></article><article><span>03</span><h3>Review performance</h3><p>Compare projected and observed performance across farmer value, production, carbon, water and economics.</p></article><article><span>04</span><h3>Generate impact report</h3><p>Translate project results into clear reporting for investors, donors, MRV partners and programme teams.</p></article></div></div></section><section class="ft-commercial-section" id="frank-phase-journey"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Project journey</span><h2>From project ideas to scaled agroforestry reporting</h2><p>FarmTree's three-phase approach moves teams from initial scenario design through to independent platform operation and scaled agroforestry reporting.</p></div><div class="ft-phase-grid"><article class="ft-phase-card"><div class="ft-phase-no">01 / UNDERSTAND &amp; DESIGN</div><h3>FarmTree turns project ideas into fundable scenarios.</h3><ul><li>Design credible farm plans and investment cases.</li><li>De-risk project choices before committing field resources.</li><li>Generate in hours what normally takes consultants months.</li></ul><div class="ft-case-mini">Case example: GIZ / Madagascar</div><button data-page="services">Learn more about this phase ↗</button></article><article class="ft-phase-card"><div class="ft-phase-no">02 / CAPTURE &amp; LEARN</div><h3>Project staff learn how field realities get turned into investment plans.</h3><ul><li>Operate the platform with FarmTree support.</li><li>Calibrate models with local species data, prices and growing conditions.</li><li>Translate field data into carbon and farmer value scenarios.</li></ul><div class="ft-case-mini">Case example: ACORN / Rabobank</div><button data-page="services">Learn more about this phase ↗</button></article><article class="ft-phase-card"><div class="ft-phase-no">03 / OPERATE &amp; SCALE</div><h3>Project staff scale agroforestry investments and report to investors and partners.</h3><ul><li>Manage projections and monitoring across projects and countries.</li><li>Use consistent science-backed metrics.</li><li>Report clearly to investors, donors and implementation partners.</li></ul><div class="ft-case-mini">Case example: Beyond Beans</div><button data-page="services">Learn more about this phase ↗</button></article></div><div class="ft-proof-metrics ft-counter-row"><div class="ft-proof-metric ft-counter-card" data-suffix=" yrs" data-target="50"><strong>50 yrs</strong><span>long-term scenario planning horizon</span></div><div class="ft-proof-metric ft-counter-card" data-suffix="" data-target="4"><strong>4</strong><span>proof story themes prepared</span></div><div class="ft-proof-metric ft-counter-card" data-suffix="" data-target="3"><strong>3</strong><span>project phases clarified for buyers</span></div><div class="ft-proof-metric ft-static-card"><strong>MRV</strong><span>reporting and monitoring narrative</span></div></div></div></section><section class="ft-commercial-section alt" id="target-groups"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Use cases</span><h2>How different organisations use FarmTree</h2><p>Each audience gets a direct path to the value FarmTree can create for their planning, investment or reporting work.</p></div><div class="ft-target-grid"><article><img src="assets/case-giz_opt.webp"/><h3>Investors &amp; climate finance organisations</h3><p>De-risk your agroforestry portfolio with credible projections and long-term farmer return scenarios.</p><button data-page="investors">Learn more ↗</button></article><article><img src="assets/embedded_016_opt.webp"/><h3>Project developers &amp; programme officers</h3><p>Design, implement and scale agroforestry projects with clearer investment plans and reporting logic.</p><button data-page="ngos">Learn more ↗</button></article><article><img src="assets/embedded_017.jpg"/><h3>Field experts &amp; scientists</h3><p>Access calibrated, science-backed modelling tools for local species, soils, climate and project context.</p><button data-page="platform">Learn more ↗</button></article><article><img src="assets/embedded_015.jpg"/><h3>Farmers &amp; farmer organisations</h3><p>Understand the value of land under different agroforestry scenarios and compare costs, benefits and risks.</p><button data-page="services">Learn more ↗</button></article><article><img src="assets/case-water_opt.webp"/><h3>MRV platforms &amp; data providers</h3><p>Connect monitoring data with credible impact projections for carbon, water, productivity and farmer value.</p><button data-page="dfi">Learn more ↗</button></article></div></div></section><section class="ft-news-section" id="news-carousel">
+<section class="ft-commercial-section" id="frank-partners"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">References</span><h2>Trusted by leading agroforestry and climate organisations.</h2><p>Organisations that have worked with FarmTree across Africa, Asia and Latin America on planning, carbon finance, cocoa landscape and water resilience projects.</p></div><div class="ft-partner-strip"><div class="ft-partner-track"><button class="ft-partner-logo" data-page="case-giz"><img alt="GIZ logo" src="assets/embedded_055.png"/></button><button class="ft-partner-logo" data-page="case-acorn"><img alt="Rabobank logo" src="assets/embedded_058.png"/></button><button class="ft-partner-logo" data-page="track"><img alt="CGIAR logo" src="assets/embedded_057.png"/></button><button class="ft-partner-logo" data-page="track"><img alt="FAO logo" src="assets/embedded_059.png"/></button><button class="ft-partner-logo" data-page="track"><img alt="CATIE logo" src="assets/embedded_060.png"/></button><button class="ft-partner-logo" data-page="track"><img alt="Helvetas logo" src="assets/embedded_056.png"/></button></div></div></div></section>
+<section class="ft-workflow-section" id="workflow"><div class="ft-workflow-inner"><div class="ft-workflow-head"><span class="ft-workflow-kicker">How FarmTree Works</span><h2 class="ft-workflow-title">Four commercial workflow steps</h2></div><div class="ft-workflow-four"><article><span>01</span><h3>Make an investment plan</h3><p>Turn project context, species assumptions and local data into credible farm plans and investment cases.</p></article><article><span>02</span><h3>Invest and implement</h3><p>Use the plan to support decision-making, field implementation and conversations with farmers or partners.</p></article><article><span>03</span><h3>Review performance</h3><p>Compare projected and observed performance across farmer value, production, carbon, water and economics.</p></article><article><span>04</span><h3>Generate impact report</h3><p>Translate project results into clear reporting for investors, donors, MRV partners and programme teams.</p></article></div></div></section><section class="ft-commercial-section alt" id="target-groups"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Use cases</span><h2>How different organisations use FarmTree</h2><p>Each audience gets a direct path to the value FarmTree can create for their planning, investment or reporting work.</p></div><div class="ft-target-grid"><article><img src="assets/case-giz_opt.webp"/><h3>Investors &amp; climate finance organisations</h3><p>De-risk your agroforestry portfolio with credible projections and long-term farmer return scenarios.</p><button data-page="investors">Learn more ↗</button></article><article><img src="assets/embedded_016_opt.webp"/><h3>Project developers &amp; programme officers</h3><p>Design, implement and scale agroforestry projects with clearer investment plans and reporting logic.</p><button data-page="ngos">Learn more ↗</button></article><article><img src="assets/embedded_017.jpg"/><h3>Field experts &amp; scientists</h3><p>Access calibrated, science-backed modelling tools for local species, soils, climate and project context.</p><button data-page="platform">Learn more ↗</button></article><article><img src="assets/embedded_015.jpg"/><h3>Farmers &amp; farmer organisations</h3><p>Understand the value of land under different agroforestry scenarios and compare costs, benefits and risks.</p><button data-page="services">Learn more ↗</button></article><article><img src="assets/case-water_opt.webp"/><h3>MRV platforms &amp; data providers</h3><p>Connect monitoring data with credible impact projections for carbon, water, productivity and farmer value.</p><button data-page="dfi">Learn more ↗</button></article></div></div></section><section class="ft-news-section" id="news-carousel">
 <div class="ft-commercial-wrap">
 <div class="ft-commercial-head center"><span class="ft-section-label">Latest updates</span><h2>News and insights from FarmTree</h2><p>Fresh resources for returning visitors, project teams and climate finance partners.</p></div>
 <div class="ft-news-grid">
@@ -3605,7 +4082,34 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 <article class="ft-news-card"><span>Project story</span><h3>From programme design to impact reporting</h3><p>Selected proof stories from partners using FarmTree for carbon, finance, cocoa and water resilience work.</p><button data-page="track">Read more ↗</button></article>
 </div>
 </div>
-</section><section class="ft-commercial-section" id="frank-partners"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">References</span><h2>Trusted by leading agroforestry and climate organisations.</h2><p>Organisations that have worked with FarmTree across Africa, Asia and Latin America on planning, carbon finance, cocoa landscape and water resilience projects.</p></div><div class="ft-partner-strip"><div class="ft-partner-track"><button class="ft-partner-logo" data-page="case-giz"><img alt="GIZ logo" src="assets/embedded_055.png"/></button><button class="ft-partner-logo" data-page="case-acorn"><img alt="Rabobank logo" src="assets/embedded_058.png"/></button><button class="ft-partner-logo" data-page="track"><img alt="CGIAR logo" src="assets/embedded_057.png"/></button><button class="ft-partner-logo" data-page="track"><img alt="FAO logo" src="assets/embedded_059.png"/></button><button class="ft-partner-logo" data-page="track"><img alt="CATIE logo" src="assets/embedded_060.png"/></button><button class="ft-partner-logo" data-page="track"><img alt="Helvetas logo" src="assets/embedded_056.png"/></button></div></div></div></section><section class="ft-commercial-section" id="case-study-cards"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Case studies</span><h2>Projects that show what FarmTree makes possible</h2><p>Four real programmes where FarmTree's science-based modelling helped teams plan, invest and report on agroforestry at scale.</p></div><div class="ft-case-grid"><article><img src="assets/case-giz_opt.webp"/><span>Preparation</span><h3>GIZ / Madagascar programme planning</h3><p>FarmTree supported GIZ programme planning in Madagascar — translating project context and species assumptions into credible investment scenarios for stakeholder alignment.</p><button data-page="case-giz">Read more ↗</button></article><article><img src="assets/case-acorn_opt.webp"/><span>Implementation</span><h3>ACORN / Rabobank carbon planning</h3><p>FarmTree translated Rabobank ACORN field data into carbon projections and farmer value scenarios across smallholder programmes in Africa, Asia and Latin America.</p><button data-page="case-acorn">Read more ↗</button></article><article><img src="assets/case-cocoa_opt.webp"/><span>Scaling</span><h3>Beyond Beans cocoa landscape planning</h3><p>FarmTree modelled shade-tree density, species mix and long-term carbon insetting for Beyond Beans — turning cocoa landscape complexity into clear, comparable scenarios.</p><button data-page="case-cocoa">Read more ↗</button></article><article><img src="assets/case-water_opt.webp"/><span>Monitoring</span><h3>LOSO Nyando / water resilience</h3><p>FarmTree modelled water resilience, carbon stocks and farmer value outcomes for the LOSO Nyando landscape programme in western Kenya, supporting long-term investment planning.</p><button data-page="case-nyando">Read more ↗</button></article></div></div></section><section class="ft-commercial-section alt" id="proof-stories"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Proof stories</span><h2>Four themes where FarmTree makes agroforestry investment legible</h2><p>Real project experience across programme planning, carbon finance, cocoa landscapes and water resilience — each theme links to the full Track Record.</p></div><div class="ft-proof-theme-grid"><article><h3>Programme investment planning</h3><p>Combining carbon projections with farmer income analysis to build a programme-level investment case for the LOSO Nyando landscape in western Kenya.</p><button data-page="track">Track Record ↗</button></article><article><h3>Carbon and farmer value modelling</h3><p>Translating ACORN field data into credible carbon plans and long-term farmer value scenarios across smallholder agroforestry programmes in multiple countries.</p><button data-page="track">Track Record ↗</button></article><article><h3>Cacao landscape scenario planning</h3><p>Beyond Beans + Cacao de Bosque: comparing shade-tree systems, carbon potential and farmer economics to shape landscape-level cocoa investment decisions.</p><button data-page="track">Track Record ↗</button></article><article><h3>Water and landscape resilience monitoring</h3><p>Connecting water balance modelling, erosion risk and ecosystem service projections to support landscape investment decisions with measurable water resilience outcomes.</p><button data-page="track">Track Record ↗</button></article></div></div></section><section class="ft-testimonials-section" id="testimonials"><div class="ft-testimonials-orb"><span>SAN</span><span>TS</span><span>HRNS</span><span>WVA</span><span>NECT</span></div><div class="ft-testimonials-head"><div class="kicker">Testimonials</div><h2>What partners say about FarmTree</h2><p>Organisations that have worked with FarmTree across Africa, Asia and Latin America on planning, investment and reporting.</p></div><div class="ft-testimonial-marquee"><div class="ft-testimonial-track"><article class="ft-testimonial-card"><div class="ft-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><p>“The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.”</p><div class="ft-testimonial-person"><div class="ft-avatar">MM</div><div><strong>Mona McCord</strong><small>SAN</small></div></div></article><article class="ft-testimonial-card"><div class="ft-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><p>“FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue, they do everything!”</p><div class="ft-testimonial-person"><div class="ft-avatar">MdB</div><div><strong>Mathijs de Bruin</strong><small>TreeScape</small></div></div></article><article class="ft-testimonial-card"><div class="ft-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><p>“FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do.”</p><div class="ft-testimonial-person"><div class="ft-avatar">KL</div><div><strong>Katharina Lima de Miranda</strong><small>HRNS</small></div></div></article><article class="ft-testimonial-card"><div class="ft-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><p>“We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios!”</p><div class="ft-testimonial-person"><div class="ft-avatar">RK</div><div><strong>Rob Kelly</strong><small>World Vision Australia</small></div></div></article><article class="ft-testimonial-card"><div class="ft-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><p>“We found the FarmTree Tool essential for predicting outcomes of highly complex farm scenarios, among many, also agroforestry systems.”</p><div class="ft-testimonial-person"><div class="ft-avatar">LM</div><div><strong>Lorenzo Mento</strong><small>Nectaerra</small></div></div></article></div></div></section><section class="ft-commercial-section" id="frank-usecases-pricing"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">How to engage</span><h2>Who uses FarmTree and how</h2><p>FarmTree serves different roles in the agroforestry investment chain. Each path leads to a clearer conversation about scope, workflow and the right level of support.</p></div><div class="ft-buyer-grid"><article><h3>Investors</h3><p>De-risk agroforestry portfolios before capital is committed.</p><button data-page="investors">Investor path ↗</button></article><article><h3>DFIs and donors</h3><p>Plan and report programme-level climate and livelihood value.</p><button data-page="dfi">DFI path ↗</button></article><article><h3>NGOs and implementers</h3><p>Support field teams with clearer planning and reporting workflows.</p><button data-page="ngos">NGO path ↗</button></article></div><div class="ft-pricing-model"><h3>Talk to us about scope</h3><p>FarmTree pricing is built around the scope of your project — one base engagement with optional add-ons for training, field visits, additional countries, submission volumes and API access.</p><button data-page="pricing">View pricing structure ↗</button></div></div></section><section class="ft-partner-statements" id="partner-statements"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Partner perspectives</span><h2>What organisations say about working with FarmTree</h2><p>Selected perspectives from partners across the agroforestry investment and implementation chain.</p></div><div class="ft-statement-grid"><article><h3>Science that travels well</h3><p>"FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything."</p><p style="margin-top:14px;font-weight:700;font-size:14px">Mathijs de Bruin — TreeScape</p></article><article><h3>Depth where it matters</h3><p>"FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do — and how to communicate that to partners."</p><p style="margin-top:14px;font-weight:700;font-size:14px">Katharina Lima de Miranda — HRNS</p></article><article><h3>Local scenarios, fast</h3><p>"We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios quickly and confidently."</p><p style="margin-top:14px;font-weight:700;font-size:14px">Rob Kelly — World Vision Australia</p></article></div></div></section><section class="ft-faq-section" id="faq"><div class="ft-faq-wrap"><div class="ft-faq-head"><span class="ft-section-label">FAQ</span><h2>Questions about agroforestry modelling? We’re here to help.</h2><p>Common questions about agroforestry modelling, the FarmTree Platform and how to get started. Can't find what you need? Contact us directly.</p><button class="ft-faq-main-button" type="button" id="ftFaqToggleBtn">Browse all questions</button></div><div class="ft-faq-grid"><article><h3>What does FarmTree model?</h3><p>FarmTree models production, carbon, hydrology, soil fertility, labour, economics and other impact indicators.</p></article><article><h3>Can FarmTree support investment planning?</h3><p>Yes. It helps turn project ideas and local assumptions into credible scenarios and investment cases.</p></article><article><h3>How far ahead can FarmTree project?</h3><p>FarmTree can support 50-year projections for planning, investment cases and monitoring.</p></article><article><h3>Can local teams use the platform?</h3><p>Yes. Project staff can learn to prepare plans and show options without relying fully on external consultants.</p></article><article><h3>How do we request a quote?</h3><p>Use the "Request a demo" or "Ask for a quotation" button anywhere on the site. The FarmTree team will follow up to discuss your scope, context and the right level of support.</p></article></div></div></section><section class="section ft-final-cta-feedback"><div class="container" style="text-align:center"><div class="kicker">Next step</div><h2 class="big-title">Join us in growing better agroforestry decisions.</h2><p class="lead ft-centered-lead">Request a demo or ask for a quotation so FarmTree can understand your scope, context and reporting needs.</p><div class="ft-final-cta-row"><button class="cta-link" data-page="request">Request a demo</button><button class="cta-link secondary" data-page="request">Ask for a quotation</button></div></div></section><section class="page" id="page-platform">
+</section><section class="ft-commercial-section" id="case-study-cards"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Case studies</span><h2>Projects that show what FarmTree makes possible</h2><p>Four real programmes where FarmTree's science-based modelling helped teams plan, invest and report on agroforestry at scale.</p></div><div class="ft-case-grid"><article><img src="assets/case-giz_opt.webp"/><span>Preparation</span><h3>GIZ / Madagascar programme planning</h3><p>FarmTree supported GIZ programme planning in Madagascar — translating project context and species assumptions into credible investment scenarios for stakeholder alignment.</p><button data-page="case-giz">Read more ↗</button></article><article><img src="assets/case-acorn_opt.webp"/><span>Implementation</span><h3>ACORN / Rabobank carbon planning</h3><p>FarmTree translated Rabobank ACORN field data into carbon projections and farmer value scenarios across smallholder programmes in Africa, Asia and Latin America.</p><button data-page="case-acorn">Read more ↗</button></article><article><img src="assets/case-cocoa_opt.webp"/><span>Scaling</span><h3>Beyond Beans cocoa landscape planning</h3><p>FarmTree modelled shade-tree density, species mix and long-term carbon insetting for Beyond Beans — turning cocoa landscape complexity into clear, comparable scenarios.</p><button data-page="case-cocoa">Read more ↗</button></article><article><img src="assets/case-water_opt.webp"/><span>Monitoring</span><h3>LOSO Nyando / water resilience</h3><p>FarmTree modelled water resilience, carbon stocks and farmer value outcomes for the LOSO Nyando landscape programme in western Kenya, supporting long-term investment planning.</p><button data-page="case-nyando">Read more ↗</button></article></div></div></section><section class="ft-commercial-section alt" id="proof-stories"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Proof stories</span><h2>Four themes where FarmTree makes agroforestry investment legible</h2><p>Real project experience across programme planning, carbon finance, cocoa landscapes and water resilience — each theme links to the full Track Record.</p></div><div class="ft-proof-theme-grid"><article><h3>Programme investment planning</h3><p>Combining carbon projections with farmer income analysis to build a programme-level investment case for the LOSO Nyando landscape in western Kenya.</p><button data-page="track">Track Record ↗</button></article><article><h3>Carbon and farmer value modelling</h3><p>Translating ACORN field data into credible carbon plans and long-term farmer value scenarios across smallholder agroforestry programmes in multiple countries.</p><button data-page="track">Track Record ↗</button></article><article><h3>Cacao landscape scenario planning</h3><p>Beyond Beans + Cacao de Bosque: comparing shade-tree systems, carbon potential and farmer economics to shape landscape-level cocoa investment decisions.</p><button data-page="track">Track Record ↗</button></article><article><h3>Water and landscape resilience monitoring</h3><p>Connecting water balance modelling, erosion risk and ecosystem service projections to support landscape investment decisions with measurable water resilience outcomes.</p><button data-page="track">Track Record ↗</button></article></div></div></section><section class="ft-testimonials-section" id="testimonials"><div class="ft-testimonials-orb"><span>SAN</span><span>TS</span><span>HRNS</span><span>WVA</span><span>NECT</span></div><div class="ft-testimonials-head"><div class="kicker">Testimonials</div><h2>What partners say about FarmTree</h2><p>Organisations that have worked with FarmTree across Africa, Asia and Latin America on planning, investment and reporting.</p></div><div class="ft-testimonial-marquee"><div class="ft-testimonial-track"><article class="ft-testimonial-card"><div class="ft-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><p>“The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.”</p><div class="ft-testimonial-person"><div class="ft-avatar">MM</div><div><strong>Mona McCord</strong><small>SAN</small></div></div></article><article class="ft-testimonial-card"><div class="ft-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><p>“FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue, they do everything!”</p><div class="ft-testimonial-person"><div class="ft-avatar">MdB</div><div><strong>Mathijs de Bruin</strong><small>TreeScape</small></div></div></article><article class="ft-testimonial-card"><div class="ft-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><p>“FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do.”</p><div class="ft-testimonial-person"><div class="ft-avatar">KL</div><div><strong>Katharina Lima de Miranda</strong><small>HRNS</small></div></div></article><article class="ft-testimonial-card"><div class="ft-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><p>“We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios!”</p><div class="ft-testimonial-person"><div class="ft-avatar">RK</div><div><strong>Rob Kelly</strong><small>World Vision Australia</small></div></div></article><article class="ft-testimonial-card"><div class="ft-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><p>“We found the FarmTree Tool essential for predicting outcomes of highly complex farm scenarios, among many, also agroforestry systems.”</p><div class="ft-testimonial-person"><div class="ft-avatar">LM</div><div><strong>Lorenzo Mento</strong><small>Nectaerra</small></div></div></article></div></div></section><section class="ft-commercial-section ft-segments-section" id="frank-usecases-pricing">
+<div class="ft-commercial-wrap">
+<div class="ft-commercial-head center">
+<span class="ft-section-label">Customer segments</span>
+<h2>Who FarmTree works with</h2>
+<p>FarmTree serves a wide range of organisations across the agroforestry investment chain — from advisors and project developers to governments and large corporates.</p>
+</div>
+<div class="ft-seg-carousel-wrap">
+<button class="ft-seg-arrow ft-seg-prev" id="ftSegPrev" aria-label="Previous segments">&#8249;</button>
+<div class="ft-seg-viewport" id="ftSegViewport">
+<div class="ft-seg-track" id="ftSegTrack">
+<article class="ft-seg-card"><div class="ft-seg-num">01</div><h3>Consultancy &amp; Agroforestry Advisors</h3><p>Add science-backed modelling to your advisory toolkit and deliver credible projections to clients.</p></article>
+<article class="ft-seg-card"><div class="ft-seg-num">02</div><h3>Development Banks &amp; Donor Organisations</h3><p>Build the evidence base for programme investment decisions across agroforestry portfolios.</p></article>
+<article class="ft-seg-card"><div class="ft-seg-num">03</div><h3>NGOs &amp; Conservation Organisations</h3><p>Plan, implement and report on agroforestry impact at scale for funders and implementation partners.</p></article>
+<article class="ft-seg-card"><div class="ft-seg-num">04</div><h3>NbS &amp; Carbon Project Developers</h3><p>Create credible carbon projections and investment cases aligned with Verra and Gold Standard.</p></article>
+<article class="ft-seg-card"><div class="ft-seg-num">05</div><h3>MRV &amp; ESG Platforms</h3><p>Connect field monitoring data to investor-grade impact reporting across multiple projects.</p></article>
+<article class="ft-seg-card"><div class="ft-seg-num">06</div><h3>Government &amp; Parastatals</h3><p>Coordinate agroforestry policy and landscape programmes with measurable, science-backed outcomes.</p></article>
+<article class="ft-seg-card"><div class="ft-seg-num">07</div><h3>Industry Associations &amp; MSPs</h3><p>Support landscape-scale agroforestry adoption with shared metrics and investment frameworks.</p></article>
+<article class="ft-seg-card"><div class="ft-seg-num">08</div><h3>Large Agri-Corporates</h3><p>Integrate agroforestry into supply chain sustainability targets with comparable, auditable data.</p></article>
+<article class="ft-seg-card"><div class="ft-seg-num">09</div><h3>Social Enterprise</h3><p>Combine farmer income projections and environmental outcomes in a single investment model.</p></article>
+<article class="ft-seg-card"><div class="ft-seg-num">10</div><h3>Implementation Organisations</h3><p>Turn field operations and local expertise into fundable agroforestry investment cases.</p></article>
+</div>
+</div>
+<button class="ft-seg-arrow ft-seg-next" id="ftSegNext" aria-label="Next segments">&#8250;</button>
+</div>
+<div class="ft-seg-dots" id="ftSegDots"></div>
+</div>
+</section><section class="ft-partner-statements" id="partner-statements"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Partner perspectives</span><h2>What organisations say about working with FarmTree</h2><p>Selected perspectives from partners across the agroforestry investment and implementation chain.</p></div><div class="ft-statement-grid"><article><h3>Science that travels well</h3><p>"FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything."</p><p style="margin-top:14px;font-weight:700;font-size:14px">Mathijs de Bruin — TreeScape</p></article><article><h3>Depth where it matters</h3><p>"FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do — and how to communicate that to partners."</p><p style="margin-top:14px;font-weight:700;font-size:14px">Katharina Lima de Miranda — HRNS</p></article><article><h3>Local scenarios, fast</h3><p>"We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios quickly and confidently."</p><p style="margin-top:14px;font-weight:700;font-size:14px">Rob Kelly — World Vision Australia</p></article></div></div></section><section class="ft-faq-section" id="faq"><div class="ft-faq-wrap"><div class="ft-faq-head"><span class="ft-section-label">FAQ</span><h2>Questions about agroforestry modelling?</h2><p>Common questions about FarmTree, the platform, and how to get started. Can’t find what you need? Contact us directly.</p></div><div class="ft-faq-grid" id="ftFaqAccordion"><article class="ft-open"><div class="ft-faq-q"><h3>What does FarmTree model?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree models production, carbon, hydrology, soil fertility, labour, economics and other impact indicators — covering 10+ KPIs across a single, interconnected science-based model.</div></div></article><article><div class="ft-faq-q"><h3>Can FarmTree support investment planning?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Yes. FarmTree helps turn project ideas, species assumptions and local data into credible scenarios and investment cases — with outputs that hold up to professional and funder scrutiny.</div></div></article><article><div class="ft-faq-q"><h3>How far ahead can FarmTree project?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree supports 50-year projections for long-term planning, investment cases and project monitoring — aligned with standard agroforestry project lifecycles.</div></div></article><article><div class="ft-faq-q"><h3>Can local project teams use the platform?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Yes. Project staff can learn, in a short time, to prepare agroforestry plans and show farmers different options — reducing dependence on external consultants over time.</div></div></article><article><div class="ft-faq-q"><h3>How do we request a demo or quotation?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Use the "Request a demo" or "Ask for a quotation" button anywhere on the site. The FarmTree team will follow up to discuss your scope, project context, and the right level of support.</div></div></article><article><div class="ft-faq-q"><h3>Which standards does FarmTree align with?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree’s carbon outputs are aligned with Verra VCS and Gold Standard methodologies. For broader ESG and climate reporting, outputs can be structured to support CSRD and MRV frameworks.</div></div></article></div></div></section><section class="section ft-final-cta-feedback"><div class="container" style="text-align:center"><span class="ft-final-cta-tagline">Make agroforestry measurable, investable and scalable.</span><h2 class="big-title">Ready to build a stronger agroforestry investment case?</h2><p class="lead ft-centered-lead">Request a demo or ask for a quotation. FarmTree will work with you to understand your scope, project context and reporting needs.</p><div class="ft-final-cta-row"><button class="cta-link" data-page="request">Request a demo</button><button class="cta-link secondary" data-page="request">Ask for a quotation</button></div></div></section><section class="page" id="page-platform">
 <div class="subhero"><img alt="Planning agroforestry scenarios with stakeholders" src="assets/embedded_025_opt.webp"/><div class="container"><div class="kicker">FarmTree Platform</div><h1>A software model and online interface for agroforestry scenarios</h1><p class="lead" style="color:white;max-width:720px">Design agroforestry scenarios and project carbon, financial and environmental indicators for up to 50 years.</p></div></div>
 <section class="section"><div class="container"><div class="overlap"><div class="overlap-img"><img alt="Field data for agroforestry modelling" src="assets/embedded_026_opt.webp"/></div><div class="overlap-card"><div class="kicker">Model methodology</div><h2 class="mid-title">Carbon, Production &amp; Finance, Environment and Landscape Tool</h2><p class="lead">The FarmTree model is composed of interconnected sub models simulating soil, nutrients, water, plant growth, production, carbon, labour and finance.</p></div></div><div class="cards"><div class="card"><h3>Carbon</h3><p>Biomass accumulation, carbon stock, Carbon Removal Units and carbon revenue by species.</p></div><div class="card"><h3>Production &amp; Finance</h3><p>Yields, production costs, revenues, cash flows, profitability and labour needs.</p></div><div class="card"><h3>Environment</h3><p>Water balance, soil organic matter, nutrient flows, erosion and biodiversity.</p></div><div class="card"><h3>Landscape Tool</h3><p>Compare multiple project areas and portfolio wide performance.</p></div></div></div></section>
 </section>
@@ -3692,6 +4196,9 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 <div class="ft-tr-region-card"><strong>Latin America</strong><span>Colombia, Brazil and broader Latin American supply chain programmes — cocoa, coffee and mixed agroforestry systems with carbon and farmer value focus.</span></div>
 </div>
 </div></section>
+
+<!-- Project Journey (relocated from Home, placed below Geographic coverage) -->
+<section class="ft-commercial-section" id="frank-phase-journey"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Project journey</span><h2>From project ideas to scaled agroforestry reporting</h2><p>FarmTree's three-phase approach moves teams from initial scenario design through to independent platform operation and scaled agroforestry reporting.</p></div><div class="ft-phase-grid"><article class="ft-phase-card"><div class="ft-phase-no">01 / UNDERSTAND &amp; DESIGN</div><h3>FarmTree turns project ideas into fundable scenarios.</h3><ul><li>Design credible farm plans and investment cases.</li><li>De-risk project choices before committing field resources.</li><li>Generate in hours what normally takes consultants months.</li></ul><div class="ft-case-mini">Case example: GIZ / Madagascar</div><button data-page="services">Learn more about this phase ↗</button></article><article class="ft-phase-card"><div class="ft-phase-no">02 / CAPTURE &amp; LEARN</div><h3>Project staff learn how field realities get turned into investment plans.</h3><ul><li>Operate the platform with FarmTree support.</li><li>Calibrate models with local species data, prices and growing conditions.</li><li>Translate field data into carbon and farmer value scenarios.</li></ul><div class="ft-case-mini">Case example: ACORN / Rabobank</div><button data-page="services">Learn more about this phase ↗</button></article><article class="ft-phase-card"><div class="ft-phase-no">03 / OPERATE &amp; SCALE</div><h3>Project staff scale agroforestry investments and report to investors and partners.</h3><ul><li>Manage projections and monitoring across projects and countries.</li><li>Use consistent science-backed metrics.</li><li>Report clearly to investors, donors and implementation partners.</li></ul><div class="ft-case-mini">Case example: Beyond Beans</div><button data-page="services">Learn more about this phase ↗</button></article></div><div class="ft-proof-metrics ft-counter-row"><div class="ft-proof-metric ft-counter-card" data-suffix=" yrs" data-target="50"><strong>50 yrs</strong><span>long-term scenario planning horizon</span></div><div class="ft-proof-metric ft-counter-card" data-suffix="" data-target="4"><strong>4</strong><span>proof story themes prepared</span></div><div class="ft-proof-metric ft-counter-card" data-suffix="" data-target="3"><strong>3</strong><span>project phases clarified for buyers</span></div><div class="ft-proof-metric ft-static-card"><strong>MRV</strong><span>reporting and monitoring narrative</span></div></div></div></section>
 
 <!-- 5. CTA -->
 <section class="ft-p5-section dark"><div class="ft-p5-wrap" style="text-align:center"><h2 class="ft-p5-h2">Want to discuss what FarmTree has done in your context?</h2><p class="ft-p5-lead" style="margin:0 auto 28px">Talk to the FarmTree team about relevant project experience, available case narratives and how our methods apply to your geography and crop system.</p><div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap"><button class="pill contact" type="button" data-ftmodal="request">Talk to the team</button><button class="ft-p5-hero-ghost" type="button" data-page="case-giz">Read a case study</button></div></div></section>
@@ -4190,7 +4697,7 @@ const dict = {
   }
 };
 const heroes = [
-  ['Agroforestry Planning', 'Plan and Report on Agroforestry Investments', 'Create credible projections for environmental impact, farmer value, and long-term investment decisions.', 'assets/case-giz_opt.webp', 'Agroforestry landscape planning — tree-based farming systems and landscape investment in Madagascar'],
+  ['Agroforestry Intelligence', 'Make agroforestry measurable, investable and scalable.', 'FarmTree helps organisations turn agroforestry complexity into clearer project intelligence for planning, reporting and investment decisions.', 'assets/case-giz_opt.webp', 'Agroforestry landscape planning — tree-based farming systems and landscape investment in Madagascar'],
   ['Science-Based Modelling', 'Turn Field Data into Investment Scenarios', 'Connect climate, soil, species, and project assumptions into clear science-backed projections.', 'assets/case-acorn_opt.webp', 'Science-based carbon and agroforestry modelling — ACORN Rabobank smallholder portfolio'],
   ['Project Teams', 'Support Local Teams with Clearer Planning Tools', 'Help project staff compare agroforestry options, understand trade-offs, and communicate value with confidence.', 'assets/embedded_027_opt.webp', 'Agroforestry field team training and support — local staff using FarmTree planning tools'],
   ['Impact Reporting', 'Report Carbon, Farmer Value and Long-Term Performance', 'Translate project results into clear reporting for investors, donors, MRV partners, and programme teams.', 'assets/case-water_opt.webp', 'Landscape investment reporting — LOSO Nyando water, carbon and farmer value programme']
@@ -4278,9 +4785,9 @@ function ftHeroGo(idx, manualClick) {
     }
   });
 
-  /* — Reset auto-rotation timer — */
+  /* — Auto-rotation DISABLED: hero advances only on user interaction (arrows/dots). — */
   clearInterval(ftHeroTimer);
-  ftHeroTimer = setInterval(function() { ftHeroGo(state.hero + 1, false); }, FT_HERO_DURATION);
+  ftHeroTimer = null;
 }
 
 /* Wire up prev/next arrows (still hidden but kept for keyboard extensibility) */
@@ -4796,6 +5303,27 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 })();
 </script>
+<script id="ft-faq-accordion-v4">
+(function(){
+  function initFaqV4(){
+    var acc = document.getElementById('ftFaqAccordion');
+    if(!acc) return;
+    acc.querySelectorAll('article').forEach(function(item){
+      if(item.dataset.faqV4) return;
+      item.dataset.faqV4 = '1';
+      var q = item.querySelector('.ft-faq-q');
+      if(!q) return;
+      q.addEventListener('click', function(){
+        var isOpen = item.classList.contains('ft-open');
+        acc.querySelectorAll('article').forEach(function(other){ other.classList.remove('ft-open'); });
+        if(!isOpen) item.classList.add('ft-open');
+      });
+    });
+  }
+  initFaqV4();
+  document.addEventListener('DOMContentLoaded', initFaqV4);
+})();
+</script>
 <script id="ft-workflow-script">
 (function(){
   function initWorkflow(){
@@ -4982,7 +5510,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const io=new IntersectionObserver(entries=>entries.forEach(en=>{ if(en.isIntersecting) animateCounter(en.target); }),{threshold:.35});
   counters.forEach(el=>io.observe(el));
   // Make hero slides use real project photos and keep layout clean without green blob.
-  const heroImgs=["assets/embedded_061.webp","assets/embedded_062.webp","assets/embedded_063.webp"];
+  const heroImgs=["assets/embedded_061.webp","assets/embedded_062.webp"];
   let heroIndex=0; const img=document.querySelector('.hero-img'); const dots=[...document.querySelectorAll('.hero-dot')];
   if(img){
     const setHero=(i)=>{heroIndex=(i+heroImgs.length)%heroImgs.length; img.src=heroImgs[heroIndex]; dots.forEach((d,k)=>d.classList.toggle('active',k===heroIndex));};
@@ -4990,6 +5518,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const next=document.getElementById('nextHero'), prev=document.getElementById('prevHero');
     if(next) next.addEventListener('click',()=>setHero(heroIndex+1)); if(prev) prev.addEventListener('click',()=>setHero(heroIndex-1));
     setHero(0);
+    /* Auto-advance DISABLED: hero changes only on user interaction (arrows/dots). */
   }
 })();
 </script>
@@ -10827,5 +11356,529 @@ document.addEventListener('click', function(e){
 
 })(); /* end ft-phase7-deploy-guard */
 </script>
+<script id="ft-seg-carousel-v5">
+(function(){
+  function initSegCarousel(){
+    var viewport = document.getElementById('ftSegViewport');
+    var track = document.getElementById('ftSegTrack');
+    var prevBtn = document.getElementById('ftSegPrev');
+    var nextBtn = document.getElementById('ftSegNext');
+    var dotsEl = document.getElementById('ftSegDots');
+    if(!track || !viewport || !prevBtn || !nextBtn) return;
+    var cards = track.querySelectorAll('.ft-seg-card');
+    if(!cards.length) return;
+    var current = 0;
+
+    function getVisibleCount(){
+      var vw = viewport.offsetWidth;
+      var cw = cards[0].offsetWidth + 20;
+      return Math.max(1, Math.round(vw / cw));
+    }
+
+    function getMaxIndex(){
+      return Math.max(0, cards.length - getVisibleCount());
+    }
+
+    function getCardStepPx(){
+      return cards[0].offsetWidth + 20;
+    }
+
+    function renderDots(){
+      dotsEl.innerHTML = '';
+      var max = getMaxIndex();
+      for(var i = 0; i <= max; i++){
+        var dot = document.createElement('button');
+        dot.className = 'ft-seg-dot' + (i === current ? ' active' : '');
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+        (function(idx){ dot.addEventListener('click', function(){ goTo(idx); }); })(i);
+        dotsEl.appendChild(dot);
+      }
+    }
+
+    function goTo(idx){
+      var max = getMaxIndex();
+      current = Math.min(Math.max(0, idx), max);
+      track.style.transform = 'translateX(-' + (current * getCardStepPx()) + 'px)';
+      dotsEl.querySelectorAll('.ft-seg-dot').forEach(function(d, i){ d.classList.toggle('active', i === current); });
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === max;
+    }
+
+    prevBtn.addEventListener('click', function(){ goTo(current - 1); });
+    nextBtn.addEventListener('click', function(){ goTo(current + 1); });
+
+    var startX = 0;
+    viewport.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive: true});
+    viewport.addEventListener('touchend', function(e){
+      var dx = e.changedTouches[0].clientX - startX;
+      if(Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+    });
+
+    renderDots();
+    goTo(0);
+
+    var resizeTimer;
+    window.addEventListener('resize', function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function(){ renderDots(); goTo(Math.min(current, getMaxIndex())); }, 120);
+    });
+  }
+
+  if(document.readyState !== 'loading') initSegCarousel();
+  else document.addEventListener('DOMContentLoaded', initSegCarousel);
+})();
+</script>
+<!-- =====================================================================
+     FarmTree Design System — FINAL scoped style block (pass 1)
+     Appended last so it wins ordering ties over earlier override blocks.
+     Scope of this pass: global tokens + Hero + About FarmTree only.
+     No structural, ID, data-page, router, carousel, FAQ or language change.
+     ===================================================================== -->
+<style id="ft-design-system-v1">
+/* ---- 1. Design tokens ------------------------------------------------ */
+:root{
+  /* Palette */
+  --fx-green:#1B4D2B;              /* deep green */
+  --fx-green-2:#2E6A35;
+  --fx-green-deep:#0E3D24;
+  --fx-cream:#F5F1E8;             /* ivory / cream */
+  --fx-cream-2:#FBF9F3;
+  --fx-gold:#C9A24B;              /* warm gold */
+  --fx-gold-soft:#D8BE86;
+  --fx-ink:#163126;
+  --fx-muted:#5C7067;
+  --fx-line:rgba(22,49,38,.10);
+
+  /* Soft shadows */
+  --fx-shadow-sm:0 2px 10px rgba(16,45,30,.06);
+  --fx-shadow-md:0 14px 40px rgba(16,45,30,.10);
+  --fx-shadow-lg:0 30px 80px rgba(16,45,30,.14);
+  --fx-shadow-hover:0 22px 60px rgba(16,45,30,.18);
+
+  /* Glass cards */
+  --fx-glass-bg:rgba(255,255,255,.66);
+  --fx-glass-border:1px solid rgba(255,255,255,.7);
+  --fx-glass-blur:saturate(1.15) blur(14px);
+  --fx-glass-dark-bg:rgba(255,255,255,.12);
+  --fx-glass-dark-border:1px solid rgba(255,255,255,.22);
+
+  /* Premium radius scale */
+  --fx-radius-sm:14px;
+  --fx-radius:20px;
+  --fx-radius-lg:28px;
+  --fx-radius-pill:999px;
+
+  /* Spacing scale */
+  --fx-space-1:4px;  --fx-space-2:8px;   --fx-space-3:12px; --fx-space-4:16px;
+  --fx-space-5:24px; --fx-space-6:32px;  --fx-space-7:48px; --fx-space-8:64px;
+  --fx-section-y:clamp(80px,9vw,132px);  /* vertical section rhythm */
+
+  /* Apple-style easing + duration */
+  --fx-ease:cubic-bezier(.22,.61,.36,1);
+  --fx-ease-smooth:cubic-bezier(.4,0,.2,1);
+  --fx-dur:.42s;
+}
+
+/* ---- 2. Hero polish -------------------------------------------------- */
+/* Readability scrim anchored to the bottom where the copy sits.
+   Sits below .hero-content (z-index:2) so text stays crisp. */
+.hero::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to top,
+    rgba(8,30,20,.74) 0%,
+    rgba(8,30,20,.30) 40%,
+    rgba(8,30,20,0) 70%);
+}
+.hero-img{opacity:.92;transition:opacity var(--fx-dur) var(--fx-ease),transform 1.2s var(--fx-ease);}
+
+.hero-content{width:min(1180px,88vw);}
+.hero .kicker,#heroKicker{
+  color:var(--fx-gold-soft);letter-spacing:.2em;
+  text-shadow:0 1px 20px rgba(0,0,0,.35);
+}
+.hero h1,#heroTitle{
+  text-shadow:0 2px 34px rgba(0,0,0,.30);
+  text-wrap:balance;
+}
+.hero p,#heroText{
+  max-width:640px;color:rgba(255,255,255,.94);
+  text-align:left;text-shadow:0 1px 18px rgba(0,0,0,.30);
+}
+
+/* CTA buttons — Apple-smooth hover */
+.ft-hero-cta-row .cta-link{
+  padding:14px 26px;letter-spacing:.01em;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  transition:transform var(--fx-dur) var(--fx-ease),
+             background var(--fx-dur) var(--fx-ease),
+             box-shadow var(--fx-dur) var(--fx-ease),
+             border-color var(--fx-dur) var(--fx-ease);
+  will-change:transform;
+}
+.ft-hero-cta-row .cta-link:not(.secondary){
+  background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.55);
+}
+.ft-hero-cta-row .cta-link:not(.secondary):hover{
+  background:rgba(255,255,255,.24);border-color:rgba(255,255,255,.9);
+  transform:translateY(-2px);box-shadow:0 16px 34px rgba(0,0,0,.28);
+}
+.ft-hero-cta-row .cta-link.secondary{
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+}
+.ft-hero-cta-row .cta-link.secondary:hover{
+  transform:translateY(-2px);box-shadow:0 18px 40px rgba(0,0,0,.26);
+}
+
+/* Future-service glass card */
+.ft-free-plan-card{
+  border-radius:var(--fx-radius-lg);box-shadow:0 12px 40px rgba(0,0,0,.22);
+  transition:transform var(--fx-dur) var(--fx-ease),box-shadow var(--fx-dur) var(--fx-ease),border-color var(--fx-dur) var(--fx-ease);
+}
+.ft-free-plan-card:hover{
+  transform:translateY(-3px);border-color:rgba(216,190,134,.5);
+  box-shadow:0 20px 54px rgba(0,0,0,.3);
+}
+.ft-free-plan-card span{color:var(--fx-gold-soft);}
+
+/* ---- 3. About FarmTree polish + section rhythm ---------------------- */
+.ft-about-feedback{
+  padding:var(--fx-section-y) 0;
+  background:linear-gradient(180deg,var(--fx-cream-2) 0%,var(--fx-cream) 100%);
+}
+.ft-about-feedback .kicker{color:var(--fx-gold);}
+.ft-about-feedback .big-title{
+  color:var(--fx-ink);text-wrap:balance;max-width:15ch;margin:0 auto;
+}
+
+/* Metric cards → glassmorphism */
+.ft-about-feedback .metrics{
+  gap:clamp(20px,2.4vw,32px);margin-top:clamp(44px,5vw,64px);
+}
+.ft-about-feedback .metric{
+  background:var(--fx-glass-bg);
+  -webkit-backdrop-filter:var(--fx-glass-blur);backdrop-filter:var(--fx-glass-blur);
+  border:var(--fx-glass-border);border-radius:var(--fx-radius-lg);
+  padding:clamp(28px,3vw,40px) clamp(20px,2vw,28px);
+  box-shadow:var(--fx-shadow-md);
+  transition:transform var(--fx-dur) var(--fx-ease),box-shadow var(--fx-dur) var(--fx-ease);
+}
+.ft-about-feedback .metric:hover{
+  transform:translateY(-6px);box-shadow:var(--fx-shadow-hover);
+}
+.ft-about-feedback .metric h3{color:var(--fx-green);letter-spacing:-.01em;}
+.ft-about-feedback .metric p{color:var(--fx-muted);}
+.ft-about-feedback .metric-icon{
+  width:clamp(96px,10vw,120px);height:clamp(96px,10vw,120px);
+  margin-bottom:clamp(20px,2.4vw,28px);box-shadow:var(--fx-shadow-sm);
+}
+
+/* Overlap platform block → premium radius + soft shadow */
+.ft-about-feedback .overlap{margin-top:clamp(56px,7vw,84px);}
+.ft-about-feedback .overlap-img{
+  border-radius:var(--fx-radius-lg);box-shadow:var(--fx-shadow-lg);overflow:hidden;
+}
+.ft-about-feedback .overlap-card{
+  border-radius:var(--fx-radius-lg);box-shadow:var(--fx-shadow-md);
+  border:1px solid var(--fx-line);
+}
+.ft-about-feedback .overlap-card .mid-title{color:var(--fx-ink);}
+.ft-about-feedback .overlap-card .lead{color:var(--fx-muted);}
+.ft-about-feedback .outline-btn{
+  transition:background var(--fx-dur) var(--fx-ease),color var(--fx-dur) var(--fx-ease),
+             border-color var(--fx-dur) var(--fx-ease),transform var(--fx-dur) var(--fx-ease),
+             box-shadow var(--fx-dur) var(--fx-ease);
+}
+.ft-about-feedback .outline-btn:hover{box-shadow:var(--fx-shadow-md);}
+
+/* ---- 4. Responsive safeguards for this pass ------------------------- */
+@media (max-width:760px){
+  .hero p,#heroText{text-align:left;font-size:18px;}
+  .ft-about-feedback .metric{padding:26px 22px;}
+  .ft-about-feedback .big-title{max-width:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-img,.ft-hero-cta-row .cta-link,.ft-free-plan-card,
+  .ft-about-feedback .metric{transition:none;}
+}
+</style>
+<!-- =====================================================================
+     FarmTree Design System v2 — FINAL scoped style block (pass 2)
+     Unifies cards, labels, buttons, section rhythm and backgrounds across
+     the remaining home sections. Builds on ft-design-system-v1 tokens.
+     Scoped to home-only section IDs so hidden inner pages are untouched.
+     No router / carousel / FAQ / language / data-page / .page change.
+     ===================================================================== -->
+<style id="ft-design-system-v2">
+/* ---- 0. Surface tokens (intentional alternation) -------------------- */
+:root{
+  --fx-surface-cream:#F5F1E8;               /* cream */
+  --fx-surface-ivory:#FBF9F3;               /* ivory (lighter) */
+  --fx-surface-green:linear-gradient(180deg,#EFF3EC 0%,#E9F0E6 100%); /* subtle green tint */
+  --fx-card-bg:#ffffff;
+  --fx-card-border:1px solid rgba(16,47,35,.10);
+  --fx-card-radius:24px;
+}
+
+/* ---- 1. Unified card system ----------------------------------------- */
+/* Resting state — consistent radius, border and soft shadow */
+#workflow .ft-workflow-four article,
+#frank-phase-journey .ft-phase-card,
+#target-groups .ft-target-grid article,
+#case-study-cards .ft-case-grid article,
+#proof-stories .ft-proof-theme-grid article,
+#proof-stories .ft-proof-metric,
+#partner-statements .ft-statement-grid article,
+#diagram .ft-method-grid article,
+#news-carousel .ft-news-card{
+  background:var(--fx-card-bg);
+  border:var(--fx-card-border);
+  box-shadow:var(--fx-shadow-md);
+  transition:transform var(--fx-dur) var(--fx-ease),
+             box-shadow var(--fx-dur) var(--fx-ease),
+             border-color var(--fx-dur) var(--fx-ease);
+  will-change:transform;
+}
+/* Calm Apple-style hover lift — unified across every home card */
+#workflow .ft-workflow-four article:hover,
+#frank-phase-journey .ft-phase-card:hover,
+#target-groups .ft-target-grid article:hover,
+#case-study-cards .ft-case-grid article:hover,
+#proof-stories .ft-proof-theme-grid article:hover,
+#proof-stories .ft-proof-metric:hover,
+#partner-statements .ft-statement-grid article:hover,
+#diagram .ft-method-grid article:hover,
+#news-carousel .ft-news-card:hover,
+#testimonials .ft-testimonial-card:hover,
+#frank-usecases-pricing .ft-seg-card:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--fx-shadow-hover);
+  border-color:rgba(201,162,75,.45);
+}
+/* Carousel cards inherit the same resting shadow for consistency */
+#testimonials .ft-testimonial-card,
+#frank-usecases-pricing .ft-seg-card{
+  box-shadow:var(--fx-shadow-sm);
+}
+
+/* ---- 2. Unified eyebrow / label / tag ------------------------------- */
+/* Home-only sections are the non-.page siblings; inner pages (.page) untouched */
+main > section:not(.page) .ft-section-label{
+  background:rgba(201,162,75,.10);
+  border:1px solid rgba(201,162,75,.32);
+  color:#8a6a2a;
+  letter-spacing:.16em;font-weight:900;
+}
+#workflow .ft-workflow-kicker,
+#frank-phase-journey .ft-phase-no,
+#news-carousel .ft-news-card span,
+#frank-usecases-pricing .ft-seg-num,
+#diagram .kicker,#platform-flow .kicker{
+  color:var(--fx-gold);letter-spacing:.16em;text-transform:uppercase;font-weight:900;
+}
+
+/* ---- 3. Section rhythm + intentional background alternation --------- */
+#platform-flow{background:var(--fx-surface-ivory);}
+#workflow{background:var(--fx-surface-cream);}
+#frank-phase-journey{background:var(--fx-surface-ivory);}
+#target-groups{background:var(--fx-surface-cream);}
+#news-carousel{background:var(--fx-surface-ivory);}
+#frank-partners{background:var(--fx-surface-cream);}
+#case-study-cards{background:var(--fx-surface-ivory);}
+#proof-stories{background:var(--fx-surface-cream);}
+#testimonials{background:var(--fx-surface-green);}
+#frank-usecases-pricing{background:var(--fx-surface-ivory);}
+#partner-statements{background:var(--fx-surface-cream);}
+#faq{background:var(--fx-surface-ivory);}
+#platform-flow,#workflow,#frank-phase-journey,#target-groups,#news-carousel,
+#frank-partners,#case-study-cards,#proof-stories,#testimonials,
+#frank-usecases-pricing,#partner-statements,#faq{
+  padding:var(--fx-section-y) 0;
+}
+
+/* ---- 4. Typography consistency for section heads -------------------- */
+#workflow .ft-workflow-title,
+#frank-phase-journey .ft-commercial-head h2,
+#target-groups .ft-commercial-head h2,
+#frank-partners .ft-commercial-head h2,
+#case-study-cards .ft-commercial-head h2,
+#proof-stories .ft-commercial-head h2,
+#frank-usecases-pricing .ft-commercial-head h2,
+#testimonials .ft-testimonials-head h2{
+  color:var(--fx-ink);letter-spacing:-.03em;text-wrap:balance;
+}
+#frank-phase-journey .ft-commercial-head p,
+#target-groups .ft-commercial-head p,
+#frank-partners .ft-commercial-head p,
+#case-study-cards .ft-commercial-head p,
+#proof-stories .ft-commercial-head p{
+  color:var(--fx-muted);
+}
+
+/* ---- 5. Buttons / CTA hover unification ----------------------------- */
+#frank-phase-journey .ft-phase-card button,
+#frank-partners .ft-partner-logo{
+  transition:transform var(--fx-dur) var(--fx-ease),
+             background var(--fx-dur) var(--fx-ease),
+             box-shadow var(--fx-dur) var(--fx-ease);
+}
+#frank-phase-journey .ft-phase-card button:hover{
+  transform:translateY(-2px);box-shadow:0 12px 26px rgba(11,74,52,.28);
+}
+/* Use-cases carousel arrows → premium calm control */
+#frank-usecases-pricing .ft-seg-arrow{
+  transition:transform var(--fx-dur) var(--fx-ease),
+             background var(--fx-dur) var(--fx-ease),
+             border-color var(--fx-dur) var(--fx-ease),
+             box-shadow var(--fx-dur) var(--fx-ease);
+}
+#frank-usecases-pricing .ft-seg-arrow:hover{
+  background:rgba(201,162,75,.12);border-color:rgba(201,162,75,.5);
+  transform:translateY(-1px);box-shadow:var(--fx-shadow-sm);
+}
+
+/* ---- 6. Use-cases / pricing — more commercial & premium ------------- */
+#frank-usecases-pricing .ft-seg-card{
+  border:1.5px solid rgba(33,79,42,.1);
+}
+#frank-usecases-pricing .ft-seg-num{
+  display:inline-flex;align-items:center;
+}
+#frank-usecases-pricing .ft-seg-dots button[aria-selected="true"],
+#frank-usecases-pricing .ft-seg-dots .active{
+  background:var(--fx-gold);
+}
+
+/* ---- 7. FAQ polish (visual only — accordion mechanism untouched) ---- */
+#faq .ft-faq-grid article{
+  border-radius:var(--fx-radius);
+  transition:border-color var(--fx-dur) var(--fx-ease),background var(--fx-dur) var(--fx-ease);
+}
+#faq .ft-faq-q{transition:background var(--fx-dur) var(--fx-ease);}
+#faq .ft-faq-grid article:hover .ft-faq-q{background:rgba(201,162,75,.05);}
+#faq .ft-faq-toggle{background:rgba(201,162,75,.1);color:#8a6a2a;}
+#faq .ft-open .ft-faq-toggle{background:rgba(201,162,75,.22);color:#8a6a2a;} /* keep opened-state tint (rotate rule untouched) */
+
+/* ---- 8. Final CTA polish (deep-green section) ----------------------- */
+.ft-final-cta-feedback .ft-final-cta-row .cta-link{
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  transition:transform var(--fx-dur) var(--fx-ease),
+             background var(--fx-dur) var(--fx-ease),
+             box-shadow var(--fx-dur) var(--fx-ease),
+             border-color var(--fx-dur) var(--fx-ease);
+}
+.ft-final-cta-feedback .ft-final-cta-row .cta-link:not(.secondary){
+  background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4);
+}
+.ft-final-cta-feedback .ft-final-cta-row .cta-link:not(.secondary):hover{
+  background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.75);
+  transform:translateY(-2px);box-shadow:0 16px 34px rgba(0,0,0,.3);
+}
+.ft-final-cta-feedback .ft-final-cta-row .cta-link.secondary:hover{
+  transform:translateY(-2px);box-shadow:0 18px 40px rgba(0,0,0,.3);
+}
+.ft-final-cta-feedback .ft-final-cta-tagline{color:var(--fx-gold-soft);}
+
+/* ---- 9. Responsive + reduced-motion safeguards --------------------- */
+@media (max-width:760px){
+  #platform-flow,#workflow,#frank-phase-journey,#target-groups,#news-carousel,
+  #frank-partners,#case-study-cards,#proof-stories,#testimonials,
+  #frank-usecases-pricing,#partner-statements,#faq{
+    padding:clamp(48px,10vw,72px) 0;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  #workflow .ft-workflow-four article,#frank-phase-journey .ft-phase-card,
+  #target-groups .ft-target-grid article,#case-study-cards .ft-case-grid article,
+  #proof-stories .ft-proof-theme-grid article,#proof-stories .ft-proof-metric,
+  #partner-statements .ft-statement-grid article,#diagram .ft-method-grid article,
+  #news-carousel .ft-news-card,#testimonials .ft-testimonial-card,
+  #frank-usecases-pricing .ft-seg-card,#frank-usecases-pricing .ft-seg-arrow,
+  .ft-final-cta-feedback .ft-final-cta-row .cta-link{transition:none;}
+}
+</style>
+<!-- =====================================================================
+     FarmTree Design System v3 — FINAL scoped style block (Hero content
+     alignment pass). Only touches Hero text position/alignment; images,
+     CTA buttons, slider logic and all other sections are untouched.
+     ===================================================================== -->
+<style id="ft-design-system-v3">
+/* Vertical: bring content nearer the visual center instead of the bottom */
+.hero{ align-items:center; }
+
+/* Horizontal: center kicker, headline and paragraph as a block */
+.hero-content{ text-align:center; }
+.hero .kicker,#heroKicker{ text-align:center; }
+.hero h1,#heroTitle{ margin:0 auto; text-align:center; }
+.hero p,#heroText{ margin:0 auto 28px; text-align:center; }
+
+/* Keep the CTA row and future-service card centered under the centered copy */
+.hero-content .ft-hero-cta-row{ justify-content:center; }
+.hero-content .ft-free-plan-card{ margin-left:auto; margin-right:auto; }
+
+@media (max-width:760px){
+  .hero{ align-items:center; padding-top:120px; }
+}
+</style>
+<!-- =====================================================================
+     ft-hero-typography-alignment-fix-v1
+     Final scoped Hero typography correction. Applies uniformly to every
+     Hero slide (same #heroTitle/#heroText/#heroKicker nodes are reused
+     by the slider JS, so no JS change is needed). Overrides the many
+     legacy clamp()/breakpoint rules by being last in source + !important.
+     No images, CTA buttons, slide structure or other sections touched.
+     ===================================================================== */
+<style id="ft-hero-typography-alignment-fix-v1">
+/* Controlled container width so the headline can't stretch too wide */
+.hero-content{
+  max-width:760px !important;
+  width:min(760px,92vw) !important;
+  margin:0 auto !important;
+}
+
+/* Kicker — stays subtle and premium, centered */
+.hero .kicker,#heroKicker{
+  text-align:center !important;
+  font-size:12px !important;
+  letter-spacing:.2em !important;
+}
+
+/* Headline — ~25% smaller than the previous clamp(64px,8vw,128px) base,
+   each bound reduced proportionally: 64->48, 128->96, 8vw->6vw */
+.hero h1,#heroTitle{
+  max-width:100% !important;
+  font-size:clamp(48px,6vw,96px) !important;
+  line-height:1.08 !important;
+  letter-spacing:-.02em !important;
+  font-weight:800 !important;
+  margin:0 auto !important;
+  text-align:center !important;
+  text-wrap:balance;
+}
+
+/* Paragraph — smaller, calmer, narrower than the headline container */
+.hero p,#heroText{
+  max-width:560px !important;
+  font-size:clamp(15px,1.4vw,19px) !important;
+  line-height:1.6 !important;
+  text-align:center !important;
+  margin:20px auto 28px !important;
+}
+
+/* CTA row stays centered under the paragraph */
+.hero-content .ft-hero-cta-row{
+  justify-content:center !important;
+}
+
+/* Proportional reduction for small phones (previous mobile floor ~30-52px) */
+@media (max-width:480px){
+  .hero h1,#heroTitle{
+    font-size:clamp(28px,8vw,40px) !important;
+    line-height:1.12 !important;
+  }
+  .hero p,#heroText{
+    font-size:15px !important;
+    line-height:1.55 !important;
+  }
+}
+</style>
 </body>
 </html>
