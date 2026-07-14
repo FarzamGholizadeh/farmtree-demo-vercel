@@ -1,0 +1,6 @@
+qa/
+index.html.backup-pre-production-audit
+index.html.safe-before-redesign
+index.html.bak
+.env.local
+.vercel/
