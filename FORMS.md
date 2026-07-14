@@ -29,8 +29,32 @@ window.FT_FORM_ENDPOINT = 'https://formspree.io/f/XXXXXXXX';
   every submission deliberately shows the error state.
 - Submit buttons are disabled during the request to prevent double-sends.
 
-## Release checklist
+## ⛔ RELEASE BLOCKER
 
-- [ ] `FT_FORM_ENDPOINT` contains a real Formspree form ID
-- [ ] Test one submission from each of the three forms on the deployed URL
-- [ ] Confirm the notification email arrives
+`FT_FORM_ENDPOINT` still contains the `YOUR_FORM_ID` placeholder.
+Until a real Formspree form ID is set, every submission intentionally
+shows the error state — **there is no simulated success path.**
+The site must not go live in this state.
+
+## Spam protection
+
+All three forms carry a visually-hidden `_gotcha` honeypot field
+(`tabindex="-1"`, `aria-hidden="true"` — invisible to users, keyboard and
+screen readers). Formspree silently discards any submission where it is
+filled. Formspree also applies its own server-side spam filtering.
+
+## Final verification checklist (run once the form ID is provided)
+
+Per release requirements — all three forms tested **separately**
+(request page, contact modal, chat widget):
+
+- [ ] Successful real submission from each form
+- [ ] Confirmed delivery to the recipient inbox for each form
+- [ ] Error state verified (e.g. temporarily break the endpoint / offline)
+- [ ] Submit button disabled during the request (no double-send)
+- [ ] Honeypot: filled `_gotcha` submission is NOT delivered
+- [ ] Privacy consent: **pending decision** — a visible consent checkbox is
+      new UI content and needs approved wording before it can be added.
+      Until then, ensure the privacy policy is linked near each form.
+- [ ] No personal data in console logs (verified: the codebase contains
+      zero `console.*` calls) or analytics (no analytics scripts present)

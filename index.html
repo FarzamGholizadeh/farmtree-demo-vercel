@@ -4474,6 +4474,7 @@ section.ft-about-feedback {
 <div id="ftRequestFormWrap">
 <h1>Contact Us</h1><p>Fill in the fields below and the FarmTree team will follow up within one business day.</p>
 <form id="ftRequestPageForm" novalidate>
+<input class="ft-hp" type="text" name="_gotcha" id="ftReqHp" tabindex="-1" autocomplete="off" aria-hidden="true"/>
 <div class="field"><label for="ftReqName">Name *</label><input id="ftReqName" type="text" placeholder="Enter your name here"/><span class="ft-field-err" id="ftReqNameErr" style="display:none;color:#ffbf80;font-size:13px;margin-top:6px;display:none">Please enter your name.</span></div>
 <div class="field"><label for="ftReqEmail">Email address *</label><input id="ftReqEmail" type="email" placeholder="Enter your email"/><span class="ft-field-err" id="ftReqEmailErr" style="display:none;color:#ffbf80;font-size:13px;margin-top:6px;display:none">Please enter a valid email address.</span></div>
 <div class="field"><label for="ftReqCompany">Company name *</label><input id="ftReqCompany" type="text" placeholder="Start typing..."/><span class="ft-field-err" id="ftReqCompanyErr" style="display:none;color:#ffbf80;font-size:13px;margin-top:6px;display:none">Please enter your company name.</span></div>
@@ -6713,6 +6714,7 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
         </div>
         <div class="ft-modal-body">
           <form id="ftModalForm">
+            <input class="ft-hp" type="text" name="_gotcha" id="ftModalHp" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="ft-modal-grid">
               <div class="ft-modal-field"><label for="ftName">Full name</label><input id="ftName" type="text" placeholder="Your name"></div>
               <div class="ft-modal-field"><label for="ftCompany">Company or organisation</label><input id="ftCompany" type="text" placeholder="Company name"></div>
@@ -6741,6 +6743,7 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
       if(submitBtn) submitBtn.disabled = true;
       window.ftSubmitLead({
         form: 'contact-modal',
+        _gotcha: (overlay.querySelector('#ftModalHp')||{}).value || '',
         name: (overlay.querySelector('#ftName')||{}).value || '',
         company: (overlay.querySelector('#ftCompany')||{}).value || '',
         email: (overlay.querySelector('#ftEmail')||{}).value || '',
@@ -8737,6 +8740,7 @@ a:focus:not(:focus-visible) { outline: none; }
 <button type="button" class="ft-chat-chip" data-q="Can FarmTree support implementers?">For implementers</button>
 </div>
 <form class="ft-chat-leadform" id="ftChatLeadForm">
+<input class="ft-hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true"/>
 <input name="name" type="text" placeholder="Name" aria-label="Name" required=""/>
 <input name="email" placeholder="Email address" aria-label="Email address" required="" type="email"/>
 <input name="company" type="text" placeholder="Company" aria-label="Company"/>
@@ -9140,6 +9144,7 @@ a:focus:not(:focus-visible) { outline: none; }
 
     var payload = {
       form: 'request-page',
+      _gotcha: (document.getElementById('ftReqHp')||{}).value || '',
       name: name ? name.value.trim() : '',
       email: email ? email.value.trim() : '',
       company: company ? company.value.trim() : '',
@@ -12012,6 +12017,8 @@ window.ftSubmitLead = function(payload){
 .ft-u-note14{margin-top:14px;font-weight:700;font-size:14px;}
 .ft-u-pointer{cursor:pointer;}
 .ft-u-muted14{color:#5d7769;font-size:14px;}
+/* Honeypot field (spam protection): visually hidden, skipped by keyboard/AT */
+.ft-hp{position:absolute !important;left:-9999px !important;width:1px;height:1px;opacity:0;pointer-events:none;}
 </style>
 <style id="ft-a11y-fixes-v1">
 /* Visible keyboard focus for all interactive elements (WCAG 2.4.7).
