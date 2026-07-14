@@ -1,0 +1,10 @@
+# FarmTree supported-browser policy (see BROWSERS.md)
+last 2 Chrome versions
+last 2 Edge versions
+last 2 Firefox versions
+Firefox ESR
+Safari >= 15.4
+iOS >= 15.4
+last 2 Samsung versions
+not dead
+not IE 11
