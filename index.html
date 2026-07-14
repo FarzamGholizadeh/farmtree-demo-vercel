@@ -12026,6 +12026,13 @@ textarea:focus-visible,
   outline:2px solid #C9A24B;
   outline-offset:2px;
 }
+/* WCAG AA contrast: small footer text switches from gold to the existing
+   cream token. Gold is retained for the socials' borders (decorative) and
+   all non-text accents. Old: #D3B06B on #00613f = 3.66:1 (fail).
+   New: #F5F1E8 on #00613f (measured below in audit) = AA pass. */
+.footer .footer-top .kicker{color:var(--cream);}
+.footer .socials span{color:var(--cream);} /* border stays var(--mint) gold */
+
 /* Dark surfaces need a lighter ring for contrast */
 .header button:focus-visible,
 .hero button:focus-visible,
