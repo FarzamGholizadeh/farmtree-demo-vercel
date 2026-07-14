@@ -5990,6 +5990,14 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
 
   function patchPerformance(){
     document.querySelectorAll('img').forEach(function(img, i){
+      /* Never lazy-load above-the-fold-critical images: the hero (LCP),
+         header/mobile logos and the site loader. Runtime-lazying them
+         regressed LCP (they paint before scroll on every visit). */
+      if(img.id === 'heroImg' || (img.closest && img.closest('.hero,.header,#ftSiteLoader,.mobile-top'))){
+        if(img.id === 'heroImg') img.setAttribute('fetchpriority','high');
+        img.setAttribute('decoding','async');
+        return;
+      }
       if(i === 0){ img.setAttribute('fetchpriority','high'); img.setAttribute('decoding','async'); return; }
       if(!img.hasAttribute('loading')) img.setAttribute('loading','lazy');
       img.setAttribute('decoding','async');
