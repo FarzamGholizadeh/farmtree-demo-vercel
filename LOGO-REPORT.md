@@ -106,6 +106,7 @@ Header (dark green) and footer (dark green): the logo renders inside **pre-exist
 3. **Official transparent full-logo master** — current master is opaque white-bg (works in pill containers; a transparent original remains preferable for future surfaces).
 4. `https://farmtree.earth/...` og:image + JSON-LD logo URLs will 404 until the site (with `assets/brand/`) deploys to that domain — expected pre-release state, verified by link checker.
 5. Pre-existing (not introduced, left unfixed for commit atomicity): MRV counter `undefined.replace` console error; `#platform` route renders cocoa content (found by axe agent); services-page muted-text contrast 4.22:1; loader hold time — all pending decisions.
+6. **Lead-CTA routing conflict (found by forms verification agent):** hero/final-CTA buttons whose text matches "Request a demo" hard-redirect to the external registration page (`tool.farmtree.earth/...Register`) because a legacy text-matched click listener fires before the `data-ftmodal` handler — while a later script (`rewriteRequestButtons`) intends them to open the contact modal. Two scripts encode opposite intents for the primary lead CTA. Works today (external form), but needs a product decision: external registration vs on-site modal. "Ask for a quotation" is unaffected and opens the modal.
 
 ## 12. Confirmations
 
