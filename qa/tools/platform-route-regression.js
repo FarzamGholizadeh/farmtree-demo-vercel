@@ -91,7 +91,7 @@ const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
       p.on('request', onReq);
       await p.evaluate(() => document.getElementById('openMenu')?.click());
       await settle(400);
-      await p.evaluate(() => { [...document.querySelectorAll('.mobile-card button')].find(b => b.textContent.trim() === 'Platform')?.click(); });
+      await p.evaluate(() => { [...document.querySelectorAll('.mobile-card button, .mobile-card a')].find(b => b.textContent.trim() === 'Platform')?.click(); });
       await settle(800);
       assert('[mobile] menu Platform button -> external Login',
         navs.length === 1 && navs[0] === 'https://tool.farmtree.earth/Identity/Account/Login',

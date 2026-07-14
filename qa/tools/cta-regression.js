@@ -63,29 +63,29 @@ const REGISTER = 'https://tool.farmtree.earth/Identity/Account/Register';
   await settle(1300);
 
   await checkAction(p, 'header FarmTree Platform pill', () => byText(p, '.header .pill.tech', 'FarmTree Platform'), LOGIN);
-  await checkAction(p, '"See the platform"', () => byText(p, 'button', 'See the platform'), LOGIN);
-  await checkAction(p, 'footer FarmTree Platform', () => byText(p, '.footer button', 'FarmTree Platform'), LOGIN);
-  await checkAction(p, 'hero Request a demo', () => byText(p, '.ft-hero-cta-row button', 'Request a demo ↗'), REGISTER);
-  await checkAction(p, 'final CTA Request a demo', () => byText(p, '.ft-final-cta-row button', 'Request a demo'), REGISTER);
-  await checkAction(p, 'footer Request a FarmTree demo', () => byText(p, '.footer button', 'Request a FarmTree demo ↗'), REGISTER);
+  await checkAction(p, '"See the platform"', () => byText(p, 'button, a', 'See the platform'), LOGIN);
+  await checkAction(p, 'footer FarmTree Platform', () => byText(p, '.footer button, .footer a', 'FarmTree Platform'), LOGIN);
+  await checkAction(p, 'hero Request a demo', () => byText(p, '.ft-hero-cta-row button, .ft-hero-cta-row a', 'Request a demo ↗'), REGISTER);
+  await checkAction(p, 'final CTA Request a demo', () => byText(p, '.ft-final-cta-row button, .ft-final-cta-row a', 'Request a demo'), REGISTER);
+  await checkAction(p, 'footer Request a FarmTree demo', () => byText(p, '.footer button, .footer a', 'Request a FarmTree demo ↗'), REGISTER);
   await checkAction(p, 'injected buyer-ctas Request a demo', () => p.evaluate(() => {
     const el = document.querySelector('.ft-buyer-ctas [data-ft-action="request-demo"]');
     if (!el) return false; el.click(); return true;
   }), REGISTER);
-  await checkAction(p, 'hero Ask for a quotation', () => byText(p, '.ft-hero-cta-row button', 'Ask for a quotation ↗'), 'MODAL');
-  await checkAction(p, 'final CTA Ask for a quotation', () => byText(p, '.ft-final-cta-row button', 'Ask for a quotation'), 'MODAL');
+  await checkAction(p, 'hero Ask for a quotation', () => byText(p, '.ft-hero-cta-row button, .ft-hero-cta-row a', 'Ask for a quotation ↗'), 'MODAL');
+  await checkAction(p, 'final CTA Ask for a quotation', () => byText(p, '.ft-final-cta-row button, .ft-final-cta-row a', 'Ask for a quotation'), 'MODAL');
 
   // keyboard Enter activation
   p.__navs = []; await closeModal(p);
   await p.goto(`${BASE}#home`, { waitUntil: 'networkidle2' }); await settle(1100);
-  await p.evaluate(() => [...document.querySelectorAll('.ft-hero-cta-row button')]
+  await p.evaluate(() => [...document.querySelectorAll('.ft-hero-cta-row button, .ft-hero-cta-row a')]
     .find(b => b.textContent.includes('Request a demo'))?.focus());
   await p.keyboard.press('Enter'); await settle(700);
   if (p.__navs.length !== 1 || p.__navs[0] !== REGISTER)
     failures.push(`keyboard Enter on hero demo: ${JSON.stringify(p.__navs)}`);
   await p.goto(`${BASE}#home`, { waitUntil: 'networkidle2' }); await settle(1100);
   p.__navs = [];
-  await p.evaluate(() => [...document.querySelectorAll('.ft-hero-cta-row button')]
+  await p.evaluate(() => [...document.querySelectorAll('.ft-hero-cta-row button, .ft-hero-cta-row a')]
     .find(b => b.textContent.includes('quotation'))?.focus());
   await p.keyboard.press('Enter'); await settle(700);
   if (!(await modalOpen(p)) || p.__navs.length)
@@ -96,18 +96,32 @@ const REGISTER = 'https://tool.farmtree.earth/Identity/Account/Register';
   // global invariant: every demo/platform-entry-labeled control carries the
   // authoritative data-ft-action (catches stragglers on any page, incl. hidden)
   const stragglers = await p.evaluate(() => {
+    const LOGIN = 'https://tool.farmtree.earth/Identity/Account/Login';
+    const REGISTER = 'https://tool.farmtree.earth/Identity/Account/Register';
     const demoLabels = ['request a demo', 'request a demo \u2197', 'request a farmtree demo \u2197'];
     const out = [];
     document.querySelectorAll('button, a').forEach(el => {
       const t = el.textContent.trim().toLowerCase();
-      if (demoLabels.includes(t) && el.dataset.ftAction !== 'request-demo')
-        out.push('demo-label without request-demo action: ' + t + ' [' + (el.className || el.tagName) + ']');
-      if ((t === 'farmtree platform' || t === 'see the platform' || (t === 'platform' && el.closest('#mobileMenu')))
-          && el.dataset.ftAction !== 'platform-login')
-        out.push('platform-entry label without platform-login action: ' + t + ' [' + (el.className || el.tagName) + ']');
+      const isDemo = demoLabels.includes(t);
+      const isPlat = t === 'farmtree platform' || t === 'see the platform' ||
+                     t === 'explore the platform' || (t === 'platform' && el.closest('#mobileMenu'));
+      if (isDemo && (el.tagName !== 'A' || el.getAttribute('href') !== REGISTER))
+        out.push('demo control not a native Register anchor: ' + t + ' [' + el.tagName + ' ' + (el.className||'') + ']');
+      if (isPlat && (el.tagName !== 'A' || el.getAttribute('href') !== LOGIN))
+        out.push('platform-entry control not a native Login anchor: ' + t + ' [' + el.tagName + ' ' + (el.className||'') + ']');
     });
     return out;
   });
+  // native semantics: modifier-click must NOT be preventDefaulted (JS must not
+  // reproduce/interfere with normal anchor navigation)
+  const modClick = await p.evaluate(() => {
+    const a = [...document.querySelectorAll('a[data-ft-action="request-demo"]')][0];
+    if (!a) return 'no demo anchor';
+    const ev = new MouseEvent('click', { bubbles: true, cancelable: true, metaKey: true });
+    a.dispatchEvent(ev);
+    return ev.defaultPrevented ? 'PREVENTED' : 'free';
+  });
+  if (modClick !== 'free') failures.push('modifier-click on demo anchor: ' + modClick);
   stragglers.forEach(sg => failures.push('straggler: ' + sg));
   await p.close();
 
@@ -117,15 +131,15 @@ const REGISTER = 'https://tool.farmtree.earth/Identity/Account/Register';
   await settle(1300);
   await checkAction(p, 'mobile menu Platform', async () => {
     await p.evaluate(() => document.getElementById('openMenu')?.click()); await settle(350);
-    return byText(p, '#mobileMenu button', 'Platform');
+    return byText(p, '#mobileMenu button, #mobileMenu a', 'Platform');
   }, LOGIN);
   await checkAction(p, 'mobile menu Request a demo', async () => {
     await p.evaluate(() => document.getElementById('openMenu')?.click()); await settle(350);
-    return byText(p, '#mobileMenu button', 'Request a demo');
+    return byText(p, '#mobileMenu button, #mobileMenu a', 'Request a demo');
   }, REGISTER);
   await p.evaluate(() => document.getElementById('closeMenu')?.click()); await settle(300);
-  await checkAction(p, 'mobile hero Request a demo', () => byText(p, '.ft-hero-cta-row button', 'Request a demo ↗'), REGISTER);
-  await checkAction(p, 'mobile hero Ask for a quotation', () => byText(p, '.ft-hero-cta-row button', 'Ask for a quotation ↗'), 'MODAL');
+  await checkAction(p, 'mobile hero Request a demo', () => byText(p, '.ft-hero-cta-row button, .ft-hero-cta-row a', 'Request a demo ↗'), REGISTER);
+  await checkAction(p, 'mobile hero Ask for a quotation', () => byText(p, '.ft-hero-cta-row button, .ft-hero-cta-row a', 'Ask for a quotation ↗'), 'MODAL');
   await p.close();
 
   await browser.close();
