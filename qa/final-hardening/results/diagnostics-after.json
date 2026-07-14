@@ -1,0 +1,14 @@
+{
+ "no-inline-styles": 0,
+ "min-height-auto": 0,
+ "text-wrap": 8,
+ "backdrop-filter-order": 0,
+ "meta-theme-color": 1,
+ "fetchpriority": 4,
+ "exceptions-documented": {
+  "text-wrap": 8,
+  "meta-theme-color": 1,
+  "link-fetchpriority": 1,
+  "img-fetchpriority": 1
+ }
+}

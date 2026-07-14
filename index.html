@@ -777,8 +777,8 @@ svg [filter] { filter:none !important; }
   background: rgba(248,245,238,.98) !important;
   border: 1px solid rgba(23,52,40,.10) !important;
   box-shadow: none !important;
-  -webkit-backdrop-filter:blur(18px) !important;backdrop-filter: blur(18px) !important;
-  -webkit-backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter:blur(18px) !important;-webkit-backdrop-filter: blur(18px) !important;
+  backdrop-filter: blur(18px) !important;
   z-index: 9999 !important;
 }
 .lang-switcher.ft-open .lang-panel,
@@ -2152,7 +2152,7 @@ form *,
   }
 
   .ft-faq-left {
-    min-height: auto;
+    min-height: 0;
     gap: 34px;
   }
 
@@ -3141,7 +3141,7 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 @media (max-width:900px){
   .usecase-hero,.usecase-grid{grid-template-columns:1fr!important;}
   .usecase-copy{padding:28px!important;}
-  .ft-phase-card{min-height:auto!important;}
+  .ft-phase-card{min-height:0!important;}
 }
 </style>
 <style id="ft-v4-final-fixes">
@@ -3153,7 +3153,7 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 .overlap-card .mid-title{font-size:clamp(36px,3.6vw,58px)!important;line-height:1!important;max-width:560px!important;}
 .overlap-card .lead{max-width:560px!important;line-height:1.62!important;}
 .split-feature.reverse{width:min(1180px,88vw)!important;margin:86px auto!important;display:grid!important;grid-template-columns:1.08fr .92fr!important;gap:42px!important;align-items:center!important;}
-.split-feature.reverse .feature-card{padding:54px 0!important;background:transparent!important;box-shadow:none!important;border:0!important;min-height:auto!important;}
+.split-feature.reverse .feature-card{padding:54px 0!important;background:transparent!important;box-shadow:none!important;border:0!important;min-height:0!important;}
 .split-feature.reverse .feature-image{height:430px!important;min-height:430px!important;border-radius:26px!important;overflow:hidden!important;}
 .split-feature.reverse .feature-image img{height:100%!important;width:100%!important;object-fit:cover!important;object-position:center!important;display:block!important;}
 .outline-btn,.cta-link,.ft-case-card button,.ft-phase-card button,.feature-card button,.overlap-card button{cursor:pointer!important;text-decoration:none!important;line-height:1!important;transition:background .22s ease,color .22s ease,border-color .22s ease,box-shadow .22s ease!important;transform:none!important;}
@@ -3176,7 +3176,7 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 .ft-case-body p{min-height:145px!important;}
 @media(max-width:900px){
   .overlap,.split-feature.reverse,#frank-platform-teaser .ft-platform-grid{grid-template-columns:1fr!important;gap:24px!important;}
-  .overlap-card{padding:34px!important;min-height:auto!important;}
+  .overlap-card{padding:34px!important;min-height:0!important;}
   .overlap-img,.split-feature.reverse .feature-image{height:330px!important;min-height:330px!important;}
   #frank-platform-teaser .ft-platform-panel{transform:none!important;justify-self:stretch!important;}
 }
@@ -3600,7 +3600,7 @@ p { text-align: left; }
   max-width: 820px;
   margin: 0 auto 52px !important;
   text-align: center;
-  min-height: auto !important;
+  min-height: 0 !important;
 }
 .ft-faq-head h2 {
   font-size: clamp(34px, 4vw, 56px) !important;
@@ -4056,8 +4056,8 @@ section.ft-about-feedback {
 <div class="metric"><div class="metric-icon">♧</div><h3>Science-based</h3><p>200+ verified species ready for local calibration and science-backed modelling.</p></div>
 </div>
 <div class="overlap ft-platform-screenshot-block">
-<div class="overlap-img" style="background:var(--green);padding:0;display:flex;align-items:stretch">
-<div class="ft-p6-mock" style="margin:18px;flex:1;border-radius:14px" role="img" aria-label="FarmTree platform interface preview">
+<div class="overlap-img ft-mock-outer">
+<div class="ft-p6-mock ft-mock-inner" role="img" aria-label="FarmTree platform interface preview">
   <div class="ft-p6-mock-chrome">
     <div class="ft-p6-mock-dots"><div class="ft-p6-mock-dot"></div><div class="ft-p6-mock-dot"></div><div class="ft-p6-mock-dot"></div></div>
     <div class="ft-p6-mock-title-bar">FarmTree Platform &nbsp;·&nbsp; Scenario View</div>
@@ -4103,7 +4103,7 @@ section.ft-about-feedback {
 </div>
 </div>
 </div>
-</section><section class="section ft-home-only-section ft-p6-grid-bg" style="background-color:var(--cream)">
+</section><section class="section ft-home-only-section ft-p6-grid-bg ft-bg-cream">
 <div class="container ft-u-center">
 <div class="kicker">Base technology</div><h2 class="big-title">Rethinking how agroforestry projects are planned and financed.</h2>
 <p class="lead ft-centered-lead">FarmTree's base technology connects site information, climate, soil and species data into a science-based methodology for projections and reporting.</p>
@@ -4154,7 +4154,7 @@ section.ft-about-feedback {
 <div class="ft-seg-dots" id="ftSegDots"></div>
 </div>
 </section><section class="ft-partner-statements" id="partner-statements"><div class="ft-commercial-wrap"><div class="ft-commercial-head center"><span class="ft-section-label">Partner perspectives</span><h2>What organisations say about working with FarmTree</h2><p>Selected perspectives from partners across the agroforestry investment and implementation chain.</p></div><div class="ft-statement-grid"><article><h3>Science that travels well</h3><p>"FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything."</p><p class="ft-u-note14">Mathijs de Bruin — TreeScape</p></article><article><h3>Depth where it matters</h3><p>"FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do — and how to communicate that to partners."</p><p class="ft-u-note14">Katharina Lima de Miranda — HRNS</p></article><article><h3>Local scenarios, fast</h3><p>"We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios quickly and confidently."</p><p class="ft-u-note14">Rob Kelly — World Vision Australia</p></article></div></div></section><section class="ft-faq-section" id="faq"><div class="ft-faq-wrap"><div class="ft-faq-head"><span class="ft-section-label">FAQ</span><h2>Questions about agroforestry modelling?</h2><p>Common questions about FarmTree, the platform, and how to get started. Can’t find what you need? Contact us directly.</p></div><div class="ft-faq-grid" id="ftFaqAccordion"><article class="ft-open"><div class="ft-faq-q"><h3>What does FarmTree model?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree models production, carbon, hydrology, soil fertility, labour, economics and other impact indicators — covering 10+ KPIs across a single, interconnected science-based model.</div></div></article><article><div class="ft-faq-q"><h3>Can FarmTree support investment planning?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Yes. FarmTree helps turn project ideas, species assumptions and local data into credible scenarios and investment cases — with outputs that hold up to professional and funder scrutiny.</div></div></article><article><div class="ft-faq-q"><h3>How far ahead can FarmTree project?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree supports 50-year projections for long-term planning, investment cases and project monitoring — aligned with standard agroforestry project lifecycles.</div></div></article><article><div class="ft-faq-q"><h3>Can local project teams use the platform?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Yes. Project staff can learn, in a short time, to prepare agroforestry plans and show farmers different options — reducing dependence on external consultants over time.</div></div></article><article><div class="ft-faq-q"><h3>How do we request a demo or quotation?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">Use the "Request a demo" or "Ask for a quotation" button anywhere on the site. The FarmTree team will follow up to discuss your scope, project context, and the right level of support.</div></div></article><article><div class="ft-faq-q"><h3>Which standards does FarmTree align with?</h3><span class="ft-faq-toggle">+</span></div><div class="ft-faq-a"><div class="ft-faq-a-inner">FarmTree’s carbon outputs are aligned with Verra VCS and Gold Standard methodologies. For broader ESG and climate reporting, outputs can be structured to support CSRD and MRV frameworks.</div></div></article></div></div></section><section class="section ft-final-cta-feedback"><div class="container ft-u-center"><span class="ft-final-cta-tagline">Make agroforestry measurable, investable and scalable.</span><h2 class="big-title">Ready to build a stronger agroforestry investment case?</h2><p class="lead ft-centered-lead">Request a demo or ask for a quotation. FarmTree will work with you to understand your scope, project context and reporting needs.</p><div class="ft-final-cta-row"><button type="button" class="cta-link" data-ft-action="request-demo">Request a demo</button><button type="button" class="cta-link secondary" data-ft-action="request-quotation">Ask for a quotation</button></div></div></section><section class="page" id="page-platform">
-<div class="subhero"><img loading="lazy" decoding="async" alt="Planning agroforestry scenarios with stakeholders" src="assets/embedded_025_opt.webp"/><div class="container"><div class="kicker">FarmTree Platform</div><h1>A software model and online interface for agroforestry scenarios</h1><p class="lead" style="color:white;max-width:720px">Design agroforestry scenarios and project carbon, financial and environmental indicators for up to 50 years.</p></div></div>
+<div class="subhero"><img loading="lazy" decoding="async" alt="Planning agroforestry scenarios with stakeholders" src="assets/embedded_025_opt.webp"/><div class="container"><div class="kicker">FarmTree Platform</div><h1>A software model and online interface for agroforestry scenarios</h1><p class="lead ft-subhero-lead-light">Design agroforestry scenarios and project carbon, financial and environmental indicators for up to 50 years.</p></div></div>
 <section class="section"><div class="container"><div class="overlap"><div class="overlap-img"><img loading="lazy" decoding="async" alt="Field data for agroforestry modelling" src="assets/embedded_026_opt.webp"/></div><div class="overlap-card"><div class="kicker">Model methodology</div><h2 class="mid-title">Carbon, Production &amp; Finance, Environment and Landscape Tool</h2><p class="lead">The FarmTree model is composed of interconnected sub models simulating soil, nutrients, water, plant growth, production, carbon, labour and finance.</p></div></div><div class="cards"><div class="card"><h3>Carbon</h3><p>Biomass accumulation, carbon stock, Carbon Removal Units and carbon revenue by species.</p></div><div class="card"><h3>Production &amp; Finance</h3><p>Yields, production costs, revenues, cash flows, profitability and labour needs.</p></div><div class="card"><h3>Environment</h3><p>Water balance, soil organic matter, nutrient flows, erosion and biodiversity.</p></div><div class="card"><h3>Landscape Tool</h3><p>Compare multiple project areas and portfolio wide performance.</p></div></div></div></section>
 </section>
 <section class="page ft-p5-page" id="page-services">
@@ -4177,10 +4177,10 @@ section.ft-about-feedback {
 </div></div></section>
 
 <!-- 4. PLATFORM-SUPPORTED DELIVERY -->
-<section class="ft-p5-section dark"><div class="ft-p5-wrap"><span class="ft-section-label" style="color:var(--gold);background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18)">Platform supported</span><h2 class="ft-p5-h2">Every service is backed by FarmTree's science-based modelling platform</h2><p class="ft-p5-lead">Regardless of which service area you engage, every projection, scenario and report is grounded in FarmTree's peer-reviewed interconnected model — covering four domains simultaneously.</p><div class="ft-sol-cap-grid"><div class="ft-sol-cap"><strong>Carbon</strong><span>Biomass accumulation, carbon stock projections and Carbon Removal Units by species — aligned with Verra VCS and Gold Standard.</span></div><div class="ft-sol-cap"><strong>Production &amp; Finance</strong><span>Yields, production costs, revenues, cash flows, profitability and labour requirements for each scenario configuration.</span></div><div class="ft-sol-cap"><strong>Environment</strong><span>Water balance, soil organic matter, nutrient flows, erosion risk and biodiversity indicators per land-use scenario.</span></div><div class="ft-sol-cap"><strong>Landscape Tool</strong><span>Compare multiple project areas and aggregate results at portfolio and programme level for consistent reporting.</span></div></div><div class="ft-sol-cta-row" style="margin-top:32px"><button class="pill contact" type="button" data-ftmodal="request">Discuss your project scope</button><button class="ft-p5-hero-ghost" type="button" data-page="platform">Explore the platform</button></div></div></section>
+<section class="ft-p5-section dark"><div class="ft-p5-wrap"><span class="ft-section-label ft-label-on-dark">Platform supported</span><h2 class="ft-p5-h2">Every service is backed by FarmTree's science-based modelling platform</h2><p class="ft-p5-lead">Regardless of which service area you engage, every projection, scenario and report is grounded in FarmTree's peer-reviewed interconnected model — covering four domains simultaneously.</p><div class="ft-sol-cap-grid"><div class="ft-sol-cap"><strong>Carbon</strong><span>Biomass accumulation, carbon stock projections and Carbon Removal Units by species — aligned with Verra VCS and Gold Standard.</span></div><div class="ft-sol-cap"><strong>Production &amp; Finance</strong><span>Yields, production costs, revenues, cash flows, profitability and labour requirements for each scenario configuration.</span></div><div class="ft-sol-cap"><strong>Environment</strong><span>Water balance, soil organic matter, nutrient flows, erosion risk and biodiversity indicators per land-use scenario.</span></div><div class="ft-sol-cap"><strong>Landscape Tool</strong><span>Compare multiple project areas and aggregate results at portfolio and programme level for consistent reporting.</span></div></div><div class="ft-sol-cta-row ft-u-mt32"><button class="pill contact" type="button" data-ftmodal="request">Discuss your project scope</button><button class="ft-p5-hero-ghost" type="button" data-page="platform">Explore the platform</button></div></div></section>
 
 <!-- 5. FINAL CTA -->
-<section class="ft-p5-section cream"><div class="ft-p5-wrap ft-u-center"><h2 class="ft-p5-h2" style="max-width:640px;margin:0 auto 16px">Ready to start your agroforestry journey with FarmTree?</h2><p class="ft-p5-lead ft-u-mxauto-mb28">Whether you are designing a first scenario or scaling an established programme, FarmTree has a service level that fits your current needs and your next step.</p><div class="ft-u-ctarow"><button class="pill contact" type="button" data-ftmodal="request">Talk to us about your project</button><button class="outline-btn" type="button" data-page="track">View our Track Record</button></div></div></section>
+<section class="ft-p5-section cream"><div class="ft-p5-wrap ft-u-center"><h2 class="ft-p5-h2 ft-cta-heading-tight">Ready to start your agroforestry journey with FarmTree?</h2><p class="ft-p5-lead ft-u-mxauto-mb28">Whether you are designing a first scenario or scaling an established programme, FarmTree has a service level that fits your current needs and your next step.</p><div class="ft-u-ctarow"><button class="pill contact" type="button" data-ftmodal="request">Talk to us about your project</button><button class="outline-btn" type="button" data-page="track">View our Track Record</button></div></div></section>
 
 </section>
 <section class="page ft-p5-page" id="page-track">
@@ -4482,22 +4482,22 @@ section.ft-about-feedback {
 <h1>Contact Us</h1><p>Fill in the fields below and the FarmTree team will follow up within one business day.</p>
 <form id="ftRequestPageForm" novalidate>
 <input class="ft-hp" type="text" name="_gotcha" id="ftReqHp" tabindex="-1" autocomplete="off" aria-hidden="true"/>
-<div class="field"><label for="ftReqName">Name *</label><input id="ftReqName" type="text" placeholder="Enter your name here"/><span class="ft-field-err" id="ftReqNameErr" style="display:none;color:#ffbf80;font-size:13px;margin-top:6px;display:none">Please enter your name.</span></div>
-<div class="field"><label for="ftReqEmail">Email address *</label><input id="ftReqEmail" type="email" placeholder="Enter your email"/><span class="ft-field-err" id="ftReqEmailErr" style="display:none;color:#ffbf80;font-size:13px;margin-top:6px;display:none">Please enter a valid email address.</span></div>
-<div class="field"><label for="ftReqCompany">Company name *</label><input id="ftReqCompany" type="text" placeholder="Start typing..."/><span class="ft-field-err" id="ftReqCompanyErr" style="display:none;color:#ffbf80;font-size:13px;margin-top:6px;display:none">Please enter your company name.</span></div>
+<div class="field"><label for="ftReqName">Name *</label><input id="ftReqName" type="text" placeholder="Enter your name here"/><span class="ft-field-err" id="ftReqNameErr">Please enter your name.</span></div>
+<div class="field"><label for="ftReqEmail">Email address *</label><input id="ftReqEmail" type="email" placeholder="Enter your email"/><span class="ft-field-err" id="ftReqEmailErr">Please enter a valid email address.</span></div>
+<div class="field"><label for="ftReqCompany">Company name *</label><input id="ftReqCompany" type="text" placeholder="Start typing..."/><span class="ft-field-err" id="ftReqCompanyErr">Please enter your company name.</span></div>
 <div class="field"><label for="ftReqRole">Job title</label><input id="ftReqRole" type="text" placeholder="Start typing..."/></div>
 <div class="field"><label for="ftReqPhone">Mobile phone</label><input id="ftReqPhone" type="tel" placeholder="Enter number"/></div>
 <div class="field"><label for="ftReqWeb">Company website</label><input id="ftReqWeb" type="url" placeholder="Enter link"/></div>
 <div class="field"><label for="ftReqInterest">What are you interested in?</label><select id="ftReqInterest"><option>FarmTree Platform demo</option><option>Agroforestry investment case</option><option>Cocoa Focus</option><option>Project monitoring</option><option>General question</option></select></div>
 <div class="field"><label for="ftReqMsg">Message</label><textarea id="ftReqMsg" placeholder="Tell us about your project"></textarea></div>
 <button class="pill contact" type="submit" id="ftReqSubmit">Submit request</button>
-<div class="ft-field-err" id="ftReqSubmitErr" style="display:none;color:#ffbf80;font-size:14px;margin-top:12px" role="alert">Sorry — your request could not be sent. Please check your connection and try again.</div>
+<div class="ft-field-err ft-submit-err" id="ftReqSubmitErr" role="alert">Sorry — your request could not be sent. Please check your connection and try again.</div>
 </form>
 </div>
-<div id="ftRequestSuccess" style="display:none;padding:80px 0;text-align:center">
-<div style="width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-size:32px">✓</div>
-<h2 style="font-family:Manrope,sans-serif;font-size:36px;margin:0 0 16px;color:white">Thank you.</h2>
-<p style="font-size:18px;color:rgba(255,255,255,.78);max-width:520px;margin:0 auto 32px;line-height:1.65">The FarmTree team will review your request and be in touch within one business day.</p>
+<div id="ftRequestSuccess" class="ft-request-success">
+<div class="ft-success-icon">✓</div>
+<h2 class="ft-success-title">Thank you.</h2>
+<p class="ft-success-text">The FarmTree team will review your request and be in touch within one business day.</p>
 <button class="pill contact" type="button" onclick="document.getElementById('ftRequestSuccess').style.display='none';document.getElementById('ftRequestFormWrap').style.display='block';document.getElementById('ftRequestPageForm').reset()">Send another request</button>
 </div>
 </div></div>
@@ -4509,7 +4509,7 @@ section.ft-about-feedback {
 <div class="ft-aud-page">
 
 <!-- 1 — SUBHERO -->
-<div class="subhero ft-u-minh72"><img loading="lazy" decoding="async" alt="Landscape programme planning for DFIs and climate funds" src="assets/embedded_028_opt.webp"/><div class="container"><div class="ft-cs-phase"><span class="ft-cs-phase-dot"></span>For DFIs, donors &amp; climate funds</div><h1 style="max-width:880px">Programme-level planning and reporting for climate and landscape investment</h1><p class="lead ft-u-heronote-660">FarmTree helps development finance institutions translate complex agroforestry programmes into structured, evidence-based scenarios aligned with M&amp;E frameworks, donor requirements and climate fund standards.</p><div class="ft-aud-hero-btns"><button class="pill contact" type="button" data-ftmodal="request">Request programme demo</button><button class="ft-aud-btn-ghost" type="button" data-page="case-giz">Read the GIZ case study</button></div></div></div>
+<div class="subhero ft-u-minh72"><img loading="lazy" decoding="async" alt="Landscape programme planning for DFIs and climate funds" src="assets/embedded_028_opt.webp"/><div class="container"><div class="ft-cs-phase"><span class="ft-cs-phase-dot"></span>For DFIs, donors &amp; climate funds</div><h1 class="ft-u-maxw880">Programme-level planning and reporting for climate and landscape investment</h1><p class="lead ft-u-heronote-660">FarmTree helps development finance institutions translate complex agroforestry programmes into structured, evidence-based scenarios aligned with M&amp;E frameworks, donor requirements and climate fund standards.</p><div class="ft-aud-hero-btns"><button class="pill contact" type="button" data-ftmodal="request">Request programme demo</button><button class="ft-aud-btn-ghost" type="button" data-page="case-giz">Read the GIZ case study</button></div></div></div>
 
 <!-- 2 — CHALLENGES -->
 <section class="ft-aud-section cream"><div class="ft-aud-wrap"><span class="ft-cs-section-label">The challenge</span><h2 class="ft-aud-h2">Why large-scale agroforestry programmes are difficult to manage</h2><p class="ft-aud-lead">DFIs and donors need to coordinate complex programmes across diverse geographies, implementation partners and reporting systems — without losing scientific credibility or operational consistency.</p><div class="ft-aud-problem-grid"><div class="ft-aud-problem-card"><h3>Inconsistent baselines</h3><p>Large-scale programmes often involve multiple implementing partners and reporting systems. Without a shared methodology, programme-level comparison and transparent accountability become difficult to maintain.</p></div><div class="ft-aud-problem-card"><h3>Accountability gaps</h3><p>Climate and livelihood outcomes are expected, but the science behind projected impact is rarely transparent or independently reviewable — creating friction in funder relationships and complicating mid-term reviews.</p></div><div class="ft-aud-problem-card"><h3>Scaling bottlenecks</h3><p>Moving from pilot to multi-country roll-out requires consistent planning logic, calibrated local assumptions and a common reporting language — one that field teams can actually operate without expert support.</p></div></div></div></section>
@@ -4724,7 +4724,7 @@ section.ft-about-feedback {
 <div class="footer-logo"><picture><source type="image/webp" srcset="assets/brand/farmtree-logo-primary-320.webp 320w, assets/brand/farmtree-logo-primary-640.webp 640w, assets/brand/farmtree-logo-primary-1024.webp 1024w" sizes="115px"/><img src="assets/brand/farmtree-logo-primary-320.png" srcset="assets/brand/farmtree-logo-primary-320.png 320w, assets/brand/farmtree-logo-primary-640.png 640w, assets/brand/farmtree-logo-primary-1024.png 1024w" sizes="115px" width="320" height="117" alt="FarmTree" loading="lazy" decoding="async"/></picture></div>
 <div><h3>About Us</h3><button type="button" data-page="team">Team</button><button type="button" data-page="vacancies">Vacancies</button><button type="button" data-page="contact">Contact</button><button type="button" data-page="blog">Blog</button></div>
 <div><h3>Platform</h3><button type="button" data-ft-action="platform-login">FarmTree Platform</button><button type="button" data-page="videos">User Videos</button><button type="button" data-page="acknowledgements">Acknowledgements</button><button type="button" data-page="licenses">Licenses</button></div>
-<div><h3>FarmTree B.V.</h3><p style="color:white">Plus Ultra Building<br/>Bronland 12C-1<br/>6708 WH Wageningen<br/>info@farmtree.earth</p></div>
+<div><h3>FarmTree B.V.</h3><p class="ft-u-white">Plus Ultra Building<br/>Bronland 12C-1<br/>6708 WH Wageningen<br/>info@farmtree.earth</p></div>
 </div>
 <div class="footer-bottom"><span>Copyright © 2026 FarmTree B.V. All rights reserved.</span><div class="socials"><span>in</span><span>◎</span><span>✉</span></div></div>
 </div>
@@ -5570,7 +5570,10 @@ document.addEventListener('DOMContentLoaded', function () {
     dots.forEach((d,i)=>d.addEventListener('click',()=>setHero(i)));
     const next=document.getElementById('nextHero'), prev=document.getElementById('prevHero');
     if(next) next.addEventListener('click',()=>setHero(heroIndex+1)); if(prev) prev.addEventListener('click',()=>setHero(heroIndex-1));
-    setHero(0);
+    /* setHero(0) init removed (perf 2.5): it transiently swapped the hero to
+       embedded_061.webp before the primary controller restored the approved
+       slide-1 image — a wasted 144KB download on every load. Manual arrow/dot
+       behavior is unchanged. */
     /* Auto-advance DISABLED: hero changes only on user interaction (arrows/dots). */
   }
 })();
@@ -7004,7 +7007,7 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
   #page-investors .usecase-mini,#page-ngos .usecase-mini,.ft-v8-eco-badges{grid-template-columns:1fr;}
   #page-blog .ft-blog-feature-card{min-height:420px;}
   .page[id^="page-blog-"] article{padding:24px;}
-  #page-investors .usecase-copy,#page-ngos .usecase-copy{padding:26px;min-height:auto;}
+  #page-investors .usecase-copy,#page-ngos .usecase-copy{padding:26px;min-height:0;}
 }
 </style>
 <script id="ft-v8-fixes-script">
@@ -8733,7 +8736,7 @@ a:focus:not(:focus-visible) { outline: none; }
 .ft-eco-caption{margin:28px auto 0;max-width:760px;text-align:center;color:#60736a;font-size:17px;line-height:1.65;}
 @keyframes ftBreath{0%,100%{box-shadow:0 0 0 0 rgba(111,220,82,.18),0 22px 55px rgba(0,107,69,.14);transform:scale(1)}50%{box-shadow:0 0 0 18px rgba(111,220,82,.05),0 28px 65px rgba(0,107,69,.18);transform:scale(1.018)}}
 @keyframes ftLineFlow{0%,100%{opacity:.45;filter:saturate(1)}50%{opacity:1;filter:saturate(1.4)}}
-@media(max-width:900px){.ft-living-ecosystem{min-height:auto;padding:22px;display:grid;gap:14px}.ft-live-node,.ft-model-core,.ft-climate,.ft-species,.ft-output,.ft-upload,.ft-flow-pill{position:relative;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:auto}.ft-dashed-flow,.ft-eco-line{display:none}.ft-climate{justify-content:center;margin:28px 0 4px}.ft-climate strong{left:50%;transform:translateX(-50%)}.ft-model-core{width:auto;height:160px}.ft-mini-charts{position:relative;right:auto;top:auto;width:100%;grid-template-columns:repeat(4,1fr)}.ft-output{min-height:auto}.ft-site-info ul,.ft-output ul,.ft-species ul{font-size:15px}}
+@media(max-width:900px){.ft-living-ecosystem{min-height:0;padding:22px;display:grid;gap:14px}.ft-live-node,.ft-model-core,.ft-climate,.ft-species,.ft-output,.ft-upload,.ft-flow-pill{position:relative;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:auto}.ft-dashed-flow,.ft-eco-line{display:none}.ft-climate{justify-content:center;margin:28px 0 4px}.ft-climate strong{left:50%;transform:translateX(-50%)}.ft-model-core{width:auto;height:160px}.ft-mini-charts{position:relative;right:auto;top:auto;width:100%;grid-template-columns:repeat(4,1fr)}.ft-output{min-height:0}.ft-site-info ul,.ft-output ul,.ft-species ul{font-size:15px}}
 </style>
 <div aria-live="polite" class="ft-chatbot">
 <button type="button" aria-label="Open FarmTree assistant" class="ft-chat-launcher" id="ftChatLauncher">
@@ -8845,7 +8848,7 @@ a:focus:not(:focus-visible) { outline: none; }
   align-items:center!important;
   margin:34px auto 0!important;
   width:100%!important;
-  min-height:auto!important;
+  min-height:0!important;
   overflow:visible!important;
 }
 #page-home #diagram .ft-simple-diagram{
@@ -9419,7 +9422,7 @@ a:focus:not(:focus-visible) { outline: none; }
   /* ─ Workflow section ─ */
   .ft-workflow-four { grid-template-columns: 1fr; }
   .ft-counter-row { grid-template-columns: 1fr 1fr !important; }
-  .ft-counter-card { min-height: auto !important; }
+  .ft-counter-card { min-height: 0 !important; }
 
   /* ─ Blog ─ */
   .ft-blog-featured { flex-direction: column; gap: 16px; }
@@ -12044,6 +12047,23 @@ window.ftSubmitLead = function(payload){
    rendered size, width follows the exact aspect ratio — never distorts. */
 .footer-logo img{width:auto;object-fit:contain;}
 .logo-wrap img{object-fit:contain;}
+
+/* Phase-2 diagnostics: former inline styles, values verbatim (semantic classes) */
+.ft-mock-outer{background:var(--green);padding:0;display:flex;align-items:stretch;}
+.ft-mock-inner{margin:18px;flex:1;border-radius:14px;}
+.ft-bg-cream{background-color:var(--cream);}
+.ft-subhero-lead-light{color:white;max-width:720px;}
+.ft-label-on-dark{color:var(--gold);background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);}
+.ft-u-mt32{margin-top:32px;}
+.ft-cta-heading-tight{max-width:640px;margin:0 auto 16px;}
+.ft-u-maxw880{max-width:880px;}
+.ft-u-white{color:white;}
+.ft-field-err{display:none;color:#ffbf80;font-size:13px;margin-top:6px;}
+.ft-submit-err{font-size:14px;margin-top:12px;}
+.ft-request-success{display:none;padding:80px 0;text-align:center;}
+.ft-success-icon{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-size:32px;}
+.ft-success-title{font-family:Manrope,sans-serif;font-size:36px;margin:0 0 16px;color:white;}
+.ft-success-text{font-size:18px;color:rgba(255,255,255,.78);max-width:520px;margin:0 auto 32px;line-height:1.65;}
 /* Honeypot field (spam protection): visually hidden, skipped by keyboard/AT */
 .ft-hp{position:absolute !important;left:-9999px !important;width:1px;height:1px;opacity:0;pointer-events:none;}
 </style>

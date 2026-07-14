@@ -1,0 +1,11 @@
+{
+  "extends": ["development"],
+  "hints": {
+    "compat-api/css": ["warning", {
+      "ignore": ["text-wrap", "text-wrap: balance", "text-wrap: pretty"]
+    }],
+    "compat-api/html": ["warning", {
+      "ignore": ["meta[name=theme-color]", "link[fetchpriority]", "img[fetchpriority]"]
+    }]
+  }
+}
