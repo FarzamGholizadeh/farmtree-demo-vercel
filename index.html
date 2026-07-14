@@ -29,6 +29,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-180.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link rel="preload" as="image" href="assets/case-giz_opt.webp" fetchpriority="high"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,7 +47,10 @@
   }
 }
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<!-- Non-blocking font CSS: fonts already use display=swap, so render is
+     never blocked on this stylesheet. noscript keeps the blocking fallback. -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/></noscript>
 <style>
 :root {
   --green:#214F2A;
@@ -2718,7 +2722,7 @@ section[class*="faq"] .faq-answer{
 .ft-photo-tile:hover img{transform:scale(1.035);filter:saturate(1.08);}
 /* Replace selected image panels with clearer field photos */
 .overlap-img:not(.ft-app-slider) > img{content:url("assets/embedded_007.webp");}
-.split-feature.reverse .feature-image img{content:url("assets/home-project-teams-v11.png")!important;}
+.split-feature.reverse .feature-image img{content:url("assets/home-project-teams-v11.ll.webp")!important;}
 .split-feature:not(.reverse) .feature-image img,.split-feature:not(.reverse) .overlap-img img{content:url("assets/embedded_009.webp");}
 @media(max-width:900px){
   .hero h1{font-size:clamp(42px,13vw,64px)!important;}
@@ -4840,7 +4844,7 @@ document.querySelectorAll('.hero-dot').forEach(function(dot, i) {
 
 /* Kick off the first slide immediately (sets progress bar + starts timer) */
 ftHeroGo(0, false);
-document.getElementById('diagram').innerHTML = '<figure class="ft-simple-diagram" aria-label="FarmTree model system diagram"><img loading="lazy" decoding="async" src="assets/home-ecosystem-v10.png" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"></figure>';
+document.getElementById('diagram').innerHTML = '<figure class="ft-simple-diagram" aria-label="FarmTree model system diagram"><img loading="lazy" decoding="async" src="assets/home-ecosystem-v10.ll.webp" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"></figure>';
 setLang('en');
 </script>
 <script>
@@ -6570,7 +6574,7 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
     if(!target) return;
     target.innerHTML = `
       <figure class="ft-simple-diagram" aria-label="FarmTree model system diagram">
-        <img loading="lazy" decoding="async" src="assets/home-ecosystem-v10.png" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"/>
+        <img loading="lazy" decoding="async" src="assets/home-ecosystem-v10.ll.webp" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"/>
       </figure>`;
   }
 
@@ -6994,7 +6998,7 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
       slug:'blog-fieldnotes',
       tag:'Field insight',
       title:'Turning field data into investment ready insight',
-      image:'assets/home-project-teams-v11.png',
+      image:'assets/home-project-teams-v11.ll.webp',
       author:'FarmTree Editorial Team',
       role:'Field strategy and planning',
       read:'6 min read',
@@ -7095,7 +7099,7 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
   }
 
   function refreshHome(){
-    setImage('#page-home .split-feature.reverse .feature-image img','assets/home-project-teams-v11.png','Project team planning agroforestry scenarios in the field');
+    setImage('#page-home .split-feature.reverse .feature-image img','assets/home-project-teams-v11.ll.webp','Project team planning agroforestry scenarios in the field');
     setImage('#page-home .section.cream .feature-image img','assets/home-deep-roots-v11.png','FarmTree field consultation in an agroforestry landscape');
     const diagramIntro = document.querySelector('#page-home #diagram + p.lead');
     if(diagramIntro) diagramIntro.classList.add('ft-diagram-intro');
@@ -8585,7 +8589,7 @@ a:focus:not(:focus-visible) { outline: none; }
 (function(){
   const imgMap = {
     platform:'assets/investor-card-hero-v8.webp',
-    projectTeams:'assets/home-project-teams-v11.png',
+    projectTeams:'assets/home-project-teams-v11.ll.webp',
     deepRoots:'assets/home-deep-roots-v11.png',
     investorHero:'assets/investor-hero-v8.webp',
     implementerHero:'assets/implementers-hero-v7_opt.webp'
@@ -8939,7 +8943,7 @@ a:focus:not(:focus-visible) { outline: none; }
   function setSimpleDiagram(){
     const target = document.getElementById('diagram');
     if(!target) return;
-    target.innerHTML = '<figure class="ft-simple-diagram" aria-label="FarmTree model system diagram"><img loading="lazy" decoding="async" src="assets/home-ecosystem-v10.png" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"></figure>';
+    target.innerHTML = '<figure class="ft-simple-diagram" aria-label="FarmTree model system diagram"><img loading="lazy" decoding="async" src="assets/home-ecosystem-v10.ll.webp" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"></figure>';
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setSimpleDiagram); else setSimpleDiagram();
   window.addEventListener('load', setSimpleDiagram);
