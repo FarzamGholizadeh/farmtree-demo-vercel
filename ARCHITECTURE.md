@@ -30,11 +30,19 @@ are UI refreshers only (content patchers, sliders, segment page titles).
 - **Customer-segment pages** (10) are template-generated from structured
   data (`ft-segment-pages` script) and injected synchronously at parse
   time, so the router resolves `#segment-*` on direct load/refresh/history.
+  #case-studies is a dedicated page (hero + the four original project
+  cards moved verbatim from the homepage + CTA pair).
   Data: slug, menu label, H1, value prop, decision context, 4 help cards,
   capability chips (approved capability areas only), 4 outputs, workflow
   note. `window.FT_SEGMENTS` exposes {slug, short, title}.
 - Use-case pages (investors/ngos) are enhanced at DOMContentLoaded by the
   ghostwriter script (`enhanceUseCasePage`).
+
+## Fullscreen menu
+Five-card Bento grid (12-col: MAIN/FARMTREE/COMPANY 4-4-4; CUSTOMER
+SEGMENTS 8 + FORMS & LEGAL 4; 2-col tablet with segments full-row;
+1-col mobile). SVG close control (grid-centred, 52px), Escape-to-close
+with focus return, Tab focus-trap while open.
 
 ## CTA system (final product decision)
 - External controls are **native anchors**: platform-entry (header/footer

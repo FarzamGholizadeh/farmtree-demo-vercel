@@ -12,6 +12,7 @@ _Last updated: 2026-07-15 (approved feature pass: socials, About proof, segment 
 - Footer LinkedIn + YouTube native anchors (exact URLs, new-tab, labelled)
 - About proof row (+100 / +30 / +40 / +1,000,000) + Science-based microscope+leaf icon
 - Customer Segments homepage section removed; ten dedicated segment pages + menu navigation (axe-clean, suites green)
+- Bento-grid menu + centred close control (Escape/focus-return/trap); About final 4-card design; section background tokens; Case Studies dedicated page; FAQ one-line desktop heading
 - a11y 100 (Lighthouse), zero console errors, honest form error states, staging noindex
 
 ## B. Requires Farzam decision
