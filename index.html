@@ -4006,12 +4006,13 @@ section.ft-about-feedback {
 <div class="mobile-menu" id="mobileMenu">
 <div class="mobile-top">
 <button type="button" class="logo-btn" data-page="home"><span class="logo-wrap"><picture><source type="image/webp" srcset="assets/brand/farmtree-logo-primary-320.webp 320w, assets/brand/farmtree-logo-primary-640.webp 640w, assets/brand/farmtree-logo-primary-1024.webp 1024w" sizes="110px"/><img src="assets/brand/farmtree-logo-primary-320.png" srcset="assets/brand/farmtree-logo-primary-320.png 320w, assets/brand/farmtree-logo-primary-640.png 640w, assets/brand/farmtree-logo-primary-1024.png 1024w" sizes="110px" width="320" height="117" alt="FarmTree homepage" loading="eager" decoding="async"/></picture></span></button>
-<button class="lang-btn" id="closeMenu" type="button" aria-label="Close navigation menu">×</button>
+<button class="lang-btn ft-menu-close" id="closeMenu" type="button" aria-label="Close menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
 </div>
-<div class="mobile-grid">
-<div class="mobile-card"><h4>Main</h4><button type="button" data-page="home">Home</button><button type="button" data-page="services">Solutions</button><button type="button" data-page="track">Track Record</button></div>
-<div class="mobile-card"><h4>FarmTree</h4><a data-ft-action="platform-login" href="https://tool.farmtree.earth/Identity/Account/Login">Platform</a><button type="button" data-page="videos">User Videos</button><button type="button" data-page="cocoa">Cocoa Focus</button>
-<h5 class="ft-menu-subhead">Customer segments</h5>
+<div class="mobile-grid ft-bento">
+<div class="mobile-card ft-b-main"><h4>Main</h4><button type="button" data-page="home">Home</button><button type="button" data-page="services">Solutions</button><button type="button" data-page="track">Track Record</button></div>
+<div class="mobile-card ft-b-farmtree"><h4>FarmTree</h4><a data-ft-action="platform-login" href="https://tool.farmtree.earth/Identity/Account/Login">Platform</a><button type="button" data-page="videos">User Videos</button><button type="button" data-page="cocoa">Cocoa Focus</button><button type="button" data-page="investors">For Investors</button><button type="button" data-page="ngos">For Implementers</button></div>
+<div class="mobile-card ft-b-company"><h4>Company</h4><button type="button" data-page="team">Team</button><button type="button" data-page="vacancies">Vacancies</button><button type="button" data-page="contact">Contact us</button><button type="button" data-page="blog">Blog</button></div>
+<div class="mobile-card ft-b-segments"><h4>Customer segments</h4>
 <div class="ft-menu-seg-grid">
 <button type="button" data-page="segment-advisors">Advisors</button>
 <button type="button" data-page="segment-development-banks-donors">Development Banks &amp; Donors</button>
@@ -4024,8 +4025,7 @@ section.ft-about-feedback {
 <button type="button" data-page="segment-social-enterprise">Social Enterprise</button>
 <button type="button" data-page="segment-implementation-organisations">Implementation Organisations</button>
 </div></div>
-<div class="mobile-card"><h4>Company</h4><button type="button" data-page="team">Team</button><button type="button" data-page="vacancies">Vacancies</button><button type="button" data-page="contact">Contact us</button><button type="button" data-page="blog">Blog</button></div>
-<div class="mobile-card"><h4>Forms &amp; Legal</h4><a data-ft-action="request-demo" href="https://tool.farmtree.earth/Identity/Account/Register">Request a demo</a><button type="button" data-page="acknowledgements">Acknowledgements</button><button type="button" data-page="licenses">Licenses</button></div>
+<div class="mobile-card ft-b-forms"><h4>Forms &amp; Legal</h4><a data-ft-action="request-demo" href="https://tool.farmtree.earth/Identity/Account/Register">Request a demo</a><button type="button" data-page="acknowledgements">Acknowledgements</button><button type="button" data-page="licenses">Licenses</button></div>
 </div>
 </div>
 <main>
@@ -4724,10 +4724,27 @@ section.ft-about-feedback {
 .ft-seg-final p{max-width:620px;margin:0 auto 24px;color:rgba(255,255,255,.8);line-height:1.7;}
 .ft-seg-final .ft-seg-cta-row{justify-content:center;}
 @media(max-width:760px){.ft-seg-hero{padding:120px 0 48px;}.ft-seg-section{padding:44px 0;}}
-/* Hamburger menu — Customer segments subsection inside the FarmTree box */
-.ft-menu-subhead{margin:18px 0 6px;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#D3B06B;}
+/* Hamburger menu — premium Bento grid (5 cards) */
 .ft-menu-seg-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:22px;}
-@media(max-width:560px){.ft-menu-seg-grid{grid-template-columns:1fr;}}
+@media(max-width:900px){.ft-menu-seg-grid{grid-template-columns:1fr;}}
+#mobileMenu .ft-bento{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;align-items:stretch;}
+#mobileMenu .ft-b-main{grid-column:span 4;}
+#mobileMenu .ft-b-farmtree{grid-column:span 4;}
+#mobileMenu .ft-b-company{grid-column:span 4;}
+#mobileMenu .ft-b-segments{grid-column:span 8;}
+#mobileMenu .ft-b-forms{grid-column:span 4;}
+@media(max-width:1023px){
+  #mobileMenu .ft-bento{grid-template-columns:1fr 1fr;}
+  #mobileMenu .ft-b-main,#mobileMenu .ft-b-farmtree,#mobileMenu .ft-b-company,#mobileMenu .ft-b-forms{grid-column:span 1;}
+  #mobileMenu .ft-b-segments{grid-column:span 2;}
+}
+@media(max-width:640px){
+  #mobileMenu .ft-bento{grid-template-columns:1fr;}
+  #mobileMenu .ft-b-main,#mobileMenu .ft-b-farmtree,#mobileMenu .ft-b-company,#mobileMenu .ft-b-segments,#mobileMenu .ft-b-forms{grid-column:span 1;}
+}
+/* Close control: geometric centring, 48px circle, SVG icon (no baseline math) */
+.ft-menu-close{display:grid !important;place-items:center !important;padding:0 !important;line-height:1 !important;height:52px !important;width:52px !important;}
+.ft-menu-close svg{display:block;}
 </style>
 <script id="ft-segment-pages">
 /* Customer-segment pages: one reusable template rendered from structured
@@ -4919,8 +4936,21 @@ const heroes = [
   ['Impact Reporting', 'Report Carbon, Farmer Value and Long-Term Performance', 'Translate project results into clear reporting for investors, donors, MRV partners, and programme teams.', 'assets/case-water_opt.webp', 'Landscape investment reporting — LOSO Nyando water, carbon and farmer value programme']
 ];
 /* [router-consolidation 2026-07] removed: legacy setPage() + [data-page] click listener */
-document.getElementById('openMenu').onclick=()=>document.getElementById('mobileMenu').classList.add('open');
-document.getElementById('closeMenu').onclick=()=>document.getElementById('mobileMenu').classList.remove('open');
+document.getElementById('openMenu').onclick=()=>{document.getElementById('mobileMenu').classList.add('open');setTimeout(()=>document.getElementById('closeMenu').focus(),60);};
+document.getElementById('closeMenu').onclick=()=>{document.getElementById('mobileMenu').classList.remove('open');document.getElementById('openMenu').focus();};
+/* Menu a11y (2026-07): Escape-to-close with focus return + focus trap while open */
+document.addEventListener('keydown',function(e){
+  var menu=document.getElementById('mobileMenu');
+  if(!menu || !menu.classList.contains('open')) return;
+  if(e.key==='Escape'){ menu.classList.remove('open'); var o=document.getElementById('openMenu'); if(o) o.focus(); return; }
+  if(e.key==='Tab'){
+    var f=menu.querySelectorAll('a[href],button:not([disabled])');
+    if(!f.length) return;
+    var first=f[0], last=f[f.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  }
+});
 function setLang(lang) {
   state.lang=lang;
   document.documentElement.lang=lang;
