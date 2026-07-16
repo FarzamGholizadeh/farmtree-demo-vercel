@@ -11935,6 +11935,17 @@ window.ftSubmitLead = function(payload){
 .ft-track-metrics .metric p{font-size:15px;}
 @media(max-width:1024px){.ft-track-metrics{grid-template-columns:1fr 1fr;gap:22px;}}
 @media(max-width:640px){.ft-track-metrics{grid-template-columns:1fr;gap:18px;}}
+/* Homepage section-background differentiation (semantic tokens, 2026-07-15)
+   Sequence: Base Technology = light warm ivory, References = pale FarmTree
+   green, Use Cases = warm sand. All AA-verified (ink >=12:1, muted >=4.6:1). */
+:root{
+  --section-base-technology-bg:#FAF8F1;
+  --section-references-bg:#EBF2EA;
+  --section-use-cases-bg:#F6EFDF;
+}
+.ft-p6-grid-bg.ft-bg-cream{background-color:var(--section-base-technology-bg);}
+#frank-partners{background:var(--section-references-bg);}
+#target-groups{background:var(--section-use-cases-bg);}
 /* Footer social anchors (LinkedIn/YouTube): identical circular styling to
    the .socials span system; !important where needed to beat the generic
    .footer a rules (::before dot, display:block, translateX hover). */
