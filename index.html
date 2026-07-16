@@ -12120,5 +12120,45 @@ textarea:focus-visible,
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();
 </script>
+<style id="ft-density-title-system-v1">
+/* ============================================================
+   Homepage title system + desktop density refinement (2026-07-15)
+   At 100% zoom the desktop layout now approximates the prior 80%-zoom
+   density WITHOUT css zoom / transform scale / viewport-meta / root-font
+   tricks — purely token-driven type + spacing reductions, desktop only.
+   Mobile/tablet (<1024px) untouched.
+   ============================================================ */
+
+/* Reusable section-title class: short/medium titles fit one line where the
+   container allows; longer titles balance across at most two lines. */
+.ft-hsec{ text-wrap:balance; max-width:24ch; margin-left:auto; margin-right:auto; line-height:1.08; }
+
+@media (min-width:1024px){
+  /* --- vertical rhythm: section spacing token -~20% --- */
+  :root{ --fx-section-y:clamp(72px,7.4vw,108px); }
+
+  /* --- section headings: -~12%, balanced two-line max (homepage + shared) --- */
+  .ft-commercial-head h2,
+  .ft-testimonials-head h2,
+  .ft-about-feedback .big-title,
+  .ft-p6-grid-bg .big-title,
+  .ft-p6-flow-section .big-title{
+    font-size:clamp(30px,3.2vw,46px)!important;
+    line-height:1.06!important;
+    text-wrap:wrap!important;
+    max-width:min(820px,92vw)!important;
+    margin-left:auto!important;margin-right:auto!important;
+  }
+  /* --- lead paragraphs: trim oversized line-height only --- */
+  .ft-centered-lead,.ft-commercial-head p{ line-height:1.6; }
+
+  /* --- card padding -~12% (large homepage cards) --- */
+  .ft-track-metrics .metric{ padding:34px 24px!important; }
+  .ft-news-card,.ft-statement-grid article,.ft-proof-theme-grid article{ padding:26px!important; }
+
+  /* --- allow content a little more horizontal width --- */
+  .ft-commercial-wrap,.ft-faq-wrap{ width:min(1240px,90vw); }
+}
+</style>
 </body>
 </html>

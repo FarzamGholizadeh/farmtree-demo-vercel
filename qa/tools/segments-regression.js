@@ -237,7 +237,7 @@ const SEGMENTS = {
     const s = document.getElementById('faq');
     return { text: h.textContent, lines, secOv: s.scrollWidth - s.clientWidth };
   });
-  A('faq exact wording', faqD.text === 'Questions about agroforestry modelling?', faqD.text);
+  A('faq exact wording', faqD.text === 'Questions about FarmTree modelling?', faqD.text);
   A('faq one line at 1280 desktop', faqD.lines === 1 && faqD.secOv === 0, JSON.stringify(faqD));
 
   await browser.close();
