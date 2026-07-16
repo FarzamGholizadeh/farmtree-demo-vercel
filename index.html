@@ -23,10 +23,12 @@
 <meta name="twitter:title" content="FarmTree | Agroforestry planning, reporting and investment insights"/>
 <meta name="twitter:description" content="FarmTree helps organisations plan, model and report agroforestry projects with clearer investor narratives, field workflows and platform driven insights."/>
 <meta name="twitter:image" content="https://farmtree.earth/assets/case-giz_opt.webp"/>
-<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png"/>
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png"/>
-<link rel="icon" type="image/png" sizes="512x512" href="assets/icons/icon-512.png"/>
-<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-180.png"/>
+<link rel="icon" href="favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="16x16" href="assets/brand/favicons/favicon-16.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicons/favicon-32.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicons/favicon-192.png"/>
+<link rel="icon" type="image/png" sizes="512x512" href="assets/brand/favicons/favicon-512.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="assets/brand/favicons/favicon-180.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
 <link rel="preload" as="image" href="assets/case-giz_opt.webp" fetchpriority="high"/>
@@ -3196,8 +3198,8 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 }
 .ft-chat-panel.open{display:flex;opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
 .ft-chat-head{background:#073f2c;color:#fff;padding:18px 18px 16px;display:flex;gap:12px;align-items:center}
-.ft-chat-avatar{width:44px;height:44px;border-radius:16px;background:#fff;display:grid;place-items:center;overflow:hidden}
-.ft-chat-avatar img{width:31px;height:31px;object-fit:contain}
+.ft-chat-avatar{flex-shrink:0;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center;overflow:hidden;padding:6px 10px}
+.ft-chat-avatar img{width:84px!important;max-width:none!important;height:auto!important;object-fit:contain;display:block}
 .ft-chat-head h3{font-size:17px;line-height:1.1;margin:0;font-weight:900}
 .ft-chat-head p{font-size:12px;line-height:1.3;margin:4px 0 0;color:rgba(255,255,255,.76)}
 .ft-chat-close{margin-left:auto;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;cursor:pointer;font-size:19px}
@@ -3229,11 +3231,12 @@ body[data-current-page="home"] .ft-home-only-section { display:block!important; 
 :root{--ft-green:#006b45;--ft-deep:#073f2c;--ft-mint:#dff4d2;--ft-cream:#f4efe5;}
 .ft-site-loader{position:fixed;inset:0;z-index:999999;background:#f4f4f1;display:grid;place-items:center;transition:opacity .65s ease,visibility .65s ease;}
 .ft-site-loader.is-hidden{opacity:0;visibility:hidden;pointer-events:none;}
-.ft-loader-core{position:relative;width:118px;height:118px;display:grid;place-items:center;}
-.ft-loader-core::before,.ft-loader-core::after{content:"";position:absolute;inset:8px;border-radius:50%;border:2px solid rgba(80,220,58,.9);box-shadow:0 0 22px rgba(80,220,58,.20);animation:ftLoaderRing 1.9s cubic-bezier(.22,.61,.36,1) infinite;}
+.ft-loader-core{position:relative;display:grid;place-items:center;}
+.ft-loader-core::before,.ft-loader-core::after{display:none;} /* circular ring not suited to the horizontal wordmark; breathe pulse retained on .ft-loader-logo */
 .ft-loader-core::after{inset:22px;animation-delay:.35s;border-color:rgba(0,107,69,.55)}
-.ft-loader-logo{width:54px;height:54px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 16px 36px rgba(0,0,0,.12);animation:ftLoaderBreathe 2s ease-in-out infinite;}
-.ft-loader-logo img{width:34px;height:34px;object-fit:contain;}
+.ft-loader-logo{border-radius:999px;background:#fff;display:grid;place-items:center;padding:14px 22px;box-shadow:0 16px 36px rgba(0,0,0,.12);animation:ftLoaderBreathe 2s ease-in-out infinite;}
+.ft-loader-logo img{width:150px!important;max-width:none!important;height:auto!important;object-fit:contain;display:block;}
+@media(max-width:640px){.ft-loader-logo img{width:120px!important;}.ft-loader-logo{padding:12px 18px;}}
 @keyframes ftLoaderRing{0%{transform:scale(.74);opacity:1}70%{transform:scale(1.18);opacity:.18}100%{transform:scale(1.28);opacity:0}}
 @keyframes ftLoaderBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 
@@ -3863,7 +3866,7 @@ section.ft-about-feedback {
 <body>
 <div role="status" aria-label="Loading FarmTree website" class="ft-site-loader" id="ftSiteLoader">
 <div class="ft-loader-core">
-<div class="ft-loader-logo"><img width="120" height="120" alt="" aria-hidden="true" loading="eager" decoding="async" src="assets/farmtree-icon.png"/></div>
+<div class="ft-loader-logo"><picture><source type="image/webp" srcset="assets/brand/farmtree-logo-primary-320.webp"/><img width="320" height="117" alt="" aria-hidden="true" loading="eager" decoding="async" src="assets/brand/farmtree-logo-primary-320.png"/></picture></div>
 </div>
 </div>
 <script id="ft-stable-router-v6-early">
@@ -8709,7 +8712,7 @@ a:focus:not(:focus-visible) { outline: none; }
 </button>
 <section aria-label="FarmTree support chat" class="ft-chat-panel" id="ftChatPanel">
 <div class="ft-chat-head">
-<div class="ft-chat-avatar"><img width="120" height="120" alt="" aria-hidden="true" loading="lazy" decoding="async" src="assets/farmtree-icon.png"/></div>
+<div class="ft-chat-avatar"><picture><source type="image/webp" srcset="assets/brand/farmtree-logo-primary-320.webp"/><img width="320" height="117" alt="FarmTree" loading="lazy" decoding="async" src="assets/brand/farmtree-logo-primary-320.png"/></picture></div>
 <div>
 <h3>FarmTree Support</h3>
 <p>AI assistant for platform, agroforestry and demo questions</p>
