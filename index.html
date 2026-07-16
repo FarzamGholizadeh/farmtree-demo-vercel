@@ -3956,14 +3956,7 @@ section.ft-about-feedback {
     var id = normalize(raw);
     var txt = (trigger.textContent || '').trim().toLowerCase();
 
-    /* External actions stay external. Internal menu/page links are rendered instantly.
-       'platform' is an internal page; the external tool uses the explicit
-       data-page="platform-external" attribute (no text-based routing). */
-    if(id === 'platform-external'){
-      e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-      window.location.href = PLATFORM_URL;
-      return;
-    }
+/* [router-consolidation 2026-07] removed: early-router dead platform-external click branch */
     /* (CTA cleanup 2026-07) text-matched 'request/demo/book' redirect removed —
        demo CTAs now use the authoritative data-ft-action="request-demo". */
 
@@ -4742,23 +4735,7 @@ const heroes = [
   ['Project Teams', 'Support Local Teams with Clearer Planning Tools', 'Help project staff compare agroforestry options, understand trade-offs, and communicate value with confidence.', 'assets/embedded_027_opt.webp', 'Agroforestry field team training and support — local staff using FarmTree planning tools'],
   ['Impact Reporting', 'Report Carbon, Farmer Value and Long-Term Performance', 'Translate project results into clear reporting for investors, donors, MRV partners, and programme teams.', 'assets/case-water_opt.webp', 'Landscape investment reporting — LOSO Nyando water, carbon and farmer value programme']
 ];
-function setPage(id) {
-  document.body.setAttribute('data-current-page', id);
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const page = document.getElementById('page-'+id);
-  if(page) page.classList.add('active');
-  document.getElementById('mobileMenu').classList.remove('open');
-  window.scrollTo(0,0);
-}
-document.addEventListener('click', e => {
-  const page = e.target.closest('[data-page]')?.dataset.page;
-  if (page === 'platform-external') {
-    window.location.href = 'https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F';
-    return;
-  }
-  if(page) setPage(page);
-
-});
+/* [router-consolidation 2026-07] removed: legacy setPage() + [data-page] click listener */
 document.getElementById('openMenu').onclick=()=>document.getElementById('mobileMenu').classList.add('open');
 document.getElementById('closeMenu').onclick=()=>document.getElementById('mobileMenu').classList.remove('open');
 function setLang(lang) {
@@ -5935,40 +5912,7 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
 </script>
 <script id="ft-hide-home-only-on-inner-pages-script">
 (function(){
-  function getCurrentPage(){
-    var hash = (location.hash || '').replace('#','').trim().toLowerCase();
-    if(!hash || hash === '/' || hash === 'home') return 'home';
-
-    var active = document.querySelector('[data-page].active, .active[data-page], [aria-current="page"][data-page]');
-    if(active && active.getAttribute('data-page')) {
-      return active.getAttribute('data-page').toLowerCase();
-    }
-
-    var visiblePage = Array.from(document.querySelectorAll('[data-page-section], .page-section, section[id]')).find(function(el){
-      var style = window.getComputedStyle(el);
-      return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetParent !== null;
-    });
-    if(visiblePage) {
-      return (visiblePage.getAttribute('data-page-section') || visiblePage.id || '').toLowerCase() || hash;
-    }
-
-    return hash;
-  }
-
-  function applyHomeOnlyVisibility(){
-    var page = getCurrentPage();
-    var isHome = page === 'home' || page === 'homepage' || page === 'main';
-    document.body.classList.toggle('ft-page-home', isHome);
-    document.body.classList.toggle('ft-page-inner', !isHome);
-  }
-
-  window.addEventListener('hashchange', applyHomeOnlyVisibility);
-  document.addEventListener('click', function(){
-    setTimeout(applyHomeOnlyVisibility, 80);
-    setTimeout(applyHomeOnlyVisibility, 250);
-  });
-  document.addEventListener('DOMContentLoaded', applyHomeOnlyVisibility);
-  applyHomeOnlyVisibility();
+/* [router-consolidation 2026-07] removed: duplicate home-only body-class reconciler (hashchange/click timers) */
 })();
 </script>
 <script id="ft-ghostwriter-updates-script-20260510">
@@ -6074,56 +6018,13 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
     ].join('');
   }
 
-  function patchNavTargets(){
-    // request/demo external
-    document.addEventListener('click', function(e){
-      var trigger = e.target.closest('[data-page]');
-      if(!trigger) return;
-      var page = normalizePage(trigger.dataset.page);
-      if(page === 'request'){
-        e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-        window.location.href = REQUEST_URL;
-        return;
-      }
-      if(page === 'platform-external'){
-        e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-        window.location.href = PLATFORM_URL;
-        return;
-      }
-    }, true);
-
-    if(typeof window.setPage === 'function'){
-      var originalSetPage = window.setPage;
-      window.setPage = function(id){
-        id = normalizePage(id);
-        if(id === 'request'){ window.location.href = REQUEST_URL; return; }
-        if(id === 'platform-external'){ window.location.href = PLATFORM_URL; return; }
-        originalSetPage(id);
-        document.body.setAttribute('data-current-page', id);
-        if(history.replaceState){ history.replaceState(null, '', '#'+id); }
-        updateHomeOnly();
-      };
-    }
-  }
-
-  function openPageFromHash(){
-    var hash = (location.hash || '').replace('#','').trim();
-    if(!hash) {
-      document.body.setAttribute('data-current-page', 'home');
-      updateHomeOnly();
-      return;
-    }
-    var target = normalizePage(hash);
-    if(target === 'request'){ return; }
-    if(typeof window.setPage === 'function') window.setPage(target);
-  }
-
+/* [router-consolidation 2026-07] removed: ghostwriter patchNavTargets (capture redirects + setPage wrapper) */
+/* [router-consolidation 2026-07] removed: ghostwriter openPageFromHash */
   document.addEventListener('DOMContentLoaded', function(){
     patchPerformance();
     markHomeOnlySections();
     addMenuLinks();
     addHeroBuyerCtas();
-    patchNavTargets();
     enhanceUseCasePage('page-investors', {
       image:'assets/investors-hero_opt.webp',
       imageAlt:'Agroforestry investor field visit',
@@ -6170,64 +6071,22 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
       note1:{h:'Ideal for', p:'NGOs, implementation partners, programme coordinators, advisory teams and landscape-level delivery organisations.'},
       note2:{h:'Typical outcome', p:'Less fragmented reporting, clearer field coordination and stronger communication with partners and funders.'}
     });
-    openPageFromHash();
-    updateHomeOnly();
   });
 })();
 </script>
 <script>
-(function(){
-  const originalSetAttribute = document.body && document.body.setAttribute;
-  window.addEventListener('DOMContentLoaded', function(){
-    if(!document.body.getAttribute('data-current-page')) document.body.setAttribute('data-current-page','home');
-    document.querySelectorAll('[data-page]').forEach(el=>{
-      el.addEventListener('click', function(){
-        const page = this.getAttribute('data-page');
-        if(page && page !== 'request') document.body.setAttribute('data-current-page', page);
-      }, true);
-    });
-  });
-})();
+/* [router-consolidation 2026-07] removed: redundant data-current-page click syncer */
 </script>
 <script id="ft-final-behaviour-v2">
 (function(){
-  var REQUEST_URL='https://tool.farmtree.earth/Identity/Account/Register';
-  var PLATFORM_URL='https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F';
-  function pageId(id){return (id||'home').toLowerCase().replace(/^#/,'');}
-  function go(id){
-    id=pageId(id);
-    if(id==='request' || id==='demo'){ window.location.href=REQUEST_URL; return; }
-    if(id==='platform-external'){ window.location.href=PLATFORM_URL; return; }
-    if(id==='implementers') id='ngos';
-    document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
-    var page=document.getElementById('page-'+id) || document.getElementById(id);
-    if(page) page.classList.add('active');
-    document.body.setAttribute('data-current-page',id);
-    document.body.classList.toggle('ft-page-home',id==='home');
-    document.body.classList.toggle('ft-page-inner',id!=='home');
-    var menu=document.getElementById('mobileMenu'); if(menu) menu.classList.remove('open');
-    if(history.replaceState) history.replaceState(null,'','#'+id);
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-  window.setPage=go;
-  document.addEventListener('click',function(e){
-    var t=e.target.closest('[data-page]');
-    if(!t) return;
-    e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-    go(t.getAttribute('data-page'));
-  },true);
+/* [router-consolidation 2026-07] removed: ft-final-behaviour-v2 go()+setPage+capture listener */
   function fixUseCaseImages(){
     var investor=document.querySelector('#page-investors .usecase-visual img');
     if(investor){ investor.src='assets/embedded_020_opt.webp'; investor.alt='Agroforestry investor and field planning discussion'; }
     var impl=document.querySelector('#page-ngos .usecase-visual img');
     if(impl){ impl.src='assets/embedded_023_opt.webp'; impl.alt='Implementers working with farmers in an agroforestry landscape'; }
   }
-  function activateFromHash(){
-    var id=pageId(location.hash||'home');
-    if(!id) id='home';
-    if(id==='request') return;
-    go(id);
-  }
+/* [router-consolidation 2026-07] removed: ft-final-behaviour-v2 activateFromHash */
   document.addEventListener('DOMContentLoaded',function(){
     fixUseCaseImages();
     document.querySelectorAll('img').forEach(function(img,i){
@@ -6235,34 +6094,12 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
       img.decoding='async';
       img.onerror=function(){ this.style.opacity='.15'; this.alt=this.alt || 'Image loading issue'; };
     });
-    activateFromHash();
   });
 })();
 </script>
 <script id="ft-v4-final-script">
 (function(){
-  const requestUrl='https://tool.farmtree.earth/Identity/Account/Register';
-  const platformUrl='https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F';
-  function go(page){
-    if(!page) return;
-    if(page==='request'){ window.location.href=requestUrl; return; }
-    if(page==='platform-external'){ window.location.href=platformUrl; return; }
-    if(typeof window.showPage==='function'){ window.showPage(page); }
-    else { location.hash=page; }
-  }
-  function bindButtons(){
-    document.querySelectorAll('[data-page]').forEach(el=>{
-      if(el.dataset.v4Bound) return;
-      el.dataset.v4Bound='1';
-      el.addEventListener('click',function(e){
-        const page=this.dataset.page;
-        if(page==='request' || page==='platform-external') { e.preventDefault(); go(page); }
-      });
-    });
-    /* (CTA cleanup 2026-07) removed: per-element listeners matched by visible
-       text ('request a demo' etc.) and by the .pill.tech class. Demo and
-       platform CTAs are handled solely by ft-cta-actions-v1. */
-  }
+/* [router-consolidation 2026-07] removed: v4 go() + bindButtons [data-page] listeners */
   // Preload hero images to reduce first-load lag
   function preloadHero(){
     document.querySelectorAll('.hero-img, .hero img').forEach(img=>{ if(img.src){ const pre=new Image(); pre.src=img.src; } });
@@ -6294,7 +6131,7 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
   function capture(){ nodes().forEach(n=>{ if(!originals.has(n)) originals.set(n,n.nodeValue); }); }
   function apply(lang){ capture(); document.documentElement.lang=lang; const lab=document.getElementById('langLabel'); if(lab) lab.textContent=lang.toUpperCase(); document.querySelectorAll('.lang-option').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang)); nodes().forEach(n=>{ const o=originals.get(n)||n.nodeValue; if(lang==='en'){n.nodeValue=o;return;} const t=o.trim(); const r=(dict[lang]||{})[t]; if(r){ const pre=(o.match(/^\s*/)||[''])[0], suf=(o.match(/\s*$/)||[''])[0]; n.nodeValue=pre+r+suf; }}); }
   window.applyFarmTreeLanguage=apply;
-  document.addEventListener('DOMContentLoaded',()=>{ capture(); bindButtons(); preloadHero(); document.querySelectorAll('.lang-option,[data-lang]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();apply(b.dataset.lang||'en');})); });
+  document.addEventListener('DOMContentLoaded',()=>{ capture(); preloadHero(); document.querySelectorAll('.lang-option,[data-lang]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();apply(b.dataset.lang||'en');})); });
 })();
 </script>
 <style id="ft-inner-pages-hide-home-sections-final">
@@ -6314,78 +6151,7 @@ main > section.page:not(.active) {
 }
 </style>
 <script id="ft-inner-pages-hide-home-sections-final-script">
-(function(){
-  var innerPageIds = {
-    services:true, track:true, videos:true, cocoa:true, team:true, vacancies:true, contact:true, request:true, acknowledgements:true, licenses:true,
-    platform:true, investors:true, dfi:true, ngos:true, pricing:true, 'case-giz':true, 'case-acorn':true, 'case-cocoa':true, 'case-nyando':true
-  };
-  function normalize(id){
-    id = (id || 'home').replace(/^#/, '').trim().toLowerCase();
-    if(!id || id === '/' || id === 'homepage' || id === 'main') return 'home';
-    if(id === 'solutions') return 'services';
-    if(id === 'track-record') return 'track';
-    if(id === 'user-videos') return 'videos';
-    if(id === 'cocoa-focus') return 'cocoa';
-    if(id === 'contact-us') return 'contact';
-    if(id === 'request-demo') return 'request';
-    return id;
-  }
-  function currentPage(){
-    var fromBody = document.body && document.body.getAttribute('data-current-page');
-    var fromHash = (window.location.hash || '').replace('#','');
-    return normalize(fromBody || fromHash || 'home');
-  }
-  function apply(){
-    if(!document.body) return;
-    var page = currentPage();
-    if(!document.getElementById('page-' + page)) page = 'home';
-    var isHome = page === 'home';
-    document.body.setAttribute('data-current-page', page);
-    document.body.classList.toggle('ft-current-home', isHome);
-    document.body.classList.toggle('ft-current-inner', !isHome);
-    document.body.classList.toggle('ft-page-home', isHome);
-    document.body.classList.toggle('ft-page-inner', !isHome);
-
-    document.querySelectorAll('main > section:not(.page)').forEach(function(section){
-      section.style.display = isHome ? '' : 'none';
-      section.setAttribute('aria-hidden', isHome ? 'false' : 'true');
-    });
-    document.querySelectorAll('main > section.page').forEach(function(section){
-      var active = section.id === 'page-' + page;
-      section.classList.toggle('active', active);
-      section.style.display = active ? '' : 'none';
-    });
-  }
-
-  var oldSetPage = window.setPage;
-  window.setPage = function(id){
-    var page = normalize(id);
-    if(page === 'request'){ window.location.href = 'https://tool.farmtree.earth/Identity/Account/Register'; return; }
-    if(page === 'platform-external'){ window.location.href = 'https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F'; return; }
-    if(typeof oldSetPage === 'function') oldSetPage(page);
-    document.body.setAttribute('data-current-page', page);
-    if(history.replaceState) history.replaceState(null, '', '#' + page);
-    apply();
-    window.scrollTo(0,0);
-  };
-
-  window.addEventListener('hashchange', function(){ setTimeout(apply, 0); });
-  document.addEventListener('click', function(e){
-    var trigger = e.target.closest && e.target.closest('[data-page]');
-    if(!trigger) return;
-    var page = normalize(trigger.getAttribute('data-page'));
-    if(innerPageIds[page] || page === 'home') {
-      setTimeout(apply, 0);
-      setTimeout(apply, 120);
-    }
-  }, true);
-  document.addEventListener('DOMContentLoaded', function(){
-    if(location.hash) document.body.setAttribute('data-current-page', normalize(location.hash));
-    apply();
-    setTimeout(apply, 250);
-  });
-  apply();
-})();
+/* [router-consolidation 2026-07] removed: duplicate apply()/setPage wrapper with reconciliation timers */
 </script>
 <style id="ft-stable-router-v6-css">
 main > section.page[hidden], main > section[hidden] { display:none !important; }
@@ -6395,22 +6161,7 @@ body.ft-page-inner main > section.page:not(.active),
 body[data-current-page]:not([data-current-page="home"]) main > section.page:not(.active) { display:none !important; }
 </style>
 <script id="ft-stable-router-v6-final-reconcile">
-(function(){
-  function norm(id){
-    id=String(id||'home').replace(/^#/,'').trim().toLowerCase();
-    var m={'solutions':'services','track-record':'track','user-videos':'videos','cocoa-focus':'cocoa','contact-us':'contact','request-demo':'request','implementers':'ngos'};
-    return m[id]||id||'home';
-  }
-  function reconcile(){
-    if(typeof window.ftRenderPage === 'function'){
-      var id = norm(location.hash || document.body.getAttribute('data-current-page') || 'home');
-      if(id==='request') id='home';
-      window.ftRenderPage(id,{updateHash:true, instant:true, scroll:false});
-    }
-  }
-  document.addEventListener('DOMContentLoaded', function(){ setTimeout(reconcile, 80); setTimeout(reconcile, 400); });
-  window.addEventListener('load', function(){ setTimeout(reconcile, 100); });
-})();
+/* [router-consolidation 2026-07] removed: ft-stable-router-v6-final-reconcile timers */
 </script>
 <style id="ft-v7-styles">
 #page-home .section .lead[style*="max-width:900px"]{margin-top:24px!important;}
@@ -6864,10 +6615,7 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
       if(history.replaceState) history.replaceState(null, '', '#contact');
       openModal();
     }
-    const currentHash = (location.hash || '').replace('#','');
-    if(currentHash === 'blog' && typeof window.ftRenderPage === 'function'){
-      setTimeout(function(){ window.ftRenderPage('blog',{updateHash:true, instant:true, scroll:false}); }, 120);
-    }
+/* [router-consolidation 2026-07] removed: blog initial-load nudge */
     const contactBtn = document.querySelector('#page-contact .outline-btn, #page-contact [data-ftmodal="request"]');
     if(contactBtn){ contactBtn.classList.add('ft-contact-inline-btn'); }
   }
