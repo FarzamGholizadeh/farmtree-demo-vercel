@@ -11941,7 +11941,13 @@ window.ftSubmitLead = function(payload){
 /* semantic heading helpers (2026-07-15): identical visuals, correct order */
 .ft-kicker-h{margin:0 0 20px;font-size:13px;}
 .ft-visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
-/* FAQ heading: keep 'Questions about agroforestry modelling?' on ONE line
+/* Base Technology diagram->cards connectors (decorative SVG overlay) */
+.ft-connect-host{position:relative;}
+.ft-connect-layer{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:1;}
+.ft-connect-path{fill:none;stroke:rgba(27,77,43,.28);stroke-width:1.6;stroke-linecap:round;}
+.ft-connect-pulse{fill:#C9A24B;filter:drop-shadow(0 0 3px rgba(201,162,75,.7));}
+@media (prefers-reduced-motion: reduce){ .ft-connect-pulse{display:none;} }
+/* FAQ heading: keep 'Questions about FarmTree modelling?' on ONE line
    at desktop. The heading lives in a ~738px grid column; the previous
    560px cap + 4.3vw size forced 2-3 wrapped lines. At >=1024px we free
    the full column width and size-to-fit via clamp (max one-line size
@@ -12028,5 +12034,91 @@ textarea:focus-visible,
   outline-offset:2px;
 }
 </style>
+<script id="ft-basetech-connectors">
+/* Responsive SVG connectors from the Base Technology diagram to its four
+   method cards, with a calm staggered light pulse. Progressive enhancement:
+   no JS -> no connectors, section unaffected. Geometry from live bounding
+   boxes; debounced resize; SMIL pause when offscreen; reduced-motion drops
+   the pulses (paths stay). Decorative: aria-hidden, no pointer events. */
+(function(){
+  var SVGNS='http://www.w3.org/2000/svg';
+  function init(){
+    var section=document.querySelector('.ft-p6-grid-bg');
+    if(!section) return;
+    var diagram=section.querySelector('#diagram');
+    var grid=section.querySelector('.ft-method-grid');
+    if(!diagram||!grid) return;
+    var cards=Array.prototype.slice.call(grid.querySelectorAll('article'));
+    if(cards.length!==4) return;
+    var host=diagram.closest('.container')||section;
+    host.classList.add('ft-connect-host');
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var svg=document.createElementNS(SVGNS,'svg');
+    svg.setAttribute('class','ft-connect-layer');
+    svg.setAttribute('aria-hidden','true');
+    svg.setAttribute('focusable','false');
+    svg.setAttribute('preserveAspectRatio','none');
+    var paths=[];
+    for(var i=0;i<4;i++){
+      var p=document.createElementNS(SVGNS,'path');
+      p.setAttribute('class','ft-connect-path');
+      p.setAttribute('id','ftConnP'+i);
+      svg.appendChild(p); paths.push(p);
+    }
+    if(!reduce){
+      for(var j=0;j<4;j++){
+        var c=document.createElementNS(SVGNS,'circle');
+        c.setAttribute('class','ft-connect-pulse'); c.setAttribute('r','3.2');
+        var am=document.createElementNS(SVGNS,'animateMotion');
+        am.setAttribute('dur','2.8s'); am.setAttribute('repeatCount','indefinite');
+        am.setAttribute('begin',(j*0.6)+'s'); am.setAttribute('calcMode','spline');
+        am.setAttribute('keyTimes','0;1'); am.setAttribute('keySplines','0.4 0 0.2 1');
+        var mp=document.createElementNS(SVGNS,'mpath');
+        mp.setAttributeNS('http://www.w3.org/1999/xlink','href','#ftConnP'+j);
+        mp.setAttribute('href','#ftConnP'+j);
+        am.appendChild(mp); c.appendChild(am); svg.appendChild(c);
+      }
+    }
+    host.appendChild(svg);
+    function draw(){
+      var cr=host.getBoundingClientRect();
+      if(!cr.width||!cr.height) return;
+      svg.setAttribute('viewBox','0 0 '+cr.width+' '+cr.height);
+      svg.setAttribute('width',cr.width); svg.setAttribute('height',cr.height);
+      var dr=diagram.getBoundingClientRect();
+      var startY=dr.bottom-cr.top;
+      var centerX=dr.left+dr.width/2-cr.left;
+      var sameRow=Math.abs(cards[0].getBoundingClientRect().top-cards[3].getBoundingClientRect().top)<4;
+      for(var i=0;i<4;i++){
+        var r=cards[i].getBoundingClientRect();
+        var endX=r.left+r.width/2-cr.left, endY=r.top-cr.top, d;
+        if(sameRow){
+          var sx=centerX+(i-1.5)*(dr.width*0.11);
+          var midY=(startY+endY)/2;
+          d='M'+sx.toFixed(1)+' '+startY.toFixed(1)+' C '+sx.toFixed(1)+' '+midY.toFixed(1)+' '+endX.toFixed(1)+' '+midY.toFixed(1)+' '+endX.toFixed(1)+' '+endY.toFixed(1);
+        }else{
+          d='M'+endX.toFixed(1)+' '+(endY-20).toFixed(1)+' L '+endX.toFixed(1)+' '+endY.toFixed(1);
+        }
+        paths[i].setAttribute('d',d);
+      }
+    }
+    var t, redraw=function(){clearTimeout(t);t=setTimeout(draw,120);};
+    window.addEventListener('resize',redraw);
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(draw);
+    var img=diagram.querySelector('img'); if(img&&!img.complete) img.addEventListener('load',draw);
+    /* ResizeObserver on the host catches image-load/font reflow -> pixel-exact
+       connectors without continuous polling (debounced) */
+    if('ResizeObserver' in window){ new ResizeObserver(redraw).observe(host); }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){es.forEach(function(e){
+        if(e.isIntersecting){ draw(); if(!reduce){ try{svg.unpauseAnimations();}catch(err){} } }
+        else if(!reduce){ try{svg.pauseAnimations();}catch(err){} }
+      });},{rootMargin:'200px'}).observe(section);
+    }
+    draw(); setTimeout(draw,300); setTimeout(draw,900);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+</script>
 </body>
 </html>
