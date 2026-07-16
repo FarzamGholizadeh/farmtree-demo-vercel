@@ -3939,8 +3939,14 @@ section.ft-about-feedback {
 
     if(options.updateHash !== false){
       var newHash = '#' + id;
-      if(location.hash !== newHash && history.replaceState) history.replaceState(null, '', newHash);
-      else if(location.hash !== newHash) location.hash = newHash;
+      if(location.hash !== newHash){
+        /* user-initiated menu navigation preserves Back/Forward history;
+           initial-load / reconciliation renders keep replaceState */
+        if(options.push === true && history.pushState) history.pushState(null, '', newHash);
+        else if(history.replaceState) history.replaceState(null, '', newHash);
+        else location.hash = newHash;
+      }
+      try{ window.dispatchEvent(new CustomEvent('ft:navigated',{detail:{id:id}})); }catch(err){}
     }
     if(options.scroll !== false){ window.scrollTo({top:0, behavior: options.instant ? 'auto' : 'smooth'}); }
   }
@@ -3961,7 +3967,7 @@ section.ft-about-feedback {
        demo CTAs now use the authoritative data-ft-action="request-demo". */
 
     e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-    render(id, {instant:false});
+    render(id, {instant:false, push: !!trigger.closest('#mobileMenu')});
   }, true);
 
   window.addEventListener('hashchange', function(){
@@ -4896,6 +4902,7 @@ section.ft-about-feedback {
     if(seg) document.title=seg.title+' | FarmTree';
   }
   window.addEventListener('hashchange', title);
+  window.addEventListener('ft:navigated', title);
   title();
 })();
 </script>

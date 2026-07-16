@@ -106,6 +106,14 @@ const SEGMENTS = {
     menuOpen: document.getElementById('mobileMenu').classList.contains('open')
   }));
   A('menu click opens route + closes menu', afterClick.page[0] === 'page-segment-social-enterprise' && !afterClick.menuOpen, JSON.stringify(afterClick));
+  // menu navigation must PUSH history: Back returns to the pre-click route,
+  // Forward re-enters the destination (fails on replaceState semantics)
+  await page.goBack(); await settle(600);
+  const histBack = await page.evaluate(() => ({ hash: location.hash, page: [...document.querySelectorAll('.page.active')].filter(x => getComputedStyle(x).display !== 'none')[0]?.id }));
+  A('menu nav Back returns to previous route', histBack.hash === '#home' && histBack.page === 'page-home', JSON.stringify(histBack));
+  await page.goForward(); await settle(600);
+  const histFwd = await page.evaluate(() => ({ hash: location.hash, page: [...document.querySelectorAll('.page.active')].filter(x => getComputedStyle(x).display !== 'none')[0]?.id }));
+  A('menu nav Forward re-enters route', histFwd.hash === '#segment-social-enterprise' && histFwd.page === 'page-segment-social-enterprise', JSON.stringify(histFwd));
 
   // ---------- SEGMENT PAGES (checks 21-30) ----------
   for (const [slug, title] of Object.entries(SEGMENTS)) {
