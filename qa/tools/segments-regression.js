@@ -1,0 +1,145 @@
+/* Regression suite for the 2026-07 approved changes:
+   footer socials, About proof row + icon, Customer Segments removal,
+   ten segment pages, hamburger-menu segment navigation.
+   Usage: node qa/tools/segments-regression.js [baseUrl]                */
+const puppeteer = require('puppeteer-core');
+const BASE = process.argv[2] || 'http://localhost:8899/index.html';
+const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const REG = 'https://tool.farmtree.earth/Identity/Account/Register';
+const SEGMENTS = {
+  'advisors': 'Consultancy & Agroforestry Advisors',
+  'development-banks-donors': 'Development Banks & Donor Organisations',
+  'ngos-conservation': 'NGOs & Conservation Organisations',
+  'nbs-carbon': 'NbS & Carbon Project Developers',
+  'mrv-esg': 'MRV & ESG Platforms',
+  'government-parastatals': 'Government & Parastatals',
+  'industry-associations': 'Industry Associations & MSPs',
+  'large-agri-corporates': 'Large Agri-Corporates',
+  'social-enterprise': 'Social Enterprise',
+  'implementation-organisations': 'Implementation Organisations'
+};
+
+(async () => {
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+  const failures = [];
+  const A = (name, cond, detail) => { if (!cond) failures.push(`${name}: ${detail}`); };
+  const settle = ms => new Promise(r => setTimeout(r, ms));
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1280, height: 900 });
+  page.on('pageerror', e => failures.push(`pageerror: ${e.message.slice(0, 90)}`));
+
+  // ---------- FOOTER (checks 1-6) ----------
+  await page.goto(`${BASE}#home`, { waitUntil: 'networkidle2' });
+  await settle(1100);
+  const foot = await page.evaluate(() => {
+    const items = [...document.querySelectorAll('.socials > *')];
+    return items.map(el => ({
+      tag: el.tagName, href: el.getAttribute('href'), target: el.getAttribute('target'),
+      rel: el.getAttribute('rel'), label: el.getAttribute('aria-label'), title: el.getAttribute('title'),
+      focusable: el.tabIndex >= 0, svg: !!el.querySelector('svg')
+    }));
+  });
+  A('footer LinkedIn href', foot[0]?.href === 'https://www.linkedin.com/company/farmtree-b-v', JSON.stringify(foot[0]));
+  A('footer YouTube href', foot[1]?.href === 'https://www.youtube.com/@farmtree8168', JSON.stringify(foot[1]));
+  A('footer target/rel', foot[0]?.target === '_blank' && foot[0]?.rel === 'noopener noreferrer' &&
+    foot[1]?.target === '_blank' && foot[1]?.rel === 'noopener noreferrer', JSON.stringify([foot[0], foot[1]]));
+  A('footer accessible names', foot[0]?.label === 'FarmTree on LinkedIn' && foot[1]?.label === 'FarmTree on YouTube', 'labels');
+  A('footer keyboard focusable', foot[0]?.focusable && foot[1]?.focusable, 'tabIndex');
+  A('footer YouTube svg present', foot[1]?.svg === true, 'svg missing');
+  const footMod = await page.evaluate(() => {
+    const a = document.querySelector('.socials a');
+    const ev = new MouseEvent('click', { bubbles: true, cancelable: true, metaKey: true });
+    a.dispatchEvent(ev); return ev.defaultPrevented;
+  });
+  A('footer no JS navigation interference', footMod === false, 'modifier click prevented');
+  await page.bringToFront(); // the modifier-click opened a background tab; rAF freezes on hidden pages
+
+  // ---------- ABOUT (checks 7-11) ----------
+  await page.evaluate(() => document.querySelector('.ft-about-feedback .metrics').scrollIntoView({ block: 'center' }));
+  await settle(1800);  // counter animation completes
+  const about = await page.evaluate(() => ({
+    cards: [...document.querySelectorAll('.ft-about-feedback .metric h3')].map(h => h.textContent.trim()),
+    scienceText: document.querySelectorAll('.ft-about-feedback .metric p')[2]?.textContent.trim(),
+    scienceSvg: !!document.querySelectorAll('.ft-about-feedback .metric-icon')[2]?.querySelector('svg'),
+    stats: [...document.querySelectorAll('.about-proof-stat')].map(s =>
+      s.querySelector('strong').textContent.trim() + '|' + s.querySelector('span').textContent.trim()),
+    overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth
+  }));
+  A('about 3 capability cards', JSON.stringify(about.cards) === JSON.stringify(['+10 KPIs', '50 years', 'Science-based']), JSON.stringify(about.cards));
+  A('about science copy unchanged', about.scienceText === '200+ verified species ready for local calibration and science-backed modelling.', about.scienceText);
+  A('about science icon replaced', about.scienceSvg === true, 'no svg in third metric-icon');
+  A('about 4 proof stats exact', JSON.stringify(about.stats) === JSON.stringify([
+    '+100|Active FarmTree Tool users', '+30|Projects', '+40|Agricultural regions impacted', '+1,000,000|Farmers indirectly reached'
+  ]), JSON.stringify(about.stats));
+  A('about no horizontal overflow', !about.overflow, 'overflow');
+
+  // ---------- HOMEPAGE REMOVAL (checks 12-15) ----------
+  const home = await page.evaluate(() => ({
+    segSection: !!document.getElementById('frank-usecases-pricing'),
+    segCards: document.querySelectorAll('.ft-seg-card').length,
+    segControls: !!document.getElementById('ftSegPrev') || !!document.getElementById('ftSegDots'),
+    faq: !!document.getElementById('faq'), partners: !!document.getElementById('partner-statements'),
+    testimonials: !!document.getElementById('testimonials')
+  }));
+  A('homepage segments section absent', !home.segSection, 'still present');
+  A('homepage no orphaned carousel controls', home.segCards === 0 && !home.segControls, JSON.stringify(home));
+  A('homepage surrounding sections render', home.faq && home.partners && home.testimonials, JSON.stringify(home));
+
+  // ---------- MENU (checks 16-20) ----------
+  await page.evaluate(() => document.getElementById('openMenu').click());
+  await settle(400);
+  const menu = await page.evaluate(() => {
+    const links = [...document.querySelectorAll('.ft-menu-seg-grid [data-page]')];
+    const m = document.getElementById('mobileMenu');
+    return { routes: links.map(l => l.dataset.page), scrollOK: getComputedStyle(m).overflowY !== 'visible' };
+  });
+  A('menu 10 segment links', menu.routes.length === 10, menu.routes.length);
+  A('menu routes correct', Object.keys(SEGMENTS).every(s => menu.routes.includes('segment-' + s)), JSON.stringify(menu.routes));
+  A('menu scrollable', menu.scrollOK, 'overflow visible');
+  await page.evaluate(() => document.querySelector('.ft-menu-seg-grid [data-page="segment-social-enterprise"]').click());
+  await settle(800);
+  const afterClick = await page.evaluate(() => ({
+    page: [...document.querySelectorAll('.page.active')].filter(x => getComputedStyle(x).display !== 'none').map(x => x.id),
+    menuOpen: document.getElementById('mobileMenu').classList.contains('open')
+  }));
+  A('menu click opens route + closes menu', afterClick.page[0] === 'page-segment-social-enterprise' && !afterClick.menuOpen, JSON.stringify(afterClick));
+
+  // ---------- SEGMENT PAGES (checks 21-30) ----------
+  for (const [slug, title] of Object.entries(SEGMENTS)) {
+    await page.goto(`${BASE}#segment-${slug}`, { waitUntil: 'networkidle2' });
+    await settle(650);
+    const st = await page.evaluate(() => {
+      const vis = [...document.querySelectorAll('.page.active')].filter(x => getComputedStyle(x).display !== 'none');
+      const pg = vis[0];
+      return {
+        vis: vis.map(v => v.id), h1: pg?.querySelector('h1')?.textContent.trim(),
+        demo: pg?.querySelector('a[data-ft-action="request-demo"]')?.getAttribute('href'),
+        modalBtn: !!pg?.querySelector('[data-ftmodal="request"]'),
+        outputs: pg ? pg.querySelectorAll('.ft-seg-outputs li').length : 0,
+        context: pg?.querySelector('.ft-seg-section p')?.textContent.length > 60
+      };
+    });
+    A(`#segment-${slug} single active + H1`, st.vis.length === 1 && st.vis[0] === `page-segment-${slug}` && st.h1 === title, JSON.stringify(st));
+    A(`#segment-${slug} demo href`, st.demo === REG, st.demo);
+    A(`#segment-${slug} modal + content`, st.modalBtn && st.outputs === 4 && st.context, JSON.stringify(st));
+  }
+  // refresh persistence + history on the last route
+  await page.reload({ waitUntil: 'networkidle2' }); await settle(700);
+  let cur = await page.evaluate(() => [...document.querySelectorAll('.page.active')].filter(x => getComputedStyle(x).display !== 'none')[0]?.id);
+  A('segment refresh persistence', cur === 'page-segment-implementation-organisations', cur);
+  await page.evaluate(() => { location.hash = 'segment-advisors'; }); await settle(600);
+  await page.goBack(); await settle(600);
+  cur = await page.evaluate(() => [...document.querySelectorAll('.page.active')].filter(x => getComputedStyle(x).display !== 'none')[0]?.id);
+  A('segment history back', cur === 'page-segment-implementation-organisations', cur);
+  await page.goForward(); await settle(600);
+  cur = await page.evaluate(() => [...document.querySelectorAll('.page.active')].filter(x => getComputedStyle(x).display !== 'none')[0]?.id);
+  A('segment history forward', cur === 'page-segment-advisors', cur);
+  // Talk to FarmTree -> modal, no navigation
+  await page.evaluate(() => document.querySelector('.page.active [data-ftmodal="request"]')?.click());
+  await settle(600);
+  A('segment Talk to FarmTree modal', await page.evaluate(() => !!document.getElementById('ftContactModal')?.classList.contains('open')), 'modal closed');
+
+  await browser.close();
+  if (failures.length) { console.error('FAIL:'); failures.forEach(f => console.error(' -', f)); process.exit(1); }
+  console.log('PASS: footer socials, About proof row/icon, segments removal, menu, and all 10 segment pages verified.');
+})().catch(e => { console.error('TEST CRASH:', e.message); process.exit(1); });
