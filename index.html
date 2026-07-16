@@ -11937,6 +11937,19 @@ window.ftSubmitLead = function(payload){
 .ft-track-metrics .metric p{font-size:15px;}
 @media(max-width:1024px){.ft-track-metrics{grid-template-columns:1fr 1fr;gap:22px;}}
 @media(max-width:640px){.ft-track-metrics{grid-template-columns:1fr;gap:18px;}}
+/* FAQ heading: keep 'Questions about agroforestry modelling?' on ONE line
+   at desktop. The heading lives in a ~738px grid column; the previous
+   560px cap + 4.3vw size forced 2-3 wrapped lines. At >=1024px we free
+   the full column width and size-to-fit via clamp (max one-line size
+   measured at 38px incl. letter-spacing). Below 1024px natural wrapping
+   is intentional. Wording untouched, no <br>. */
+@media (min-width:1024px){
+  section#faq .ft-faq-head h2{
+    white-space:nowrap;
+    max-width:none !important;
+    font-size:clamp(34px, 2.6vw, 38px) !important;
+  }
+}
 /* Homepage section-background differentiation (semantic tokens, 2026-07-15)
    Sequence: Base Technology = light warm ivory, References = pale FarmTree
    green, Use Cases = warm sand. All AA-verified (ink >=12:1, muted >=4.6:1). */
