@@ -4683,6 +4683,193 @@ section.ft-about-feedback {
 </section>
 <section class="page" id="page-blog"></section>
 </main>
+
+<style id="ft-segment-pages-css">
+/* Customer-segment pages: reuse the FarmTree token system; template-driven */
+.ft-seg-hero{background:#0b3d2c;color:#fff;padding:150px 0 64px;}
+.ft-seg-hero .ft-seg-wrap{width:min(1180px,92vw);margin:0 auto;}
+.ft-seg-hero h1{font-size:clamp(34px,4.6vw,62px);line-height:1.02;letter-spacing:-.045em;margin:14px 0 18px;max-width:820px;}
+.ft-seg-hero p{max-width:640px;font-size:18px;line-height:1.7;color:rgba(255,255,255,.85);margin:0 0 26px;}
+.ft-seg-wrap{width:min(1180px,92vw);margin:0 auto;}
+.ft-seg-section{padding:64px 0;}
+.ft-seg-section.alt{background:#fff;}
+.ft-seg-section h2{font-size:clamp(26px,3vw,40px);letter-spacing:-.03em;color:#163126;margin:10px 0 14px;max-width:760px;}
+.ft-seg-section > .ft-seg-wrap > p{max-width:720px;color:#5C7067;line-height:1.75;}
+.ft-seg-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:24px;}
+.ft-seg-cards article{background:#fff;border:1px solid rgba(16,47,35,.10);border-radius:20px;padding:22px;box-shadow:0 10px 30px rgba(16,45,30,.06);text-align:left;}
+.ft-seg-section.alt .ft-seg-cards article{background:#FBF9F3;}
+.ft-seg-cards h3{margin:0 0 8px;font-size:18px;color:#1B4D2B;}
+.ft-seg-cards p{margin:0;font-size:14.5px;line-height:1.6;color:#5C7067;}
+.ft-seg-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;padding:0;list-style:none;}
+.ft-seg-chips li{border:1px solid rgba(201,162,75,.4);background:rgba(201,162,75,.08);color:#163126;border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:700;}
+.ft-seg-outputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px;padding:0;list-style:none;}
+.ft-seg-outputs li{background:rgba(255,255,255,.6);border:1px solid rgba(16,47,35,.10);border-radius:14px;padding:14px 16px;font-size:14.5px;color:#163126;font-weight:700;}
+.ft-seg-cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+.ft-seg-hero .cta-link{font-size:13.3333px;}
+.ft-seg-final{background:#0b3d2c;color:#fff;text-align:center;padding:72px 0;}
+.ft-seg-final h2{color:#fff;margin:0 auto 12px;}
+.ft-seg-final p{max-width:620px;margin:0 auto 24px;color:rgba(255,255,255,.8);line-height:1.7;}
+.ft-seg-final .ft-seg-cta-row{justify-content:center;}
+@media(max-width:760px){.ft-seg-hero{padding:120px 0 48px;}.ft-seg-section{padding:44px 0;}}
+</style>
+<script id="ft-segment-pages">
+/* Customer-segment pages: one reusable template rendered from structured
+   data. Injected synchronously at parse time so the authoritative router
+   resolves #segment-* routes on direct load, refresh and history nav.
+   The homepage carousel content that previously summarised these
+   segments is superseded by these pages (archive in qa/). */
+(function(){
+  var REG='https://tool.farmtree.earth/Identity/Account/Register';
+  var S=[
+   {slug:'advisors',short:'Advisors',title:'Consultancy & Agroforestry Advisors',
+    value:'Add science-based agroforestry modelling to advisory work and give clients clearer scenario comparisons they can act on.',
+    context:'Advisors need to compare land-use and agroforestry options, explain long-term costs and benefits, and translate technical assumptions into credible client recommendations.',
+    helps:[['Baseline vs intervention','Compare a client’s current land use against agroforestry scenarios with documented assumptions.'],
+           ['Local calibration','Work with locally calibrated species and climate assumptions rather than generic defaults.'],
+           ['Multi-indicator projections','Show production, carbon, water and financial projections side by side.'],
+           ['Sensitivity & comparison','Test how outcomes shift over the long term when key assumptions change.']],
+    caps:['agroforestry scenario comparison','production projections','carbon projections','farmer income','financial planning','long-term scenario modelling'],
+    outputs:['Scenario comparison','Farm or project plan','Projection summary','Client-ready evidence package'],
+    flow:'Advisors typically enter at step one of the FarmTree workflow — turning project context and assumptions into credible plans — and hand clients evidence they can carry through implementation and review.'},
+   {slug:'development-banks-donors',short:'Development Banks & Donors',title:'Development Banks & Donor Organisations',
+    value:'Build a stronger evidence base for programme and portfolio investment decisions.',
+    context:'Development finance and donor teams need comparable evidence across projects, credible long-term assumptions and visibility into both environmental outcomes and farmer value.',
+    helps:[['Programme scenarios','Structure programme investment scenarios on consistent, documented assumptions.'],
+           ['Farmer return visibility','Project long-term farmer returns alongside environmental indicators.'],
+           ['Risk & sensitivity','Compare risk and sensitivity across interventions before committing funds.'],
+           ['Comparable reporting','Report across projects and portfolios with the same indicator logic.']],
+    caps:['portfolio comparison','long-term scenario modelling','carbon projections','farmer income','financial planning','reporting'],
+    outputs:['Programme investment case','Portfolio scenario comparison','Long-term cost-benefit projection','Decision-ready reporting package'],
+    flow:'Programme teams use the FarmTree workflow from investment planning through review — the same evidence base serves appraisal, monitoring and reporting.'},
+   {slug:'ngos-conservation',short:'NGOs & Conservation',title:'NGOs & Conservation Organisations',
+    value:'Plan, implement and report on agroforestry impact with stronger evidence.',
+    context:'NGOs and conservation organisations need to connect field realities, farmer priorities and environmental objectives with funder-ready planning and reporting.',
+    helps:[['Local scenarios','Build agroforestry scenarios grounded in local field realities.'],
+           ['Livelihoods in focus','Keep farmer livelihood considerations explicit in every plan.'],
+           ['Environmental indicators','Track carbon, water, soil and production in one framework.'],
+           ['Funder communication','Support baselines, monitoring logic and funder-facing reporting.']],
+    caps:['agroforestry scenario comparison','carbon projections','hydrology','soil fertility','farmer income','project monitoring','reporting'],
+    outputs:['Project scenario plan','Environmental and livelihood projection','Monitoring framework input','Funder-facing impact summary'],
+    flow:'NGO teams move through the full FarmTree workflow — plan, implement, review, report — with one consistent evidence base from proposal to funder report.'},
+   {slug:'nbs-carbon',short:'NbS & Carbon Developers',title:'NbS & Carbon Project Developers',
+    value:'Connect agroforestry design, carbon potential and long-term project viability within one scenario framework.',
+    context:'Nature-based solutions and carbon project developers need to compare system designs while considering carbon, farmer economics, production and implementation realities together.',
+    helps:[['Species-level carbon','Project biomass and carbon at species level, under local conditions.'],
+           ['Design comparison','Compare baseline and intervention designs before field commitment.'],
+           ['Farmer economics','Model farmer income and cash flow alongside carbon outcomes.'],
+           ['Monitoring preparation','Prepare the projection logic that monitoring and reporting build on.']],
+    caps:['carbon projections','agroforestry scenario comparison','farmer income','long-term scenario modelling','project monitoring','reporting'],
+    outputs:['Carbon scenario comparison','Agroforestry system design evidence','Farmer value projection','Project investment scenario'],
+    flow:'Developers use FarmTree from scenario design through performance review — the workflow keeps carbon, production and farmer value connected across the project lifecycle.'},
+   {slug:'mrv-esg',short:'MRV & ESG Platforms',title:'MRV & ESG Platforms',
+    value:'Connect observed field information with forward-looking agroforestry impact projections.',
+    context:'MRV and ESG systems often capture current or historical field data but require structured modelling to understand future performance and compare interventions.',
+    helps:[['Assumption integration','Bring field assumptions into a structured, documented model.'],
+           ['Multi-KPI modelling','Model production, carbon, water and economics in one scenario.'],
+           ['Projected vs observed','Compare projected trajectories with observed performance over time.'],
+           ['Consistent reporting','Keep indicators consistent across locations and projects.']],
+    caps:['long-term scenario modelling','portfolio comparison','carbon projections','hydrology','project monitoring','reporting'],
+    outputs:['Scenario projection layer','Indicator mapping','Portfolio comparison','Reporting-ready model outputs'],
+    flow:'FarmTree’s workflow complements monitoring systems: projections set the forward view that observed field data is compared against at review.'},
+   {slug:'government-parastatals',short:'Government & Parastatals',title:'Government & Parastatals',
+    value:'Support agroforestry policy, programme design and landscape investment with measurable scenarios.',
+    context:'Public-sector organisations need to compare interventions across regions, coordinate multiple stakeholders and understand long-term environmental, economic and farmer outcomes.',
+    helps:[['Regional comparison','Compare interventions across regions on the same assumptions.'],
+           ['Landscape planning','Plan programmes at landscape level with measurable indicators.'],
+           ['Farmer & environment','Keep farmer value and environmental outcomes visible together.'],
+           ['Stakeholder evidence','Give stakeholders comparable evidence for coordination decisions.']],
+    caps:['agroforestry scenario comparison','portfolio comparison','long-term scenario modelling','farmer income','carbon projections','reporting'],
+    outputs:['Regional scenario overview','Programme investment framework','Policy decision-support evidence','Landscape reporting summary'],
+    flow:'Public programmes apply the FarmTree workflow across regions — one planning and reporting logic that stakeholders can share.'},
+   {slug:'industry-associations',short:'Industry Associations & MSPs',title:'Industry Associations & MSPs',
+    value:'Create shared agroforestry evidence for value-chain and landscape collaboration.',
+    context:'Industry associations and multi-stakeholder platforms need common assumptions, comparable indicators and a shared evidence base across organisations.',
+    helps:[['Shared scenarios','Define scenarios once and share them across member organisations.'],
+           ['Comparable indicators','Keep indicators consistent across the value chain or landscape.'],
+           ['Decision support','Support member and stakeholder decisions with one evidence base.'],
+           ['Scalable reporting','Structure reporting that scales across programmes and partners.']],
+    caps:['agroforestry scenario comparison','portfolio comparison','production projections','carbon projections','reporting'],
+    outputs:['Shared scenario framework','Stakeholder comparison','Landscape planning evidence','Multi-partner reporting structure'],
+    flow:'Associations anchor the FarmTree workflow as common ground: shared scenario design, coordinated implementation and comparable review across members.'},
+   {slug:'large-agri-corporates',short:'Large Agri-Corporates',title:'Large Agri-Corporates',
+    value:'Connect agroforestry planning with supply-chain sustainability and farmer economics.',
+    context:'Large agricultural companies need to compare agroforestry interventions across sourcing regions while understanding production, farmer value, carbon, water and implementation implications.',
+    helps:[['Sourcing-region scenarios','Compare interventions across sourcing regions consistently.'],
+           ['Farmer income & production','Project supplier and farmer outcomes next to volumes.'],
+           ['Environmental indicators','Track carbon and water implications of sourcing decisions.'],
+           ['Portfolio view','Roll regional scenarios up into portfolio-level comparisons.']],
+    caps:['agroforestry scenario comparison','production projections','farmer income','carbon projections','hydrology','portfolio comparison','reporting'],
+    outputs:['Sourcing-region scenario comparison','Supplier or farmer value projection','Sustainability programme evidence','Portfolio-level reporting input'],
+    flow:'Corporate teams use the FarmTree workflow to move from sourcing-region planning to programme review, keeping farmer economics inside the sustainability case.'},
+   {slug:'social-enterprise',short:'Social Enterprise',title:'Social Enterprise',
+    value:'Evaluate farmer income and environmental outcomes within one agroforestry business model.',
+    context:'Social enterprises need to demonstrate that an intervention can support farmer livelihoods while producing credible environmental and financial value.',
+    helps:[['Farmer income first','Model farmer income as a first-class outcome of the business model.'],
+           ['Costs, labour, revenue','Understand production, costs and labour requirements together.'],
+           ['Environmental value','Track carbon and environmental indicators next to the economics.'],
+           ['Long-term viability','Test the business model over long-term scenarios.']],
+    caps:['farmer income','production projections','labour requirements','financial planning','carbon projections','long-term scenario modelling'],
+    outputs:['Farmer business-case comparison','Long-term cash-flow projection','Impact scenario','Investment discussion material'],
+    flow:'Social enterprises run the FarmTree workflow around the farmer business case — plan, pilot, review and refine with the same scenario logic.'},
+   {slug:'implementation-organisations',short:'Implementation Organisations',title:'Implementation Organisations',
+    value:'Turn field knowledge and operational plans into fundable, measurable agroforestry scenarios.',
+    context:'Implementation teams understand local realities but need a structured way to translate field knowledge into plans, investment cases and reporting.',
+    helps:[['Local definitions','Define baselines and interventions from real field knowledge.'],
+           ['Field-data assumptions','Feed field data and species assumptions into the model.'],
+           ['Scenario comparison','Compare implementation options before committing resources.'],
+           ['Monitoring logic','Set up the projection logic that project monitoring reports against.']],
+    caps:['agroforestry scenario comparison','production projections','farmer income','soil fertility','project monitoring','reporting'],
+    outputs:['Implementation scenario','Field-informed farm plan','Projected project outcomes','Reporting input for funders and programme partners'],
+    flow:'Implementation teams live in the middle of the FarmTree workflow — turning plans into field action and field learning back into better scenarios and reports.'}
+  ];
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function page(d){
+    var caps=d.caps.map(function(c){return '<li>'+esc(c)+'</li>';}).join('');
+    var outs=d.outputs.map(function(o){return '<li>'+esc(o)+'</li>';}).join('');
+    var cards=d.helps.map(function(h){return '<article><h3>'+esc(h[0])+'</h3><p>'+esc(h[1])+'</p></article>';}).join('');
+    return '<section class="page" id="page-segment-'+d.slug+'">'
+      +'<div class="ft-seg-hero"><div class="ft-seg-wrap">'
+      +'<span class="ft-section-label ft-label-on-dark">Customer segment</span>'
+      +'<h1>'+esc(d.title)+'</h1><p>'+esc(d.value)+'</p>'
+      +'<div class="ft-seg-cta-row"><a class="cta-link" data-ft-action="request-demo" href="'+REG+'">Request a demo ↗</a>'
+      +'<button type="button" class="cta-link secondary" data-ftmodal="request">Talk to FarmTree</button></div>'
+      +'</div></div>'
+      +'<div class="ft-seg-section"><div class="ft-seg-wrap"><span class="ft-section-label">Their decision context</span>'
+      +'<h2>The decisions this work has to support</h2><p>'+esc(d.context)+'</p></div></div>'
+      +'<div class="ft-seg-section alt"><div class="ft-seg-wrap"><span class="ft-section-label">How FarmTree helps</span>'
+      +'<h2>Where FarmTree fits in</h2><div class="ft-seg-cards">'+cards+'</div></div></div>'
+      +'<div class="ft-seg-section"><div class="ft-seg-wrap"><span class="ft-section-label">What they can work with</span>'
+      +'<h2>FarmTree capability areas used by this segment</h2><ul class="ft-seg-chips">'+caps+'</ul></div></div>'
+      +'<div class="ft-seg-section alt"><div class="ft-seg-wrap"><span class="ft-section-label">Typical outputs</span>'
+      +'<h2>What this work typically produces</h2><ul class="ft-seg-outputs">'+outs+'</ul></div></div>'
+      +'<div class="ft-seg-section"><div class="ft-seg-wrap"><span class="ft-section-label">Relevant workflow</span>'
+      +'<h2>Connected to the FarmTree workflow</h2><p>'+esc(d.flow)+'</p></div></div>'
+      +'<div class="ft-seg-final"><div class="ft-seg-wrap">'
+      +'<h2>Ready to see it on your own case?</h2><p>Request a demo, or start a conversation with the FarmTree team about your context and evidence needs.</p>'
+      +'<div class="ft-seg-cta-row"><a class="cta-link" data-ft-action="request-demo" href="'+REG+'">Request a demo ↗</a>'
+      +'<button type="button" class="cta-link secondary" data-ftmodal="request">Talk to FarmTree</button></div>'
+      +'</div></div>'
+      +'</section>';
+  }
+  var main=document.querySelector('main');
+  if(main){
+    var html=S.map(page).join('');
+    main.insertAdjacentHTML('beforeend', html);
+  }
+  window.FT_SEGMENTS = S.map(function(d){ return {slug:d.slug, short:d.short, title:d.title}; });
+  /* document title per segment page (UI refresh on route change only) */
+  function title(){
+    var id=(location.hash||'').replace('#','');
+    var m=id.match(/^segment-(.+)$/);
+    if(!m) return;
+    var seg=S.filter(function(x){return x.slug===m[1];})[0];
+    if(seg) document.title=seg.title+' | FarmTree';
+  }
+  window.addEventListener('hashchange', title);
+  title();
+})();
+</script>
+
 <footer class="footer">
 <div class="container">
 <div class="footer-top"><div class="kicker">Take action</div><h2>Join us in growing better agroforestry decisions.</h2><a class="cta-link" data-ft-action="request-demo" href="https://tool.farmtree.earth/Identity/Account/Register">Request a FarmTree demo ↗</a></div>
