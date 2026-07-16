@@ -4116,7 +4116,7 @@ section.ft-about-feedback {
 <div class="container ft-u-center">
 <div class="kicker">Base technology</div><h2 class="big-title">Rethinking how agroforestry projects are planned and financed.</h2>
 <p class="lead ft-centered-lead">FarmTree's base technology connects site information, climate, soil and species data into a science-based methodology for projections and reporting.</p>
-<div class="diagram" id="diagram"><figure class="ft-simple-diagram ft-final-ecosystem"><img loading="lazy" decoding="async" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection" src="assets/home-ecosystem-final.jpg"/></figure></div>
+<div class="diagram" id="diagram"><figure class="ft-simple-diagram ft-final-ecosystem"><img loading="lazy" decoding="async" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection" src="assets/base-technology/home-ecosystem-current-brand.webp"/></figure></div>
 <div class="ft-method-grid">
 <article><div class="ft-p6-method-num">01</div><h3>Find &amp; define</h3><p>Identify the baseline, what is on the plot, and the intervention that is planned.</p></article>
 <article><div class="ft-p6-method-num">02</div><h3>Connect</h3><p>FarmTree Model links climate, soil and species data and runs the scenario.</p></article>
@@ -5037,7 +5037,7 @@ document.querySelectorAll('.hero-dot').forEach(function(dot, i) {
 
 /* Kick off the first slide immediately (sets progress bar + starts timer) */
 ftHeroGo(0, false);
-document.getElementById('diagram').innerHTML = '<figure class="ft-simple-diagram" aria-label="FarmTree model system diagram"><img loading="lazy" decoding="async" src="assets/home-ecosystem-v10.ll.webp" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"></figure>';
+document.getElementById('diagram').innerHTML = '<figure class="ft-simple-diagram" aria-label="FarmTree model system diagram"><img loading="lazy" decoding="async" src="assets/base-technology/home-ecosystem-current-brand.webp" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"></figure>';
 setLang('en');
 </script>
 <script>
@@ -6558,7 +6558,7 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
     if(!target) return;
     target.innerHTML = `
       <figure class="ft-simple-diagram" aria-label="FarmTree model system diagram">
-        <img loading="lazy" decoding="async" src="assets/home-ecosystem-v10.ll.webp" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"/>
+        <img loading="lazy" decoding="async" src="assets/base-technology/home-ecosystem-current-brand.webp" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"/>
       </figure>`;
   }
 
@@ -7101,7 +7101,7 @@ body[data-current-page]:not([data-current-page="home"]) main > section.page:not(
     if(!diagram) return;
     diagram.innerHTML = `
       <figure class="ft-simple-diagram ft-final-ecosystem" aria-label="FarmTree model system diagram">
-        <img loading="lazy" decoding="async" src="assets/home-ecosystem-final.jpg" alt="FarmTree model infographic showing site information, automatic upload, species database, impact monitoring and impact projection"/>
+        <img loading="lazy" decoding="async" src="assets/base-technology/home-ecosystem-current-brand.webp" alt="FarmTree model infographic showing site information, automatic upload, species database, impact monitoring and impact projection"/>
       </figure>`;
   }
 
@@ -8927,7 +8927,7 @@ a:focus:not(:focus-visible) { outline: none; }
   function setSimpleDiagram(){
     const target = document.getElementById('diagram');
     if(!target) return;
-    target.innerHTML = '<figure class="ft-simple-diagram" aria-label="FarmTree model system diagram"><img loading="lazy" decoding="async" src="assets/home-ecosystem-v10.ll.webp" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"></figure>';
+    target.innerHTML = '<figure class="ft-simple-diagram" aria-label="FarmTree model system diagram"><img loading="lazy" decoding="async" src="assets/base-technology/home-ecosystem-current-brand.webp" alt="FarmTree model infographic showing site information, climate and terrain inputs, species database, impact monitoring and impact projection"></figure>';
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setSimpleDiagram); else setSimpleDiagram();
   window.addEventListener('load', setSimpleDiagram);
