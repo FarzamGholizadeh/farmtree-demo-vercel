@@ -54,23 +54,26 @@ const SEGMENTS = {
   A('footer no JS navigation interference', footMod === false, 'modifier click prevented');
   await page.bringToFront(); // the modifier-click opened a background tab; rAF freezes on hidden pages
 
-  // ---------- ABOUT (checks 7-11) ----------
-  await page.evaluate(() => document.querySelector('.ft-about-feedback .metrics').scrollIntoView({ block: 'center' }));
-  await settle(1800);  // counter animation completes
+  // ---------- ABOUT (final 4-card design, 2026-07-15) ----------
+  await page.evaluate(() => document.querySelector('.ft-about-feedback').scrollIntoView({ block: 'center' }));
+  await settle(1200);
   const about = await page.evaluate(() => ({
-    cards: [...document.querySelectorAll('.ft-about-feedback .metric h3')].map(h => h.textContent.trim()),
-    scienceText: document.querySelectorAll('.ft-about-feedback .metric p')[2]?.textContent.trim(),
-    scienceSvg: !!document.querySelectorAll('.ft-about-feedback .metric-icon')[2]?.querySelector('svg'),
-    stats: [...document.querySelectorAll('.about-proof-stat')].map(s =>
-      s.querySelector('strong').textContent.trim() + '|' + s.querySelector('span').textContent.trim()),
+    slogan: [...document.querySelectorAll('.ft-about-feedback .big-title')].map(h => h.textContent.trim()),
+    oldCards: ['+10 KPIs', '50 years', 'Science-based'].filter(t =>
+      [...document.querySelectorAll('.ft-about-feedback h3')].some(h => h.textContent.trim() === t)),
+    proofRow: !!document.querySelector('.about-proof-grid'),
+    cards: [...document.querySelectorAll('.ft-track-metrics .metric')].map(m =>
+      m.querySelector('h3').textContent.trim() + '|' + m.querySelector('p').textContent.trim()),
+    svgs: document.querySelectorAll('.ft-track-metrics .metric-icon svg').length,
     overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth
   }));
-  A('about 3 capability cards', JSON.stringify(about.cards) === JSON.stringify(['+10 KPIs', '50 years', 'Science-based']), JSON.stringify(about.cards));
-  A('about science copy unchanged', about.scienceText === '200+ verified species ready for local calibration and science-backed modelling.', about.scienceText);
-  A('about science icon replaced', about.scienceSvg === true, 'no svg in third metric-icon');
-  A('about 4 proof stats exact', JSON.stringify(about.stats) === JSON.stringify([
+  A('about slogan removed', about.slogan.length === 0, JSON.stringify(about.slogan));
+  A('about old capability cards removed', about.oldCards.length === 0, JSON.stringify(about.oldCards));
+  A('about compact proof row removed', !about.proofRow, 'still present');
+  A('about exactly four primary cards, exact values+labels', JSON.stringify(about.cards) === JSON.stringify([
     '+100|Active FarmTree Tool users', '+30|Projects', '+40|Agricultural regions impacted', '+1,000,000|Farmers indirectly reached'
-  ]), JSON.stringify(about.stats));
+  ]), JSON.stringify(about.cards));
+  A('about four ring icons', about.svgs === 4, about.svgs);
   A('about no horizontal overflow', !about.overflow, 'overflow');
 
   // ---------- HOMEPAGE REMOVAL (checks 12-15) ----------

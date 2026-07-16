@@ -64,7 +64,7 @@ const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
       setTimeout(() => res([...document.querySelectorAll('.metric h3')].map(e => e.textContent.trim())), 1600);
     }, 500));
   });
-  if (JSON.stringify(home) !== JSON.stringify(['+10 KPIs', '50 years', 'Science-based']))
+  if (JSON.stringify(home) !== JSON.stringify(['+100', '+30', '+40', '+1,000,000']))
     failures.push(`home metrics ${JSON.stringify(home)}`);
   await p.close();
 
