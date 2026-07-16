@@ -38,6 +38,23 @@ are UI refreshers only (content patchers, sliders, segment page titles).
 - Use-case pages (investors/ngos) are enhanced at DOMContentLoaded by the
   ghostwriter script (`enhanceUseCasePage`).
 
+## Base Technology connectors
+`ft-basetech-connectors`: decorative SVG overlay drawing 4 diagram->card
+paths from live bounding boxes (debounced ResizeObserver, IntersectionObserver
+pause/redraw), animateMotion gold pulse, reduced-motion aware, aria-hidden.
+
+## Desktop density + title system
+`ft-density-title-system-v1` (>=1024 only): token-driven type/spacing
+reduction (--fx-section-y, heading clamps, card padding) approximating the
+prior 80%-zoom density with NO css zoom / transform / viewport / root-font.
+`.ft-hsec` reusable section-title class.
+
+## Brand assets
+Favicons: assets/brand/favicons/* + root favicon.ico (from master, full logo
+on white square). Loader + AI-assistant header + Base Technology diagram
+model box all use the current logo (shared farmtree-logo-primary-320 webp;
+diagram is a scripted raster composite, originals in assets/base-technology/).
+
 ## Fullscreen menu
 Five-card Bento grid (12-col: MAIN/FARMTREE/COMPANY 4-4-4; CUSTOMER
 SEGMENTS 8 + FORMS & LEGAL 4; 2-col tablet with segments full-row;
