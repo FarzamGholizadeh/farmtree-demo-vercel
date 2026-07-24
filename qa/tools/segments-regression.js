@@ -190,11 +190,14 @@ const SEGMENTS = {
   const tokens = await page.evaluate(() => ({
     base: getComputedStyle(document.querySelector('.ft-p6-grid-bg')).backgroundColor,
     refs: getComputedStyle(document.getElementById('frank-partners')).backgroundColor,
-    use: getComputedStyle(document.getElementById('target-groups')).backgroundColor
+    use: getComputedStyle(document.getElementById('target-groups')).backgroundColor,
+    testi: getComputedStyle(document.getElementById('testimonials')).backgroundColor
   }));
   A('base-technology token', tokens.base === 'rgb(250, 248, 241)', tokens.base);
-  A('references pale-green token', tokens.refs === 'rgb(235, 242, 234)', tokens.refs);
+  A('references warm-cream token (2026-07-24)', tokens.refs === 'rgb(245, 240, 228)', tokens.refs);
   A('use-cases warm-sand token', tokens.use === 'rgb(246, 239, 223)', tokens.use);
+  A('testimonials soft-green token (2026-07-24)', tokens.testi === 'rgb(220, 231, 210)', tokens.testi);
+  A('references cream != testimonials green (cream/green rhythm)', tokens.refs !== tokens.testi, 'collision');
   A('tokens mutually distinct', new Set([tokens.base, tokens.refs, tokens.use]).size === 3, 'collision');
 
   // ---------- CASE STUDIES ----------
