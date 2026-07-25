@@ -4,3 +4,5 @@ index.html.safe-before-redesign
 index.html.bak
 .env.local
 .vercel/
+
+.DS_Store
