@@ -309,7 +309,8 @@ a, button { cursor:pointer; }
 #frank-platform-teaser .ft-commercial-head h2{
   max-width:650px!important;
   text-align:justify!important;
-  text-align-last:left!important;
+  /* last line uses the browser's default start alignment for justified text
+     (removed a redundant last-line override unsupported in Safari <16). */
   font-size:clamp(38px,4.2vw,62px)!important;
   line-height:1.08!important;
   letter-spacing:-.055em!important;

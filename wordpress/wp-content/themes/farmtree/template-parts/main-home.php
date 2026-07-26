@@ -32,6 +32,7 @@
     <div class="ft-ms-stage">
       <div class="ft-ms-track" id="ftPpsTrack">
         <div class="ft-ms-slide" role="group" aria-roledescription="slide" aria-label="Slide 1 of 2 — agroforestry landscape" aria-description="Silent looping aerial view of a maturing agroforestry landscape at sunrise, with rows of trees across misted hills.">
+          <!-- playsinline is required for iOS inline video and is kept intentionally (playback is controlled by JS visibility/reduced-motion logic, no autoplay attribute). The Firefox "unsupported" note from webhint (compat-api/html) is a known false-positive and is narrowly suppressed in .hintrc — do not remove this attribute. -->
           <video class="ft-ms-video" width="1280" height="720" muted loop playsinline preload="metadata" poster="<?php echo farmtree_asset('media/power-project-staff-landscape-poster.webp'); ?>" aria-hidden="true" tabindex="-1">
             <source src="<?php echo farmtree_asset('media/power-project-staff-landscape.webm'); ?>" type="video/webm">
             <source src="<?php echo farmtree_asset('media/power-project-staff-landscape.mp4'); ?>" type="video/mp4">

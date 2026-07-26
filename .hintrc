@@ -5,7 +5,7 @@
       "ignore": ["text-wrap", "text-wrap: balance", "text-wrap: pretty"]
     }],
     "compat-api/html": ["warning", {
-      "ignore": ["meta[name=theme-color]", "link[fetchpriority]", "img[fetchpriority]"]
+      "ignore": ["meta[name=theme-color]", "link[fetchpriority]", "img[fetchpriority]", "video[playsinline]"]
     }]
   }
 }

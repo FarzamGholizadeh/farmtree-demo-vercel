@@ -1211,7 +1211,8 @@ textarea:focus-visible,
   .ft-p6-flow-section .big-title{
     font-size:clamp(30px,3.2vw,46px)!important;
     line-height:1.06!important;
-    text-wrap:wrap!important;
+    /* natural wrapping via white-space/overflow-wrap (Safari <17.4 safe) */
+    white-space:normal!important;overflow-wrap:break-word!important;word-break:normal!important;
     max-width:min(820px,92vw)!important;
     margin-left:auto!important;margin-right:auto!important;
   }
