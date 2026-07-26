@@ -103,3 +103,38 @@ not independently indexable. Future option (needs approval): path-based
 URLs (e.g. `/segments/advisors`) via static per-route HTML shells or a
 Vercel rewrite layer; benefit = independent indexing/sharing per segment,
 risk = URL migration + duplicate-content management.
+
+## WordPress integration (`wordpress-integration` branch)
+Phase-1 port of the approved static site into a **classic** custom theme
+(`wordpress/wp-content/themes/farmtree`) + companion plugin
+(`wordpress/wp-content/plugins/farmtree-core`), served from
+`https://farmtree.eu`. No page builder, no jQuery. Full detail:
+`wordpress/README.md`.
+
+- **Extraction (deterministic, one-off).** `index.html` was split by source
+  order: 64 `<style>` blocks → four ordered CSS files (`base → components →
+  pages → responsive`, enqueued via a dependency chain to preserve the exact
+  cascade); 45 inline scripts → two ordered JS bundles — `farmtree-head.js`
+  (CTA capture listener + early hash router, `<head>`, both defer to
+  `DOMContentLoaded`) and `farmtree-app.js` (all in-body IIFEs, footer). Body
+  markup → three template parts (`header-chrome`, `main-home`, `footer-chrome`)
+  wrapped by `header.php` / `front-page.php` / `footer.php`.
+- **Templates.** `front-page.php` (and the `index.php` fallback) render the full
+  homepage document; the head hash router resolves `#platform`, `#case-studies`,
+  `#segment-*`. Title via WordPress' title system (`pre_get_document_title`),
+  not a hard-coded `<title>`.
+- **Asset URLs.** `farmtree_asset()` (markup, escaped `get_theme_file_uri`),
+  `window.FT_ASSETS` (JS-built markup), `url(../…)` (CSS). Nothing hard-codes
+  `assets/…` or a filesystem path. Production assets copied into the theme
+  minus the 23.9 MB source GIF, `superseded-opaque-source/`, `icons/`, QA.
+- **SEO/env.** No hard-coded `noindex` (Settings → Reading / SEO plugin owns
+  robots); canonical/OG use `home_url()` = `farmtree.eu`; no
+  `farmtree-demo-vercel.vercel.app` reference. Hash routing preserved this
+  phase; clean permalinks deferred.
+- **Plugin.** Foundations only — `farmtree_core_planned_content_models()`
+  documents the future editable models (News, Case Studies, Testimonials, Team,
+  Vacancies, Customer Segments, FAQ, Videos); **no public post type is
+  registered yet**, so activation shows complete approved content immediately.
+- **Deploy.** `.github/workflows/deploy-wordpress.yml` — on push to
+  `wordpress-integration`: validate files, `php -l`, `rsync --delete` theme +
+  plugin to Vimexx over SSH. (Not triggered in this phase — nothing pushed.)
