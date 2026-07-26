@@ -115,17 +115,22 @@ body.ft-modal-open .ft-chat-launcher{ display:none !important; }
 /* 6 — MOBILE HEADER ORDER + LANGUAGE CONTROL (<=768). Order must be
        Logo -> EN -> Hamburger. The base rule (@<=760) set .lang-switcher{order:3}
        which pushed the language control AFTER the hamburger; force explicit flex
-       order so EN precedes the menu button. Also make the language toggle a
-       compact, hamburger-balanced pill (>=44x44) instead of the stretched
-       ~78px min-width, with a centred "EN" and the oversized ring hidden. */
+       order so EN precedes the menu button. Keep the control a compact,
+       hamburger-balanced pill (>=44x44, ~60x52) that visibly shows BOTH the
+       existing globe/ring glyph AND "EN", horizontally aligned + vertically
+       centred with a small gap. The base @<=760 rules hide .globe and the Treeo
+       .globe is 21px; restore it here at a compact ~17px. */
 @media (max-width:768px){
   .header-actions .lang-switcher{ order:1 !important; }
   .header-actions .menu-btn{ order:2 !important; }
   .lang-toggle{
-    min-width:54px !important; width:54px !important; padding:0 !important;
+    min-width:58px !important; width:auto !important; padding:0 8px !important; gap:7px !important;
     display:inline-flex !important; align-items:center !important; justify-content:center !important;
   }
-  .lang-toggle .globe{ display:none !important; }
+  .lang-toggle .globe{
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+    font-size:17px !important; line-height:1 !important;
+  }
   #langLabel{ line-height:1 !important; }
 }
 

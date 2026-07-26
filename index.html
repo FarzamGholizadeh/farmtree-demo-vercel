@@ -12356,15 +12356,19 @@ body.ft-modal-open .ft-chat-launcher{ display:none !important; }
     bottom:calc(16px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
-/* Mobile header order Logo -> EN -> Hamburger + compact language control */
+/* Mobile header order Logo -> EN -> Hamburger + compact language control
+   showing BOTH the globe/ring glyph (~17px) and "EN", centred with a small gap */
 @media (max-width:768px){
   .header-actions .lang-switcher{ order:1 !important; }
   .header-actions .menu-btn{ order:2 !important; }
   .lang-toggle{
-    min-width:54px !important; width:54px !important; padding:0 !important;
+    min-width:58px !important; width:auto !important; padding:0 8px !important; gap:7px !important;
     display:inline-flex !important; align-items:center !important; justify-content:center !important;
   }
-  .lang-toggle .globe{ display:none !important; }
+  .lang-toggle .globe{
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+    font-size:17px !important; line-height:1 !important;
+  }
   #langLabel{ line-height:1 !important; }
 }
 /* Bento menu long labels: wrap fully, never clip (min-width:0 + width:100%) */
