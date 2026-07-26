@@ -111,3 +111,36 @@ body.ft-modal-open .ft-chat-launcher{ display:none !important; }
     bottom:calc(16px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+/* 6 — MOBILE HEADER ORDER + LANGUAGE CONTROL (<=768). Order must be
+       Logo -> EN -> Hamburger. The base rule (@<=760) set .lang-switcher{order:3}
+       which pushed the language control AFTER the hamburger; force explicit flex
+       order so EN precedes the menu button. Also make the language toggle a
+       compact, hamburger-balanced pill (>=44x44) instead of the stretched
+       ~78px min-width, with a centred "EN" and the oversized ring hidden. */
+@media (max-width:768px){
+  .header-actions .lang-switcher{ order:1 !important; }
+  .header-actions .menu-btn{ order:2 !important; }
+  .lang-toggle{
+    min-width:54px !important; width:54px !important; padding:0 !important;
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+  }
+  .lang-toggle .globe{ display:none !important; }
+  #langLabel{ line-height:1 !important; }
+}
+
+/* 7 — BENTO MENU LONG LABELS (<=768). Guarantee every navigation label wraps
+       and is fully visible: no nowrap, no ellipsis, no right-edge clip. Grid /
+       flex items default to min-width:auto (won't shrink below content, so long
+       labels overflow); min-width:0 + width:100% lets them shrink and wrap
+       naturally, left-aligned. Customer Segments stays a single-column list. */
+@media (max-width:768px){
+  #mobileMenu .mobile-card a,
+  #mobileMenu .mobile-card button,
+  #mobileMenu .ft-menu-seg-grid button{
+    width:100% !important; min-width:0 !important; max-width:100% !important;
+    white-space:normal !important; overflow-wrap:break-word !important; word-break:normal !important;
+    text-align:left !important; text-overflow:clip !important; overflow:visible !important;
+  }
+  #mobileMenu .ft-menu-seg-grid{ grid-template-columns:1fr !important; min-width:0 !important; }
+}

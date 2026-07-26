@@ -2028,7 +2028,7 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
             <h1 style="font-size:clamp(40px,4.6vw,68px);line-height:.94;letter-spacing:-.05em;color:#173428;margin-top:14px">Ideas, field notes and platform thinking for modern agroforestry work</h1>
             
           </div>
-          <div class="ft-blog-actions"><button class="primary" type="button" data-ftmodal="request">Talk to FarmTree</button><a class="secondary" data-ft-action="platform-login" href="https://tool.farmtree.earth/Identity/Account/Login">Explore the platform</a></div>
+          <div class="ft-blog-actions"><button class="primary" type="button" data-ftmodal="request">Talk to FarmTree</button><a class="secondary" data-ft-action="platform-login" href="https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F">Explore the platform</a></div>
         </div>
         <div class="ft-blog-category-bar"><a href="#">All topics</a><a href="#">Field insight</a><a href="#">Operations</a><a href="#">Landscape thinking</a><a href="#">Communication</a></div>
         <div class="ft-blog-featured">

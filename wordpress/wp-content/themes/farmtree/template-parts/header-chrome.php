@@ -14,7 +14,7 @@
 <button type="button" class="nav-item" data-page="request">Design tool</button></nav>
 <div class="header-actions">
 <button type="button" class="pill contact" data-i18n="contact" data-page="contact">Contact</button>
-<a class="pill tech" data-ft-action="platform-login" href="https://tool.farmtree.earth/Identity/Account/Login">FarmTree Platform</a>
+<a class="pill tech" data-ft-action="platform-login" href="https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F">FarmTree Platform</a>
 <div role="group" aria-label="Language switcher" class="lang-switcher">
 <button aria-expanded="false" aria-haspopup="true" aria-label="Switch language" class="lang-toggle" type="button">
 <span class="globe">◎</span>
@@ -37,7 +37,7 @@
 </div>
 <div class="mobile-grid ft-bento">
 <div class="mobile-card ft-b-main"><h4>Main</h4><button type="button" data-page="home">Home</button><button type="button" data-page="services">Solutions</button><button type="button" data-page="track">Track Record</button></div>
-<div class="mobile-card ft-b-farmtree"><h4>FarmTree</h4><a data-ft-action="platform-login" href="https://tool.farmtree.earth/Identity/Account/Login">Platform</a><button type="button" data-page="videos">User Videos</button><button type="button" data-page="cocoa">Cocoa Focus</button><button type="button" data-page="case-studies">Case Studies</button><button type="button" data-page="investors">For Investors</button><button type="button" data-page="ngos">For Implementers</button></div>
+<div class="mobile-card ft-b-farmtree"><h4>FarmTree</h4><a data-ft-action="platform-login" href="https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F">Platform</a><button type="button" data-page="videos">User Videos</button><button type="button" data-page="cocoa">Cocoa Focus</button><button type="button" data-page="case-studies">Case Studies</button><button type="button" data-page="investors">For Investors</button><button type="button" data-page="ngos">For Implementers</button></div>
 <div class="mobile-card ft-b-company"><h4>Company</h4><button type="button" data-page="team">Team</button><button type="button" data-page="vacancies">Vacancies</button><button type="button" data-page="contact">Contact us</button><button type="button" data-page="blog">Blog</button></div>
 <div class="mobile-card ft-b-segments"><h4>Customer segments</h4>
 <div class="ft-menu-seg-grid">
