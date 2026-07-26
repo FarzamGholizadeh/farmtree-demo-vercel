@@ -158,18 +158,26 @@ keep non-production files (previews, notes) out of the theme/plugin dirs.
 
 ## Remaining blockers
 
-- **Forms** — the contact-modal / request / chat forms keep the approved UI and
-  the placeholder endpoint `REPLACE_WITH_FORM_ID`; they intentionally do **not**
-  submit to any invented endpoint or recipient. Wiring them to Formspree, the
-  WordPress REST API, or a CRM (Odoo) is a follow-up (see FORMS.md at repo root).
-- **`home-deep-roots-v11.png`** — referenced in the approved `index.html` but
-  absent from the source `assets/` (a pre-existing broken reference that 404s on
-  the Vercel site too). Preserved verbatim for parity; supply the file or update
-  the reference to resolve it.
+- **Forms (endpoint not yet configured)** — the contact-modal / request / chat
+  forms keep the approved UI and modal layout. Until `window.FT_FORM_ENDPOINT`
+  is set to a real endpoint (it still holds the `YOUR_FORM_ID` placeholder),
+  `ftSubmitLead()` rejects **before any network request** — no data leaves the
+  browser, no invented endpoint/recipient is contacted, no fake success is
+  shown, and the user's input is **not** cleared. Each surface shows a clear
+  unavailable state: *"Form submission is not configured yet. Please contact
+  FarmTree directly."* Go live by replacing `YOUR_FORM_ID` in one place
+  (`inc`/`farmtree-app.js` `FT_FORM_ENDPOINT`) with a Formspree form, a
+  WordPress REST route, or a CRM/Odoo webhook — no other change required. See
+  FORMS.md at repo root.
 - **Clean permalinks** — internal navigation stays hash-based this phase
   (`#segment-*`, `#case-studies`, …); path-based URLs are a later phase.
 - **Editable content** — News / Case Studies / Testimonials / Team / Vacancies /
   Customer Segments / FAQ / Videos are documented but not yet registered.
+
+*Resolved in the pre-push corrective pass:* the broken
+`home-deep-roots-v11.png` reference (dead `setImage` calls targeting a
+superseded `.section.cream .feature-image` element that no longer exists) was
+removed from the app bundle and `index.html`; a router-safe skip link was added.
 
 ---
 

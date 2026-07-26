@@ -75,9 +75,13 @@ with focus return, Tab focus-trap while open.
 
 ## Forms
 Three lead surfaces (request page, contact modal, chat) POST JSON to
-`window.FT_FORM_ENDPOINT` (Formspree placeholder — release blocker, see
-FORMS.md). Honest error state when unconfigured; `_gotcha` honeypots;
-no PII logging (zero console.* in codebase).
+`window.FT_FORM_ENDPOINT` via `ftSubmitLead()`. While the endpoint holds the
+`YOUR_FORM_ID` placeholder (`ftFormConfigured()` false), submission is rejected
+**before any network request** — nothing is sent, no fake success, input is not
+cleared — and each surface shows "Form submission is not configured yet. Please
+contact FarmTree directly." `_gotcha` honeypots; no PII logging (zero console.*
+in codebase). Go live by replacing `YOUR_FORM_ID` (Formspree / WP REST /
+CRM-Odoo). Release blocker, see FORMS.md.
 
 ## Counters
 Generic block animates digit-bearing `.metric h3` / `.ft-proof-metric
