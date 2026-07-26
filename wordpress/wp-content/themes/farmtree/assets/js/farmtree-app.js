@@ -1774,7 +1774,8 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
       }).then(function(){
         success.classList.add('show');
         setTimeout(function(){ closeModal(); success.classList.remove('show'); form.reset(); }, 1200);
-      }).catch(function(){
+      }).catch(function(err){
+        if(err && err.ftUnconfigured) error.textContent = window.FT_FORM_UNAVAILABLE_MSG;
         error.classList.add('show');
       }).finally(function(){
         if(submitBtn) submitBtn.disabled = false;
@@ -1983,7 +1984,6 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
 
   function refreshHome(){
     setImage('#page-home .split-feature.reverse .feature-image img','' + window.FT_ASSETS + '/home-project-teams-v11.ll.webp','Project team planning agroforestry scenarios in the field');
-    setImage('#page-home .section.cream .feature-image img','' + window.FT_ASSETS + '/home-deep-roots-v11.png','FarmTree field consultation in an agroforestry landscape');
     const diagramIntro = document.querySelector('#page-home #diagram + p.lead');
     if(diagramIntro) diagramIntro.classList.add('ft-diagram-intro');
     const metrics = document.querySelectorAll('#page-home #frank-phase-journey .ft-counter-card span');
@@ -2347,7 +2347,6 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
   const imgMap = {
     platform:'' + window.FT_ASSETS + '/investor-card-hero-v8.webp',
     projectTeams:'' + window.FT_ASSETS + '/home-project-teams-v11.ll.webp',
-    deepRoots:'' + window.FT_ASSETS + '/home-deep-roots-v11.png',
     investorHero:'' + window.FT_ASSETS + '/investor-hero-v8.webp',
     implementerHero:'' + window.FT_ASSETS + '/implementers-hero-v7_opt.webp'
   };
@@ -2370,7 +2369,6 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
   function updateHomeImages(){
     /* platform image intentionally handled by ft-app-slider, do not replace it */
     setImg('#page-home .split-feature.reverse .feature-image img', imgMap.projectTeams, 'Field team preparing agroforestry planning scenarios');
-    setImg('#page-home .section.cream .feature-image img', imgMap.deepRoots, 'FarmTree agroforestry transformation landscape');
   }
   function refineContact(){
     document.querySelectorAll('#page-contact .outline-btn, #page-contact button').forEach(btn=>{
@@ -2481,8 +2479,8 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
         form.reset();
         add('Thanks. Your request has been sent to the FarmTree team — they will follow up with you.','bot');
       })
-      .catch(()=>{
-        add('Sorry — your request could not be sent right now. Please try again in a moment, or use the contact page.','bot');
+      .catch((err)=>{
+        add((err&&err.ftUnconfigured)?window.FT_FORM_UNAVAILABLE_MSG:'Sorry — your request could not be sent right now. Please try again in a moment, or use the contact page.','bot');
       })
       .finally(()=>{ if(btn) btn.disabled=false; });
   });
@@ -2605,7 +2603,8 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
       if(wrap) wrap.style.display = 'none';
       if(success) success.style.display = 'block';
       window.scrollTo(0,0);
-    }).catch(function(){
+    }).catch(function(err){
+      if(err && err.ftUnconfigured){ var e=document.getElementById('ftReqSubmitErr'); if(e) e.textContent = window.FT_FORM_UNAVAILABLE_MSG; }
       show('ftReqSubmitErr');
     }).finally(function(){
       if(btn) btn.disabled = false;
@@ -4457,12 +4456,25 @@ document.addEventListener('click', function(e){
 })(); /* end ft-phase7-deploy-guard */
 
 /* ---- block 41 ---- */
-/* Production form transport (Formspree).
-   SETUP: create a form at https://formspree.io and replace YOUR_FORM_ID
-   below — one place only. See FORMS.md. While the placeholder is present,
-   submissions fail safely and users see the error state (no fake success). */
+/* Form transport. Until a real endpoint is configured (replace YOUR_FORM_ID
+   in FT_FORM_ENDPOINT — one place only; see FORMS.md), submissions fail safely
+   BEFORE any network request: nothing is sent anywhere, no fake success is
+   shown, the form is not cleared, and the caller surfaces the unavailable
+   state. Swap FT_FORM_ENDPOINT for a real endpoint (Formspree, a WordPress REST
+   route, a CRM/Odoo webhook, …) to go live — no other change required. */
 window.FT_FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+window.FT_FORM_UNAVAILABLE_MSG = 'Form submission is not configured yet. Please contact FarmTree directly.';
+window.ftFormConfigured = function(){
+  var e = window.FT_FORM_ENDPOINT || '';
+  return e.indexOf('YOUR_FORM_ID') === -1 && /^https?:\/\/\S+/.test(e);
+};
 window.ftSubmitLead = function(payload){
+  if(!window.ftFormConfigured()){
+    /* No fetch: no data leaves the browser, no invented endpoint/recipient. */
+    var err = new Error(window.FT_FORM_UNAVAILABLE_MSG);
+    err.ftUnconfigured = true;
+    return Promise.reject(err);
+  }
   return fetch(window.FT_FORM_ENDPOINT, {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
