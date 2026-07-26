@@ -13,6 +13,25 @@
   --muted:#5C7067;
   --line:rgba(22,49,38,.10);
 }
+
+/* ── Desktop density tokens ──────────────────────────────────────────────
+   Reproduce the approved 80%-zoom composition while the browser stays at
+   native 100% — NO global zoom / transform scaling is used. These are
+   consumed by the winning header, hero and section rules (here and in
+   responsive.css). Desktop/tablet only; mobile keeps its own sizing. */
+:root {
+  --ftd-header-h: 74px;                              /* was 86px  */
+  --ftd-logo-w: 174px;                               /* logo pill min-width, was 210px */
+  --ftd-logo-h: 48px;                                /* was 56px  */
+  --ftd-logo-img-h: 34px;                            /* was 40px  */
+  --ftd-control-h: 48px;                             /* lang toggle / menu button, was 52–54px */
+  --ftd-hero-h1: clamp(58px, 3vw + 1.6rem, 76px);    /* ≈68px @1440, was ≈86px */
+  --ftd-hero-h1-lh: 1.0;                             /* was 1.08  */
+  --ftd-hero-p: clamp(15px, 1.2vw, 18px);            /* ≈17px @1440, was 19px */
+  --ftd-hero-content-w: 940px;                       /* was 860px */
+  --ftd-hero-cta-pad: 16px 26px;                     /* ≈47px tall, was 14px 26px (≈43px) */
+  --ftd-section-pad: 88px;                           /* was 76px  */
+}
 * { box-sizing:border-box; }
 html, body { margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif; background:var(--cream); color:var(--text); scroll-behavior:smooth; }
 body { overflow-x:hidden; }
