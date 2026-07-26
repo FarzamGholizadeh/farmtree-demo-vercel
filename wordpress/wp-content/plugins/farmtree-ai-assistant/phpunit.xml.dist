@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="tests/bootstrap.php"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertWarningsToExceptions="true"
+    convertNoticesToExceptions="true">
+    <testsuites>
+        <testsuite name="farmtree-ai-assistant">
+            <file>tests/test-plugin.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>

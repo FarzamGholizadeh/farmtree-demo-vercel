@@ -142,3 +142,40 @@ Phase-1 port of the approved static site into a **classic** custom theme
 - **Deploy.** `.github/workflows/deploy-wordpress.yml` — on push to
   `wordpress-integration`: validate files, `php -l`, `rsync --delete` theme +
   plugin to Vimexx over SSH. (Not triggered in this phase — nothing pushed.)
+
+### FarmTree AI Assistant plugin (`wordpress/wp-content/plugins/farmtree-ai-assistant`)
+Optional, **ships inactive**. A manageable AI assistant with an admin area
+(Overview / Knowledge / Behavior / Skills / Settings), a server-side chat REST
+endpoint, and a refactored front-end widget. Full detail: the plugin's
+`README.md`.
+
+- **Secret handling (non-negotiable).** The AI API key is read **only** from a
+  server constant/env (`FARMTREE_AI_API_KEY`) via `FT_AI_Settings::get_api_key()`
+  — never the DB, never the admin UI, never localized to the browser, never in a
+  REST response, never logged. `is_provider_configured()` / `is_assistant_active()`
+  gate every "active" claim; enabling the switch alone never fakes activity.
+- **Provider adapter.** `FT_AI_Provider_Interface` + `…_OpenAI` (OpenAI-compatible
+  Chat Completions) behind `FT_AI_Provider_Factory` (filterable
+  `farmtree_ai_providers`). Provider calls are server-to-server only.
+- **No fabricated answers.** With no provider configured, the REST endpoint
+  (`POST /wp-json/farmtree-ai/v1/chat`) returns a structured `unavailable` error;
+  it never invents a reply. Answers are grounded in approved **Knowledge**
+  (lightweight keyword retrieval in `FT_AI_Retrieval`, capped context — not
+  vector search), and `FT_AI_Behavior`'s always-on safe-fallback rule makes the
+  model defer uncovered questions to the FarmTree team.
+- **Knowledge scanner.** `FT_AI_Scanner` fetches a submitted public URL
+  server-side with SSRF protection (rejects localhost/private/reserved IPs incl.
+  the cloud metadata address, `wp_safe_remote_get` with size/redirect caps),
+  extracts readable text only, and shows it for review before saving.
+- **Data.** `dbDelta` tables (`wp_ft_ai_knowledge|skills|conversations|messages`)
+  versioned by `ft_ai_db_version`; options `ft_ai_settings` / `ft_ai_behavior`.
+  Five example **Skills** seed **disabled** (Platform → login URL, Demo → register
+  URL). Conversation logging is opt-in and stores a one-way hashed IP only.
+  `uninstall.php` preserves data unless the admin opted into removal.
+- **Theme handoff.** `footer-chrome.php` renders the built-in static chatbot
+  unless `apply_filters('farmtree_ai_plugin_active', false)` is true — the plugin
+  returns true only when activated **and** configured, so the default (plugin
+  absent/inactive) is unchanged.
+- **Tests.** `node tests/verify.mjs` — runnable-now static gate asserting the
+  secret/no-fake-AI invariants (96 checks); PHPUnit (`tests/test-plugin.php`) for
+  runtime behavior in CI.
