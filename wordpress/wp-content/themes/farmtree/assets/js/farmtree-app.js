@@ -141,7 +141,7 @@
       +'<div class="ft-seg-hero"><div class="ft-seg-wrap">'
       +'<span class="ft-section-label ft-label-on-dark">Customer segment</span>'
       +'<h1>'+esc(d.title)+'</h1><p>'+esc(d.value)+'</p>'
-      +'<div class="ft-seg-cta-row"><a class="cta-link" data-ft-action="request-demo" href="'+REG+'">Request a demo ↗</a>'
+      +'<div class="ft-seg-cta-row"><a class="cta-link" target="_blank" rel="noopener noreferrer" data-ft-action="request-demo" href="'+REG+'">Request a demo ↗</a>'
       +'<button type="button" class="cta-link secondary" data-ftmodal="request">Talk to FarmTree</button></div>'
       +'</div></div>'
       +'<div class="ft-seg-section"><div class="ft-seg-wrap"><span class="ft-section-label">Their decision context</span>'
@@ -156,7 +156,7 @@
       +'<h2>Connected to the FarmTree workflow</h2><p>'+esc(d.flow)+'</p></div></div>'
       +'<div class="ft-seg-final"><div class="ft-seg-wrap">'
       +'<h2>Ready to see it on your own case?</h2><p>Request a demo, or start a conversation with the FarmTree team about your context and evidence needs.</p>'
-      +'<div class="ft-seg-cta-row"><a class="cta-link" data-ft-action="request-demo" href="'+REG+'">Request a demo ↗</a>'
+      +'<div class="ft-seg-cta-row"><a class="cta-link" target="_blank" rel="noopener noreferrer" data-ft-action="request-demo" href="'+REG+'">Request a demo ↗</a>'
       +'<button type="button" class="cta-link secondary" data-ftmodal="request">Talk to FarmTree</button></div>'
       +'</div></div>'
       +'</section>';
@@ -887,7 +887,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     const heroContent = document.querySelector('#page-home .hero-content') || document.querySelector('#page-home .hero .container') || document.querySelector('#page-home .hero-text');
     if(heroContent && !heroContent.querySelector('.ft-buyer-ctas')){
-      heroContent.insertAdjacentHTML('beforeend','<div class="ft-buyer-ctas"><button type="button" data-page="investors">For investors</button><button type="button" data-page="ngos">For implementers</button><a data-ft-action="request-demo" href="https://tool.farmtree.earth/Identity/Account/Register">Request a demo</a></div>');
+      heroContent.insertAdjacentHTML('beforeend','<div class="ft-buyer-ctas"><button type="button" data-page="investors">For investors</button><button type="button" data-page="ngos">For implementers</button><a target="_blank" rel="noopener noreferrer" data-ft-action="request-demo" href="https://tool.farmtree.earth/Identity/Account/Register">Request a demo</a></div>');
     }
     const h1 = document.querySelector('#page-home .hero h1');
     if(h1){ h1.style.fontSize = 'clamp(56px,8.5vw,116px)'; h1.style.letterSpacing='-.07em'; }
@@ -994,7 +994,7 @@ document.addEventListener('DOMContentLoaded', function () {
     el.addEventListener('click',()=>{ const home=document.querySelector('[data-page="home"]'); if(home) home.click(); else window.scrollTo({top:0,behavior:'smooth'}); });
   });
   document.querySelectorAll('.ft-usecase-card,.ft-phase-card,.ft-case-card').forEach(card=>{
-    card.addEventListener('click',e=>{ if(e.target.closest('button')) return; const b=card.querySelector('button[data-page]'); if(b) b.click(); });
+    card.addEventListener('click',e=>{ if(e.target.closest('a[href],button')) return; const b=card.querySelector('button[data-page]'); if(b) b.click(); });
   });
   const counters=[...document.querySelectorAll('.metric h3,.ft-proof-metric strong')];
   const parse=(txt)=>{ const m=txt.match(/\d+/); return m?parseInt(m[0],10):null; };
@@ -1352,7 +1352,7 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
     if(heroContent && !heroContent.querySelector('.ft-buyer-ctas')){
       var div = document.createElement('div');
       div.className = 'ft-buyer-ctas';
-      div.innerHTML = '<button data-page="investors" type="button">For investors</button><button data-page="ngos" type="button">For implementers</button><a data-ft-action="request-demo" href="https://tool.farmtree.earth/Identity/Account/Register">Request a demo</a>';
+      div.innerHTML = '<button data-page="investors" type="button">For investors</button><button data-page="ngos" type="button">For implementers</button><a target="_blank" rel="noopener noreferrer" data-ft-action="request-demo" href="https://tool.farmtree.earth/Identity/Account/Register">Request a demo</a>';
       heroContent.appendChild(div);
     }
   }
@@ -1371,7 +1371,7 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
             '<p class="lead">'+cfg.lead+'</p>',
             '<div class="usecase-btns">',
               (cfg.primaryExternal ? '<a class="primary" href="'+cfg.primaryHref+'" target="_blank" rel="noopener">'+cfg.primaryText+'</a>' : '<button class="primary" data-page="'+cfg.primaryHref+'" type="button">'+cfg.primaryText+'</button>'),
-              '<a class="secondary" data-ft-action="request-demo" href="https://tool.farmtree.earth/Identity/Account/Register">Request a demo</a>',
+              '<a class="secondary" target="_blank" rel="noopener noreferrer" data-ft-action="request-demo" href="https://tool.farmtree.earth/Identity/Account/Register">Request a demo</a>',
             '</div>',
           '</div>',
         '</div>',
@@ -2028,7 +2028,7 @@ try { if(!document.body.getAttribute('data-current-page')) document.body.setAttr
             <h1 style="font-size:clamp(40px,4.6vw,68px);line-height:.94;letter-spacing:-.05em;color:#173428;margin-top:14px">Ideas, field notes and platform thinking for modern agroforestry work</h1>
             
           </div>
-          <div class="ft-blog-actions"><button class="primary" type="button" data-ftmodal="request">Talk to FarmTree</button><a class="secondary" data-ft-action="platform-login" href="https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F">Explore the platform</a></div>
+          <div class="ft-blog-actions"><button class="primary" type="button" data-ftmodal="request">Talk to FarmTree</button><a class="secondary" target="_blank" rel="noopener noreferrer" data-ft-action="platform-login" href="https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F">Explore the platform</a></div>
         </div>
         <div class="ft-blog-category-bar"><a href="#">All topics</a><a href="#">Field insight</a><a href="#">Operations</a><a href="#">Landscape thinking</a><a href="#">Communication</a></div>
         <div class="ft-blog-featured">

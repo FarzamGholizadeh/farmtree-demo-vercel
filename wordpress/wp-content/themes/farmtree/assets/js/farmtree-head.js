@@ -110,6 +110,11 @@
   window.setPage = function(id){ render(id); };
 
   document.addEventListener('click', function(e){
+    /* External destinations (Platform / Register / LinkedIn / YouTube) are native
+       anchors — never intercept them, so they navigate and escape the WordPress
+       Customizer preview iframe via target="_blank". */
+    var extA = e.target.closest && e.target.closest('a[href]');
+    if(extA && (extA.target === '_blank' || /^https?:\/\//i.test(extA.getAttribute('href') || ''))) return;
     var trigger = e.target.closest && e.target.closest('[data-page]');
     if(!trigger) return;
     var raw = trigger.getAttribute('data-page');
