@@ -99,17 +99,8 @@ body.ft-modal-open .ft-chat-launcher{ display:none !important; }
   .hero-controls .hero-dot:focus-visible{ outline:none !important; }
   .hero-controls .hero-dot:focus-visible::before{ outline:2px solid #fff !important; outline-offset:4px !important; }
 }
-/* The site applies body{zoom:0.9} above 430px (it resets to zoom:1 at <=430),
-   which visually scales the rendered/clickable box. Enlarge the CSS box in the
-   431–768 range so the actual clickable bounding box stays >=44x44 there
-   (50 * 0.9 = 45). The visible ::before dot scales with the page, as intended. */
-@media (min-width:431px) and (max-width:768px){
-  .ft-ms-dots .ft-ms-dot,
-  .hero-controls .hero-dot{
-    min-width:50px !important; min-height:50px !important;
-    width:50px !important; height:50px !important;
-  }
-}
+/* (No page zoom now, so the dot hit boxes render at their native 44x44 across
+   the whole mobile range — the earlier 431–768 zoom-compensation is removed.) */
 
 /* 5 — ASSISTANT LAUNCHER: mobile-appropriate size (>=44px) with safe-area-aware
        spacing so it clears the home indicator and never sits over hero CTAs. */

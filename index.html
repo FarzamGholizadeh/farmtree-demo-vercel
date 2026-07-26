@@ -523,10 +523,8 @@ body:not([data-current-page="home"]) main > .home-only-section {
   display: none !important;
 }
 
-/* Farzam requested default 90 percent visual scale on normal browser zoom */
-@supports (zoom: 0.9) {
-  body { zoom: 0.9; }
-}
+/* Native browser scale — the site renders at 100% (no whole-document zoom).
+   Desktop visual density is handled by the token-based density system (>=1024). */
 
 
 /* Feedback V3 implementation */
@@ -7527,7 +7525,6 @@ a:focus:not(:focus-visible) { outline: none; }
   .ft-hero-cta-row, .ft-aud-cta-band,
   .pill.contact, .cta-link { display: none !important; }
   .page { display: block !important; }
-  body { zoom: 1 !important; }
 }
 
 /* ── Responsive fine-tuning for 1440px+ ─────────────────────── */
@@ -7550,10 +7547,7 @@ a:focus:not(:focus-visible) { outline: none; }
   .overlap-card { margin-left: 0 !important; padding: 36px !important; }
 }
 
-/* ── Deployment: remove zoom effect on iOS to prevent layout ── */
-@media (max-width: 430px) {
-  body { zoom: 1 !important; }
-}
+/* (Former iOS zoom-reset removed: the site no longer applies any page zoom.) */
 </style>
 <style id="ft-p6-saas-styles">
 /* ══════════════════════════════════════════════════════════════
@@ -12353,15 +12347,8 @@ body.ft-modal-open .ft-chat-launcher{ display:none !important; }
   .hero-controls .hero-dot:focus-visible{ outline:none !important; }
   .hero-controls .hero-dot:focus-visible::before{ outline:2px solid #fff !important; outline-offset:4px !important; }
 }
-/* body{zoom:0.9} above 430px (reset to 1 at <=430) scales the clickable box;
-   enlarge the CSS box in 431–768 so the actual clickable box stays >=44 (50*0.9=45). */
-@media (min-width:431px) and (max-width:768px){
-  .ft-ms-dots .ft-ms-dot,
-  .hero-controls .hero-dot{
-    min-width:50px !important; min-height:50px !important;
-    width:50px !important; height:50px !important;
-  }
-}
+/* (No page zoom now, so dot hit boxes render at native 44x44 across the mobile
+   range — the earlier 431–768 zoom-compensation is removed.) */
 @media (max-width:768px){
   .ft-chat-launcher{
     width:54px !important; height:54px !important;

@@ -453,10 +453,9 @@ body:not([data-current-page="home"]) main > .home-only-section {
   display: none !important;
 }
 
-/* Farzam requested default 90 percent visual scale on normal browser zoom */
-@supports (zoom: 0.9) {
-  body { zoom: 0.9; }
-}
+/* Native browser scale — the site renders at 100% (no whole-document zoom).
+   Desktop visual density is handled by the token-based density system in
+   responsive.css (>=1024), not by scaling the document. */
 
 
 /* Feedback V3 implementation */

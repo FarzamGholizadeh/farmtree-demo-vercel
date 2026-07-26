@@ -451,7 +451,6 @@ a:focus:not(:focus-visible) { outline: none; }
   .ft-hero-cta-row, .ft-aud-cta-band,
   .pill.contact, .cta-link { display: none !important; }
   .page { display: block !important; }
-  body { zoom: 1 !important; }
 }
 
 /* ── Responsive fine-tuning for 1440px+ ─────────────────────── */
@@ -474,10 +473,7 @@ a:focus:not(:focus-visible) { outline: none; }
   .overlap-card { margin-left: 0 !important; padding: 36px !important; }
 }
 
-/* ── Deployment: remove zoom effect on iOS to prevent layout ── */
-@media (max-width: 430px) {
-  body { zoom: 1 !important; }
-}
+/* (Former iOS zoom-reset removed: the site no longer applies any page zoom.) */
 
 /* ══════════════════════════════════════════════════════════════
    PHASE 6 — SaaS & technology credibility
