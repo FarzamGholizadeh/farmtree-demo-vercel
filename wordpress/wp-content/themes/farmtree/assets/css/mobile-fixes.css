@@ -57,15 +57,58 @@ body.ft-modal-open .ft-chat-launcher{ display:none !important; }
   .hero-controls{ bottom:22px !important; }
 }
 
-/* 4 — DOT INDICATORS (hero progress pills + project-staff media slider):
-       a global button touch rule (button,.pill,…{min-height:44px}@<=430) also
-       inflated these tiny decorative dot-buttons into oversized 30x44 ovals /
-       bars. Undo that for the dots only, and keep the media-slider active dot a
-       small consistent round dot on mobile (the desktop elongated pill stays). */
+/* 4 — DOT INDICATORS (hero progress pills + project-staff media slider): each
+       dot <button> gets a >=44x44 transparent hit area, and the compact visible
+       indicator is drawn with ::before — so touch targets meet 44x44 while the
+       dots stay visually small (hero ~30x3 pill, slider ~9x9 round) with their
+       existing colours/states. (A global button touch rule had otherwise
+       inflated these into 30x44 ovals/bars, and the earlier min-height:0 undo
+       had left the clickable box at the tiny visible size.) gap:0 keeps hit
+       areas adjacent without overlapping. Desktop dots/hit areas are untouched. */
 @media (max-width:768px){
-  .hero-dot,
-  .ft-ms-dots .ft-ms-dot{ min-height:0 !important; }
-  .ft-ms-dot.is-active{ width:9px !important; border-radius:50% !important; }
+  /* project-staff media slider dots */
+  .ft-ms-dots{ gap:0 !important; }
+  .ft-ms-dots .ft-ms-dot{
+    min-width:44px !important; min-height:44px !important; width:44px !important; height:44px !important;
+    padding:0 !important; background:transparent !important; border:0 !important; border-radius:0 !important;
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+  }
+  .ft-ms-dots .ft-ms-dot::before{
+    content:"" !important; display:block !important;
+    width:9px !important; height:9px !important; border-radius:50% !important;
+    background:rgba(33,79,42,.28) !important; transition:background .2s ease !important;
+  }
+  .ft-ms-dots .ft-ms-dot:hover::before{ background:rgba(33,79,42,.5) !important; }
+  .ft-ms-dots .ft-ms-dot.is-active::before{ background:var(--green,#214F2A) !important; }
+  .ft-ms-dots .ft-ms-dot:focus-visible{ outline:none !important; }
+  .ft-ms-dots .ft-ms-dot:focus-visible::before{ outline:2px solid #163126 !important; outline-offset:3px !important; }
+
+  /* hero carousel progress dots */
+  .hero-controls{ gap:0 !important; }
+  .hero-controls .hero-dot{
+    min-width:44px !important; min-height:44px !important; width:44px !important; height:44px !important;
+    padding:0 !important; background:transparent !important; border:0 !important; overflow:visible !important;
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+  }
+  .hero-controls .hero-dot::before{
+    content:"" !important; display:block !important;
+    width:30px !important; height:3px !important; border-radius:999px !important;
+    background:rgba(255,255,255,.22) !important; transition:background .2s ease !important;
+  }
+  .hero-controls .hero-dot.active::before{ background:rgba(255,255,255,.30) !important; }
+  .hero-controls .hero-dot:focus-visible{ outline:none !important; }
+  .hero-controls .hero-dot:focus-visible::before{ outline:2px solid #fff !important; outline-offset:4px !important; }
+}
+/* The site applies body{zoom:0.9} above 430px (it resets to zoom:1 at <=430),
+   which visually scales the rendered/clickable box. Enlarge the CSS box in the
+   431–768 range so the actual clickable bounding box stays >=44x44 there
+   (50 * 0.9 = 45). The visible ::before dot scales with the page, as intended. */
+@media (min-width:431px) and (max-width:768px){
+  .ft-ms-dots .ft-ms-dot,
+  .hero-controls .hero-dot{
+    min-width:50px !important; min-height:50px !important;
+    width:50px !important; height:50px !important;
+  }
 }
 
 /* 5 — ASSISTANT LAUNCHER: mobile-appropriate size (>=44px) with safe-area-aware
