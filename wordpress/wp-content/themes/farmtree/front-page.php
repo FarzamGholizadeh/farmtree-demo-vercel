@@ -1,19 +1,22 @@
 <?php
 /**
- * Front-page template.
+ * Front page: the full approved FarmTree homepage.
  *
- * The current Vercel website will be integrated here in the next phase.
+ * The homepage sections and the statically-present in-page routes
+ * (#platform, #case-studies, #segment-*) live in the main-home template
+ * part; the hash router in the head bundle toggles the active section.
  *
  * @package FarmTree
  */
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 get_header();
 ?>
-
 <main id="main-content">
-    <h1><?php bloginfo('name'); ?></h1>
-    <p><?php esc_html_e('FarmTree WordPress integration is ready for development.', 'farmtree'); ?></p>
+<?php get_template_part('template-parts/main-home'); ?>
 </main>
-
 <?php
 get_footer();
