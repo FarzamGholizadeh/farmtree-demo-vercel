@@ -39,6 +39,8 @@ function farmtree_enqueue_assets(): void
     wp_enqueue_style('farmtree-responsive', "{$css}/responsive.css", ['farmtree-pages'], $ver);
     // Theme-authored a11y styles (skip link) layered last.
     wp_enqueue_style('farmtree-a11y', "{$css}/theme-a11y.css", ['farmtree-responsive'], $ver);
+    // Mobile parity corrections (header/menu/hero/slider/launcher) — last.
+    wp_enqueue_style('farmtree-mobile', "{$css}/mobile-fixes.css", ['farmtree-a11y'], $ver);
 
     // Head bundle (registers CTA + router early; safe to run before <body>).
     wp_enqueue_script('farmtree-head', "{$js}/farmtree-head.js", [], $ver, false);
@@ -52,6 +54,24 @@ function farmtree_enqueue_assets(): void
         . "l.addEventListener('click',function(e){var m=document.getElementById('main-content');"
         . "if(!m)return;e.preventDefault();m.focus();m.scrollIntoView();});}"
         . "if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}})();",
+        'after'
+    );
+    // Overlay body-state sync: mirror the Bento menu / contact modal open state
+    // onto <body> (ft-menu-open / ft-modal-open) so CSS can lock page scroll and
+    // hide the assistant launcher behind the overlay, and restore both on close.
+    // Observes every open/close path (button, Escape, nav-item) — no handler
+    // edits needed. The modal is built lazily, so we watch for its insertion.
+    wp_add_inline_script(
+        'farmtree-head',
+        "(function(){function ready(fn){if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fn);}else{fn();}}"
+        . "ready(function(){function sync(){var m=document.getElementById('mobileMenu'),d=document.getElementById('ftContactModal');"
+        . "document.body.classList.toggle('ft-menu-open',!!(m&&m.classList.contains('open')));"
+        . "document.body.classList.toggle('ft-modal-open',!!(d&&d.classList.contains('open')));}"
+        . "var menu=document.getElementById('mobileMenu');"
+        . "if(menu){new MutationObserver(sync).observe(menu,{attributes:true,attributeFilter:['class']});}"
+        . "var bo=new MutationObserver(function(){var d=document.getElementById('ftContactModal');"
+        . "if(d&&!d.__ftObs){d.__ftObs=1;new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['class']});sync();}});"
+        . "bo.observe(document.body,{childList:true});sync();});})();",
         'after'
     );
 

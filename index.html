@@ -12293,5 +12293,67 @@ textarea:focus-visible,
   go(0); /* manual only — no autoplay/timer between slides */
 })();
 </script>
+<style id="ft-mobile-fixes">
+/* FarmTree — mobile parity corrections (loaded last). ROOT CAUSE of the mobile
+   header overflow: the global button-normalization rule that includes
+   .pill.contact/.pill.tech with display:inline-flex!important forces the header
+   action pills visible at every width, pushing the hamburger + language control
+   off-screen (masked by body{overflow-x:hidden}). Also the assistant launcher
+   (z:99990) sat above the menu (z:200); the menu didn't lock scroll; and the
+   hero side-arrows overlapped the centred text. All rules are mobile/overlay
+   scoped — desktop is unchanged. */
+@media (max-width:1050px){
+  .header .pill.contact,.header .pill.tech{ display:none !important; }
+}
+@media (max-width:768px){
+  .menu-btn{ min-width:44px !important; min-height:44px !important; }
+  .lang-toggle{ min-height:44px !important; }
+}
+.mobile-menu{ z-index:100000 !important; }
+body.ft-menu-open{ overflow:hidden !important; }
+body.ft-menu-open .ft-chat-launcher,
+body.ft-modal-open .ft-chat-launcher{ display:none !important; }
+@media (max-width:768px){
+  .hero .arrow-side{ display:none !important; }
+  .hero .hero-content{ padding-bottom:64px !important; }
+  .ft-hero-cta-row{ flex-direction:column !important; align-items:center !important; gap:14px !important; }
+  .ft-hero-cta-row > .cta-link{ width:100% !important; max-width:360px !important; justify-content:center !important; }
+  .hero-controls{ bottom:22px !important; }
+}
+@media (max-width:768px){
+  .hero-dot,.ft-ms-dots .ft-ms-dot{ min-height:0 !important; }
+  .ft-ms-dot.is-active{ width:9px !important; border-radius:50% !important; }
+}
+@media (max-width:768px){
+  .ft-chat-launcher{
+    width:54px !important; height:54px !important;
+    right:calc(16px + env(safe-area-inset-right, 0px)) !important;
+    bottom:calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+</style>
+<script id="ft-overlay-state">
+/* Mirror Bento menu / contact modal open state onto <body> so CSS can lock page
+   scroll and hide the assistant launcher behind the overlay (restored on close).
+   Observes every open/close path; the modal is built lazily so we watch for it. */
+(function(){
+  function ready(fn){ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fn);}else{fn();} }
+  ready(function(){
+    function sync(){
+      var m=document.getElementById('mobileMenu'), d=document.getElementById('ftContactModal');
+      document.body.classList.toggle('ft-menu-open', !!(m&&m.classList.contains('open')));
+      document.body.classList.toggle('ft-modal-open', !!(d&&d.classList.contains('open')));
+    }
+    var menu=document.getElementById('mobileMenu');
+    if(menu){ new MutationObserver(sync).observe(menu,{attributes:true,attributeFilter:['class']}); }
+    var bo=new MutationObserver(function(){
+      var d=document.getElementById('ftContactModal');
+      if(d&&!d.__ftObs){ d.__ftObs=1; new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['class']}); sync(); }
+    });
+    bo.observe(document.body,{childList:true});
+    sync();
+  });
+})();
+</script>
 </body>
 </html>

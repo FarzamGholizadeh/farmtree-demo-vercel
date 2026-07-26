@@ -1,0 +1,79 @@
+/* FarmTree — mobile parity corrections (theme-authored; enqueued LAST).
+   ---------------------------------------------------------------------------
+   ROOT CAUSE of the mobile header overflow: a global button-normalization rule
+     .cta-link,.outline-btn,.ft-phase-card button,.ft-case-card button,
+     .usecase-btns a,.usecase-btns button,.pill.contact,.pill.tech
+       { display:inline-flex !important; }
+   wrongly includes the two header action pills. Being global + !important and
+   later in source than the @media(max-width:760px) pill-hide, it forces the
+   Contact / FarmTree-Platform pills visible at EVERY width, so on mobile they
+   consume the row and push the hamburger + language control off the right edge
+   — clipped (not laid out) by body{overflow-x:hidden}, which is why the static
+   scrollWidth harness never caught it.
+   Also: the assistant launcher (z-index:99990) sat above the menu (z-index:200);
+   the menu didn't lock body scroll; and the hero side-arrows (.arrow-side,
+   top:50%) overlapped the centred heading/paragraph on narrow screens.
+
+   Every rule below is scoped to a mobile media query or to an overlay-open body
+   state, so desktop rendering is byte-for-byte unchanged. No blanket overflow
+   masking, no zoom, no transformed wrapper. */
+
+/* 1 — HEADER: hide the desktop action pills across the whole hamburger range
+       (nav collapses at <=1050). Specificity .header .pill.contact (0,0,3,0)
+       beats the normalization rule (0,0,2,0); scoped to mobile only. This
+       restores the intended composition: logo + compact language + hamburger. */
+@media (max-width:1050px){
+  .header .pill.contact,
+  .header .pill.tech{ display:none !important; }
+}
+@media (max-width:768px){
+  /* guarantee >=44x44 touch targets for the remaining controls */
+  .menu-btn{ min-width:44px !important; min-height:44px !important; }
+  .lang-toggle{ min-height:44px !important; }
+}
+
+/* 2 — MENU OVERLAY: sit above the header AND the assistant launcher, lock the
+       page behind it, and hide the launcher while an overlay is open. The body
+       classes are toggled by the theme's menu/modal observer script. */
+.mobile-menu{ z-index:100000 !important; }
+body.ft-menu-open{ overflow:hidden !important; }
+body.ft-menu-open .ft-chat-launcher,
+body.ft-modal-open .ft-chat-launcher{ display:none !important; }
+
+/* 3 — HERO (<=768): remove the side arrows that overlapped the centred text
+       (the dot controls remain for navigation), keep the CTAs cleanly stacked
+       with a comfortable gap, and reserve room below for the dot row. */
+@media (max-width:768px){
+  .hero .arrow-side{ display:none !important; }
+  .hero .hero-content{ padding-bottom:64px !important; }
+  .ft-hero-cta-row{
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:14px !important;
+  }
+  .ft-hero-cta-row > .cta-link{
+    width:100% !important; max-width:360px !important; justify-content:center !important;
+  }
+  .hero-controls{ bottom:22px !important; }
+}
+
+/* 4 — DOT INDICATORS (hero progress pills + project-staff media slider):
+       a global button touch rule (button,.pill,…{min-height:44px}@<=430) also
+       inflated these tiny decorative dot-buttons into oversized 30x44 ovals /
+       bars. Undo that for the dots only, and keep the media-slider active dot a
+       small consistent round dot on mobile (the desktop elongated pill stays). */
+@media (max-width:768px){
+  .hero-dot,
+  .ft-ms-dots .ft-ms-dot{ min-height:0 !important; }
+  .ft-ms-dot.is-active{ width:9px !important; border-radius:50% !important; }
+}
+
+/* 5 — ASSISTANT LAUNCHER: mobile-appropriate size (>=44px) with safe-area-aware
+       spacing so it clears the home indicator and never sits over hero CTAs. */
+@media (max-width:768px){
+  .ft-chat-launcher{
+    width:54px !important; height:54px !important;
+    right:calc(16px + env(safe-area-inset-right, 0px)) !important;
+    bottom:calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
