@@ -14,17 +14,27 @@
         {
           "slug": "farmtree-green",
           "name": "FarmTree Green",
-          "color": "#006C49"
-        },
-        {
-          "slug": "farmtree-cream",
-          "name": "FarmTree Cream",
-          "color": "#F5F0E4"
+          "color": "#214F2A"
         },
         {
           "slug": "farmtree-ink",
           "name": "FarmTree Ink",
-          "color": "#123D2D"
+          "color": "#163126"
+        },
+        {
+          "slug": "farmtree-cream",
+          "name": "References Cream",
+          "color": "#F5F0E4"
+        },
+        {
+          "slug": "farmtree-surface-green",
+          "name": "Testimonials Green",
+          "color": "#DCE7D2"
+        },
+        {
+          "slug": "farmtree-ivory",
+          "name": "FarmTree Ivory",
+          "color": "#FAF8F1"
         }
       ]
     }
