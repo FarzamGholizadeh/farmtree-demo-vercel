@@ -55,6 +55,17 @@
 
 
 
+<?php
+/*
+ * The theme's built-in assistant renders by default. If the optional
+ * FarmTree AI Assistant plugin is installed, activated AND configured, it sets
+ * the `farmtree_ai_plugin_active` filter to true and takes over the chat — so
+ * we suppress this static widget to avoid two launchers. With the plugin absent
+ * or inactive (the default), the filter is never registered and this renders
+ * exactly as before.
+ */
+if (!apply_filters('farmtree_ai_plugin_active', false)) :
+?>
 <div aria-live="polite" class="ft-chatbot">
 <button type="button" aria-label="Open FarmTree assistant" class="ft-chat-launcher" id="ftChatLauncher">
 <svg aria-hidden="true" fill="none" viewbox="0 0 24 24">
@@ -94,6 +105,7 @@
 </div>
 </section>
 </div>
+<?php endif; // farmtree_ai_plugin_active ?>
 
 
 
