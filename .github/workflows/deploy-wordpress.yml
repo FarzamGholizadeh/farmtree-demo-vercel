@@ -7,6 +7,7 @@ on:
     paths:
       - "wordpress/wp-content/themes/farmtree/**"
       - "wordpress/wp-content/plugins/farmtree-core/**"
+      - "wordpress/wp-content/plugins/farmtree-ai-assistant/**"
       - ".github/workflows/deploy-wordpress.yml"
 
 permissions:
@@ -30,12 +31,14 @@ jobs:
           test -f wordpress/wp-content/themes/farmtree/functions.php
           test -f wordpress/wp-content/themes/farmtree/index.php
           test -f wordpress/wp-content/plugins/farmtree-core/farmtree-core.php
+          test -f wordpress/wp-content/plugins/farmtree-ai-assistant/farmtree-ai-assistant.php
           echo "WORDPRESS_FILES_OK"
 
       - name: Validate PHP syntax
         run: |
           find wordpress/wp-content/themes/farmtree \
                wordpress/wp-content/plugins/farmtree-core \
+               wordpress/wp-content/plugins/farmtree-ai-assistant \
                -type f -name '*.php' \
                -exec php -l {} \;
 
@@ -64,7 +67,8 @@ jobs:
             "$USERNAME@$HOST" \
             "mkdir -p \
               '$WORDPRESS_PATH/wp-content/themes/farmtree' \
-              '$WORDPRESS_PATH/wp-content/plugins/farmtree-core'"
+              '$WORDPRESS_PATH/wp-content/plugins/farmtree-core' \
+              '$WORDPRESS_PATH/wp-content/plugins/farmtree-ai-assistant'"
 
       - name: Deploy FarmTree theme
         env:
@@ -90,6 +94,22 @@ jobs:
             wordpress/wp-content/plugins/farmtree-core/ \
             "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/plugins/farmtree-core/"
 
+      - name: Deploy FarmTree AI Assistant plugin
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          # --delete is scoped to the farmtree-ai-assistant destination only
+          # (trailing slashes = sync directory contents in place). It removes
+          # stale files inside this plugin directory and never touches sibling
+          # plugins or wp-content/plugins itself. Files only; no DB, no activation.
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
+            wordpress/wp-content/plugins/farmtree-ai-assistant/ \
+            "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/plugins/farmtree-ai-assistant/"
+
       - name: Verify deployed code
         env:
           HOST: ${{ secrets.VIMEXX_HOST }}
@@ -104,4 +124,5 @@ jobs:
             "test -f '$WORDPRESS_PATH/wp-content/themes/farmtree/style.css' \
             && test -f '$WORDPRESS_PATH/wp-content/themes/farmtree/functions.php' \
             && test -f '$WORDPRESS_PATH/wp-content/plugins/farmtree-core/farmtree-core.php' \
+            && test -f '$WORDPRESS_PATH/wp-content/plugins/farmtree-ai-assistant/farmtree-ai-assistant.php' \
             && echo 'WORDPRESS_DEPLOYMENT_OK'"
