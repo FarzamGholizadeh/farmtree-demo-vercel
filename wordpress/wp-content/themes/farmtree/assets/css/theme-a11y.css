@@ -1,0 +1,33 @@
+/* Theme-authored accessibility styles (NOT extracted from index.html).
+   Enqueued last so it layers on top of the migrated cascade. */
+
+/* Router-safe skip link: off-screen until keyboard focus, then pinned to the
+   top-left. Visual layout of the site is unchanged (link is invisible until
+   focused). */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -64px;
+  z-index: 100000;
+  display: inline-block;
+  padding: 10px 18px;
+  background: #163126;
+  color: #ffffff;
+  font: 700 14px/1 "Manrope", "Inter", system-ui, sans-serif;
+  text-decoration: none;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 8px 24px rgba(16, 47, 35, .35);
+  transition: top .18s ease;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #D3B06B;
+  outline-offset: 2px;
+}
+
+/* The main landmark receives programmatic focus (tabindex="-1") when the skip
+   link is used; suppress the focus ring on the whole container only. */
+#main-content:focus,
+#main-content:focus-visible {
+  outline: none;
+}

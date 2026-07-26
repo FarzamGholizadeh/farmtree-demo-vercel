@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 
 get_header();
 ?>
-<main id="main-content">
+<main id="main-content" tabindex="-1">
 <?php get_template_part('template-parts/main-home'); ?>
 </main>
 <?php

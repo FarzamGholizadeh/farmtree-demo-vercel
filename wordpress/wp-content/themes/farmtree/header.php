@@ -69,4 +69,5 @@ if (!defined('ABSPATH')) {
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<a class="skip-link" href="#main-content"><?php esc_html_e('Skip to content', 'farmtree'); ?></a>
 <?php get_template_part('template-parts/header-chrome'); ?>

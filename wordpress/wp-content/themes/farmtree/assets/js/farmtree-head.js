@@ -28,7 +28,7 @@
 
   function normalize(id){
     id = String(id || 'home').replace(/^#/, '').trim().toLowerCase();
-    if(!id || id === '/' || id === 'homepage' || id === 'main') return 'home';
+    if(!id || id === '/' || id === 'homepage' || id === 'main' || id === 'main-content') return 'home';
     var map = {
       'solutions':'services',
       'solution':'services',

@@ -37,9 +37,23 @@ function farmtree_enqueue_assets(): void
     wp_enqueue_style('farmtree-components', "{$css}/components.css", ['farmtree-base'], $ver);
     wp_enqueue_style('farmtree-pages', "{$css}/pages.css", ['farmtree-components'], $ver);
     wp_enqueue_style('farmtree-responsive', "{$css}/responsive.css", ['farmtree-pages'], $ver);
+    // Theme-authored a11y styles (skip link) layered last.
+    wp_enqueue_style('farmtree-a11y', "{$css}/theme-a11y.css", ['farmtree-responsive'], $ver);
 
     // Head bundle (registers CTA + router early; safe to run before <body>).
     wp_enqueue_script('farmtree-head', "{$js}/farmtree-head.js", [], $ver, false);
+    // Router-safe skip link: on activation, move focus to #main-content without
+    // changing the hash (so the router never processes it) — progressive
+    // enhancement over the native anchor fallback. DOMContentLoaded-guarded
+    // because the head bundle runs before <body> is parsed.
+    wp_add_inline_script(
+        'farmtree-head',
+        "(function(){function init(){var l=document.querySelector('.skip-link');if(!l)return;"
+        . "l.addEventListener('click',function(e){var m=document.getElementById('main-content');"
+        . "if(!m)return;e.preventDefault();m.focus();m.scrollIntoView();});}"
+        . "if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}})();",
+        'after'
+    );
 
     // App bundle in the footer, preceded by the FT_ASSETS base.
     wp_enqueue_script('farmtree-app', "{$js}/farmtree-app.js", [], $ver, true);
