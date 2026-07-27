@@ -14,9 +14,19 @@
 }
 
 .ft-editor-homepage-hero-preview .hero-content {
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .ft-editor-homepage-hero-preview .cta-link {
+  pointer-events: none;
   text-decoration: none;
+}
+
+.ft-editor-selected-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 160px;
+  object-fit: cover;
+  margin-bottom: 12px;
 }
