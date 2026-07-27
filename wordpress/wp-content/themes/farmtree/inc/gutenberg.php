@@ -229,12 +229,17 @@ add_filter('allowed_block_types_all', 'farmtree_allowed_block_types_for_native_t
  */
 function farmtree_enqueue_block_editor_config(): void
 {
-    wp_enqueue_script('farmtree-homepage-hero-editor-script');
-
     wp_add_inline_script(
         'farmtree-homepage-hero-editor-script',
         'window.FT_ASSETS = ' . wp_json_encode(esc_url_raw(untrailingslashit(get_theme_file_uri('assets')))) . ';',
         'before'
     );
+
+    $scripts = wp_scripts();
+    if (isset($scripts->registered['wp-edit-post']) && !in_array('farmtree-homepage-hero-editor-script', $scripts->registered['wp-edit-post']->deps, true)) {
+        $scripts->registered['wp-edit-post']->deps[] = 'farmtree-homepage-hero-editor-script';
+    }
+
+    wp_enqueue_script('farmtree-homepage-hero-editor-script');
 }
-add_action('enqueue_block_editor_assets', 'farmtree_enqueue_block_editor_config', 5);
+add_action('enqueue_block_editor_assets', 'farmtree_enqueue_block_editor_config', 1);

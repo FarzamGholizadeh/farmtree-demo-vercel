@@ -6,7 +6,7 @@
 
     attempts += 1;
 
-    if (!wp || !wp.hooks || !wp.compose || !wp.element || !wp.blockEditor || !wp.components || !wp.i18n) {
+    if (!wp || !wp.blocks || !wp.element || !wp.blockEditor || !wp.components || !wp.i18n) {
       if (attempts < 80) {
         window.setTimeout(boot, 50);
       }
@@ -14,8 +14,7 @@
       return;
     }
 
-    var addFilter = wp.hooks.addFilter;
-    var createHigherOrderComponent = wp.compose.createHigherOrderComponent;
+    var registerBlockType = wp.blocks.registerBlockType;
     var el = wp.element.createElement;
     var Fragment = wp.element.Fragment;
     var __ = wp.i18n.__;
@@ -208,17 +207,84 @@
       );
     }
 
-    var withHomepageHeroEdit = createHigherOrderComponent(function (BlockEdit) {
-      return function FarmTreeHomepageHeroBlockEdit(props) {
-        if (!props || props.name !== 'farmtree/homepage-hero') {
-          return el(BlockEdit, props);
+    if (wp.blocks.getBlockType('farmtree/homepage-hero')) {
+      wp.blocks.unregisterBlockType('farmtree/homepage-hero');
+    }
+
+    registerBlockType('farmtree/homepage-hero', {
+      apiVersion: 3,
+      title: __('FarmTree Homepage Hero', 'farmtree'),
+      category: 'theme',
+      icon: 'palmtree',
+      description: __('Editable FarmTree homepage hero using the approved frontend design.', 'farmtree'),
+      attributes: {
+        kicker: {
+          type: 'string',
+          default: defaults.kicker
+        },
+        title: {
+          type: 'string',
+          default: defaults.title
+        },
+        text: {
+          type: 'string',
+          default: defaults.text
+        },
+        mediaId: {
+          type: 'number',
+          default: 0
+        },
+        mediaUrl: {
+          type: 'string',
+          default: defaults.mediaUrl
+        },
+        mediaAlt: {
+          type: 'string',
+          default: defaults.mediaAlt
+        },
+        primaryText: {
+          type: 'string',
+          default: defaults.primaryText
+        },
+        primaryUrl: {
+          type: 'string',
+          default: defaults.primaryUrl
+        },
+        secondaryText: {
+          type: 'string',
+          default: defaults.secondaryText
+        },
+        futureLabel: {
+          type: 'string',
+          default: defaults.futureLabel
+        },
+        futureTitle: {
+          type: 'string',
+          default: defaults.futureTitle
+        },
+        futureText: {
+          type: 'string',
+          default: defaults.futureText
+        },
+        showFutureCard: {
+          type: 'boolean',
+          default: defaults.showFutureCard
         }
-
-        return el(HomepageHeroEdit, props);
-      };
-    }, 'withHomepageHeroEdit');
-
-    addFilter('editor.BlockEdit', 'farmtree/homepage-hero-edit-ui', withHomepageHeroEdit);
+      },
+      supports: {
+        align: false,
+        anchor: false,
+        color: false,
+        customClassName: false,
+        html: false,
+        spacing: false,
+        typography: false
+      },
+      edit: HomepageHeroEdit,
+      save: function () {
+        return null;
+      }
+    });
   }
 
   boot();
