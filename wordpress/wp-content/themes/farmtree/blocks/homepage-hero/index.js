@@ -49,6 +49,10 @@
     });
   }
 
+  if (wp.blocks.getBlockType('farmtree/homepage-hero')) {
+    wp.blocks.unregisterBlockType('farmtree/homepage-hero');
+  }
+
   registerBlockType('farmtree/homepage-hero', {
     title: __('FarmTree Homepage Hero', 'farmtree'),
     category: 'theme',
