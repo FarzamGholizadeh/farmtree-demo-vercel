@@ -149,6 +149,28 @@ Phase-1 port of the approved static site into a **classic** custom theme
   `production` environment approval boundary is cleared.
   `.github/workflows/test-vimexx-ssh.yml` is manual-only.
 
+## WordPress-native foundation (`FT-WP-001`)
+The theme now has a hybrid Gutenberg foundation while keeping the approved
+single-document frontend shell:
+
+- Custom block: `farmtree/homepage-hero`.
+- Pilot page template: `template-farmtree-native-homepage.php`.
+- Pattern: `farmtree/homepage-hero-pilot`.
+- Editor guardrail: the pilot page template allows only
+  `farmtree/homepage-hero`, so editors can change approved content fields
+  without free-form page-builder layout drift.
+- Runtime bridge: `template-parts/main-home.php` renders the hero through the
+  block renderer. If the configured static front page contains the pilot block,
+  the theme reads that block's attributes; otherwise it renders approved default
+  hero content.
+- Content-model roadmap:
+  `farmtree_core_target_content_architecture()` documents future Pages, CPTs,
+  taxonomies, global settings, blocks, and editor locking without registering
+  public content types prematurely.
+
+The rest of the homepage and hash-routed inner sections remain in the legacy
+PHP/JS shell until their own focused native-block or content-model sprints.
+
 ## Governance gates
 FarmTree website changes follow six approval gates:
 

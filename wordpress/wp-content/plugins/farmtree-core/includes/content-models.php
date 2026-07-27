@@ -88,3 +88,97 @@ function farmtree_core_planned_content_models(): array
      */
     return apply_filters('farmtree_core_planned_content_models', $models);
 }
+
+/**
+ * Target WordPress-native information architecture.
+ *
+ * This is an implementation roadmap, not runtime registration. Each model moves
+ * to real Pages, CPTs, taxonomies, settings, or blocks only in its own focused
+ * sprint after the matching frontend renderer and migration path exist.
+ *
+ * @return array<string, mixed>
+ */
+function farmtree_core_target_content_architecture(): array
+{
+    $architecture = [
+        'pages' => [
+            'home' => [
+                'url' => '/',
+                'template' => 'template-farmtree-native-homepage.php',
+                'blocks' => ['farmtree/homepage-hero'],
+                'notes' => 'Pilot hybrid page. The approved shell remains in code while the hero reads block attributes from the selected static front page.',
+            ],
+            'platform' => [
+                'url' => '/platform/',
+                'source' => 'future page template',
+                'notes' => 'Replace #platform after clean-route approval.',
+            ],
+            'solutions' => [
+                'url' => '/solutions/',
+                'source' => 'future page template',
+                'notes' => 'Replace #services after clean-route approval.',
+            ],
+            'track_record' => [
+                'url' => '/track-record/',
+                'source' => 'future page template plus case-study CPT queries',
+                'notes' => 'Replace #track after clean-route approval.',
+            ],
+        ],
+        'custom_post_types' => [
+            'case_study' => [
+                'public' => true,
+                'taxonomies' => ['farmtree_region', 'farmtree_theme', 'farmtree_audience'],
+                'fields' => ['summary', 'hero_media', 'partner_logo', 'metrics', 'challenge', 'approach', 'outcomes', 'quote'],
+            ],
+            'news' => [
+                'public' => true,
+                'taxonomies' => ['category', 'post_tag', 'farmtree_audience'],
+                'fields' => ['summary', 'hero_media', 'related_cta'],
+            ],
+            'team_member' => [
+                'public' => false,
+                'fields' => ['role', 'photo', 'bio', 'linkedin_url', 'sort_order'],
+            ],
+            'testimonial' => [
+                'public' => false,
+                'fields' => ['quote', 'person', 'organisation', 'initials', 'related_case_study'],
+            ],
+            'vacancy' => [
+                'public' => true,
+                'fields' => ['location', 'employment_type', 'application_url', 'closing_date'],
+            ],
+            'customer_segment' => [
+                'public' => true,
+                'taxonomies' => ['farmtree_audience'],
+                'fields' => ['hero_copy', 'decision_context', 'help_cards', 'capability_chips', 'outputs'],
+            ],
+            'video' => [
+                'public' => true,
+                'taxonomies' => ['farmtree_audience'],
+                'fields' => ['poster', 'webm', 'mp4', 'external_url', 'transcript'],
+            ],
+        ],
+        'global_settings' => [
+            'company_profile' => ['address', 'email', 'phone', 'social_links', 'legal_name'],
+            'cta_destinations' => ['platform_login_url', 'demo_registration_url', 'quotation_behavior'],
+            'seo_defaults' => ['default_og_image', 'organization_schema_logo', 'content_owner'],
+        ],
+        'blocks' => [
+            'farmtree/homepage-hero' => 'Editable pilot block for hero copy, media and CTA labels.',
+            'farmtree/section-heading' => 'Future controlled heading block for repeated section headers.',
+            'farmtree/case-study-grid' => 'Future query block for approved case studies.',
+            'farmtree/partner-strip' => 'Future global partner logo strip.',
+        ],
+        'editor_locking' => [
+            'principle' => 'Editors change content inside FarmTree blocks and patterns; layout primitives remain controlled by theme templates.',
+            'pilot' => 'The FarmTree Native Homepage Pilot page template currently allows only farmtree/homepage-hero.',
+        ],
+    ];
+
+    /**
+     * Filter the target content architecture roadmap.
+     *
+     * @param array $architecture Target architecture keyed by concern.
+     */
+    return apply_filters('farmtree_core_target_content_architecture', $architecture);
+}

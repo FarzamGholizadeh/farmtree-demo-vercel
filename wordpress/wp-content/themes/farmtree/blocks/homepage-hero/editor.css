@@ -1,0 +1,22 @@
+.ft-editor-lock-note {
+  margin-bottom: 16px;
+}
+
+.ft-editor-homepage-hero-preview {
+  display: block !important;
+  max-width: 100%;
+}
+
+.ft-editor-homepage-hero-preview .hero {
+  min-height: 620px;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.ft-editor-homepage-hero-preview .hero-content {
+  pointer-events: none;
+}
+
+.ft-editor-homepage-hero-preview .cta-link {
+  text-decoration: none;
+}

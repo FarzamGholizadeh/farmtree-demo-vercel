@@ -7,6 +7,7 @@
  *   - enqueue.php       ordered CSS + JS bundles, FT_ASSETS base
  *   - template-tags.php farmtree_asset() and presentational helpers
  *   - helpers.php       low-level utilities
+ *   - gutenberg.php     FarmTree blocks, patterns, and editor guardrails
  *
  * @package FarmTree
  */
@@ -26,3 +27,4 @@ require_once FARMTREE_DIR . '/inc/helpers.php';
 require_once FARMTREE_DIR . '/inc/template-tags.php';
 require_once FARMTREE_DIR . '/inc/setup.php';
 require_once FARMTREE_DIR . '/inc/enqueue.php';
+require_once FARMTREE_DIR . '/inc/gutenberg.php';

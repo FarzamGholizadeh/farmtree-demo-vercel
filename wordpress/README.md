@@ -17,17 +17,24 @@ plugin are **inactive** until activated in wp-admin.
 
 ```
 style.css                 Theme header (metadata only; not enqueued)
-theme.json                Editor palette / layout settings (block editor)
+theme.json                FarmTree editor design tokens / layout settings
 functions.php             Bootstrap: constants + require inc/*
 header.php                <head> (migrated meta, fonts, JSON-LD) + top chrome
 footer.php                footer chrome + wp_footer()
 front-page.php            Homepage: <main> + template-parts/main-home
 index.php                 Fallback: renders the same homepage document
+template-farmtree-native-homepage.php
+                           Pilot locked template for native homepage editing
 inc/
   setup.php               Theme supports, menus, content width, front-page title
   enqueue.php             Ordered CSS + JS bundles, window.FT_ASSETS base
   template-tags.php       farmtree_asset() — resolves theme asset URLs
   helpers.php             farmtree_asset_exists()
+  gutenberg.php           FarmTree block registration, patterns, editor guards
+blocks/
+  homepage-hero/          Dynamic editable hero block
+patterns/
+  homepage-hero-pilot.php Reusable hero block pattern
 template-parts/
   header-chrome.php       Site loader + header/nav + Bento mobile menu
   main-home.php           All homepage sections + in-page routes (#platform,
@@ -93,8 +100,22 @@ models are published as data via `farmtree_core_planned_content_models()`.
 | External CTA destinations (Login / Register)           | Menus (locations already registered)       |
 | Media slider + video lifecycle, loader, AI assistant   | Site title / tagline, front-page selection |
 | Colours, typography, responsive rules                  | Search-engine visibility (robots)          |
+| Homepage hero defaults and renderer                    | Hero copy/media/CTA via FarmTree block     |
 
 See `includes/content-models.php` for the full future content-model plan.
+
+### WordPress-native pilot
+
+`FT-WP-001` introduces the first editor-friendly bridge:
+
+1. Create or choose a WordPress Page.
+2. Assign the **FarmTree Native Homepage Pilot** template.
+3. Insert the **FarmTree Homepage Hero** block or the FarmTree hero pattern.
+4. Edit hero copy, media, alt text and CTA labels/URL.
+5. Set the page as the static front page only after release approval.
+
+If no configured static front page contains the pilot block, the theme renders
+the approved default hero content and the live homepage remains visually stable.
 
 ---
 
@@ -120,8 +141,8 @@ available before pushing.
 
 ## GitHub Actions deployment path
 
-`.github/workflows/deploy-wordpress.yml` deploys on push to
-`wordpress-integration` (paths under the theme / plugin / workflow):
+`.github/workflows/deploy-wordpress.yml` is manual-only via
+`workflow_dispatch`:
 
 1. Validates required files exist.
 2. Runs `php -l` on every theme + plugin PHP file.

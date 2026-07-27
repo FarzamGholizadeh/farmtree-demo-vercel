@@ -1,22 +1,6 @@
 <?php if (!defined('ABSPATH')) exit; ?>
-<section class="page active" id="page-home">
-<div class="hero">
-<img fetchpriority="high" alt="Agroforestry landscape planning — tree-based farming systems and landscape investment in Madagascar" class="hero-img" id="heroImg" src="<?php echo farmtree_asset('case-giz_opt.webp'); ?>"/>
-<div class="green-blob"></div>
-<button type="button" class="arrow-side left" id="prevHero">‹</button><button type="button" class="arrow-side right" id="nextHero">›</button>
-<div class="hero-content">
-<div class="kicker" id="heroKicker">AGROFORESTRY INTELLIGENCE</div>
-<h1 id="heroTitle">Make agroforestry measurable, investable and scalable.</h1>
-<p id="heroText">FarmTree helps organisations turn agroforestry complexity into clearer project intelligence for planning, reporting and investment decisions.</p>
-<div class="ft-hero-cta-row"><a class="cta-link" target="_blank" rel="noopener noreferrer" data-ft-action="request-demo" href="https://tool.farmtree.earth/Identity/Account/Register">Request a demo ↗</a><button type="button" class="cta-link secondary" data-ft-action="request-quotation">Ask for a quotation ↗</button></div><div class="ft-free-plan-card"><span>Future service</span><strong>Design your own agroforestry system</strong><p>Explore how FarmTree turns agroforestry scenarios into measurable outcomes and investment-ready plans.</p></div>
-</div>
-<div class="hero-controls" role="tablist" aria-label="Hero slides">
-<button type="button" class="hero-dot active" data-slide="0" aria-label="Slide 1: Agroforestry Planning" aria-selected="true" role="tab"></button>
-<button type="button" class="hero-dot" data-slide="1" aria-label="Slide 2: Science-Based Modelling" aria-selected="false" role="tab"></button>
-</div>
-</div>
-<div class="video-home"></div>
-</section><section class="section ft-about-feedback">
+<?php echo farmtree_render_homepage_hero(farmtree_get_front_page_homepage_hero_attributes()); ?>
+<section class="section ft-about-feedback">
 <div class="container ft-u-center">
 <h2 class="kicker ft-kicker-h">About FarmTree</h2>
 <div class="metrics ft-track-metrics" data-ft-static aria-label="FarmTree track record">

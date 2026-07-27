@@ -2,11 +2,11 @@
 
 _Last updated: 2026-07-27_
 
-## Active Governance Task
+## Completed Governance Task
 
 ### FT-WEB-001 - Production-safe governance baseline
 
-Status: implemented locally, awaiting review.
+Status: committed and pushed to `origin/wordpress-integration`.
 
 Scope:
 
@@ -36,8 +36,36 @@ Acceptance:
 
 ## Deferred Implementation Backlog
 
-- FT-WEB-002 - Define clean WordPress route strategy for replacing hash routes.
-- FT-WEB-003 - Define SEO metadata, canonical, hreflang, sitemap, and robots ownership across WordPress core, theme, and SEO plugin.
+## Active Sprint
+
+### FT-WP-001 - WordPress Native Foundation Architecture
+
+Status: in local implementation.
+
+Scope:
+
+- Audit hard-coded homepage/global components.
+- Define the WordPress-native content model across Pages, FarmTree blocks, patterns, future CPTs, taxonomies, global settings, and editor locking.
+- Add minimum Gutenberg infrastructure to the FarmTree theme.
+- Add the first editable pilot block: `farmtree/homepage-hero`.
+- Add a FarmTree Native Homepage Pilot page template with locked block scope.
+- Preserve the approved frontend hero DOM, design classes, IDs, CTA behavior, and responsive hooks.
+- Keep current production unchanged until release approval.
+
+Acceptance:
+
+- Homepage hero can be represented by a custom block.
+- Hero text, supporting text, background image/alt text, primary CTA label/URL, secondary CTA label, and future-card content are editable.
+- If a configured static front page contains the pilot block, the theme reads its attributes.
+- If no static page/block exists, the approved default hero renders unchanged.
+- No Elementor or unrestricted page-builder behavior is introduced.
+- No push, deployment, WordPress publication, activation, or database change is performed.
+
+## Deferred Implementation Backlog
+
+- FT-WP-002 - Convert homepage section headings and repeated cards into locked FarmTree blocks/patterns.
+- FT-WP-003 - Register and migrate first functional CPT set for Case Studies and Testimonials.
+- FT-WP-004 - Define clean WordPress route strategy for replacing hash routes.
+- FT-SEO-001 - Define SEO metadata, canonical, hreflang, sitemap, and robots ownership across WordPress core, theme, and SEO plugin.
 - FT-WEB-004 - Define production form handling and delivery verification.
-- FT-WEB-005 - Define editable content models for approved WordPress content types.
-- FT-WEB-006 - Add browser-based production verification checklist after an approved deployment.
+- FT-WP-005 - Add browser-based production verification checklist after an approved deployment.

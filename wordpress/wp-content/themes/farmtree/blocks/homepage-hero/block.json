@@ -1,0 +1,76 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "farmtree/homepage-hero",
+  "version": "0.1.0",
+  "title": "FarmTree Homepage Hero",
+  "category": "theme",
+  "icon": "palmtree",
+  "description": "Editable FarmTree homepage hero using the approved frontend design.",
+  "textdomain": "farmtree",
+  "attributes": {
+    "kicker": {
+      "type": "string",
+      "default": "AGROFORESTRY INTELLIGENCE"
+    },
+    "title": {
+      "type": "string",
+      "default": "Make agroforestry measurable, investable and scalable."
+    },
+    "text": {
+      "type": "string",
+      "default": "FarmTree helps organisations turn agroforestry complexity into clearer project intelligence for planning, reporting and investment decisions."
+    },
+    "mediaId": {
+      "type": "number",
+      "default": 0
+    },
+    "mediaUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "mediaAlt": {
+      "type": "string",
+      "default": "Agroforestry landscape planning — tree-based farming systems and landscape investment in Madagascar"
+    },
+    "primaryText": {
+      "type": "string",
+      "default": "Request a demo ↗"
+    },
+    "primaryUrl": {
+      "type": "string",
+      "default": "https://tool.farmtree.earth/Identity/Account/Register"
+    },
+    "secondaryText": {
+      "type": "string",
+      "default": "Ask for a quotation ↗"
+    },
+    "futureLabel": {
+      "type": "string",
+      "default": "Future service"
+    },
+    "futureTitle": {
+      "type": "string",
+      "default": "Design your own agroforestry system"
+    },
+    "futureText": {
+      "type": "string",
+      "default": "Explore how FarmTree turns agroforestry scenarios into measurable outcomes and investment-ready plans."
+    },
+    "showFutureCard": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "supports": {
+    "align": false,
+    "anchor": false,
+    "color": false,
+    "customClassName": false,
+    "html": false,
+    "spacing": false,
+    "typography": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css"
+}

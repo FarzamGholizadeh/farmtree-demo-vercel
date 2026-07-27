@@ -199,6 +199,15 @@ const heroes = [
   ['Project Teams', 'Support Local Teams with Clearer Planning Tools', 'Help project staff compare agroforestry options, understand trade-offs, and communicate value with confidence.', '' + window.FT_ASSETS + '/embedded_027_opt.webp', 'Agroforestry field team training and support — local staff using FarmTree planning tools'],
   ['Impact Reporting', 'Report Carbon, Farmer Value and Long-Term Performance', 'Translate project results into clear reporting for investors, donors, MRV partners, and programme teams.', '' + window.FT_ASSETS + '/case-water_opt.webp', 'Landscape investment reporting — LOSO Nyando water, carbon and farmer value programme']
 ];
+try {
+  const heroDataEl = document.getElementById('ftHomepageHeroData');
+  const heroData = heroDataEl ? JSON.parse(heroDataEl.textContent || '{}') : null;
+  if (heroData && heroData.kicker && heroData.title && heroData.text && heroData.mediaUrl) {
+    heroes[0] = [heroData.kicker, heroData.title, heroData.text, heroData.mediaUrl, heroData.mediaAlt || heroes[0][4]];
+    window.FT_HOMEPAGE_HERO_EDITABLE = true;
+  }
+} catch (err) {}
+window.heroes = heroes;
 /* [router-consolidation 2026-07] removed: legacy setPage() + [data-page] click listener */
 document.getElementById('openMenu').onclick=()=>{document.getElementById('mobileMenu').classList.add('open');setTimeout(()=>document.getElementById('closeMenu').focus(),60);};
 document.getElementById('closeMenu').onclick=()=>{document.getElementById('mobileMenu').classList.remove('open');document.getElementById('openMenu').focus();};
@@ -3101,7 +3110,9 @@ function applyFormTranslations(){
 /* ── Update hero slides with current language ───────────────── */
 function applyHeroTranslations(){
   if(!window.heroes || !window.heroes.length) return;
-  window.heroes[0] = [t('hero.s1.kicker'), t('hero.s1.title'), t('hero.s1.text'), window.heroes[0][3], window.heroes[0][4]];
+  if(!window.FT_HOMEPAGE_HERO_EDITABLE){
+    window.heroes[0] = [t('hero.s1.kicker'), t('hero.s1.title'), t('hero.s1.text'), window.heroes[0][3], window.heroes[0][4]];
+  }
   window.heroes[1] = [t('hero.s2.kicker'), t('hero.s2.title'), t('hero.s2.text'), window.heroes[1][3], window.heroes[1][4]];
   window.heroes[2] = [t('hero.s3.kicker'), t('hero.s3.title'), t('hero.s3.text'), window.heroes[2][3], window.heroes[2][4]];
   window.heroes[3] = [t('hero.s4.kicker'), t('hero.s4.title'), t('hero.s4.text'), window.heroes[3][3], window.heroes[3][4]];

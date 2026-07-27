@@ -10,6 +10,9 @@
     "color": {
       "custom": false,
       "customGradient": false,
+      "defaultDuotone": false,
+      "defaultGradients": false,
+      "defaultPalette": false,
       "palette": [
         {
           "slug": "farmtree-green",
@@ -35,8 +38,111 @@
           "slug": "farmtree-ivory",
           "name": "FarmTree Ivory",
           "color": "#FAF8F1"
+        },
+        {
+          "slug": "farmtree-gold",
+          "name": "FarmTree Gold",
+          "color": "#D3B06B"
+        },
+        {
+          "slug": "farmtree-muted",
+          "name": "FarmTree Muted Text",
+          "color": "#4D6258"
         }
       ]
+    },
+    "spacing": {
+      "customSpacingSize": false,
+      "spacingSizes": [
+        {
+          "slug": "20",
+          "name": "20",
+          "size": "20px"
+        },
+        {
+          "slug": "40",
+          "name": "40",
+          "size": "40px"
+        },
+        {
+          "slug": "80",
+          "name": "80",
+          "size": "80px"
+        },
+        {
+          "slug": "120",
+          "name": "120",
+          "size": "120px"
+        }
+      ],
+      "units": [
+        "px",
+        "rem"
+      ]
+    },
+    "typography": {
+      "customFontSize": false,
+      "dropCap": false,
+      "fontFamilies": [
+        {
+          "fontFamily": "Manrope, system-ui, sans-serif",
+          "name": "Manrope",
+          "slug": "manrope"
+        },
+        {
+          "fontFamily": "Inter, system-ui, sans-serif",
+          "name": "Inter",
+          "slug": "inter"
+        }
+      ],
+      "fontSizes": [
+        {
+          "slug": "body",
+          "name": "Body",
+          "size": "18px"
+        },
+        {
+          "slug": "lead",
+          "name": "Lead",
+          "size": "22px"
+        },
+        {
+          "slug": "heading",
+          "name": "Heading",
+          "size": "clamp(34px, 5.2vw, 72px)"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#FAF8F1",
+      "text": "#163126"
+    },
+    "typography": {
+      "fontFamily": "Inter, system-ui, sans-serif"
+    },
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontFamily": "Manrope, system-ui, sans-serif",
+          "fontWeight": "900",
+          "letterSpacing": "0"
+        }
+      },
+      "button": {
+        "border": {
+          "radius": "999px"
+        },
+        "color": {
+          "background": "#214F2A",
+          "text": "#FFFFFF"
+        },
+        "typography": {
+          "fontFamily": "Manrope, system-ui, sans-serif",
+          "fontWeight": "900"
+        }
+      }
     }
   }
 }
