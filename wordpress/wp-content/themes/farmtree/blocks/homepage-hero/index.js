@@ -1,23 +1,34 @@
-(function (wp) {
-  if (!wp || !wp.blocks || !wp.element || !wp.blockEditor || !wp.components || !wp.i18n) {
-    return;
-  }
+(function () {
+  var attempts = 0;
 
-  var el = wp.element.createElement;
-  var Fragment = wp.element.Fragment;
-  var __ = wp.i18n.__;
-  var registerBlockType = wp.blocks.registerBlockType;
-  var InspectorControls = wp.blockEditor.InspectorControls;
-  var MediaUpload = wp.blockEditor.MediaUpload;
-  var MediaUploadCheck = wp.blockEditor.MediaUploadCheck;
-  var PanelBody = wp.components.PanelBody;
-  var TextControl = wp.components.TextControl;
-  var TextareaControl = wp.components.TextareaControl;
-  var ToggleControl = wp.components.ToggleControl;
-  var Button = wp.components.Button;
-  var Notice = wp.components.Notice;
+  function boot() {
+    var wp = window.wp;
 
-  var defaults = {
+    attempts += 1;
+
+    if (!wp || !wp.blocks || !wp.element || !wp.blockEditor || !wp.components || !wp.i18n) {
+      if (attempts < 80) {
+        window.setTimeout(boot, 50);
+      }
+
+      return;
+    }
+
+    var el = wp.element.createElement;
+    var Fragment = wp.element.Fragment;
+    var __ = wp.i18n.__;
+    var registerBlockType = wp.blocks.registerBlockType;
+    var InspectorControls = wp.blockEditor.InspectorControls;
+    var MediaUpload = wp.blockEditor.MediaUpload;
+    var MediaUploadCheck = wp.blockEditor.MediaUploadCheck;
+    var PanelBody = wp.components.PanelBody;
+    var TextControl = wp.components.TextControl;
+    var TextareaControl = wp.components.TextareaControl;
+    var ToggleControl = wp.components.ToggleControl;
+    var Button = wp.components.Button;
+    var Notice = wp.components.Notice;
+
+    var defaults = {
     kicker: 'AGROFORESTRY INTELLIGENCE',
     title: 'Make agroforestry measurable, investable and scalable.',
     text: 'FarmTree helps organisations turn agroforestry complexity into clearer project intelligence for planning, reporting and investment decisions.',
@@ -30,13 +41,13 @@
     futureTitle: 'Design your own agroforestry system',
     futureText: 'Explore how FarmTree turns agroforestry scenarios into measurable outcomes and investment-ready plans.',
     showFutureCard: true
-  };
+    };
 
-  function attr(attributes, key) {
+    function attr(attributes, key) {
     return attributes[key] === undefined || attributes[key] === '' ? defaults[key] : attributes[key];
-  }
+    }
 
-  function textControl(label, key, attributes, setAttributes, help) {
+    function textControl(label, key, attributes, setAttributes, help) {
     return el(TextControl, {
       label: label,
       value: attr(attributes, key),
@@ -47,13 +58,13 @@
         setAttributes(next);
       }
     });
-  }
+    }
 
-  if (wp.blocks.getBlockType('farmtree/homepage-hero')) {
-    wp.blocks.unregisterBlockType('farmtree/homepage-hero');
-  }
+    if (wp.blocks.getBlockType('farmtree/homepage-hero')) {
+      wp.blocks.unregisterBlockType('farmtree/homepage-hero');
+    }
 
-  registerBlockType('farmtree/homepage-hero', {
+    registerBlockType('farmtree/homepage-hero', {
     title: __('FarmTree Homepage Hero', 'farmtree'),
     category: 'theme',
     icon: 'palmtree',
@@ -214,4 +225,7 @@
       return null;
     }
   });
-})(window.wp);
+  }
+
+  boot();
+})();
