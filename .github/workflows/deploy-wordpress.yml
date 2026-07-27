@@ -1,0 +1,124 @@
+name: Deploy FarmTree WordPress Code
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: farmtree-wordpress-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://farmtree.eu/
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate required files
+        run: |
+          test -f wordpress/wp-content/themes/farmtree/style.css
+          test -f wordpress/wp-content/themes/farmtree/functions.php
+          test -f wordpress/wp-content/themes/farmtree/index.php
+          test -f wordpress/wp-content/plugins/farmtree-core/farmtree-core.php
+          test -f wordpress/wp-content/plugins/farmtree-ai-assistant/farmtree-ai-assistant.php
+          echo "WORDPRESS_FILES_OK"
+
+      - name: Validate PHP syntax
+        run: |
+          find wordpress/wp-content/themes/farmtree \
+               wordpress/wp-content/plugins/farmtree-core \
+               wordpress/wp-content/plugins/farmtree-ai-assistant \
+               -type f -name '*.php' \
+               -exec php -l {} \;
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Ensure deployment directories exist
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -p "$PORT" \
+            "$USERNAME@$HOST" \
+            "mkdir -p \
+              '$WORDPRESS_PATH/wp-content/themes/farmtree' \
+              '$WORDPRESS_PATH/wp-content/plugins/farmtree-core' \
+              '$WORDPRESS_PATH/wp-content/plugins/farmtree-ai-assistant'"
+
+      - name: Deploy FarmTree theme
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
+            wordpress/wp-content/themes/farmtree/ \
+            "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/themes/farmtree/"
+
+      - name: Deploy FarmTree Core plugin
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
+            wordpress/wp-content/plugins/farmtree-core/ \
+            "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/plugins/farmtree-core/"
+
+      - name: Deploy FarmTree AI Assistant plugin
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          # --delete is scoped to the farmtree-ai-assistant destination only
+          # (trailing slashes = sync directory contents in place). It removes
+          # stale files inside this plugin directory and never touches sibling
+          # plugins or wp-content/plugins itself. Files only; no DB, no activation.
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
+            wordpress/wp-content/plugins/farmtree-ai-assistant/ \
+            "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/plugins/farmtree-ai-assistant/"
+
+      - name: Verify deployed code
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -p "$PORT" \
+            "$USERNAME@$HOST" \
+            "test -f '$WORDPRESS_PATH/wp-content/themes/farmtree/style.css' \
+            && test -f '$WORDPRESS_PATH/wp-content/themes/farmtree/functions.php' \
+            && test -f '$WORDPRESS_PATH/wp-content/plugins/farmtree-core/farmtree-core.php' \
+            && test -f '$WORDPRESS_PATH/wp-content/plugins/farmtree-ai-assistant/farmtree-ai-assistant.php' \
+            && echo 'WORDPRESS_DEPLOYMENT_OK'"
