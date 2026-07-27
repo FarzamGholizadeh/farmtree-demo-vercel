@@ -1,10 +1,11 @@
 (function (wp) {
-  if (!wp || !wp.blocks || !wp.element || !wp.blockEditor || !wp.components) {
+  if (!wp || !wp.blocks || !wp.element || !wp.blockEditor || !wp.components || !wp.i18n) {
     return;
   }
 
   var el = wp.element.createElement;
   var Fragment = wp.element.Fragment;
+  var __ = wp.i18n.__;
   var registerBlockType = wp.blocks.registerBlockType;
   var InspectorControls = wp.blockEditor.InspectorControls;
   var MediaUpload = wp.blockEditor.MediaUpload;
@@ -57,17 +58,17 @@
 
       return el(Fragment, {},
         el(InspectorControls, {},
-          el(PanelBody, { title: 'Hero content', initialOpen: true },
-            textControl('Kicker', 'kicker', attributes, setAttributes),
-            textControl('Headline', 'title', attributes, setAttributes),
+          el(PanelBody, { title: __('Hero content', 'farmtree'), initialOpen: true },
+            textControl(__('Kicker', 'farmtree'), 'kicker', attributes, setAttributes),
+            textControl(__('Headline', 'farmtree'), 'title', attributes, setAttributes),
             el(TextareaControl, {
-              label: 'Supporting text',
+              label: __('Supporting text', 'farmtree'),
               value: attr(attributes, 'text'),
               rows: 4,
               onChange: function (value) { setAttributes({ text: value }); }
             })
           ),
-          el(PanelBody, { title: 'Background media', initialOpen: false },
+          el(PanelBody, { title: __('Background media', 'farmtree'), initialOpen: false },
             el(MediaUploadCheck, {},
               el(MediaUpload, {
                 allowedTypes: ['image'],
@@ -80,25 +81,25 @@
                   });
                 },
                 render: function (obj) {
-                  return el(Button, { variant: 'secondary', onClick: obj.open }, mediaUrl ? 'Replace image' : 'Choose image');
+                  return el(Button, { variant: 'secondary', onClick: obj.open }, mediaUrl ? __('Replace image', 'farmtree') : __('Choose image', 'farmtree'));
                 }
               })
             ),
-            textControl('Image alt text', 'mediaAlt', attributes, setAttributes, 'Describe the visible image for accessibility.')
+            textControl(__('Image alt text', 'farmtree'), 'mediaAlt', attributes, setAttributes, __('Describe the visible image for accessibility.', 'farmtree'))
           ),
-          el(PanelBody, { title: 'Calls to action', initialOpen: false },
-            textControl('Primary CTA label', 'primaryText', attributes, setAttributes),
-            textControl('Primary CTA URL', 'primaryUrl', attributes, setAttributes, 'Only HTTPS URLs are accepted on the frontend.'),
-            textControl('Secondary CTA label', 'secondaryText', attributes, setAttributes),
+          el(PanelBody, { title: __('Calls to action', 'farmtree'), initialOpen: false },
+            textControl(__('Primary CTA label', 'farmtree'), 'primaryText', attributes, setAttributes),
+            textControl(__('Primary CTA URL', 'farmtree'), 'primaryUrl', attributes, setAttributes, __('Only HTTPS URLs are accepted on the frontend.', 'farmtree')),
+            textControl(__('Secondary CTA label', 'farmtree'), 'secondaryText', attributes, setAttributes),
             el(ToggleControl, {
-              label: 'Show future service card',
+              label: __('Show future service card', 'farmtree'),
               checked: showFutureCard,
               onChange: function (value) { setAttributes({ showFutureCard: !!value }); }
             }),
-            showFutureCard ? textControl('Future card label', 'futureLabel', attributes, setAttributes) : null,
-            showFutureCard ? textControl('Future card title', 'futureTitle', attributes, setAttributes) : null,
+            showFutureCard ? textControl(__('Future card label', 'farmtree'), 'futureLabel', attributes, setAttributes) : null,
+            showFutureCard ? textControl(__('Future card title', 'farmtree'), 'futureTitle', attributes, setAttributes) : null,
             showFutureCard ? el(TextareaControl, {
-              label: 'Future card text',
+              label: __('Future card text', 'farmtree'),
               value: attr(attributes, 'futureText'),
               rows: 3,
               onChange: function (value) { setAttributes({ futureText: value }); }
@@ -107,7 +108,7 @@
         ),
         el('div', { className: 'ft-editor-lock-note' },
           el(Notice, { status: 'info', isDismissible: false },
-            'Design is locked to the approved FarmTree hero. Edit content and media only.'
+            __('Design is locked to the approved FarmTree hero. Edit content and media only.', 'farmtree')
           )
         ),
         el('section', { className: 'page active ft-editor-homepage-hero-preview' },
