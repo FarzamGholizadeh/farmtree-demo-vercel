@@ -1,13 +1,18 @@
 # FarmTree Website — Architecture
 
-_Last updated: 2026-07-15_
+_Last updated: 2026-07-27_
 
 ## Shape
-Static single-document SPA (`index.html`, no build step) deployed on Vercel.
-All CSS/JS inline (62 style / 43 script blocks); modular extraction is the
-top deferred item (see RELEASE-CHECKLIST §F). Assets under `assets/`
-(brand masters in `assets/brand/`, superseded audit evidence in
-`assets/brand/superseded-opaque-source/`).
+The production FarmTree website source is the WordPress implementation on the
+`wordpress-integration` branch:
+
+- Theme: `wordpress/wp-content/themes/farmtree`
+- Core plugin: `wordpress/wp-content/plugins/farmtree-core`
+- AI plugin: `wordpress/wp-content/plugins/farmtree-ai-assistant`
+- Production domain: `https://farmtree.eu/`
+
+The root `index.html` and any Vercel/static SPA artifacts are legacy/reference
+material only. Vercel is not the production source.
 
 ## Routing (single authority)
 The **early stable router** (`ft-stable-router-v6-early`) owns everything:
@@ -100,13 +105,12 @@ proof row (+100/+30/+40/+1,000,000) is intentionally static.
   harnesses; artifacts in `qa/final-hardening/`, `qa/logo-qc/`
 
 ## SEO / environment
-Staging: `noindex, nofollow` (RELEASE TOGGLE in head). Production domain:
-`https://farmtree.earth/` (canonical/OG/JSON-LD; assets 404 until deploy —
-sequencing item). Hash routes = one indexable document; segment pages are
-not independently indexable. Future option (needs approval): path-based
-URLs (e.g. `/segments/advisors`) via static per-route HTML shells or a
-Vercel rewrite layer; benefit = independent indexing/sharing per segment,
-risk = URL migration + duplicate-content management.
+Production domain: `https://farmtree.eu/`. In the WordPress theme,
+canonical/OG URL generation uses WordPress URL helpers such as `home_url()`;
+robots behavior is owned by WordPress Settings / approved SEO configuration.
+Hash routing remains from the static-era implementation, so hash sections are
+not independently indexable WordPress routes. Future clean URLs require a
+separate approved routing/SEO implementation.
 
 ## WordPress integration (`wordpress-integration` branch)
 Phase-1 port of the approved static site into a **classic** custom theme
@@ -132,16 +136,28 @@ Phase-1 port of the approved static site into a **classic** custom theme
   `assets/…` or a filesystem path. Production assets copied into the theme
   minus the 23.9 MB source GIF, `superseded-opaque-source/`, `icons/`, QA.
 - **SEO/env.** No hard-coded `noindex` (Settings → Reading / SEO plugin owns
-  robots); canonical/OG use `home_url()` = `farmtree.eu`; no
-  `farmtree-demo-vercel.vercel.app` reference. Hash routing preserved this
-  phase; clean permalinks deferred.
+  robots); canonical/OG use `home_url()` = `farmtree.eu`; no Vercel preview
+  domain reference. Hash routing preserved this phase; clean permalinks
+  deferred.
 - **Plugin.** Foundations only — `farmtree_core_planned_content_models()`
   documents the future editable models (News, Case Studies, Testimonials, Team,
   Vacancies, Customer Segments, FAQ, Videos); **no public post type is
   registered yet**, so activation shows complete approved content immediately.
-- **Deploy.** `.github/workflows/deploy-wordpress.yml` — on push to
-  `wordpress-integration`: validate files, `php -l`, `rsync --delete` theme +
-  plugin to Vimexx over SSH. (Not triggered in this phase — nothing pushed.)
+- **Deploy.** `.github/workflows/deploy-wordpress.yml` — manual-only via
+  `workflow_dispatch`. The workflow validates files and PHP syntax, then
+  deploys the theme and plugins to Vimexx over SSH/rsync only after the GitHub
+  `production` environment approval boundary is cleared.
+  `.github/workflows/test-vimexx-ssh.yml` is manual-only.
+
+## Governance gates
+FarmTree website changes follow six approval gates:
+
+- Gate 1 - spec approval.
+- Gate 2 - implementation approval.
+- Gate 3 - push approval.
+- Gate 4 - merge/release-candidate approval.
+- Gate 5 - deployment approval.
+- Gate 6 - WordPress publication/activation/database approval.
 
 ### FarmTree AI Assistant plugin (`wordpress/wp-content/plugins/farmtree-ai-assistant`)
 Optional, **ships inactive**. A manageable AI assistant with an admin area

@@ -1,14 +1,7 @@
 name: Deploy FarmTree WordPress Code
 
 on:
-  push:
-    branches:
-      - wordpress-integration
-    paths:
-      - "wordpress/wp-content/themes/farmtree/**"
-      - "wordpress/wp-content/plugins/farmtree-core/**"
-      - "wordpress/wp-content/plugins/farmtree-ai-assistant/**"
-      - ".github/workflows/deploy-wordpress.yml"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -20,6 +13,9 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://farmtree.eu/
 
     steps:
       - name: Checkout repository

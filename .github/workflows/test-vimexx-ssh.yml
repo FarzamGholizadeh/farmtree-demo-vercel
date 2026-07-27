@@ -1,9 +1,6 @@
 name: Test Vimexx SSH Connection
 
 on:
-  push:
-    branches:
-      - wordpress-integration
   workflow_dispatch:
 
 permissions:

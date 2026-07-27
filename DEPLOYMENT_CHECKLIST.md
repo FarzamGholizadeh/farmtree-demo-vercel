@@ -1,102 +1,73 @@
-# FarmTree Website — GitHub Pages Deployment Checklist
-**File:** `index.html` (single-file SPA, 625 KB)
-**Repository:** `farzamgholizadeh/farmtree-preview-3`
-**Live URL:** https://farzamgholizadeh.github.io/farmtree-preview-3/
+# FarmTree WordPress Deployment Checklist
 
----
+_Last updated: 2026-07-27_
 
-## Pre-upload checklist
+## Deployment Context
 
-### Content
-- [ ] Open `index.html` locally in a browser and scroll through the homepage
-- [ ] Confirm no visible placeholder text remains (none expected)
-- [ ] Confirm no "Final visual to be supplied" or "Content to be confirmed" text
-- [ ] Confirm hero carousel cycles through 4 slides (8 sec each)
-- [ ] Confirm all 4 case study pages open and display full content
+- Production domain: `https://farmtree.eu/`
+- Primary branch: `wordpress-integration`
+- WordPress theme: `wordpress/wp-content/themes/farmtree`
+- Core plugin: `wordpress/wp-content/plugins/farmtree-core`
+- AI plugin: `wordpress/wp-content/plugins/farmtree-ai-assistant`
+- Vercel/static SPA: legacy/reference only, not the production source.
+- Canonical release checklist: `RELEASE-CHECKLIST.md`
 
-### Navigation
-- [ ] Click every header nav item — confirm no blank pages
-- [ ] Click footer links — confirm correct pages open
-- [ ] Test mobile menu (hamburger) — confirm all links work
-- [ ] Test "Blog" link — confirm blog page renders
-- [ ] Test "Request a demo" modal — confirm it opens and closes
+## Approval Gates
 
-### Forms
-- [ ] Open Request page (`data-page="request"`)
-- [ ] Submit empty form — confirm validation errors appear
-- [ ] Fill in Name, Email, Company — confirm submit works
-- [ ] Confirm success state shows: "Thank you. The FarmTree team will review..."
-- [ ] Test request modal (CTA buttons across site) — confirm same behaviour
+- [ ] Gate 1 - Spec approval is complete.
+- [ ] Gate 2 - Implementation approval is complete.
+- [ ] Gate 3 - Push approval is complete.
+- [ ] Gate 4 - Merge/release-candidate approval is complete.
+- [ ] Gate 5 - Deployment approval is granted through the GitHub `production` environment.
+- [ ] Gate 6 - WordPress publication/activation/database approval is complete, if runtime WordPress changes are needed.
 
-### Language
-- [ ] Switch to Dutch — confirm nav, footer, forms, FAQ update
-- [ ] Switch to German — confirm same
-- [ ] Refresh page with Dutch selected — confirm Dutch persists
-- [ ] Check case study page in Dutch — confirm headings/labels translate
+## Pre-Deployment Checks
 
-### Responsive
-- [ ] Test at 375px (iPhone SE) — confirm no overflow
-- [ ] Test at 430px (iPhone 14) — confirm hero readable, dots visible
-- [ ] Test at 768px (iPad portrait) — confirm grids collapse correctly
-- [ ] Test platform dashboard mockup on desktop — confirm visible
+- [ ] Confirm the release branch is `wordpress-integration`.
+- [ ] Confirm the diff contains only approved files.
+- [ ] Confirm no forbidden theme/plugin/content/database changes are bundled accidentally.
+- [ ] Confirm no `.env*`, `.vercel/**`, `wp-config.php`, credentials, or secret values are present.
+- [ ] Run `git status --short`.
+- [ ] Run `git diff --stat`.
+- [ ] Run `git diff --check`.
+- [ ] Run approved read-only syntax checks or tests that do not install dependencies or trigger remote workflows.
 
-### Console
-- [ ] Open browser DevTools → Console
-- [ ] Confirm no red errors on page load
-- [ ] Confirm no 404 requests for broken images
-- [ ] Switch language and navigate — confirm no errors
+## GitHub Actions Boundary
 
----
+- [ ] Confirm `.github/workflows/deploy-wordpress.yml` declares `environment: production` on the deployment job.
+- [ ] Confirm the GitHub `production` environment requires reviewer approval in repository settings.
+- [ ] Confirm approval is granted before SSH setup, remote directory creation, or `rsync`.
+- [ ] Confirm `.github/workflows/test-vimexx-ssh.yml` can run only by `workflow_dispatch`.
 
-## Upload steps
+## Code Deployment
 
-### Option A — Replace via GitHub web UI (simplest)
-1. Go to https://github.com/farzamgholizadeh/farmtree-preview-3
-2. Click `index.html` in the file list
-3. Click the pencil (Edit) icon
-4. Select all text → delete → paste contents of new `index.html`
-5. Scroll down → Commit changes → "Deploy Phase 7 final polish"
-6. Wait ~60 seconds → visit live URL to confirm
+The WordPress deployment workflow syncs repository code only:
 
-### Option B — Via git push
-```bash
-# Clone or navigate to the repo
-cd ~/path/to/farmtree-preview-3
+- `wordpress/wp-content/themes/farmtree`
+- `wordpress/wp-content/plugins/farmtree-core`
+- `wordpress/wp-content/plugins/farmtree-ai-assistant`
 
-# Copy the updated file
-cp ~/Downloads/farmtree_v24_full_feedback_v3_implementation/index.html ./index.html
+It must not publish WordPress content, change database records, or activate/deactivate themes or plugins.
 
-# Commit and push
-git add index.html
-git commit -m "Phase 7: final polish, language completion, SaaS credibility"
-git push origin main
-```
+## Post-Deployment Verification
 
-### Option C — Upload assets folder too
-If any new images were added (check `assets/` folder for new files):
-```bash
-cp -r ~/Downloads/farmtree_v24_full_feedback_v3_implementation/assets/* ./assets/
-git add assets/
-git commit -m "Update assets"
-git push origin main
-```
+These checks require an approved deployment and permitted browser/runtime verification:
 
----
+- [ ] Visit `https://farmtree.eu/`.
+- [ ] Confirm the homepage renders correctly.
+- [ ] Confirm primary navigation and footer navigation work.
+- [ ] Confirm key CTAs work.
+- [ ] Confirm assets load without 404s.
+- [ ] Confirm canonical, metadata, robots, sitemap, structured data, and hreflang behavior.
+- [ ] Confirm mobile, tablet, and desktop layouts.
+- [ ] Confirm accessibility smoke checks on key flows.
 
-## Post-upload check
-1. Visit https://farzamgholizadeh.github.io/farmtree-preview-3/
-2. Hard-refresh (Cmd+Shift+R / Ctrl+Shift+R) to bypass cache
-3. Run through the checklist above on the live URL
-4. Test on mobile device (not just browser resize)
+## Runtime WordPress Changes
 
----
+Do not perform these actions without Gate 6 approval:
 
-## What changed across Phases 1–7
-| Phase | Summary |
-|---|---|
-| 1+2 | Responsive fixes, Manrope typography, language system v1 |
-| 3 | 4 case study pages fully built |
-| 4 | 3 audience pages (investors, DFI, NGOs) fully built |
-| 5 | Solutions, Track Record, Pricing pages rebuilt |
-| 6 | SaaS credibility: platform mockup, numbers strip, data flow |
-| 7 | Final polish: dev notes removed, shadows fixed, deploy guards |
+- [ ] Publish, edit, or delete WordPress content.
+- [ ] Activate or deactivate themes.
+- [ ] Activate or deactivate plugins.
+- [ ] Change WordPress settings.
+- [ ] Run database migrations or direct database updates.

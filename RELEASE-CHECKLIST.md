@@ -1,47 +1,67 @@
-# FarmTree — Release Checklist
+# FarmTree WordPress Release Checklist
 
-_Last updated: 2026-07-15 (approved feature pass: socials, About proof, segment pages)_
+_Last updated: 2026-07-27_
 
-## A. Resolved
-- Official transparent logo master installed + verified (sha256 `9aac825a…`); responsive derivatives live
-- MRV counter crash fixed (+ regression test)
-- Platform/Cocoa route synchronization fixed (+ regression test)
-- CTA decision implemented: Demo → Register, Platform-entry (incl. "Explore the platform") → Login, quotation → modal; all native anchors (+ suite)
-- All 39 VS Code/webhint diagnostics fixed or narrowly excepted (`.hintrc`, documented)
-- Routing consolidated to the single authoritative early router
-- Footer LinkedIn + YouTube native anchors (exact URLs, new-tab, labelled)
-- About proof row (+100 / +30 / +40 / +1,000,000) + Science-based microscope+leaf icon
-- Customer Segments homepage section removed; ten dedicated segment pages + menu navigation (axe-clean, suites green)
-- Bento-grid menu + centred close control; About final 4-card design; section background tokens; Case Studies dedicated page; FAQ one-line desktop heading
-- How FarmTree Works removed; F&Q copy; Base Technology diagram->card animated connectors; homepage title system + desktop density (token-driven, no scaling); current-logo favicon/loader/assistant/diagram
-- a11y 100 (Lighthouse), zero console errors, honest form error states, staging noindex
+## Release Context
 
-## B. Requires Farzam decision
-- Services-page muted-text contrast (4.22:1 vs 4.5 AA) — needs approved color tweak
-- Heading-order retag on cocoa/pricing cards (visual-identical retag proposal pending)
-- Site-loader hold time & hero first-paint choreography (largest mobile-LCP lever)
-- Lossy recompression of hero/photo assets (visible-quality trade-off)
-- Remaining paused hardening phases (counters/observers consolidation, CSS/JS extraction, performance targets 80/90, security headers, claims register, QA npm scripts)
+- Production domain: `https://farmtree.eu/`
+- Primary branch: `wordpress-integration`
+- WordPress theme: `wordpress/wp-content/themes/farmtree`
+- Core plugin: `wordpress/wp-content/plugins/farmtree-core`
+- AI plugin: `wordpress/wp-content/plugins/farmtree-ai-assistant`
+- Vercel/static SPA: legacy/reference only, not the production source.
 
-## C. Requires external credential/configuration
-- **Formspree form ID** (release blocker for contact/quotation modal + request-page forms — demo requests no longer depend on it)
-- Recipient delivery verification after ID is set (FORMS.md checklist)
-- Official standalone FarmTree symbol asset (favicons/loader/chat marks) — brand follow-up, not a blocker while current favicon stands
+## Approval Gates
 
-## D. Requires production deployment
-- farmtree.earth asset URLs currently 404 by design (og:image, JSON-LD logo, brand assets) — resolve on deploy
-- Switch `<meta name="robots">` staging noindex → `index, follow` (RELEASE TOGGLE comment in head)
-- Brotli/caching verification on production host
+- [ ] Gate 1 - Spec approval is recorded.
+- [ ] Gate 2 - Implementation approval is recorded.
+- [ ] Gate 3 - Push approval is recorded before any push.
+- [ ] Gate 4 - Merge/release-candidate approval is recorded before release candidate handling.
+- [ ] Gate 5 - Deployment approval is granted through the GitHub `production` environment before SSH/rsync deployment.
+- [ ] Gate 6 - WordPress publication/activation/database approval is recorded before content publication, theme/plugin activation changes, or database changes.
 
-## E. Post-deployment verification
-- HTTP 200: OG image, JSON-LD logo, favicons, sitemap.xml, robots.txt, canonical URL, /assets/brand/*
-- One real submission per form (3 forms) + inbox delivery confirmed
-- Lighthouse mobile+desktop on production URL (3-run median)
-- LinkedIn/YouTube links resolve to the correct company pages (no redirects)
-- Spot-check segment routes on production
+## Preflight
 
-## F. Deferred technical debt
-- CSS/JS modular extraction of the monolithic index.html (highest-value maintainability item)
-- Orphaned CSS selectors for removed sections (inert, documented)
-- Dual hero-controller cleanup; counter implementation unification
-- Hash-route SEO limitation (single indexable document) — clean-URL architecture proposal documented in ARCHITECTURE.md
+- [ ] Confirm current branch is `wordpress-integration`.
+- [ ] Confirm working-tree status is understood.
+- [ ] Confirm release diff contains only approved files.
+- [ ] Confirm no secrets or environment files are included.
+- [ ] Confirm no forbidden production data or WordPress runtime state is changed.
+
+## Local Validation
+
+- [ ] Run `git status --short`.
+- [ ] Run `git diff --stat`.
+- [ ] Run `git diff --check`.
+- [ ] Run available read-only syntax checks or tests that do not install dependencies, write output, or trigger remote actions.
+- [ ] Review GitHub Actions YAML indentation and trigger logic.
+
+## Deployment Review
+
+- [ ] Confirm `.github/workflows/deploy-wordpress.yml` uses only `workflow_dispatch`.
+- [ ] Confirm `.github/workflows/deploy-wordpress.yml` uses the `production` environment.
+- [ ] Confirm the `production` environment in GitHub requires reviewer approval.
+- [ ] Confirm `.github/workflows/test-vimexx-ssh.yml` is manual-only.
+- [ ] Confirm deployment uses repository code only and does not publish WordPress content.
+
+## Post-Deployment Verification
+
+These checks require an approved deployment and permitted browser/runtime verification:
+
+- [ ] Visit `https://farmtree.eu/`.
+- [ ] Confirm homepage renders without browser console errors.
+- [ ] Confirm primary navigation, footer navigation, and key CTAs work.
+- [ ] Confirm theme assets load correctly.
+- [ ] Confirm canonical, metadata, robots, sitemap, and structured data behavior on production.
+- [ ] Confirm responsive behavior on mobile, tablet, and desktop.
+- [ ] Confirm accessibility smoke checks on key flows.
+
+## WordPress Runtime Actions
+
+The following are not part of code deployment and require Gate 6:
+
+- [ ] Publishing, editing, or deleting WordPress content.
+- [ ] Activating or deactivating themes.
+- [ ] Activating or deactivating plugins.
+- [ ] Changing WordPress settings.
+- [ ] Running database migrations or direct database edits.
