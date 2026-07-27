@@ -71,6 +71,6 @@
     "spacing": false,
     "typography": false
   },
-  "editorScript": "file:./index.js",
+  "editorScript": "farmtree-homepage-hero-editor-script",
   "editorStyle": "file:./editor.css"
 }

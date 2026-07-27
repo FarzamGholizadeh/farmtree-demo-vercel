@@ -164,6 +164,20 @@ function farmtree_get_front_page_homepage_hero_attributes(): array
  */
 function farmtree_register_blocks(): void
 {
+    $hero_asset_path = FARMTREE_DIR . '/blocks/homepage-hero/index.asset.php';
+    $hero_asset      = file_exists($hero_asset_path) ? require $hero_asset_path : [
+        'dependencies' => ['wp-block-editor', 'wp-blocks', 'wp-components', 'wp-element', 'wp-i18n'],
+        'version'      => FARMTREE_VERSION,
+    ];
+
+    wp_register_script(
+        'farmtree-homepage-hero-editor-script',
+        FARMTREE_URI . '/blocks/homepage-hero/index.js',
+        $hero_asset['dependencies'] ?? [],
+        $hero_asset['version'] ?? FARMTREE_VERSION,
+        true
+    );
+
     register_block_type(
         FARMTREE_DIR . '/blocks/homepage-hero',
         [
