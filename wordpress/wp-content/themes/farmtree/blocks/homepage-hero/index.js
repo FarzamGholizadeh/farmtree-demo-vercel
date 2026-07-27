@@ -50,6 +50,73 @@
   }
 
   registerBlockType('farmtree/homepage-hero', {
+    title: __('FarmTree Homepage Hero', 'farmtree'),
+    category: 'theme',
+    icon: 'palmtree',
+    description: __('Editable FarmTree homepage hero using the approved frontend design.', 'farmtree'),
+    attributes: {
+      kicker: {
+        type: 'string',
+        default: defaults.kicker
+      },
+      title: {
+        type: 'string',
+        default: defaults.title
+      },
+      text: {
+        type: 'string',
+        default: defaults.text
+      },
+      mediaId: {
+        type: 'number',
+        default: 0
+      },
+      mediaUrl: {
+        type: 'string',
+        default: defaults.mediaUrl
+      },
+      mediaAlt: {
+        type: 'string',
+        default: defaults.mediaAlt
+      },
+      primaryText: {
+        type: 'string',
+        default: defaults.primaryText
+      },
+      primaryUrl: {
+        type: 'string',
+        default: defaults.primaryUrl
+      },
+      secondaryText: {
+        type: 'string',
+        default: defaults.secondaryText
+      },
+      futureLabel: {
+        type: 'string',
+        default: defaults.futureLabel
+      },
+      futureTitle: {
+        type: 'string',
+        default: defaults.futureTitle
+      },
+      futureText: {
+        type: 'string',
+        default: defaults.futureText
+      },
+      showFutureCard: {
+        type: 'boolean',
+        default: defaults.showFutureCard
+      }
+    },
+    supports: {
+      align: false,
+      anchor: false,
+      color: false,
+      customClassName: false,
+      html: false,
+      spacing: false,
+      typography: false
+    },
     edit: function (props) {
       var attributes = props.attributes;
       var setAttributes = props.setAttributes;
