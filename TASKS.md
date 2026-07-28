@@ -36,36 +36,28 @@ Acceptance:
 
 ## Deferred Implementation Backlog
 
+## Reference Sprint
+
+### FT-WP-001 - Homepage Hero Gutenberg Pilot
+
+Status: retained as architecture reference; no further expansion.
+
+The pilot remains in the production theme until the isolated rebuild is stable.
+
 ## Active Sprint
 
-### FT-WP-001 - WordPress Native Foundation Architecture
+### FT-NATIVE-001 - WordPress Native Foundation
 
-Status: in local implementation.
+Status: Review.
 
-Scope:
-
-- Audit hard-coded homepage/global components.
-- Define the WordPress-native content model across Pages, FarmTree blocks, patterns, future CPTs, taxonomies, global settings, and editor locking.
-- Add minimum Gutenberg infrastructure to the FarmTree theme.
-- Add the first editable pilot block: `farmtree/homepage-hero`.
-- Add a FarmTree Native Homepage Pilot page template with locked block scope.
-- Preserve the approved frontend hero DOM, design classes, IDs, CTA behavior, and responsive hooks.
-- Keep current production unchanged until release approval.
-
-Acceptance:
-
-- Homepage hero can be represented by a custom block.
-- Hero text, supporting text, background image/alt text, primary CTA label/URL, secondary CTA label, and future-card content are editable.
-- If a configured static front page contains the pilot block, the theme reads its attributes.
-- If no static page/block exists, the approved default hero renders unchanged.
-- No Elementor or unrestricted page-builder behavior is introduced.
-- No push, deployment, WordPress publication, activation, or database change is performed.
+Scope and acceptance are defined in `CURRENT_SPRINT.md`.
 
 ## Deferred Implementation Backlog
 
-- FT-WP-002 - Convert homepage section headings and repeated cards into locked FarmTree blocks/patterns.
-- FT-WP-003 - Register and migrate first functional CPT set for Case Studies and Testimonials.
-- FT-WP-004 - Define clean WordPress route strategy for replacing hash routes.
+- FT-NATIVE-002 - Rebuild the homepage using core blocks and approved patterns.
+- FT-NATIVE-003 - Register content models and build the admin experience.
+- FT-NATIVE-004 - Build real pages, navigation and clean WordPress routes.
+- FT-NATIVE-005 - Migrate content, validate staging and prepare cutover.
 - FT-SEO-001 - Define SEO metadata, canonical, hreflang, sitemap, and robots ownership across WordPress core, theme, and SEO plugin.
 - FT-WEB-004 - Define production form handling and delivery verification.
 - FT-WP-005 - Add browser-based production verification checklist after an approved deployment.

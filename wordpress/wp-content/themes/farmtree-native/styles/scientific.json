@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Scientific",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "farmtree-green",
+          "name": "FarmTree Green",
+          "color": "#214F2A"
+        },
+        {
+          "slug": "farmtree-forest",
+          "name": "FarmTree Forest",
+          "color": "#123A2A"
+        },
+        {
+          "slug": "farmtree-ink",
+          "name": "FarmTree Ink",
+          "color": "#163126"
+        },
+        {
+          "slug": "farmtree-ivory",
+          "name": "FarmTree Ivory",
+          "color": "#FAF8F1"
+        },
+        {
+          "slug": "farmtree-cream",
+          "name": "FarmTree Cream",
+          "color": "#F2ECDD"
+        },
+        {
+          "slug": "farmtree-mist",
+          "name": "FarmTree Mist",
+          "color": "#DCE7D2"
+        },
+        {
+          "slug": "farmtree-gold",
+          "name": "FarmTree Gold",
+          "color": "#C9A85F"
+        },
+        {
+          "slug": "farmtree-sky",
+          "name": "FarmTree Sky",
+          "color": "#C9DDE3"
+        },
+        {
+          "slug": "white",
+          "name": "White",
+          "color": "#FFFFFF"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#FFFFFF",
+      "text": "#163126"
+    }
+  }
+}

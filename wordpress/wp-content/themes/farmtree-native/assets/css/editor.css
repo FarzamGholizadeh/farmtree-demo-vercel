@@ -1,0 +1,8 @@
+.editor-styles-wrapper {
+  min-height: 100%;
+}
+
+.editor-styles-wrapper .ft-native-site-header,
+.editor-styles-wrapper .ft-native-site-footer {
+  border: 1px dashed rgb(22 49 38 / 22%);
+}

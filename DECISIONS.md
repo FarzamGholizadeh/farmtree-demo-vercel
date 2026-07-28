@@ -46,3 +46,28 @@ Secrets belong only in approved secret stores such as GitHub Actions secrets or 
 ## DEC-009: WordPress Runtime Changes Need Separate Approval
 
 Publishing WordPress content, activating or deactivating themes/plugins, and database changes require Gate 6 approval. Repository evidence alone cannot confirm those runtime states.
+
+## DEC-010: Native Rebuild Is Isolated
+
+The WordPress-native rebuild is developed on
+`feat/wordpress-native-rebuild` in `farmtree-native` and
+`farmtree-content`. The production `farmtree` theme remains read-only except for
+explicit emergency hotfixes.
+
+## DEC-011: Core Blocks First
+
+Standard editorial layouts use WordPress core blocks and locked patterns.
+Custom blocks require FarmTree-specific functionality that core blocks cannot
+provide safely.
+
+## DEC-012: Content Ownership Moves To FarmTree Content
+
+`farmtree-content` is the future canonical owner of content types, taxonomies,
+global content settings and editorial capabilities. `farmtree-core` remains a
+temporary compatibility layer and must not duplicate active registrations.
+
+## DEC-013: Staging Before Cutover
+
+The native theme cannot be activated on production until it has been validated
+on a separate WordPress installation with an independent database and a tested
+rollback path.

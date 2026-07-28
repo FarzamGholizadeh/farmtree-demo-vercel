@@ -13,6 +13,15 @@ _Last updated: 2026-07-27_
 
 The production website source is the WordPress implementation in this repository. The root `index.html` and any Vercel/static SPA artifacts are retained as legacy/reference material and are not the production source.
 
+## Isolated Native Rebuild
+
+- Working branch: `feat/wordpress-native-rebuild`
+- New Block Theme: `wordpress/wp-content/themes/farmtree-native`
+- Canonical content layer: `wordpress/wp-content/plugins/farmtree-content`
+
+The rebuild is isolated and inactive. The current `farmtree` theme remains the
+production and rollback theme until an explicitly approved cutover.
+
 ## Safety Baseline
 
 - Do not push, deploy, publish content, activate/deactivate WordPress themes or plugins, or change production data without explicit approval.
@@ -32,3 +41,8 @@ The production website source is the WordPress implementation in this repository
 ## Deployment Boundary
 
 `.github/workflows/deploy-wordpress.yml` is the code deployment path for the WordPress theme and plugins. It must be protected by the GitHub `production` environment before SSH credentials are configured or `rsync` runs. `.github/workflows/test-vimexx-ssh.yml` is manual-only and is not a push-time workflow.
+
+Repository audit on 2026-07-28 found GitHub `Preview` and `Production`
+environments with no protection rules. No workflow currently targets a separate
+WordPress staging host. Environment protection and staging setup remain release
+prerequisites; they are not changed by FT-NATIVE-001.

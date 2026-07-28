@@ -181,6 +181,25 @@ FarmTree website changes follow six approval gates:
 - Gate 5 - deployment approval.
 - Gate 6 - WordPress publication/activation/database approval.
 
+## Isolated native rebuild (`feat/wordpress-native-rebuild`)
+
+`FT-NATIVE-001` establishes a parallel Block Theme at
+`wordpress/wp-content/themes/farmtree-native` and a canonical content-layer
+scaffold at `wordpress/wp-content/plugins/farmtree-content`.
+
+- The current `farmtree` theme remains the active production and rollback theme.
+- The old homepage-hero pilot remains reference material only.
+- Templates, template parts, patterns and `theme.json` form the new presentation
+  foundation.
+- `farmtree-content` will own future post types, taxonomies, global settings and
+  editorial capabilities after the FT-NATIVE-003 migration review.
+- `farmtree-core` currently registers no models and remains compatibility-only.
+- No staging environment is represented in repository workflows; cutover
+  requires a separate WordPress installation and database.
+
+Full design, model, editor and migration decisions:
+`docs/FT-NATIVE-ARCHITECTURE.md`.
+
 ### FarmTree AI Assistant plugin (`wordpress/wp-content/plugins/farmtree-ai-assistant`)
 Optional, **ships inactive**. A manageable AI assistant with an admin area
 (Overview / Knowledge / Behavior / Skills / Settings), a server-side chat REST

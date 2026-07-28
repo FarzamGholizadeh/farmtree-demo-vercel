@@ -1,0 +1,321 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": false,
+    "useRootPaddingAwareAlignments": true,
+    "layout": {
+      "contentSize": "760px",
+      "wideSize": "1280px"
+    },
+    "color": {
+      "custom": false,
+      "customDuotone": false,
+      "customGradient": false,
+      "defaultDuotone": false,
+      "defaultGradients": false,
+      "defaultPalette": false,
+      "palette": [
+        {
+          "slug": "farmtree-green",
+          "name": "FarmTree Green",
+          "color": "#214F2A"
+        },
+        {
+          "slug": "farmtree-forest",
+          "name": "FarmTree Forest",
+          "color": "#123A2A"
+        },
+        {
+          "slug": "farmtree-ink",
+          "name": "FarmTree Ink",
+          "color": "#163126"
+        },
+        {
+          "slug": "farmtree-ivory",
+          "name": "FarmTree Ivory",
+          "color": "#FAF8F1"
+        },
+        {
+          "slug": "farmtree-cream",
+          "name": "FarmTree Cream",
+          "color": "#F2ECDD"
+        },
+        {
+          "slug": "farmtree-mist",
+          "name": "FarmTree Mist",
+          "color": "#DCE7D2"
+        },
+        {
+          "slug": "farmtree-gold",
+          "name": "FarmTree Gold",
+          "color": "#C9A85F"
+        },
+        {
+          "slug": "farmtree-sky",
+          "name": "FarmTree Sky",
+          "color": "#C9DDE3"
+        },
+        {
+          "slug": "white",
+          "name": "White",
+          "color": "#FFFFFF"
+        }
+      ]
+    },
+    "dimensions": {
+      "minHeight": true
+    },
+    "spacing": {
+      "blockGap": true,
+      "customSpacingSize": false,
+      "defaultSpacingSizes": false,
+      "spacingSizes": [
+        {
+          "slug": "20",
+          "name": "XS",
+          "size": "0.5rem"
+        },
+        {
+          "slug": "30",
+          "name": "S",
+          "size": "0.75rem"
+        },
+        {
+          "slug": "40",
+          "name": "M",
+          "size": "1rem"
+        },
+        {
+          "slug": "50",
+          "name": "L",
+          "size": "1.5rem"
+        },
+        {
+          "slug": "60",
+          "name": "XL",
+          "size": "2rem"
+        },
+        {
+          "slug": "70",
+          "name": "2XL",
+          "size": "clamp(2.5rem, 6vw, 5rem)"
+        },
+        {
+          "slug": "80",
+          "name": "3XL",
+          "size": "clamp(4rem, 9vw, 8rem)"
+        }
+      ],
+      "units": [
+        "px",
+        "rem",
+        "%"
+      ]
+    },
+    "typography": {
+      "customFontSize": false,
+      "dropCap": false,
+      "fluid": true,
+      "fontFamilies": [
+        {
+          "slug": "editorial",
+          "name": "FarmTree Editorial",
+          "fontFamily": "Manrope, Inter, system-ui, sans-serif"
+        },
+        {
+          "slug": "interface",
+          "name": "FarmTree Interface",
+          "fontFamily": "Inter, system-ui, sans-serif"
+        }
+      ],
+      "fontSizes": [
+        {
+          "slug": "caption",
+          "name": "Caption",
+          "size": "0.8125rem"
+        },
+        {
+          "slug": "small",
+          "name": "Small",
+          "size": "0.9375rem"
+        },
+        {
+          "slug": "body",
+          "name": "Body",
+          "size": "1.0625rem"
+        },
+        {
+          "slug": "lead",
+          "name": "Lead",
+          "size": "clamp(1.125rem, 1.6vw, 1.375rem)"
+        },
+        {
+          "slug": "heading-small",
+          "name": "Heading Small",
+          "size": "clamp(1.75rem, 3vw, 2.5rem)"
+        },
+        {
+          "slug": "heading",
+          "name": "Heading",
+          "size": "clamp(2.5rem, 5vw, 4.75rem)"
+        }
+      ],
+      "fontStyle": false,
+      "fontWeight": true,
+      "letterSpacing": false,
+      "lineHeight": true,
+      "textDecoration": false,
+      "textTransform": false,
+      "writingMode": false
+    },
+    "border": {
+      "color": false,
+      "radius": false,
+      "style": false,
+      "width": false
+    },
+    "shadow": {
+      "defaultPresets": false,
+      "presets": [
+        {
+          "slug": "soft",
+          "name": "Soft",
+          "shadow": "0 18px 48px rgb(22 49 38 / 10%)"
+        }
+      ]
+    },
+    "blocks": {
+      "core/button": {
+        "border": {
+          "radius": false
+        },
+        "color": {
+          "custom": false,
+          "customGradient": false
+        },
+        "spacing": {
+          "padding": false
+        }
+      },
+      "core/group": {
+        "color": {
+          "custom": false
+        }
+      },
+      "core/heading": {
+        "typography": {
+          "fontSize": false
+        }
+      },
+      "core/navigation": {
+        "typography": {
+          "fontSize": false
+        }
+      }
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var:preset|color|farmtree-ivory",
+      "text": "var:preset|color|farmtree-ink"
+    },
+    "spacing": {
+      "blockGap": "var:preset|spacing|50",
+      "padding": {
+        "left": "var:preset|spacing|50",
+        "right": "var:preset|spacing|50"
+      }
+    },
+    "typography": {
+      "fontFamily": "var:preset|font-family|interface",
+      "fontSize": "var:preset|font-size|body",
+      "lineHeight": "1.65"
+    },
+    "elements": {
+      "button": {
+        "border": {
+          "radius": "999px"
+        },
+        "color": {
+          "background": "var:preset|color|farmtree-green",
+          "text": "var:preset|color|white"
+        },
+        "spacing": {
+          "padding": {
+            "top": "0.8rem",
+            "right": "1.2rem",
+            "bottom": "0.8rem",
+            "left": "1.2rem"
+          }
+        },
+        "typography": {
+          "fontFamily": "var:preset|font-family|editorial",
+          "fontSize": "var:preset|font-size|small",
+          "fontWeight": "700"
+        }
+      },
+      "caption": {
+        "color": {
+          "text": "var:preset|color|farmtree-green"
+        },
+        "typography": {
+          "fontSize": "var:preset|font-size|caption"
+        }
+      },
+      "heading": {
+        "typography": {
+          "fontFamily": "var:preset|font-family|editorial",
+          "fontWeight": "800",
+          "lineHeight": "1.08"
+        }
+      },
+      "link": {
+        "color": {
+          "text": "var:preset|color|farmtree-green"
+        },
+        "typography": {
+          "textDecoration": "none"
+        },
+        ":hover": {
+          "typography": {
+            "textDecoration": "underline"
+          }
+        }
+      }
+    },
+    "blocks": {
+      "core/post-content": {
+        "spacing": {
+          "blockGap": "var:preset|spacing|60"
+        }
+      },
+      "core/post-title": {
+        "typography": {
+          "fontSize": "var:preset|font-size|heading"
+        }
+      }
+    }
+  },
+  "templateParts": [
+    {
+      "name": "header",
+      "title": "FarmTree Header",
+      "area": "header"
+    },
+    {
+      "name": "footer",
+      "title": "FarmTree Footer",
+      "area": "footer"
+    }
+  ],
+  "customTemplates": [
+    {
+      "name": "content-only-page",
+      "title": "FarmTree Content-Only Page",
+      "postTypes": [
+        "page"
+      ]
+    }
+  ]
+}
