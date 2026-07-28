@@ -1,47 +1,42 @@
 # Current FarmTree Sprint
 
-## FT-NATIVE-001 - WordPress Native Foundation
+## FT-NATIVE-001A - WordPress Native Staging Validation
 
 Status: Review
 
 ### Objective
 
-Create an isolated WordPress Block Theme and canonical content-plugin foundation
-that can replace the current static-style production architecture without
-changing the active FarmTree website.
+Create a guarded CI and staging-validation path for the isolated Block Theme and
+content plugin without changing the active FarmTree website.
 
 ### Business Value
 
-- FarmTree staff will eventually manage public content through WordPress rather
-  than PHP or JavaScript.
-- The rebuild can be developed and reviewed without destabilising production.
-- Future page, content-model, URL and translation work will have one documented
-  ownership model.
+- Invalid native theme or plugin changes fail before staging.
+- Staging deployment cannot silently target the production WordPress path.
+- Runtime validation becomes possible before the homepage rebuild begins.
 
 ### Scope
 
-- Audit the production theme, FarmTree Core and FarmTree AI Assistant.
-- Add `wordpress/wp-content/themes/farmtree-native/`.
-- Add `wordpress/wp-content/plugins/farmtree-content/` as an inactive canonical
-  content-layer scaffold.
-- Define design tokens in `theme.json`.
-- Add Block Theme templates, template parts and core-block patterns.
-- Add initial locked header and footer foundations.
-- Document content models, editor locking, migration, rollback and staging.
-- Add a static internal foundation preview.
+- Verify whether an isolated WordPress staging runtime exists.
+- Add native PHP, JSON, block-markup, JavaScript, CSS and secret validation.
+- Add a manual Preview-environment deployment for only `farmtree-native` and
+  `farmtree-content`.
+- Require a separate staging marker, credentials and WordPress installation.
+- Document the external staging setup and runtime validation checklist.
 
 ### Allowed Files
 
-- `wordpress/wp-content/themes/farmtree-native/**`
-- `wordpress/wp-content/plugins/farmtree-content/**`
-- `docs/FT-NATIVE-ARCHITECTURE.md`
+- `.github/workflows/validate-wordpress-native.yml`
+- `.github/workflows/deploy-wordpress-staging.yml`
+- `.gitignore`
 - `scripts/validate-native-foundation.mjs`
-- `docs/FT-NATIVE-PREVIEW.html`
-- `PROJECT_CONTEXT.md`
-- `DECISIONS.md`
-- `ARCHITECTURE.md`
+- `scripts/validate-native-workflows.mjs`
+- `docs/FT-NATIVE-STAGING.md`
+- `package.json`
+- `package-lock.json`
+- `stylelint.config.mjs`
+- `wordpress/wp-content/themes/farmtree-native/style.css`
 - `TASKS.md`
-- `ROADMAP.md`
 - `CURRENT_SPRINT.md`
 - `SPRINT_REPORT.md`
 - `SPRINT_HISTORY.md`
@@ -51,41 +46,33 @@ changing the active FarmTree website.
 - `wordpress/wp-content/themes/farmtree/**`
 - `wordpress/wp-content/plugins/farmtree-core/**`
 - `wordpress/wp-content/plugins/farmtree-ai-assistant/**`
-- `.github/workflows/**`
+- `.github/workflows/deploy-wordpress.yml`
+- `.github/workflows/test-vimexx-ssh.yml`
 - Production data, uploads, configuration and secrets
 
 ### Design And Editing Rules
 
-- Preserve the approved premium climate-tech identity.
-- Use WordPress core blocks before custom blocks.
-- Lock template structure while allowing content editing.
-- Keep global header/footer structures controlled.
-- Do not build the complete homepage in this sprint.
-- Do not add public content or placeholder claims.
+- Do not change the theme design or build the homepage.
+- Do not reuse production secret names in staging.
+- Keep staging deployment manual and Preview-environment scoped.
+- Deploy code inactive; activation requires separate approval.
 
 ### SEO, Accessibility And Responsive Baseline
 
-- Use semantic template landmarks and one page-title hierarchy.
-- Keep rendered content server-side.
-- Use responsive core blocks and explicit content/wide widths.
-- Preserve visible focus, keyboard navigation and reduced-motion support.
-- Validate the foundation at 320, 375, 390, 430, 768, 1024, 1280, 1440 and
-  1920 CSS pixels during implementation sprints.
+- Preserve the existing FT-NATIVE-001 accessibility and responsive baseline.
+- Runtime viewport validation is blocked until isolated staging exists.
 
 ### Acceptance Criteria
 
-- The isolated branch and Block Theme structure exist.
-- `theme.json` and style variation JSON are valid.
-- Header, footer, page, post, archive and 404 foundations exist.
-- Approved starter patterns use core blocks and have clear descriptions.
-- The content plugin does not duplicate or activate FarmTree Core models.
-- Content ownership, editor locking, staging and migration are documented.
-- No current production theme/plugin or workflow file changes.
-- Available validation passes.
+- CI checks PHP, JSON, required files, block markup, JavaScript, CSS and secrets.
+- Manual staging deployment is `workflow_dispatch`-only.
+- Staging workflow uses only `STAGING_*` secrets and the `Preview` environment.
+- A remote marker and valid WordPress runtime are required before rsync.
+- Only the native theme and content plugin are deployment targets.
+- Existing production workflow, theme, plugins and data remain unchanged.
 - One local atomic commit is created.
 
 ### Rollback
 
-Delete or revert the isolated foundation commit. Because the new theme and
-plugin are not activated and create no data, rollback has no production runtime
-or database effect.
+Revert the FT-NATIVE-001A commit. Nothing is deployed or activated by the local
+implementation, so rollback has no runtime or database effect.

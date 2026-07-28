@@ -4,3 +4,4 @@
 |---|---|---|---|
 | FT-WP-001 | Reference pilot | `wordpress-integration` | Gutenberg hero experiment retained in the production theme for reference only |
 | FT-NATIVE-001 | Review | `feat/wordpress-native-rebuild` | Isolated WordPress-native foundation implemented locally |
+| FT-NATIVE-001A | Review | `feat/wordpress-native-rebuild` | Native CI and guarded staging path prepared locally |

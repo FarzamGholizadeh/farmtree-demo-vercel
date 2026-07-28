@@ -62,7 +62,7 @@ body {
   color: inherit;
 }
 
-@media (max-width: 781px) {
+@media (width <= 781px) {
   .ft-native-header-actions {
     display: none !important;
   }

@@ -46,7 +46,7 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 
 ## Active Sprint
 
-### FT-NATIVE-001 - WordPress Native Foundation
+### FT-NATIVE-001A - WordPress Native Staging Validation
 
 Status: Review.
 

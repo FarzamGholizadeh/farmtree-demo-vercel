@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
@@ -28,6 +28,23 @@ const required = [
 for (const file of required) {
   if (!existsSync(resolve(theme, file))) {
     throw new Error(`Missing Block Theme file: ${file}`);
+  }
+}
+
+for (const directory of ['parts', 'templates', 'patterns']) {
+  for (const entry of readdirSync(resolve(theme, directory))) {
+    if (!entry.endsWith('.html') && !entry.endsWith('.php')) {
+      continue;
+    }
+
+    const markup = readFileSync(resolve(theme, directory, entry), 'utf8');
+    for (const match of markup.matchAll(/<!-- wp:[^\s]+ (\{.*?\}) -->/g)) {
+      try {
+        JSON.parse(match[1]);
+      } catch {
+        throw new Error(`${directory}/${entry} contains invalid block attribute JSON.`);
+      }
+    }
   }
 }
 

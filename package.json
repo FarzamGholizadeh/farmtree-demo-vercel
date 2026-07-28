@@ -1,0 +1,18 @@
+{
+  "name": "farmtree-wordpress-native-validation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Repository-side validation for the isolated FarmTree native WordPress rebuild.",
+  "scripts": {
+    "validate:native": "node scripts/validate-native-foundation.mjs",
+    "validate:workflows": "node scripts/validate-native-workflows.mjs",
+    "lint:js": "node --check scripts/validate-native-foundation.mjs && node --check scripts/validate-native-workflows.mjs && node --check stylelint.config.mjs",
+    "lint:css": "stylelint \"wordpress/wp-content/themes/farmtree-native/**/*.css\"",
+    "test": "npm run validate:native && npm run validate:workflows && npm run lint:js && npm run lint:css"
+  },
+  "devDependencies": {
+    "stylelint": "17.14.1",
+    "stylelint-config-standard": "40.0.0",
+    "yaml": "2.9.0"
+  }
+}

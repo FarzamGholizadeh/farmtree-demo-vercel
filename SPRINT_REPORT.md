@@ -1,56 +1,34 @@
-# FT-NATIVE-001 Sprint Report
+# FT-NATIVE-001A Sprint Report
 
 Status: Review
 
-## Architecture Created
+## Staging And Runtime Approach
 
-- Isolated WordPress Block Theme: `farmtree-native`.
-- Canonical content-layer scaffold: `farmtree-content`.
-- Core-block-first templates, parts and patterns.
-- Content-only locked global header/footer foundations.
-- Documented content ownership, roles, models, staging, migration and rollback.
+- No existing isolated WordPress staging runtime was found.
+- CI validates the native theme/plugin and workflow boundaries.
+- Manual staging deployment is isolated behind the GitHub `Preview` environment.
+- A separate WordPress root, database, HTTPS URL, WP-CLI and
+  `.farmtree-staging` marker are mandatory.
 
 ## Production Isolation
 
-- Existing `farmtree` theme unchanged.
-- Existing `farmtree-core` and `farmtree-ai-assistant` plugins unchanged.
-- Existing deployment and SSH workflows unchanged.
-- No activation, content publication, database change, push or deployment.
+- Existing `farmtree` theme and production plugins remain unchanged.
+- Existing production deployment and SSH workflows remain unchanged.
+- No staging deployment, activation, content publication or database change.
 
 ## Validation
 
-- `node scripts/validate-native-foundation.mjs`: passed.
-- Theme and style-variation JSON parsing: passed.
-- WordPress block-comment attribute JSON parsing: passed.
-- JavaScript syntax check: passed.
-- CSS brace balance: passed.
-- `git diff --check`: passed.
-- Forbidden production path diff check: passed.
-- Secret-pattern scan: passed; the staging policy mentions password protection
-  but contains no credential.
-
-## Preview
-
-Internal static artifact:
-`docs/FT-NATIVE-PREVIEW.html`
-
-The in-app browser does not permit local `file:` URLs, so no browser screenshot
-is claimed. The preview remains directly reviewable from the shared workspace.
+- `npm test` covers required files, JSON, block markup, workflow policy,
+  JavaScript syntax and standards-based CSS validation.
+- CI adds PHP 8.1 syntax validation and Gitleaks secret scanning.
+- Real WordPress editor and frontend checks remain blocked on staging setup.
 
 ## Limitations
 
-- PHP CLI is not installed locally, so PHP lint must run in CI or a WordPress
-  development environment before release.
-- No local WordPress runtime or staging host is configured.
-- GitHub has `Preview` and `Production` environments with no protection rules.
-- No workflow targets a separate WordPress staging installation.
-- The current production deployment workflow intentionally does not deploy
-  `farmtree-native` or `farmtree-content`.
-- Global URL settings and content models are architecture-only until
-  FT-NATIVE-003; no database-backed settings or post types are registered.
-- The complete homepage is intentionally deferred to FT-NATIVE-002.
+- PHP CLI is not installed locally; PHP lint will execute in GitHub Actions.
+- The `Preview` environment needs staging-only configuration and protection.
+- Runtime screenshots cannot exist until the isolated WordPress runtime exists.
 
 ## Recommended Next Sprint
 
-FT-NATIVE-002 - Rebuild the approved homepage with core blocks, locked patterns,
-native media and editor-tested responsive behavior inside the isolated theme.
+Complete real WordPress staging validation, then begin FT-NATIVE-002.
