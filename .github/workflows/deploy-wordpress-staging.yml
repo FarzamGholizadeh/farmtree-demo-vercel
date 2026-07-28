@@ -1,0 +1,160 @@
+name: Deploy FarmTree Native to WordPress Staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Type STAGING ONLY to confirm this isolated preview deployment"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: farmtree-wordpress-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: Preview
+      url: ${{ vars.STAGING_URL }}
+
+    steps:
+      - name: Require explicit staging confirmation
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: test "$CONFIRMATION" = "STAGING ONLY"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
+
+      - name: Validate deployment source
+        run: |
+          npm ci
+          npm test
+          find wordpress/wp-content/themes/farmtree-native \
+               wordpress/wp-content/plugins/farmtree-content \
+               -type f -name '*.php' \
+               -exec php -l {} \;
+
+      - name: Validate staging configuration
+        env:
+          STAGING_SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+          STAGING_KNOWN_HOSTS: ${{ secrets.STAGING_KNOWN_HOSTS }}
+          STAGING_HOST: ${{ secrets.STAGING_HOST }}
+          STAGING_PORT: ${{ secrets.STAGING_PORT }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+          STAGING_WORDPRESS_PATH: ${{ secrets.STAGING_WORDPRESS_PATH }}
+          STAGING_URL: ${{ vars.STAGING_URL }}
+        run: |
+          test -n "$STAGING_SSH_KEY"
+          test -n "$STAGING_KNOWN_HOSTS"
+          test -n "$STAGING_HOST"
+          test -n "$STAGING_PORT"
+          test -n "$STAGING_USER"
+          test -n "$STAGING_WORDPRESS_PATH"
+          test -n "$STAGING_URL"
+          case "$STAGING_URL" in
+            https://farmtree.eu|https://farmtree.eu/*) exit 1 ;;
+            https://*) ;;
+            *) exit 1 ;;
+          esac
+
+      - name: Configure staging SSH
+        env:
+          STAGING_SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+          STAGING_KNOWN_HOSTS: ${{ secrets.STAGING_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$STAGING_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$STAGING_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Prove isolated WordPress staging target
+        env:
+          STAGING_HOST: ${{ secrets.STAGING_HOST }}
+          STAGING_PORT: ${{ secrets.STAGING_PORT }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+          STAGING_WORDPRESS_PATH: ${{ secrets.STAGING_WORDPRESS_PATH }}
+        run: |
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -p "$STAGING_PORT" \
+            "$STAGING_USER@$STAGING_HOST" \
+            "test -f '$STAGING_WORDPRESS_PATH/.farmtree-staging' \
+            && test -f '$STAGING_WORDPRESS_PATH/wp-load.php' \
+            && command -v wp >/dev/null \
+            && wp core is-installed --path='$STAGING_WORDPRESS_PATH'"
+
+      - name: Create isolated native code directories
+        env:
+          STAGING_HOST: ${{ secrets.STAGING_HOST }}
+          STAGING_PORT: ${{ secrets.STAGING_PORT }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+          STAGING_WORDPRESS_PATH: ${{ secrets.STAGING_WORDPRESS_PATH }}
+        run: |
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -p "$STAGING_PORT" \
+            "$STAGING_USER@$STAGING_HOST" \
+            "mkdir -p \
+              '$STAGING_WORDPRESS_PATH/wp-content/themes/farmtree-native' \
+              '$STAGING_WORDPRESS_PATH/wp-content/plugins/farmtree-content'"
+
+      - name: Deploy inactive FarmTree Native theme
+        env:
+          STAGING_HOST: ${{ secrets.STAGING_HOST }}
+          STAGING_PORT: ${{ secrets.STAGING_PORT }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+          STAGING_WORDPRESS_PATH: ${{ secrets.STAGING_WORDPRESS_PATH }}
+        run: |
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p $STAGING_PORT" \
+            wordpress/wp-content/themes/farmtree-native/ \
+            "$STAGING_USER@$STAGING_HOST:$STAGING_WORDPRESS_PATH/wp-content/themes/farmtree-native/"
+
+      - name: Deploy inactive FarmTree Content plugin
+        env:
+          STAGING_HOST: ${{ secrets.STAGING_HOST }}
+          STAGING_PORT: ${{ secrets.STAGING_PORT }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+          STAGING_WORDPRESS_PATH: ${{ secrets.STAGING_WORDPRESS_PATH }}
+        run: |
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p $STAGING_PORT" \
+            wordpress/wp-content/plugins/farmtree-content/ \
+            "$STAGING_USER@$STAGING_HOST:$STAGING_WORDPRESS_PATH/wp-content/plugins/farmtree-content/"
+
+      - name: Verify WordPress recognizes inactive native code
+        env:
+          STAGING_HOST: ${{ secrets.STAGING_HOST }}
+          STAGING_PORT: ${{ secrets.STAGING_PORT }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+          STAGING_WORDPRESS_PATH: ${{ secrets.STAGING_WORDPRESS_PATH }}
+        run: |
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -p "$STAGING_PORT" \
+            "$STAGING_USER@$STAGING_HOST" \
+            "wp theme is-installed farmtree-native --path='$STAGING_WORDPRESS_PATH' \
+            && wp plugin is-installed farmtree-content --path='$STAGING_WORDPRESS_PATH' \
+            && wp eval \
+              'if (!wp_get_theme(\"farmtree-native\")->is_block_theme()) { exit(1); }' \
+              --path='$STAGING_WORDPRESS_PATH' \
+            && echo 'FARMTREE_NATIVE_STAGING_CODE_OK'"
