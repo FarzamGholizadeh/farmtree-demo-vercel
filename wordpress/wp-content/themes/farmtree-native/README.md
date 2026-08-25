@@ -1,6 +1,6 @@
 # FarmTree Native
 
-Isolated WordPress Block Theme foundation for the FarmTree website rebuild.
+Inactive WordPress Block Theme for the FarmTree website rebuild.
 
 ## Status
 
@@ -15,8 +15,21 @@ Isolated WordPress Block Theme foundation for the FarmTree website rebuild.
   capabilities.
 - `templates/` provides native page, post, archive and error foundations.
 - `parts/` provides content-only locked global header and footer structures.
-- `patterns/` provides approved core-block page sections.
+- `patterns/` provides approved core-block page sections with content-only
+  locking.
 - `farmtree-content` will own future models and global settings.
 
-The full homepage, content models, clean URLs and content migration belong to
-later roadmap sprints.
+## Homepage
+
+FT-NATIVE-002 provides the complete native Homepage as the **FarmTree
+Homepage** block pattern. Create or edit the WordPress page assigned as the
+static front page, insert the pattern once, and manage its content in the normal
+Page Editor. The `front-page.html` template renders that page content while the
+pattern locks layout and design structure.
+
+Editors can update copy, links, media, partner references, testimonials, proof
+themes, FAQs and CTA content. Posts shown in News & Insights are managed as
+normal WordPress posts. Administrators retain ownership of templates, pattern
+structure and `theme.json` design controls.
+
+Content models, clean URLs and content migration remain later roadmap sprints.

@@ -2,8 +2,8 @@
 Theme Name: FarmTree Native
 Theme URI: https://farmtree.eu/
 Author: FarmTree
-Description: Isolated WordPress Block Theme foundation for the FarmTree native rebuild. Not approved for production activation.
-Version: 0.1.0
+Description: Inactive WordPress Block Theme for the FarmTree native rebuild. Not approved for production activation.
+Version: 0.2.0
 Requires at least: 6.6
 Tested up to: 7.0
 Requires PHP: 8.1
@@ -58,6 +58,301 @@ body {
   box-shadow: var(--ft-shadow-soft);
 }
 
+.ft-native-home {
+  overflow: clip;
+}
+
+.ft-native-home > * {
+  margin-block-start: 0;
+}
+
+.ft-home-section {
+  border-bottom: var(--ft-border-subtle);
+}
+
+.ft-home-section-heading {
+  max-width: 880px;
+  margin-inline: auto;
+  margin-bottom: var(--wp--preset--spacing--70);
+  text-align: center;
+}
+
+.ft-home-section-heading > :last-child,
+.ft-home-hero-content > :last-child,
+.ft-proof-card-copy > :last-child,
+.ft-news-item > :last-child {
+  margin-bottom: 0;
+}
+
+.ft-home-hero {
+  min-height: max(520px, min(720px, calc(100svh - 132px))) !important;
+}
+
+.ft-home-hero .wp-block-cover__image-background {
+  object-position: center 52%;
+}
+
+.ft-home-hero-content {
+  max-width: 820px;
+  margin-inline: 0 auto;
+}
+
+.ft-home-hero-content h1 {
+  max-width: 780px;
+}
+
+.ft-home-hero-content .has-lead-font-size {
+  max-width: 680px;
+}
+
+.ft-home-hero .is-style-outline .wp-block-button__link {
+  border-color: var(--wp--preset--color--white);
+}
+
+.ft-home-value-list {
+  padding: 0;
+  list-style: none;
+}
+
+.ft-home-value-list li {
+  position: relative;
+  margin-block: 0.8rem;
+  padding-left: 2rem;
+  font-weight: 700;
+}
+
+.ft-home-value-list li::before {
+  position: absolute;
+  top: 0.48rem;
+  left: 0;
+  width: 0.72rem;
+  height: 0.72rem;
+  border: 2px solid var(--wp--preset--color--farmtree-green);
+  border-radius: 50%;
+  content: "";
+}
+
+.ft-platform-visual {
+  position: relative;
+  min-height: 520px;
+  padding: var(--wp--preset--spacing--50);
+  border: var(--ft-border-subtle);
+  border-radius: 8px;
+  background: var(--wp--preset--color--farmtree-cream);
+}
+
+.ft-platform-screen {
+  overflow: hidden;
+  margin: 0;
+  border: var(--ft-border-subtle);
+  border-radius: 6px;
+  background: var(--wp--preset--color--white);
+  box-shadow: var(--ft-shadow-soft);
+}
+
+.ft-platform-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ft-platform-screen-detail {
+  position: absolute;
+  right: var(--wp--preset--spacing--50);
+  bottom: var(--wp--preset--spacing--60);
+  width: 58%;
+}
+
+.ft-home-media-caption {
+  position: absolute;
+  bottom: var(--wp--preset--spacing--30);
+  left: var(--wp--preset--spacing--50);
+  margin: 0;
+  color: var(--wp--preset--color--farmtree-green);
+}
+
+.ft-technology-model {
+  overflow: hidden;
+  padding: var(--wp--preset--spacing--40);
+  border: var(--ft-border-subtle);
+  border-radius: 8px;
+  background: var(--wp--preset--color--farmtree-ivory);
+}
+
+.ft-technology-model img {
+  display: block;
+  width: 100%;
+}
+
+.ft-home-inputs {
+  margin-top: var(--wp--preset--spacing--60);
+}
+
+.ft-home-inputs .wp-block-column {
+  padding-top: var(--wp--preset--spacing--50);
+  border-top: 2px solid var(--wp--preset--color--farmtree-green);
+}
+
+.ft-home-input-number {
+  color: var(--wp--preset--color--farmtree-green);
+  font-weight: 800;
+}
+
+.ft-partner-logos {
+  gap: var(--wp--preset--spacing--40) !important;
+  margin-block: var(--wp--preset--spacing--70);
+}
+
+.ft-partner-logos .wp-block-image {
+  display: flex !important;
+  min-height: 96px;
+  align-items: center;
+  justify-content: center;
+  padding: var(--wp--preset--spacing--40);
+  border-radius: 6px;
+  background: var(--wp--preset--color--white);
+}
+
+.ft-partner-logos .wp-block-image img {
+  width: 100% !important;
+  height: 54px !important;
+  object-fit: contain !important;
+}
+
+.ft-trust-quotes {
+  margin-top: var(--wp--preset--spacing--70);
+}
+
+.ft-trust-quote {
+  height: 100%;
+  margin: 0;
+  padding: var(--wp--preset--spacing--60) 0 0;
+  border: 0;
+  border-top: 3px solid var(--wp--preset--color--farmtree-gold);
+}
+
+.ft-trust-quote p {
+  margin-top: 0;
+  font-family: var(--wp--preset--font-family--editorial);
+  line-height: 1.45;
+}
+
+.ft-trust-quote p::before {
+  color: var(--wp--preset--color--farmtree-gold);
+  content: "\201C";
+}
+
+.ft-trust-quote p::after {
+  color: var(--wp--preset--color--farmtree-gold);
+  content: "\201D";
+}
+
+.ft-trust-quote cite {
+  color: var(--wp--preset--color--farmtree-mist);
+  font-size: var(--wp--preset--font-size--small);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.ft-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--wp--preset--spacing--50);
+}
+
+.ft-proof-grid > .wp-block-column {
+  min-width: 0;
+}
+
+.ft-proof-card {
+  height: 100%;
+  overflow: hidden;
+  border: var(--ft-border-subtle);
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgb(22 49 38 / 8%);
+}
+
+.ft-proof-card > .wp-block-image {
+  overflow: hidden;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+}
+
+.ft-proof-card > .wp-block-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ft-proof-card-copy {
+  padding: var(--wp--preset--spacing--50);
+}
+
+.ft-proof-card-copy h3 {
+  min-height: 4.4em;
+}
+
+.ft-faq-list {
+  border-bottom: var(--ft-border-subtle);
+}
+
+.ft-faq-list .wp-block-details {
+  margin: 0;
+  padding: var(--wp--preset--spacing--50) 0;
+  border-top: var(--ft-border-subtle);
+}
+
+.ft-faq-list summary {
+  cursor: pointer;
+  font-family: var(--wp--preset--font-family--editorial);
+  font-size: var(--wp--preset--font-size--lead);
+  font-weight: 800;
+}
+
+.ft-faq-list .wp-block-details p {
+  max-width: 680px;
+  margin-bottom: 0;
+  color: var(--wp--preset--color--farmtree-green);
+}
+
+.ft-home-news-header {
+  margin-bottom: var(--wp--preset--spacing--60);
+}
+
+.ft-home-news-query .wp-block-post-template {
+  gap: var(--wp--preset--spacing--50);
+}
+
+.ft-news-item {
+  height: 100%;
+  padding-top: var(--wp--preset--spacing--40);
+  border-top: 2px solid var(--wp--preset--color--farmtree-green);
+}
+
+.ft-news-item .wp-block-post-featured-image {
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.ft-news-item .wp-block-post-date {
+  color: var(--wp--preset--color--farmtree-green);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ft-proof-card > .wp-block-image img,
+  .ft-platform-screen-detail {
+    transition: transform 240ms ease;
+  }
+
+  .ft-proof-card:hover > .wp-block-image img {
+    transform: scale(1.025);
+  }
+
+  .ft-platform-visual:hover .ft-platform-screen-detail {
+    transform: translateY(-4px);
+  }
+}
+
 .ft-native-site-footer a {
   color: inherit;
 }
@@ -69,6 +364,64 @@ body {
 
   .ft-native-page-intro {
     min-height: auto !important;
+  }
+
+  .ft-home-hero {
+    min-height: max(520px, calc(100svh - 120px)) !important;
+  }
+
+  .has-heading-font-size {
+    font-size: 3rem !important;
+  }
+
+  .has-heading-small-font-size {
+    font-size: 2rem !important;
+  }
+
+  .has-lead-font-size {
+    font-size: 1.2rem !important;
+  }
+
+  .ft-home-section-heading {
+    text-align: left;
+  }
+
+  .ft-platform-visual {
+    min-height: auto;
+    padding-bottom: var(--wp--preset--spacing--50);
+  }
+
+  .ft-platform-screen-detail {
+    position: static;
+    width: 88%;
+    margin: calc(var(--wp--preset--spacing--50) * -1) 0 0 auto;
+  }
+
+  .ft-home-media-caption {
+    position: static;
+    margin-top: var(--wp--preset--spacing--40);
+  }
+
+  .ft-partner-logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ft-proof-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ft-proof-card-copy h3 {
+    min-height: 0;
+  }
+}
+
+@media (width >= 782px) and (width <= 1100px) {
+  .ft-proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ft-proof-card-copy h3 {
+    min-height: 2.9em;
   }
 }
 
