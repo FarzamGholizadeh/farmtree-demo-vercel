@@ -5,7 +5,7 @@ on:
     branches:
       - feat/wordpress-native-rebuild
     paths:
-      - ".github/workflows/deploy-wordpress-staging.yml"
+      - ".github/workflows/deploy-wordpress-native.yml"
       - ".github/workflows/validate-wordpress-native.yml"
       - "wordpress/wp-content/themes/farmtree-native/**"
       - "wordpress/wp-content/plugins/farmtree-content/**"
@@ -15,7 +15,7 @@ on:
       - "stylelint.config.mjs"
   pull_request:
     paths:
-      - ".github/workflows/deploy-wordpress-staging.yml"
+      - ".github/workflows/deploy-wordpress-native.yml"
       - ".github/workflows/validate-wordpress-native.yml"
       - "wordpress/wp-content/themes/farmtree-native/**"
       - "wordpress/wp-content/plugins/farmtree-content/**"

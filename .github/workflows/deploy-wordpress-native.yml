@@ -1,0 +1,217 @@
+name: Deploy FarmTree Native Private Runtime
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Type PRIVATE NATIVE FILES ONLY to deploy inactive native code"
+        required: true
+        type: string
+      backup_confirmation:
+        description: "Type RECOVERABLE FILE AND DB BACKUP VERIFIED before deployment"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: farmtree-wordpress-native-private-runtime
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://farmtree.eu/
+
+    steps:
+      - name: Require explicit private-runtime confirmation
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+          BACKUP_CONFIRMATION: ${{ inputs.backup_confirmation }}
+        run: |
+          test "$CONFIRMATION" = "PRIVATE NATIVE FILES ONLY"
+          test "$BACKUP_CONFIRMATION" = "RECOVERABLE FILE AND DB BACKUP VERIFIED"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
+
+      - name: Validate native deployment source
+        run: |
+          npm ci
+          npm test
+          find wordpress/wp-content/themes/farmtree-native \
+               wordpress/wp-content/plugins/farmtree-content \
+               -type f -name '*.php' \
+               -exec php -l {} \;
+
+      - name: Validate production deployment configuration
+        env:
+          SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          test -n "$SSH_KEY"
+          test -n "$HOST"
+          test -n "$PORT"
+          test -n "$USERNAME"
+          test -n "$WORDPRESS_PATH"
+
+      - name: Verify public rebuild safety
+        run: |
+          headers="$(mktemp)"
+          body="$(mktemp)"
+          curl -fsSL --max-time 20 -D "$headers" -o "$body" https://farmtree.eu/
+          grep -qi "Coming Soon" "$body"
+          if grep -qi "^x-robots-tag:.*noindex" "$headers"; then
+            echo "FARMTREE_PUBLIC_NOINDEX_OK"
+            exit 0
+          fi
+          if grep -Eqi "<meta[^>]+name=['\"]robots['\"][^>]+content=['\"][^'\"]*noindex" "$body"; then
+            echo "FARMTREE_PUBLIC_NOINDEX_OK"
+            exit 0
+          fi
+          echo "::error::Public Coming Soon response must include noindex before private runtime deployment."
+          exit 1
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Verify private WordPress runtime boundary
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          remote_wordpress_path="$(printf '%q' "$WORDPRESS_PATH")"
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -p "$PORT" \
+            "$USERNAME@$HOST" \
+            "set -eu
+            test -f $remote_wordpress_path/wp-load.php
+            command -v wp >/dev/null
+            wp core is-installed --path=$remote_wordpress_path
+            test \"\$(wp option get template --path=$remote_wordpress_path)\" = farmtree
+            test \"\$(wp option get stylesheet --path=$remote_wordpress_path)\" = farmtree
+            test \"\$(wp option get blog_public --path=$remote_wordpress_path)\" = 0
+            wp plugin is-active coming-soon --path=$remote_wordpress_path
+            test -d $remote_wordpress_path/wp-content/themes/farmtree
+            echo CURRENT_THEME_FARMTREE_AND_PRIVATE_RUNTIME_OK"
+
+      - name: Record native code presence before deployment
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          remote_wordpress_path="$(printf '%q' "$WORDPRESS_PATH")"
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -p "$PORT" \
+            "$USERNAME@$HOST" \
+            "set -eu
+            if wp theme is-installed farmtree-native --path=$remote_wordpress_path; then
+              echo FARMTREE_NATIVE_THEME_ALREADY_PRESENT
+            else
+              echo FARMTREE_NATIVE_THEME_NOT_PRESENT
+            fi
+            if wp plugin is-installed farmtree-content --path=$remote_wordpress_path; then
+              echo FARMTREE_CONTENT_PLUGIN_ALREADY_PRESENT
+            else
+              echo FARMTREE_CONTENT_PLUGIN_NOT_PRESENT
+            fi"
+
+      - name: Create native code directories
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -p "$PORT" \
+            "$USERNAME@$HOST" \
+            "mkdir -p \
+              '$WORDPRESS_PATH/wp-content/themes/farmtree-native' \
+              '$WORDPRESS_PATH/wp-content/plugins/farmtree-content'"
+
+      - name: Deploy inactive FarmTree Native theme
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          # --delete is scoped to the farmtree-native destination only.
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
+            wordpress/wp-content/themes/farmtree-native/ \
+            "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/themes/farmtree-native/"
+
+      - name: Deploy inactive FarmTree Content plugin
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          # --delete is scoped to the farmtree-content destination only.
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
+            wordpress/wp-content/plugins/farmtree-content/ \
+            "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/plugins/farmtree-content/"
+
+      - name: Verify inactive native code on WordPress
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          remote_wordpress_path="$(printf '%q' "$WORDPRESS_PATH")"
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -p "$PORT" \
+            "$USERNAME@$HOST" \
+            "set -eu
+            test -f $remote_wordpress_path/wp-content/themes/farmtree-native/style.css
+            test -f $remote_wordpress_path/wp-content/themes/farmtree-native/theme.json
+            test -f $remote_wordpress_path/wp-content/themes/farmtree-native/functions.php
+            test -f $remote_wordpress_path/wp-content/plugins/farmtree-content/farmtree-content.php
+            wp theme is-installed farmtree-native --path=$remote_wordpress_path
+            wp plugin is-installed farmtree-content --path=$remote_wordpress_path
+            if wp theme is-active farmtree-native --path=$remote_wordpress_path; then
+              echo FARMTREE_NATIVE_THEME_MUST_REMAIN_INACTIVE
+              exit 1
+            fi
+            wp eval 'if (!wp_get_theme(\"farmtree-native\")->is_block_theme()) { exit(1); }' --path=$remote_wordpress_path
+            echo FARMTREE_NATIVE_PRIVATE_RUNTIME_CODE_OK"

@@ -1,16 +1,17 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import YAML from 'yaml';
 
 const root = resolve(import.meta.dirname, '..');
 const workflowDirectory = resolve(root, '.github/workflows');
 const validationPath = resolve(workflowDirectory, 'validate-wordpress-native.yml');
-const stagingPath = resolve(workflowDirectory, 'deploy-wordpress-staging.yml');
+const privateRuntimePath = resolve(workflowDirectory, 'deploy-wordpress-native.yml');
+const retiredStagingPath = resolve(workflowDirectory, 'deploy-wordpress-staging.yml');
 
 const validationSource = readFileSync(validationPath, 'utf8');
-const stagingSource = readFileSync(stagingPath, 'utf8');
+const privateRuntimeSource = readFileSync(privateRuntimePath, 'utf8');
 const validation = YAML.parse(validationSource);
-const staging = YAML.parse(stagingSource);
+const privateRuntime = YAML.parse(privateRuntimeSource);
 
 const validationEvents = Object.keys(validation.on ?? {});
 
@@ -18,46 +19,75 @@ if (!['pull_request', 'push', 'workflow_dispatch'].every((event) => validationEv
   throw new Error('Native validation must run on pull requests, branch pushes and manual dispatch.');
 }
 
-if (Object.keys(staging.on ?? {}).join(',') !== 'workflow_dispatch') {
-  throw new Error('Staging deployment must remain workflow_dispatch-only.');
+if (existsSync(retiredStagingPath)) {
+  throw new Error('Separate staging deployment workflow must remain retired for FT-NATIVE-001B.');
 }
 
-const stagingJob = staging.jobs?.deploy;
-
-if (stagingJob?.environment?.name !== 'Preview') {
-  throw new Error('Staging deployment must use the Preview environment.');
+if (!validationSource.includes('.github/workflows/deploy-wordpress-native.yml')) {
+  throw new Error('Validation workflow must watch the private runtime deployment workflow.');
 }
 
-if (stagingJob?.environment?.url !== '${{ vars.STAGING_URL }}') {
-  throw new Error('Staging deployment URL must come from the Preview environment.');
+if (validationSource.includes('.github/workflows/deploy-wordpress-staging.yml')) {
+  throw new Error('Validation workflow must not watch the retired staging workflow.');
+}
+
+if (Object.keys(privateRuntime.on ?? {}).join(',') !== 'workflow_dispatch') {
+  throw new Error('Private runtime deployment must remain workflow_dispatch-only.');
+}
+
+const privateRuntimeJob = privateRuntime.jobs?.deploy;
+
+if (privateRuntimeJob?.environment?.name !== 'production') {
+  throw new Error('Private runtime deployment must use the protected production environment.');
+}
+
+if (privateRuntimeJob?.environment?.url !== 'https://farmtree.eu/') {
+  throw new Error('Private runtime deployment URL must be https://farmtree.eu/.');
 }
 
 for (const forbidden of [
-  'VIMEXX_',
-  'farmtree.eu/wp-admin',
+  'STAGING_',
+  '.farmtree-staging',
   'wp-content/themes/farmtree/',
   'wp-content/plugins/farmtree-core/',
-  'wp-content/plugins/farmtree-ai-assistant/'
+  'wp-content/plugins/farmtree-ai-assistant/',
+  'wp theme activate',
+  'wp plugin activate',
+  'wp db ',
+  'wp search-replace',
+  'wp option update'
 ]) {
-  if (stagingSource.includes(forbidden)) {
-    throw new Error(`Staging workflow contains a production reference: ${forbidden}`);
+  if (privateRuntimeSource.includes(forbidden)) {
+    throw new Error(`Private runtime workflow contains a forbidden operation or path: ${forbidden}`);
   }
 }
 
 for (const required of [
-  'STAGING_SSH_KEY',
-  'STAGING_KNOWN_HOSTS',
-  'STAGING_HOST',
-  'STAGING_PORT',
-  'STAGING_USER',
-  'STAGING_WORDPRESS_PATH',
-  '.farmtree-staging',
-  'https://farmtree.eu/*) exit 1',
+  'PRIVATE NATIVE FILES ONLY',
+  'RECOVERABLE FILE AND DB BACKUP VERIFIED',
+  'VIMEXX_SSH_KEY',
+  'VIMEXX_HOST',
+  'VIMEXX_PORT',
+  'VIMEXX_USER',
+  'VIMEXX_WORDPRESS_PATH',
+  'environment:',
+  'name: production',
+  'https://farmtree.eu/',
+  'Coming Soon',
+  'noindex',
+  'wp option get template',
+  'wp option get stylesheet',
+  'wp option get blog_public',
+  'wp plugin is-active coming-soon',
   'wordpress/wp-content/themes/farmtree-native/',
-  'wordpress/wp-content/plugins/farmtree-content/'
+  'wordpress/wp-content/plugins/farmtree-content/',
+  'wp theme is-installed farmtree-native',
+  'wp plugin is-installed farmtree-content',
+  'wp theme is-active farmtree-native',
+  'is_block_theme'
 ]) {
-  if (!stagingSource.includes(required)) {
-    throw new Error(`Staging workflow is missing required boundary: ${required}`);
+  if (!privateRuntimeSource.includes(required)) {
+    throw new Error(`Private runtime workflow is missing required boundary: ${required}`);
   }
 }
 

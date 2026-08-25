@@ -1,6 +1,6 @@
 # FarmTree Tasks
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-08-25_
 
 ## Completed Governance Task
 
@@ -46,9 +46,9 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 
 ## Active Sprint
 
-### FT-NATIVE-001A - WordPress Native Staging Validation
+### FT-NATIVE-001B - Private Production Runtime Validation
 
-Status: Review.
+Status: Blocked.
 
 Scope and acceptance are defined in `CURRENT_SPRINT.md`.
 
@@ -57,7 +57,7 @@ Scope and acceptance are defined in `CURRENT_SPRINT.md`.
 - FT-NATIVE-002 - Rebuild the homepage using core blocks and approved patterns.
 - FT-NATIVE-003 - Register content models and build the admin experience.
 - FT-NATIVE-004 - Build real pages, navigation and clean WordPress routes.
-- FT-NATIVE-005 - Migrate content, validate staging and prepare cutover.
+- FT-NATIVE-005 - Migrate content, validate runtime and prepare cutover.
 - FT-SEO-001 - Define SEO metadata, canonical, hreflang, sitemap, and robots ownership across WordPress core, theme, and SEO plugin.
 - FT-WEB-004 - Define production form handling and delivery verification.
 - FT-WP-005 - Add browser-based production verification checklist after an approved deployment.

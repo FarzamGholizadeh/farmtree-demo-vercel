@@ -3,8 +3,8 @@
 ## Architecture Decision
 
 FarmTree will move from a classic static-style theme to an isolated Block Theme.
-The approved production theme remains active until a controlled staging and
-cutover sprint.
+The approved production theme remains active until private runtime validation
+and a controlled cutover sprint are complete.
 
 ### Ownership
 
@@ -79,34 +79,32 @@ No empty archive becomes public before approved content and templates exist.
 - Brand palette, typography, widths, radii and spacing are theme-controlled.
 - Custom colour, arbitrary font size and arbitrary spacing controls are disabled.
 
-## Staging And Migration
+## Private Runtime And Migration
 
-GitHub currently contains `Preview` and `Production` environments, both without
-protection rules. No workflow targets `Preview`, and no separate WordPress host,
-database or path is configured in the repository. `Preview` is therefore not a
-working staging environment.
+The active `https://farmtree.eu/` WordPress installation is intentionally hidden
+behind Coming Soon during the native rebuild. For FT-NATIVE-001B it is the
+private runtime-validation environment, while the current `farmtree` theme
+remains active and public rollback-safe.
 
-Before cutover, use a separate WordPress installation or host-provided staging
-clone with:
+Before any native private-runtime deployment:
 
-1. a separate database and uploads directory;
-2. production-like PHP and WordPress versions;
-3. password protection and `noindex`;
-4. a staging-only deployment target and secrets;
-5. no shared production database writes;
-6. an explicit content freeze and delta-migration plan.
+1. verify a recent recoverable backup for WordPress files and database;
+2. keep Coming Soon active;
+3. verify explicit public `noindex` behavior;
+4. verify WordPress search visibility is disabled for indexing;
+5. verify the active theme remains `farmtree`;
+6. deploy only inactive `farmtree-native` and `farmtree-content` code;
+7. avoid database migrations, theme activation and public page publication.
 
-The simplest safe option is a Vimexx staging subdomain backed by a cloned
-WordPress installation and separate database, plus a dedicated GitHub
-`staging` environment with reviewer protection. If that is unavailable, use a
-separate temporary WordPress host rather than activating the incomplete theme
-on production. Add reviewer protection to `Production` before any future native
-release.
+Runtime validation should use WordPress preview and editor mechanisms while
+Coming Soon remains active. If future content migration requires destructive or
+irreversible database changes, create a separate approval gate and backup-backed
+migration plan before proceeding.
 
 ## Cutover And Rollback
 
 1. Complete native English templates and models.
-2. Migrate approved content in staging.
+2. Validate approved content in the private runtime.
 3. Validate editor workflows, URLs, accessibility and responsive layouts.
 4. Back up production files and database.
 5. Deploy inactive native code.
