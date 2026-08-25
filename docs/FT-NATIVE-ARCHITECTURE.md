@@ -69,6 +69,23 @@ All custom post types introduced later must set `show_in_rest` to `true`, suppor
 revisions, use the Block Editor where appropriate and define capability mapping.
 No empty archive becomes public before approved content and templates exist.
 
+## Homepage Rebuild Direction
+
+After FT-NATIVE-001B passes, FT-NATIVE-002 rebuilds the Homepage in the native
+theme using the Frank-approved 25 August 2026 review direction. The canonical
+brief is `docs/FT-NATIVE-002-HOMEPAGE.md`.
+
+The native Homepage will prioritise positioning, planning value, technology,
+trust and proof stories. Testimonials belong to the Trust architecture, Use
+Cases are removed from the Homepage, News & Insights moves lower, and any
+remaining audience segmentation is reduced to the three approved groups.
+
+Editors own approved headings, text, media, proof stories, testimonials, theme
+cards, calls to action, FAQs and partner/reference content. The theme continues
+to own and lock structural composition and visual controls. Future partner
+evidence pages, complete audience subpages and final proof-story detail pages
+remain separate content work and do not block the Homepage rebuild.
+
 ## Editor Policy
 
 - Authors create drafts and edit assigned editorial content.

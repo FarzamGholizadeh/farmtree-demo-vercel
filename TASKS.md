@@ -54,7 +54,10 @@ Scope and acceptance are defined in `CURRENT_SPRINT.md`.
 
 ## Deferred Implementation Backlog
 
-- FT-NATIVE-002 - Rebuild the homepage using core blocks and approved patterns.
+- FT-NATIVE-002 - Rebuild the shorter, trust-led homepage using core blocks,
+  approved patterns and Frank's review direction. Ready after FT-NATIVE-001B;
+  scope and acceptance direction are recorded in
+  `docs/FT-NATIVE-002-HOMEPAGE.md`.
 - FT-NATIVE-003 - Register content models and build the admin experience.
 - FT-NATIVE-004 - Build real pages, navigation and clean WordPress routes.
 - FT-NATIVE-005 - Migrate content, validate runtime and prepare cutover.
