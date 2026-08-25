@@ -1,6 +1,6 @@
 # FarmTree Decisions
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-08-25_
 
 ## DEC-001: WordPress Is The Production Source
 
@@ -66,8 +66,17 @@ provide safely.
 global content settings and editorial capabilities. `farmtree-core` remains a
 temporary compatibility layer and must not duplicate active registrations.
 
-## DEC-013: Staging Before Cutover
+## DEC-013: Private Production Runtime Before Cutover
 
-The native theme cannot be activated on production until it has been validated
-on a separate WordPress installation with an independent database and a tested
-rollback path.
+The existing WordPress installation may be used for private runtime validation
+while Coming Soon remains active. Before native files are deployed, a recent
+recoverable files/database backup and explicit public noindex protection must be
+verified. The native theme stays inactive, the current `farmtree` theme remains
+the rollback theme, and activation still requires separate approval.
+
+## DEC-014: Autonomous Local Delivery Stops At Pre-release
+
+Normal FarmTree implementation work proceeds autonomously through local edits,
+validation, self-review, documentation and a focused local commit. Pushes,
+merges, workflow runs, deployments, publication, activation and production data
+or configuration changes retain their explicit approval gates.

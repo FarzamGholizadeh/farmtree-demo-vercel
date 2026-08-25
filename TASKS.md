@@ -46,18 +46,25 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 
 ## Active Sprint
 
+### FT-NATIVE-002 - Native Homepage
+
+Status: Local implementation complete; runtime validation pending.
+
+The Frank-approved Homepage has been built in `farmtree-native` with core
+blocks, content-only locked patterns and a read-only local preview. Scope,
+evidence and remaining runtime checks are defined in `CURRENT_SPRINT.md` and
+`SPRINT_REPORT.md`.
+
+## Parallel Runtime Gate
+
 ### FT-NATIVE-001B - Private Production Runtime Validation
 
-Status: Blocked.
-
-Scope and acceptance are defined in `CURRENT_SPRINT.md`.
+Status: Blocked on recoverable files/database backup verification and explicit
+public `noindex` evidence. This gate blocks runtime/deployment actions, not local
+native development.
 
 ## Deferred Implementation Backlog
 
-- FT-NATIVE-002 - Rebuild the shorter, trust-led homepage using core blocks,
-  approved patterns and Frank's review direction. Ready after FT-NATIVE-001B;
-  scope and acceptance direction are recorded in
-  `docs/FT-NATIVE-002-HOMEPAGE.md`.
 - FT-NATIVE-003 - Register content models and build the admin experience.
 - FT-NATIVE-004 - Build real pages, navigation and clean WordPress routes.
 - FT-NATIVE-005 - Migrate content, validate runtime and prepare cutover.

@@ -1,0 +1,7 @@
+interface:
+  display_name: "FarmTree Autonomous Delivery"
+  short_description: "FarmTree engineering through local pre-release"
+  default_prompt: "Use $farmtree-autonomous-delivery to handle this FarmTree implementation request end-to-end and stop at pre-release."
+
+policy:
+  allow_implicit_invocation: true

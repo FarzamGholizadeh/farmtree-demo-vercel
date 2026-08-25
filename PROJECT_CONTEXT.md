@@ -1,6 +1,6 @@
 # FarmTree Project Context
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-08-25_
 
 ## Production Source
 
@@ -40,9 +40,15 @@ production and rollback theme until an explicitly approved cutover.
 
 ## Deployment Boundary
 
-`.github/workflows/deploy-wordpress.yml` is the code deployment path for the WordPress theme and plugins. It must be protected by the GitHub `production` environment before SSH credentials are configured or `rsync` runs. `.github/workflows/test-vimexx-ssh.yml` is manual-only and is not a push-time workflow.
+`.github/workflows/deploy-wordpress.yml` remains the full production code
+deployment path. `.github/workflows/deploy-wordpress-native.yml` is a manual,
+inactive-native-code-only path for private runtime validation. Both use the
+GitHub `production` environment before SSH credentials or `rsync`; neither may
+activate themes/plugins or change the database. `.github/workflows/test-vimexx-ssh.yml`
+is manual-only and is not a push-time workflow.
 
 Repository audit on 2026-07-28 found GitHub `Preview` and `Production`
-environments with no protection rules. No workflow currently targets a separate
-WordPress staging host. Environment protection and staging setup remain release
-prerequisites; they are not changed by FT-NATIVE-001.
+environments with no protection rules. The current private-runtime plan uses the
+existing WordPress installation behind Coming Soon rather than a separate
+staging host. A recent recoverable backup and explicit public noindex evidence
+remain prerequisites for any native deployment.

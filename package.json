@@ -5,11 +5,12 @@
   "description": "Repository-side validation for the FarmTree native WordPress rebuild.",
   "scripts": {
     "preview:native": "node scripts/preview-native-homepage.mjs",
+    "validate:agents": "node scripts/validate-agent-system.mjs",
     "validate:native": "node scripts/validate-native-foundation.mjs",
     "validate:workflows": "node scripts/validate-native-workflows.mjs",
-    "lint:js": "node --check scripts/preview-native-homepage.mjs && node --check scripts/validate-native-foundation.mjs && node --check scripts/validate-native-workflows.mjs && node --check stylelint.config.mjs",
+    "lint:js": "node --check scripts/preview-native-homepage.mjs && node --check scripts/validate-agent-system.mjs && node --check scripts/validate-native-foundation.mjs && node --check scripts/validate-native-workflows.mjs && node --check stylelint.config.mjs",
     "lint:css": "stylelint \"wordpress/wp-content/themes/farmtree-native/**/*.css\"",
-    "test": "npm run validate:native && npm run validate:workflows && npm run lint:js && npm run lint:css"
+    "test": "npm run validate:agents && npm run validate:native && npm run validate:workflows && npm run lint:js && npm run lint:css"
   },
   "devDependencies": {
     "stylelint": "17.14.1",

@@ -1,11 +1,13 @@
 # FT-NATIVE-002 Homepage Direction
 
-Status: Ready after FT-NATIVE-001B passes
+Status: Implemented locally; runtime validation pending
 
 ## Dependency And Source
 
-FT-NATIVE-002 starts automatically after FT-NATIVE-001B passes. It must not
-expand or alter the runtime-validation responsibilities of FT-NATIVE-001B.
+FT-NATIVE-002 local development can proceed while FT-NATIVE-001B is blocked.
+Backup and noindex safeguards gate deployment and real WordPress runtime
+validation, not repository implementation. FT-NATIVE-002 must not expand or
+alter the runtime-validation responsibilities of FT-NATIVE-001B.
 
 The Frank-approved requirements derived from the 25 August 2026 website review
 transcript are a product and content source of truth for this sprint. Interpret

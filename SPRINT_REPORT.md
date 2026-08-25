@@ -1,56 +1,76 @@
-# FT-NATIVE-001B Sprint Report
+# FT-NATIVE-002 Sprint Report
 
-Status: Blocked
+Status: Local implementation complete; runtime validation pending
+
+## Homepage Structure
+
+The native Homepage now follows Hero, Platform, Technology, Trust, Proof
+Stories, FAQ, News & Insights and Final CTA. It is implemented in
+`farmtree-native` as core block markup and a content-only locked pattern.
+
+## Frank Feedback Implemented
+
+- Reframed Platform copy around project staff creating investment plans,
+  comparing options and understanding future scenarios.
+- Reframed Technology around planning, monitoring and reporting with climate,
+  soil and species data connected into a science-based, multi-KPI business plan.
+- Moved Trust above proof content and integrated testimonial/reference material.
+- Replaced Homepage Use Cases with prominent working proof themes: Carbon, Farm
+  Value Modelling, Cocoa Scenario Planning and Monitoring, and Water and
+  Landscape Resilience Monitoring.
+- Removed the large audience section, moved News lower, retained FAQ and CTA,
+  and shortened the overall page.
+
+## Editorial And Design Ownership
+
+Editors can manage normal headings, copy, media, testimonials, proof content,
+FAQs and CTA fields. WordPress posts supply News through a Query block. Pattern
+content locking prevents structural movement/removal, while the theme owns
+section order, layout, typography, spacing, brand tokens and responsive rules.
+
+## Local Evidence
+
+- Native foundation validation checks required files, JSON, valid block
+  structure, Homepage order, prohibited legacy sections, editable content and
+  the content-only pattern lock.
+- Workflow validation confirms that private deployment remains manual,
+  inactive-code-only and guarded by backup, Coming Soon, noindex,
+  `blog_public=0` and active-theme checks.
+- `npm test` passes the agent system, native foundation, workflow safeguards,
+  JavaScript syntax and native-theme CSS lint checks.
+- `npm run preview:native` provides a read-only composed local Homepage preview.
+- The served preview returned HTTP 200 with the approved section order, final
+  CTA and dynamic-News placeholder resolved and no raw PHP/pattern markers.
+- The repository-local `$farmtree-autonomous-delivery` skill passes both the
+  project validator and the Codex skill schema validator.
+- Homepage implementation source commit: `c27da77`.
+
+## Preview And Screenshots
+
+The local preview renderer is available without changing WordPress state.
+Automated in-app browser capture was unavailable in the current environment, so
+no new composed screenshots are claimed. Static preview composition and content
+order are tested; visual browser and responsive inspection remain pending.
 
 ## Runtime Safety
 
-- `https://farmtree.eu/` serves a SeedProd Coming Soon page to unauthenticated
-  users.
-- `https://farmtree.eu/wp-admin/` redirects to the WordPress login screen.
-- Direct public checks for native theme/plugin files are intercepted by Coming
-  Soon, so server presence cannot be confirmed without authenticated runtime or
-  deployment access.
-- A recent recoverable backup for WordPress files and database was not
-  verifiable from local repository or unauthenticated runtime access.
-- The fetched public Coming Soon response did not include a visible `noindex`
-  header or robots meta tag.
+No deployment, activation, content publication, Coming Soon change or database
+change was made. FT-NATIVE-001B remains blocked until a recent recoverable
+files/database backup and explicit public noindex signal are verified.
 
-## Repository Preparation
+## Runtime Validation Still Required
 
-- The separate staging workflow was retired.
-- A manual private-runtime workflow was added for inactive native code only.
-- The workflow uses the protected production environment and existing
-  `VIMEXX_*` credentials.
-- The workflow deploys only:
-  - `wordpress/wp-content/themes/farmtree-native/`
-  - `wordpress/wp-content/plugins/farmtree-content/`
-- The workflow does not activate a theme or plugin and does not run
-  database-changing WP-CLI commands.
-- The workflow verifies local source, PHP syntax, Coming Soon/noindex, current
-  active `farmtree` theme, `blog_public=0`, WP-CLI, WordPress installation,
-  native theme installation, content plugin installation and Block Theme status.
+- PHP syntax in the approved CI or server environment.
+- Theme/plugin recognition while both remain inactive.
+- Site Editor, Page Editor and Template Editor behavior.
+- Frontend block rendering, Query Loop output and responsive visual review.
+- Keyboard, focus, reduced-motion and screen-reader checks in rendered
+  WordPress.
+- Final approved imagery, proof labels, testimonials and partner evidence before
+  publication.
 
-## Production Isolation
+## Next Action
 
-- Existing `farmtree` theme remains unchanged.
-- Existing `farmtree-core` and `farmtree-ai-assistant` plugins remain unchanged.
-- Existing full production deployment and SSH-test workflows remain unchanged.
-- No deployment, activation, content publication or database change was made.
-
-## Validation
-
-- Repository-side validation is expected to cover required native files, JSON,
-  block markup, workflow policy, JavaScript syntax and CSS validation.
-- CI adds PHP 8.1 syntax validation and Gitleaks secret scanning.
-- Real WordPress editor and frontend checks remain blocked until runtime safety
-  is corrected and an approved private-runtime deployment has run.
-
-## Required User Action
-
-Verify a recent recoverable backup for WordPress files and database, then ensure
-the public Coming Soon response sends an explicit `noindex` signal before
-approving the private-runtime deployment.
-
-## Next Sprint
-
-FT-NATIVE-002 can begin only after FT-NATIVE-001B runtime validation passes.
+Correct the backup/noindex blockers, then seek explicit approval for the manual
+private-runtime workflow. Keep `farmtree-native` inactive and Coming Soon in
+place.
