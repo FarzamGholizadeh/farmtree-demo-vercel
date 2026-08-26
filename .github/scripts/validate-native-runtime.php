@@ -398,13 +398,15 @@ if ($saved_draft->post_content !== $marked_content) {
     }
 
     farmtree_runtime_fail(sprintf(
-        'Draft content changed on save (expected_bytes=%d actual_bytes=%d first_difference=%d trailing_newline_only=%s kses_equivalent=%s unfiltered_html=%s).',
+        'Draft content changed on save (expected_bytes=%d actual_bytes=%d first_difference=%d trailing_newline_only=%s kses_equivalent=%s unfiltered_html=%s expected_context_hex=%s actual_context_hex=%s).',
         $expected_length,
         $actual_length,
         $first_difference,
         rtrim($saved_draft->post_content, "\r\n") === rtrim($marked_content, "\r\n") ? 'yes' : 'no',
         wp_kses_post($marked_content) === $saved_draft->post_content ? 'yes' : 'no',
-        current_user_can('unfiltered_html') ? 'yes' : 'no'
+        current_user_can('unfiltered_html') ? 'yes' : 'no',
+        bin2hex(substr($marked_content, max(0, $first_difference - 32), 96)),
+        bin2hex(substr($saved_draft->post_content, max(0, $first_difference - 32), 106))
     ));
 }
 $revisions_after = wp_get_post_revisions($draft_id);
