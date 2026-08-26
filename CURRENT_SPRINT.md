@@ -13,18 +13,19 @@ design controls.
 
 ### Runtime Dependency
 
-The five approved native-rebuild commits reached origin at `8c22624`, and the
-resulting GitHub native validation run passed. FT-NATIVE-001B remains blocked on
-approved default-branch exposure of `.github/workflows/deploy-wordpress-native.yml`,
-retirement of the superseded separate-staging workflow, required-reviewer
-protection for GitHub `Production`, a verified matching recoverable
-files/database backup and an explicit public `noindex` signal.
+The six approved native-rebuild commits reached origin at `897a991`, and GitHub
+native validation run `32956292922` passed that source. PR #3 merged the
+workflow-only reconciliation to `main` at `3df2ae2`: GitHub now registers
+`.github/workflows/deploy-wordpress-native.yml` as active and manual-only, the
+superseded separate-staging workflow is absent, and the native workflow has
+never run.
 
-A minimal workflow-only reconciliation branch is prepared locally. The private
-repository's current GitHub plan cannot enforce required reviewers; that gate
-requires Enterprise-capable ownership and an eligible reviewer. These
-safeguards block deployment and real WordPress runtime validation, not local
-native development.
+FT-NATIVE-001B remains blocked on required-reviewer protection for GitHub
+`Production`, a verified matching recoverable files/database backup and an
+explicit public `noindex` signal. The private repository's current GitHub plan
+cannot enforce required reviewers; that gate requires Enterprise-capable
+ownership and an eligible reviewer. These safeguards block deployment and real
+WordPress runtime validation, not local native development.
 
 ### Implemented Homepage
 
@@ -60,7 +61,9 @@ legacy concept.
   markup, dynamic-post placeholder and footer without WordPress or PHP.
 - PHP syntax, Site Editor, Page Editor, Query rendering and frontend behavior in
   real WordPress remain runtime checks.
-- GitHub run `32954130310` validated pushed commit `8c22624` successfully.
+- GitHub run `32956292922` validated pushed commit `897a991` successfully.
+- PR #3 merged the manual-only native workflow to `main` at `3df2ae2`; GitHub
+  registers it as active with zero runs, and the staging workflow is retired.
 
 ### Production Boundary
 
@@ -81,10 +84,8 @@ legacy concept.
 
 ### Next Approval-Bound Action
 
-Request approval to push the new pre-release evidence commit on the native
-branch, push `codex/enable-native-private-runtime`, and open its workflow-only
-pull request to `main`. Do not merge or dispatch it yet. Before a private-runtime
-run, move or upgrade the private repository to an Enterprise-capable owner, add
-an eligible required reviewer to `Production`, verify a matching recoverable
-files/database restore point, and expose explicit public `noindex`. Do not
-activate the theme during validation.
+Configure an eligible required reviewer on GitHub `Production`, which first
+requires Enterprise-capable ownership for this private repository. Then verify
+a matching recoverable files/database restore point and expose explicit public
+`noindex`. The workflow still requires separate explicit dispatch approval; do
+not activate the theme during validation.

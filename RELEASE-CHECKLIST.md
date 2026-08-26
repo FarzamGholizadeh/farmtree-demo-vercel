@@ -24,12 +24,14 @@ _Last updated: 2026-08-26_
 
 - [ ] Confirm the branch matches the operation: `feat/wordpress-native-rebuild`
       for native pre-release work and `wordpress-integration` for approved
-      production integration; use `codex/enable-native-private-runtime` only for
-      the workflow-only pull request targeting `main`.
+      production integration.
 - [ ] Confirm working-tree status is understood.
 - [ ] Confirm release diff contains only approved files.
 - [ ] Confirm no secrets or environment files are included.
 - [ ] Confirm no forbidden production data or WordPress runtime state is changed.
+- [ ] Before any future merge to `main`, obtain explicit approval for the
+      resulting legacy Vercel deployment or suspend the Vercel Git integration.
+      A `main` merge currently creates an external static-project deployment.
 
 ## Local Validation
 
@@ -49,13 +51,17 @@ _Last updated: 2026-08-26_
 
 ## Native Private-Runtime Review
 
-- [ ] Confirm `.github/workflows/deploy-wordpress-native.yml` has reached the
-      GitHub default `main` branch through an approved release path.
+- [x] Confirm `.github/workflows/deploy-wordpress-native.yml` has reached the
+      GitHub default `main` branch. PR #3 merged at `3df2ae2`; GitHub registers
+      the workflow as active and it has zero runs.
 - [ ] Record the full approved commit SHA from `feat/wordpress-native-rebuild`;
       use that immutable SHA as `source_commit` rather than deploying `main` or
-      an unpinned branch tip.
-- [ ] Reconcile the default-branch workflow additions and retire the superseded
-      `.github/workflows/deploy-wordpress-staging.yml` path.
+      an unpinned branch tip. Current validated candidate:
+      `897a991fbdd9f301d0409d1a015282baac8fce61` (run `32956292922`); confirm it
+      again as part of explicit dispatch approval.
+- [x] Reconcile the default-branch workflow additions and retire the superseded
+      `.github/workflows/deploy-wordpress-staging.yml` path. Verified absent
+      from `main` at `3df2ae2`.
 - [ ] Confirm the GitHub `Production` environment has required-reviewer
       protection before the workflow runs. For this private repository, first
       confirm Enterprise-capable ownership and an eligible reviewer with read

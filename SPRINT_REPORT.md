@@ -49,14 +49,12 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
 - The repository-local `$farmtree-autonomous-delivery` skill passes both the
   project validator and the Codex skill schema validator.
 - Read-only checks on 2026-08-26 reconfirmed Coming Soon without an explicit
-  public `noindex` signal, no protection rules on GitHub `Production`, and no
-  `.github/workflows/deploy-wordpress-native.yml` on the default `main` branch.
-  `main` instead contains the superseded separate-staging workflow, which must
-  be retired during approved integration.
-- The five approved commits were pushed to the native-rebuild branch at
-  `8c22624`; GitHub native validation run `32954130310` passed.
-- A workflow-only branch based on current `origin/main` is prepared locally to
-  add `deploy-wordpress-native.yml` and retire `deploy-wordpress-staging.yml`.
+  public `noindex` signal and no protection rules on GitHub `Production`.
+- The six approved commits were pushed to the native-rebuild branch through
+  `897a991`; GitHub native validation run `32956292922` passed.
+- PR #3 merged the workflow-only reconciliation to `main` at `3df2ae2`.
+  GitHub registers `deploy-wordpress-native.yml` as active and manual-only with
+  zero runs, and `deploy-wordpress-staging.yml` is absent from `main`.
 - GitHub API verification found that the repository is private, only the owner
   has access, and `Production` has no rules. Required reviewers for a private
   repository require Enterprise-capable ownership plus an eligible reviewer.
@@ -65,6 +63,10 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   noindex signal.
 - Backup existence remains externally unverified. The deployment workflow now
   requires a non-secret evidence reference in addition to typed confirmation.
+- Merging PR #3 caused `vercel[bot]` to create GitHub deployment record
+  `6101732202`; its successful status points to the legacy/reference static
+  project at a Vercel-authenticated `vercel.app` URL. It did not run the native
+  Actions workflow or deploy to the WordPress runtime at `farmtree.eu`.
 - Homepage implementation source commit: `c27da77`.
 
 ## Preview And Screenshots
@@ -76,11 +78,11 @@ order are tested; visual browser and responsive inspection remain pending.
 
 ## Runtime Safety
 
-No deployment, activation, content publication, Coming Soon change or database
-change was made. FT-NATIVE-001B remains blocked until the workflow-only default
-branch change is approved and merged, the private repository can enforce an
-eligible `Production` reviewer, a matching recoverable files/database backup is
-verified and the public response exposes explicit noindex.
+No native workflow run, WordPress deployment, activation, content publication,
+Coming Soon change or database change was made. FT-NATIVE-001B remains blocked
+until the private repository can enforce an eligible `Production` reviewer, a
+matching recoverable files/database backup is verified and the public response
+exposes explicit noindex.
 
 ## Runtime Validation Still Required
 
@@ -95,8 +97,7 @@ verified and the public response exposes explicit noindex.
 
 ## Next Action
 
-Seek explicit approval to push the new native pre-release evidence commit, push
-`codex/enable-native-private-runtime`, and open its workflow-only pull request to
-`main`. Keep it unmerged and do not dispatch the workflow until the Enterprise
-reviewer, matching backup and public noindex gates are satisfied. Keep
-`farmtree-native` inactive and Coming Soon in place.
+Configure an eligible required reviewer on GitHub `Production`, which requires
+Enterprise-capable ownership for this private repository. Then verify matching
+backup evidence and explicit public noindex before seeking separate workflow
+dispatch approval. Keep `farmtree-native` inactive and Coming Soon in place.

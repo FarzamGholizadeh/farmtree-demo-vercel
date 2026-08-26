@@ -48,6 +48,12 @@ GitHub `production` environment before SSH credentials or `rsync`; neither may
 activate themes/plugins or change the database. `.github/workflows/test-vimexx-ssh.yml`
 is manual-only and is not a push-time workflow.
 
+The legacy Vercel Git integration currently creates an external static-project
+deployment when `main` is merged. Treat every future `main` merge as
+deployment-producing: obtain explicit Vercel deployment approval or suspend the
+integration before merging. This integration does not deploy the WordPress
+runtime at `farmtree.eu`.
+
 Read-only GitHub API verification on 2026-08-26 confirmed that the private,
 personal-account repository uses `main` as its default branch. `Preview` and
 `Production` have no protection rules or deployment branch policy, and only the
@@ -56,11 +62,9 @@ available for private repositories on Free, Pro or Team; the existing mandatory
 reviewer gate therefore requires Enterprise-capable ownership plus an eligible
 reviewer before it can be enforced.
 
-The private-runtime workflow at
-`.github/workflows/deploy-wordpress-native.yml` is not present on `main` and is
-not remotely dispatchable yet. `main` instead contains the superseded
-`.github/workflows/deploy-wordpress-staging.yml`. A minimal local reconciliation
-branch, `codex/enable-native-private-runtime`, replaces that staging workflow
-with the manual-only private-runtime workflow and awaits an approved push and
-pull request. Required-reviewer protection, matching recoverable file/database
-backup evidence and explicit public noindex remain prerequisites for any run.
+PR #3 merged the private-runtime workflow reconciliation to `main` at
+`3df2ae2`. GitHub registers `.github/workflows/deploy-wordpress-native.yml` as
+active and manual-only with zero runs, and the superseded
+`.github/workflows/deploy-wordpress-staging.yml` is absent. Required-reviewer
+protection, matching recoverable file/database backup evidence, explicit public
+noindex and separate dispatch approval remain prerequisites for any run.

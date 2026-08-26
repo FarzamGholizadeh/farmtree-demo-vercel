@@ -59,8 +59,9 @@ evidence and remaining runtime checks are defined in `CURRENT_SPRINT.md` and
 
 ### FT-NATIVE-001B - Private Production Runtime Validation
 
-Status: Pushed source validated; runtime blocked. A workflow-only default-branch
-replacement is prepared locally and awaits approved push/PR. The remaining
+Status: Pushed source validated; runtime blocked. PR #3 completed the
+default-branch reconciliation at `3df2ae2`: the native workflow is active and
+manual-only, and the superseded staging workflow is retired. The remaining
 gates are Enterprise-capable required-reviewer protection for GitHub
 `Production`, matching recoverable files/database backup evidence and explicit
 public `noindex`. These gates block runtime/deployment actions, not local native

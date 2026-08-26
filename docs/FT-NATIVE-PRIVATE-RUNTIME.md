@@ -31,13 +31,22 @@ Runtime validation cannot proceed until these are verified or corrected:
   the owner currently has access; GitHub requires Enterprise-capable ownership
   for required reviewers on a private repository, plus an eligible reviewer
   with at least read access.
-- `.github/workflows/deploy-wordpress-native.yml` must first reach the GitHub
-  default branch through the approved push/merge path; that exact workflow is
-  not present on `origin/main` yet.
-- A local workflow-only branch, `codex/enable-native-private-runtime`, replaces
-  the superseded `.github/workflows/deploy-wordpress-staging.yml` currently on
-  `origin/main`. It requires an approved push and pull request before the native
-  workflow becomes dispatchable.
+
+GitHub documents the reviewer access and private-repository plan requirements at
+<https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments#required-reviewers>.
+
+## Verified Repository Workflow State
+
+PR #3 merged the workflow-only reconciliation to `main` at `3df2ae2` on
+2026-08-26. GitHub registers
+`.github/workflows/deploy-wordpress-native.yml` as active, its only trigger is
+`workflow_dispatch`, and it has zero runs. The superseded
+`.github/workflows/deploy-wordpress-staging.yml` is absent from `main`.
+
+The workflow is therefore available for manual dispatch, but availability is
+not deployment approval. Do not dispatch it until required-reviewer protection,
+matching backup evidence and explicit public noindex are verified and a human
+separately approves the run.
 
 ## Backup Evidence Requirement
 
@@ -80,6 +89,11 @@ Each run requires the full immutable `source_commit` SHA approved from
 workflow fails unless the commit is contained in the remote native-rebuild
 branch. This prevents an accidental dispatch on `main`, which intentionally
 does not contain the native implementation source.
+
+The current validated candidate is
+`897a991fbdd9f301d0409d1a015282baac8fce61`; GitHub validation run
+`32956292922` passed it. This is recorded evidence, not dispatch approval, and
+the SHA must be explicitly reconfirmed before a run.
 
 The workflow targets the existing `Production` environment and existing
 `VIMEXX_*` server credentials. A read-only GitHub API check on 2026-08-26 found
