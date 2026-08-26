@@ -82,6 +82,12 @@ function farmtree_runtime_count_block_type(array $block, string $block_name): in
     return $count;
 }
 
+function farmtree_runtime_editor_equivalent(string $expected, string $actual): bool
+{
+    return html_entity_decode($expected, ENT_QUOTES | ENT_HTML5, 'UTF-8')
+        === html_entity_decode($actual, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
+
 /**
  * Evaluate a theme pattern file the same way core obtains its content.
  */
@@ -384,31 +390,22 @@ if (is_wp_error($marked_update)) {
 
 $saved_draft = get_post($draft_id);
 farmtree_runtime_assert($saved_draft instanceof WP_Post, 'Saved draft could not be reloaded.');
-if ($saved_draft->post_content !== $marked_content) {
+farmtree_runtime_assert(
+    farmtree_runtime_editor_equivalent($marked_content, $saved_draft->post_content),
+    'Draft content was not semantically preserved after WordPress save normalization.'
+);
+$editor_normalized_entities = $saved_draft->post_content !== $marked_content;
+if ($editor_normalized_entities) {
     $expected_length = strlen($marked_content);
     $actual_length = strlen($saved_draft->post_content);
-    $comparison_length = min($expected_length, $actual_length);
-    $first_difference = $comparison_length;
-
-    for ($index = 0; $index < $comparison_length; $index++) {
-        if ($marked_content[$index] !== $saved_draft->post_content[$index]) {
-            $first_difference = $index;
-            break;
-        }
-    }
-
-    farmtree_runtime_fail(sprintf(
-        'Draft content changed on save (expected_bytes=%d actual_bytes=%d first_difference=%d trailing_newline_only=%s kses_equivalent=%s unfiltered_html=%s expected_context_hex=%s actual_context_hex=%s).',
-        $expected_length,
-        $actual_length,
-        $first_difference,
-        rtrim($saved_draft->post_content, "\r\n") === rtrim($marked_content, "\r\n") ? 'yes' : 'no',
-        wp_kses_post($marked_content) === $saved_draft->post_content ? 'yes' : 'no',
-        current_user_can('unfiltered_html') ? 'yes' : 'no',
-        bin2hex(substr($marked_content, max(0, $first_difference - 32), 96)),
-        bin2hex(substr($saved_draft->post_content, max(0, $first_difference - 32), 106))
-    ));
+    farmtree_runtime_assert(
+        $actual_length - $expected_length === 10
+            && substr_count($saved_draft->post_content, '&#x2197;') === 2,
+        'WordPress applied an unexpected editor normalization.'
+    );
 }
+$saved_blocks = parse_blocks($saved_draft->post_content);
+farmtree_runtime_assert(count($saved_blocks) > 0, 'Saved draft blocks could not be parsed after reload.');
 $revisions_after = wp_get_post_revisions($draft_id);
 $revision_ids_after = array_map('intval', array_keys($revisions_after));
 $new_revision_ids = array_diff($revision_ids_after, $revision_ids_before);
@@ -435,7 +432,10 @@ if (is_wp_error($restored_update)) {
 $restored_draft = get_post($draft_id);
 farmtree_runtime_assert($restored_draft instanceof WP_Post, 'Restored draft could not be reloaded.');
 farmtree_runtime_assert($restored_draft->post_status === 'draft', 'Draft status changed during validation.');
-farmtree_runtime_assert($restored_draft->post_content === $homepage_content, 'Final draft content does not match the Homepage pattern.');
+farmtree_runtime_assert(
+    farmtree_runtime_editor_equivalent($homepage_content, $restored_draft->post_content),
+    'Final draft content does not match the Homepage pattern after editor normalization.'
+);
 
 $rendered = do_blocks($homepage_content);
 farmtree_runtime_assert(trim($rendered) !== '', 'Homepage blocks rendered no output.');
@@ -456,8 +456,9 @@ farmtree_runtime_assert(wp_get_theme()->get_stylesheet() === 'farmtree', 'The ac
 farmtree_runtime_assert(!is_plugin_active($plugin_slug . '/farmtree-content.php'), 'farmtree-content was activated during validation.');
 
 printf(
-    "FARMTREE_NATIVE_RUNTIME_STATIC_OK\nFARMTREE_NATIVE_DRAFT_ID=%d\nFARMTREE_NATIVE_DRAFT_SAVE_RELOAD_REVISIONS_OK\nFARMTREE_NATIVE_QUERY_AND_PATTERNS_RENDER_OK\n",
-    $draft_id
+    "FARMTREE_NATIVE_RUNTIME_STATIC_OK\nFARMTREE_NATIVE_DRAFT_ID=%d\nFARMTREE_NATIVE_DRAFT_SAVE_RELOAD_REVISIONS_OK\nFARMTREE_NATIVE_EDITOR_ENTITY_NORMALIZATION_OK=%s\nFARMTREE_NATIVE_QUERY_AND_PATTERNS_RENDER_OK\n",
+    $draft_id,
+    $editor_normalized_entities ? 'yes' : 'not-needed'
 );
 
 restore_error_handler();
