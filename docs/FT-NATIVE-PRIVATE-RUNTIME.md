@@ -2,7 +2,8 @@
 
 ## Verified Public Runtime State
 
-Repository and unauthenticated HTTPS checks on 2026-08-25 confirmed:
+Repository and unauthenticated HTTPS checks on 2026-08-25, with the public
+Homepage and headers rechecked on 2026-08-26, confirmed:
 
 - `https://farmtree.eu/` returns a SeedProd Coming Soon page.
 - `https://farmtree.eu/wp-admin/` redirects to the WordPress login screen.
@@ -23,6 +24,14 @@ Runtime validation cannot proceed until these are verified or corrected:
   (`blog_public=0`).
 - The active public theme must remain `farmtree`.
 - Coming Soon must remain active until final launch approval.
+- GitHub's `Production` environment must gain and retain required-reviewer
+  protection before a native workflow run.
+- `.github/workflows/deploy-wordpress-native.yml` must first reach the GitHub
+  default branch through the approved push/merge path; that exact workflow is
+  not present on `origin/main` yet.
+- The superseded `.github/workflows/deploy-wordpress-staging.yml` currently on
+  `origin/main` must be retired during approved integration so it cannot remain
+  as a second, misleading native deployment path.
 
 ## Private Runtime Deployment Boundary
 
@@ -32,9 +41,12 @@ exactly:
 - `wordpress/wp-content/themes/farmtree-native/`
 - `wordpress/wp-content/plugins/farmtree-content/`
 
-The workflow uses the existing protected production environment and existing
-`VIMEXX_*` server credentials. It requires typed confirmation that a recoverable
-file and database backup has been verified before any SSH or rsync step runs.
+The workflow targets the existing `Production` environment and existing
+`VIMEXX_*` server credentials. A read-only GitHub API check on 2026-08-26 found
+no protection rules on that environment, so the repository binding must not be
+described as reviewer-protected until that external rule is configured and
+verified. The workflow requires typed confirmation that a recoverable file and
+database backup has been verified before any SSH or rsync step runs.
 
 The workflow does not:
 

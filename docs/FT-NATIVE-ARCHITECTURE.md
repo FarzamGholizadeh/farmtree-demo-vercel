@@ -71,8 +71,9 @@ No empty archive becomes public before approved content and templates exist.
 
 ## Homepage Rebuild Direction
 
-After FT-NATIVE-001B passes, FT-NATIVE-002 rebuilds the Homepage in the native
-theme using the Frank-approved 25 August 2026 review direction. The canonical
+FT-NATIVE-002 rebuilds the Homepage locally while FT-NATIVE-001B remains
+blocked, using the Frank-approved 25 August 2026 review direction. FT-NATIVE-001B
+must pass before real WordPress runtime validation or deployment. The canonical
 brief is `docs/FT-NATIVE-002-HOMEPAGE.md`.
 
 The native Homepage will prioritise positioning, planning value, technology,

@@ -11,7 +11,7 @@ WordPress-native system is built in isolation.
 | 2 | FT-NATIVE-002 | Local implementation complete | Native homepage rebuilt with core blocks and patterns; runtime validation pending |
 | 3 | FT-NATIVE-003 | Planned | Content models and non-technical admin experience |
 | 4 | FT-NATIVE-004 | Planned | Real pages, navigation and clean URLs |
-| 5 | FT-NATIVE-005 | Planned | Content migration, private runtime validation and cutover |
+| 5 | FT-NATIVE-005 | Planned | Content migration, final migrated-content runtime validation and cutover |
 | 6 | FT-I18N-001 | Planned | English and Dutch architecture |
 | 7 | FT-SEO-001 | Planned | Technical SEO foundation |
 | 8 | FT-GEO-001 | Planned | Entity and generative-search architecture |

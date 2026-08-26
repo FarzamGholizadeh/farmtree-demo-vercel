@@ -20,13 +20,22 @@ const [agentMap, skill, interfaceConfig] = await Promise.all([
 
 assert.match(agentMap, /\$farmtree-autonomous-delivery/);
 for (const source of [
+  'PROJECT_CONTEXT.md',
+  'DECISIONS.md',
+  'ROADMAP.md',
   'CURRENT_SPRINT.md',
   'SPRINT_REPORT.md',
-  'DECISIONS.md',
+  'SPRINT_HISTORY.md',
+  'docs/FT-NATIVE-ARCHITECTURE.md',
+  'docs/FT-NATIVE-002-HOMEPAGE.md',
   'RELEASE-CHECKLIST.md',
 ]) {
   assert.match(agentMap, new RegExp(source.replace('.', '\\.')));
 }
+assert.match(agentMap, /https:\/\/farmtree\.eu\//);
+assert.match(agentMap, /`farmtree` is the current public and\s+rollback-safe theme/);
+assert.match(agentMap, /`farmtree-native` remains inactive and must not become\s+public without explicit approval/);
+assert.match(agentMap, /Coming Soon removal/);
 
 const frontmatter = skill.match(/^---\n([\s\S]+?)\n---/);
 assert.ok(frontmatter, 'SKILL.md must start with YAML frontmatter');
@@ -51,6 +60,18 @@ for (const trigger of [
 }
 assert.match(skill, /Run The Delivery Loop/);
 assert.match(skill, /Preserve The Production Boundary/);
+assert.match(skill, /reproduce it when possible/);
+assert.match(skill, /multiple\s+evidence-based attempts/);
+assert.match(skill, /Do not make speculative code changes/);
+assert.match(skill, /320, 375, 390, 430, 768, 1024, 1280/);
+for (const reportRequirement of [
+  'visual and functional result',
+  'production impact',
+  'rollback method',
+  'real limitation or blocker',
+]) {
+  assert.match(skill, new RegExp(reportRequirement));
+}
 
 const config = YAML.parse(interfaceConfig);
 assert.equal(config.policy?.allow_implicit_invocation, true);

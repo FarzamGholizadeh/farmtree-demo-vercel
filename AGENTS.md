@@ -20,9 +20,9 @@ the skill.
 ## Working Rules
 
 - Build the WordPress-native system in `farmtree-native` and
-  `farmtree-content`. Treat the root static site and the current `farmtree`
-  theme as legacy or production references unless the task explicitly says
-  otherwise.
+  `farmtree-content`. The root static site is legacy/reference only. The current
+  `farmtree` theme is the production and rollback reference and remains
+  unchanged unless an explicit emergency hotfix is approved.
 - Work autonomously through local implementation, validation, documentation and
   an atomic local commit. Repair failed checks before stopping.
 - Prefer WordPress core blocks, locked patterns and existing repository
@@ -32,6 +32,10 @@ the skill.
   pending.
 
 ## Approval Boundary
+
+`https://farmtree.eu/` is production. `farmtree` is the current public and
+rollback-safe theme. `farmtree-native` remains inactive and must not become
+public without explicit approval.
 
 Explicit approval is required before pushes, merges, deployments, workflow
 runs, theme or plugin activation changes, Coming Soon removal, content

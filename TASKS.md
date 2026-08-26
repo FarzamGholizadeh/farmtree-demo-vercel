@@ -1,6 +1,6 @@
 # FarmTree Tasks
 
-_Last updated: 2026-08-25_
+_Last updated: 2026-08-26_
 
 ## Completed Governance Task
 
@@ -59,9 +59,11 @@ evidence and remaining runtime checks are defined in `CURRENT_SPRINT.md` and
 
 ### FT-NATIVE-001B - Private Production Runtime Validation
 
-Status: Blocked on recoverable files/database backup verification and explicit
-public `noindex` evidence. This gate blocks runtime/deployment actions, not local
-native development.
+Status: Blocked on approved default-branch reconciliation, retirement of the
+superseded staging workflow, exposure of `deploy-wordpress-native.yml`,
+required-reviewer protection for GitHub `Production`, recoverable files/database
+backup verification and explicit public `noindex` evidence. These gates block
+runtime/deployment actions, not local native development.
 
 ## Deferred Implementation Backlog
 

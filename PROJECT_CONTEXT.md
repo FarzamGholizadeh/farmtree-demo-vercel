@@ -1,11 +1,12 @@
 # FarmTree Project Context
 
-_Last updated: 2026-08-25_
+_Last updated: 2026-08-26_
 
 ## Production Source
 
 - Repository: `farmtree-demo-vercel`
 - Primary branch: `wordpress-integration`
+- GitHub default branch: `main` (verified 2026-08-26)
 - Production domain: `https://farmtree.eu/`
 - WordPress theme: `wordpress/wp-content/themes/farmtree`
 - Core plugin: `wordpress/wp-content/plugins/farmtree-core`
@@ -47,8 +48,14 @@ GitHub `production` environment before SSH credentials or `rsync`; neither may
 activate themes/plugins or change the database. `.github/workflows/test-vimexx-ssh.yml`
 is manual-only and is not a push-time workflow.
 
-Repository audit on 2026-07-28 found GitHub `Preview` and `Production`
-environments with no protection rules. The current private-runtime plan uses the
-existing WordPress installation behind Coming Soon rather than a separate
-staging host. A recent recoverable backup and explicit public noindex evidence
-remain prerequisites for any native deployment.
+Read-only GitHub API verification on 2026-08-26 confirmed that the `Preview`
+and `Production` environments still have no protection rules or deployment
+branch policy. It also confirmed `main` is the default branch; the native
+private-runtime workflow at `.github/workflows/deploy-wordpress-native.yml` is
+not present there and therefore is not remotely dispatchable yet. `main` does
+contain the earlier `.github/workflows/deploy-wordpress-staging.yml`, which
+targets a separate `STAGING_URL` and is not the current private-runtime path.
+The approved default-branch integration must reconcile the branches, retire
+that superseded staging workflow, expose the private-runtime workflow, add
+required-reviewer protection, and verify a recent recoverable backup plus
+explicit public noindex before any native workflow run.

@@ -13,9 +13,12 @@ design controls.
 
 ### Runtime Dependency
 
-FT-NATIVE-001B remains blocked on a verified recoverable files/database backup
-and an explicit public `noindex` signal. Those safeguards block deployment and
-real WordPress runtime validation; they do not block local native development.
+FT-NATIVE-001B remains blocked on approved default-branch exposure of
+`.github/workflows/deploy-wordpress-native.yml`, retirement of the superseded
+separate-staging workflow, required-reviewer protection for GitHub `Production`,
+a verified recoverable files/database backup and an explicit public `noindex`
+signal. Those safeguards block deployment and real WordPress runtime validation;
+they do not block local native development.
 
 ### Implemented Homepage
 
@@ -45,7 +48,8 @@ legacy concept.
 ### Available Validation
 
 - Repository checks cover required native files, JSON, block markup, homepage
-  hierarchy, approved copy constraints, workflow policy, JavaScript and CSS.
+  hierarchy, approved copy constraints, Cover serialization, semantic landmark
+  ownership, focus treatment, workflow policy, JavaScript and CSS.
 - A read-only local preview renderer composes the native header, Homepage block
   markup, dynamic-post placeholder and footer without WordPress or PHP.
 - PHP syntax, Site Editor, Page Editor, Query rendering and frontend behavior in
@@ -70,7 +74,10 @@ legacy concept.
 
 ### Next Approval-Bound Action
 
-After a recent recoverable WordPress files/database backup is verified and the
-public Coming Soon response exposes explicit `noindex`, request approval to run
-the manual private-runtime workflow for the inactive native theme and content
-plugin. Do not activate the theme during that validation.
+Request approval to push the local native-rebuild commits. Before any
+private-runtime run, the approved release path must reconcile the default-branch
+workflows, retire the superseded staging path, place
+`.github/workflows/deploy-wordpress-native.yml` on `main`, add required-reviewer
+protection to `Production`, verify a recent recoverable WordPress files/database
+backup and expose explicit public `noindex`. Do not activate the theme during
+that validation.

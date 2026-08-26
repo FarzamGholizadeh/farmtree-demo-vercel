@@ -3,7 +3,7 @@ Theme Name: FarmTree Native
 Theme URI: https://farmtree.eu/
 Author: FarmTree
 Description: Inactive WordPress Block Theme for the FarmTree native rebuild. Not approved for production activation.
-Version: 0.2.0
+Version: 0.2.1
 Requires at least: 6.6
 Tested up to: 7.0
 Requires PHP: 8.1
@@ -24,8 +24,9 @@ body {
 }
 
 :where(a, button, input, textarea, select, summary):focus-visible {
-  outline: 3px solid var(--wp--preset--color--farmtree-gold);
+  outline: 3px solid var(--wp--preset--color--white);
   outline-offset: 3px;
+  box-shadow: 0 0 0 5px var(--wp--preset--color--farmtree-ink);
 }
 
 .wp-site-blocks {

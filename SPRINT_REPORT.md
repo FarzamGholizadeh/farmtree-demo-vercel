@@ -33,6 +33,11 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
 - Native foundation validation checks required files, JSON, valid block
   structure, Homepage order, prohibited legacy sections, editable content and
   the content-only pattern lock.
+- Final source review aligned the Hero Cover attributes with Gutenberg save
+  markup, removed duplicate header/footer landmark wrappers and added a
+  two-tone focus indicator that remains visible on light and dark sections.
+- Regression validation now guards Cover dim/alt serialization, semantic
+  template-part ownership and the focus treatment.
 - Workflow validation confirms that private deployment remains manual,
   inactive-code-only and guarded by backup, Coming Soon, noindex,
   `blog_public=0` and active-theme checks.
@@ -43,6 +48,11 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   CTA and dynamic-News placeholder resolved and no raw PHP/pattern markers.
 - The repository-local `$farmtree-autonomous-delivery` skill passes both the
   project validator and the Codex skill schema validator.
+- Read-only checks on 2026-08-26 reconfirmed Coming Soon without an explicit
+  public `noindex` signal, no protection rules on GitHub `Production`, and no
+  `.github/workflows/deploy-wordpress-native.yml` on the default `main` branch.
+  `main` instead contains the superseded separate-staging workflow, which must
+  be retired during approved integration.
 - Homepage implementation source commit: `c27da77`.
 
 ## Preview And Screenshots
@@ -55,8 +65,10 @@ order are tested; visual browser and responsive inspection remain pending.
 ## Runtime Safety
 
 No deployment, activation, content publication, Coming Soon change or database
-change was made. FT-NATIVE-001B remains blocked until a recent recoverable
-files/database backup and explicit public noindex signal are verified.
+change was made. FT-NATIVE-001B remains blocked until the native workflow has an
+approved default-branch release path, GitHub `Production` has required-reviewer
+protection, a recent recoverable files/database backup is verified and the
+public response exposes explicit noindex.
 
 ## Runtime Validation Still Required
 
@@ -71,6 +83,8 @@ files/database backup and explicit public noindex signal are verified.
 
 ## Next Action
 
-Correct the backup/noindex blockers, then seek explicit approval for the manual
-private-runtime workflow. Keep `farmtree-native` inactive and Coming Soon in
-place.
+Seek explicit approval to push the local native-rebuild commits. Then
+reconcile the default-branch workflows, retire the superseded staging path, and
+complete the environment-reviewer, backup and noindex safeguards before seeking
+approval for the manual private-runtime workflow. Keep `farmtree-native`
+inactive and Coming Soon in place.

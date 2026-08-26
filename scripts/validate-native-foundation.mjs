@@ -101,6 +101,29 @@ for (const part of ['parts/header.html', 'parts/footer.html']) {
   if (!markup.includes('"templateLock":"contentOnly"')) {
     throw new Error(`${part} must retain content-only locking.`);
   }
+  if (/"tagName":"(?:header|footer)"/.test(markup)) {
+    throw new Error(`${part} must let the semantic template-part area own its landmark.`);
+  }
+}
+
+const templatePartAreas = new Map(
+  themeJson.templateParts?.map(({ name, area }) => [name, area]) ?? []
+);
+for (const area of ['header', 'footer']) {
+  if (templatePartAreas.get(area) !== area) {
+    throw new Error(`theme.json must assign the ${area} part to the semantic ${area} area.`);
+  }
+}
+
+for (const template of readdirSync(resolve(theme, 'templates'))) {
+  if (!template.endsWith('.html')) {
+    continue;
+  }
+
+  const markup = readFileSync(resolve(theme, 'templates', template), 'utf8');
+  if (/wp:template-part[^\n]+"tagName":"(?:header|footer)"/.test(markup)) {
+    throw new Error(`${template} must not wrap semantic header/footer parts in duplicate landmarks.`);
+  }
 }
 
 for (const pattern of [
@@ -121,6 +144,7 @@ for (const pattern of [
 
 const homepage = readFileSync(resolve(theme, 'patterns/homepage-foundation.php'), 'utf8');
 const frontPage = readFileSync(resolve(theme, 'templates/front-page.html'), 'utf8');
+const themeStyles = readFileSync(resolve(theme, 'style.css'), 'utf8');
 
 if (!homepage.includes('"templateLock":"contentOnly"')) {
   throw new Error('The Homepage pattern must retain content-only locking.');
@@ -132,6 +156,35 @@ if (!frontPage.includes('wp:post-content')) {
 
 if (frontPage.includes('wp:pattern')) {
   throw new Error('The front-page template must not hard-code Homepage content in the Site Editor.');
+}
+
+const coverComment = homepage.match(/<!-- wp:cover (\{.*?\}) -->/);
+if (!coverComment) {
+  throw new Error('Homepage must provide a serialized core Cover block.');
+}
+const coverAttributes = JSON.parse(coverComment[1]);
+if (!coverAttributes.alt?.trim()) {
+  throw new Error('Homepage Cover block must serialize its alternative text attribute.');
+}
+if (/<div class="[^"]*\bwp-block-cover\b[^"]*\bis-dark\b/.test(homepage)) {
+  throw new Error('Homepage Cover wrapper must not retain Gutenberg\'s obsolete is-dark class.');
+}
+const expectedDimClass = `has-background-dim-${10 * Math.round(coverAttributes.dimRatio / 10)}`;
+if (!homepage.includes(expectedDimClass)) {
+  throw new Error(`Homepage Cover markup must match its dimRatio via ${expectedDimClass}.`);
+}
+const coverImageIndex = homepage.indexOf('wp-block-cover__image-background');
+const coverOverlayIndex = homepage.indexOf('wp-block-cover__background');
+const coverContentIndex = homepage.indexOf('wp-block-cover__inner-container');
+if (!(coverImageIndex < coverOverlayIndex && coverOverlayIndex < coverContentIndex)) {
+  throw new Error('Homepage Cover children must follow Gutenberg image, overlay and content order.');
+}
+
+if (
+  !themeStyles.includes('outline: 3px solid var(--wp--preset--color--white)') ||
+  !themeStyles.includes('box-shadow: 0 0 0 5px var(--wp--preset--color--farmtree-ink)')
+) {
+  throw new Error('Focus indicators must retain a two-tone high-contrast treatment.');
 }
 
 const requiredHomepageContent = [

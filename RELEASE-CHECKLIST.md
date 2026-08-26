@@ -1,6 +1,6 @@
 # FarmTree WordPress Release Checklist
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-08-26_
 
 ## Release Context
 
@@ -22,7 +22,9 @@ _Last updated: 2026-07-27_
 
 ## Preflight
 
-- [ ] Confirm current branch is `wordpress-integration`.
+- [ ] Confirm the branch matches the operation: `feat/wordpress-native-rebuild`
+      for native pre-release work and `wordpress-integration` for approved
+      production integration.
 - [ ] Confirm working-tree status is understood.
 - [ ] Confirm release diff contains only approved files.
 - [ ] Confirm no secrets or environment files are included.
@@ -43,6 +45,20 @@ _Last updated: 2026-07-27_
 - [ ] Confirm the `production` environment in GitHub requires reviewer approval.
 - [ ] Confirm `.github/workflows/test-vimexx-ssh.yml` is manual-only.
 - [ ] Confirm deployment uses repository code only and does not publish WordPress content.
+
+## Native Private-Runtime Review
+
+- [ ] Confirm `.github/workflows/deploy-wordpress-native.yml` has reached the
+      GitHub default `main` branch through an approved release path.
+- [ ] Reconcile the default-branch workflow additions and retire the superseded
+      `.github/workflows/deploy-wordpress-staging.yml` path.
+- [ ] Confirm the GitHub `Production` environment has required-reviewer
+      protection before the workflow runs.
+- [ ] Confirm a recent recoverable WordPress files and database backup.
+- [ ] Confirm Coming Soon remains active and the public response exposes an
+      explicit `noindex` signal.
+- [ ] Confirm the workflow deploys only inactive `farmtree-native` and
+      `farmtree-content` files and performs no activation or database change.
 
 ## Post-Deployment Verification
 

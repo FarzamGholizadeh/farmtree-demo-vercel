@@ -29,15 +29,24 @@ focused on the reusable delivery loop.
    static checks, syntax/lint, unit or integration tests, responsive browser
    checks, accessibility, content/SEO structure, performance-sensitive assets,
    WordPress block validity and runtime checks when an approved runtime exists.
-4. When a check fails, capture the evidence, isolate the smallest cause, repair
-   it and rerun the affected checks plus the main suite.
-5. Review the final diff independently for regressions, unsupported claims,
-   editability, design-lock boundaries, production risk and missing tests.
+4. When a check fails, reproduce it when possible, capture the evidence,
+   distinguish a repository cause from an environment or platform cause,
+   implement the narrowest maintainable fix and rerun the affected checks plus
+   the main suite. Do not make speculative code changes for an external issue.
+5. Review the final diff independently for unrelated changes, regressions,
+   unsupported claims, unnecessary technical debt, WordPress-native ownership,
+   editability, design-lock boundaries, responsive and accessibility risk,
+   production impact, rollback preservation and missing tests.
 6. Update current sprint, report, task and history documents when state or
    evidence changed. Do not rewrite historical facts.
 7. Create one focused local commit after all available checks pass.
 8. Stop at pre-release and report tested, inferred and runtime-pending items
    separately.
+
+Choose validation for the changed surface rather than running irrelevant checks.
+For responsive interface work, inspect 320, 375, 390, 430, 768, 1024, 1280,
+1440 and 1920 pixel widths when browser tooling is available; otherwise record
+that visual validation remains pending.
 
 ## Exercise Local Autonomy
 
@@ -66,13 +75,26 @@ make validation pass.
 
 ## Stop And Report
 
-Stop early only when progress requires a real approval-bound action, required
-source material is unavailable and cannot be inferred safely, or local evidence
-shows an unresolved release risk.
+Complete unaffected work and try safe alternative diagnostics before stopping.
+Stop only when progress requires a real approval-bound action or unavailable
+credential/system, a material business decision cannot be inferred safely, a
+destructive action is required, the same failure persists after multiple
+evidence-based attempts without new evidence, or unavailable validation would
+make further work speculative.
 
-The pre-release report must cover implementation, approved feedback, editable
-content, locked design, validation evidence, preview/screenshots, local commit,
-runtime work still required, blockers and the next approval-bound action. End
-with:
+The concise pre-release report must cover:
+
+1. what changed;
+2. what is editable in WordPress and what design remains locked;
+3. the visual and functional result;
+4. tests passed;
+5. tests or runtime validation still pending;
+6. screenshots or preview location;
+7. the local commit hash;
+8. production impact;
+9. rollback method;
+10. any real limitation or blocker and the next approval-bound action.
+
+End with:
 
 `Implementation is complete and validated to the available environment. Ready for the release step?`
