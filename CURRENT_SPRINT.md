@@ -2,8 +2,8 @@
 
 ## FT-NATIVE-002 - Native Homepage
 
-Status: Local visual-parity implementation and regression gate complete;
-runtime validation blocked by orphaned GitHub Actions run
+Status: Visual-first implementation and real local WordPress validation
+complete; browser-rendered evidence pending
 
 ### Objective
 
@@ -14,10 +14,11 @@ design controls.
 
 ### Runtime Dependency
 
-The pushed native-rebuild source reaches `897a991`, and GitHub native validation
-run `32956292922` passed that source. Local commit `416500a` then reconciled the
-runtime release-readiness evidence. PR #3 merged the workflow-only
-reconciliation to `main` at `3df2ae2`: GitHub registers
+The native-rebuild branch is synchronized through `2f810ef`, including the
+workflow-root correction and completed visual-parity source. GitHub native
+validation run `32956292922` passed the earlier `897a991` source. Local commit
+`416500a` then reconciled the runtime release-readiness evidence. PR #3 merged
+the workflow-only reconciliation to `main` at `3df2ae2`: GitHub registers
 `.github/workflows/deploy-wordpress-native.yml` as active and manual-only, the
 superseded separate-staging workflow is absent, and the native workflow has
 never run. The current visual-parity correction remains local pending a future
@@ -25,12 +26,14 @@ push approval.
 
 The matching recoverable files/database backups are verified locally, and the
 public Coming Soon response has an explicit `X-Robots-Tag: noindex, nofollow`.
-Runtime validation is temporarily blocked by GitHub Actions run `32985108587`,
-which remains in an orphaned `queued`/null state with zero jobs. Independent
-GitHub Environment Required Reviewer protection is a deferred governance
-enhancement for this private repository. The compensating release boundary
-keeps all WordPress production workflows manual-only and requires explicit user
-approval before dispatch.
+Production runtime validation is temporarily blocked by GitHub Actions run
+`32985108587`, which remains in an orphaned `queued`/null state with zero jobs.
+It no longer blocks local WordPress validation: the repository now runs an
+isolated WordPress 7.1 / PHP 8.2 Playground instance with SQLite at loopback
+only. Independent GitHub Environment Required Reviewer protection is a deferred
+governance enhancement for this private repository. The compensating release
+boundary keeps all WordPress production workflows manual-only and requires
+explicit user approval before dispatch.
 
 ### Implemented Homepage
 
@@ -93,6 +96,17 @@ publication gate are approved under FT-WEB-004.
   Video serialization, semantic landmark ownership, manual-only Hero and
   Platform controls, responsive layout rules, focus treatment, workflow policy,
   JavaScript and CSS.
+- A deterministic visual-baseline gate compares the native theme with the
+  production `farmtree` source, including shared layout contracts and SHA-256
+  equality for 17 approved brand, Hero, Platform, proof and partner assets. It
+  found and corrected a two-pixel logo-height and Header-width drift.
+- The isolated real WordPress runtime recognizes and locally activates
+  `farmtree-native` as a Block Theme and activates `farmtree-content`. A private
+  bootstrapped Homepage persists its registered pattern content and revision,
+  renders exactly one H1 and a Query Loop, loads 18 referenced theme assets,
+  and returns HTTP 200 from the Site Editor, Page Editor and frontend without
+  rendered PHP warnings or fatals. WordPress registers all seven required
+  templates, three template parts and four native patterns.
 - A read-only local preview renderer composes the native header, Homepage block
   markup, dynamic-post placeholder and footer from the real native sources and
   `theme.json` tokens without WordPress or PHP. It includes explicit local
@@ -110,8 +124,9 @@ publication gate are approved under FT-WEB-004.
   1024, 1280, 1440 and 1920 widths without page-level zoom, root transforms or
   overflow masking. Rendered scroll-width and screenshot evidence remains a
   browser-environment check because no connected in-app browser was available.
-- PHP syntax, Site Editor, Page Editor, Query rendering and frontend behavior in
-  real WordPress remain runtime checks.
+- Browser console, keyboard, axe, overflow and screenshot validation across all
+  nine target widths remain pending because no supported in-app browser session
+  is connected.
 - A fresh preview process returned HTTP 200 with the expected
   `X-Robots-Tag: noindex, nofollow` header.
 - GitHub run `32956292922` validated pushed commit `897a991` successfully.
@@ -132,14 +147,22 @@ publication gate are approved under FT-WEB-004.
   repository/preview validation: complete to the available environment.
 - Frank-approved structure and content direction: implemented.
 - Core-block editability and locked design contract: verified from source.
-- Real WordPress editor/frontend, PHP, rendered browser screenshots, axe and
-  keyboard validation: pending.
+- Real local WordPress editor/frontend recognition, save/reload, revisions,
+  locking, Query Loop, asset and PHP-rendering checks: complete.
+- Rendered browser screenshots, browser-console, axe, keyboard and scroll-width
+  validation: pending a supported in-app browser session.
 - Locale-aware NL/DE routing and production quotation submission/privacy:
   deferred and intentionally unavailable in the current build.
 - Partner evidence links, final theme labels, approved production media and
   final testimonials: pending later content validation before publication.
 
-### Next Approval-Bound Action
+### Next Local Validation Action
+
+Connect a supported in-app browser session, then run the rendered native
+WordPress Homepage through 320, 375, 390, 430, 768, 1024, 1280, 1440 and 1920
+pixel screenshots plus keyboard, axe, console and overflow checks.
+
+### Production Approval Boundary
 
 Do not dispatch another native workflow while run `32985108587` remains
 non-terminal. Before any later explicitly approved dispatch, verify through the

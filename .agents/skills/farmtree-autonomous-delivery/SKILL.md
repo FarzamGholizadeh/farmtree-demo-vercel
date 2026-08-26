@@ -39,6 +39,13 @@ ownership in the WordPress-native Block Theme, Gutenberg patterns/templates
 and `farmtree-content`. Visual parity must not be achieved by returning to the
 legacy static SPA architecture.
 
+For migration work, establish and verify the approved visual baseline before
+progressively replacing hard-coded content with WordPress-managed content.
+Preserve rendered markup and behavior section-by-section, keep design controls
+in the theme, expose only the editorial fields people need, and revalidate
+parity after each conversion. Prefer core blocks, but do not force them when
+they materially damage approved UI/UX.
+
 ## Run The Delivery Loop
 
 1. Translate the approved brief into concrete acceptance checks.

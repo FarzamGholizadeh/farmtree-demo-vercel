@@ -5,15 +5,21 @@
   "description": "Repository-side validation for the FarmTree native WordPress rebuild.",
   "scripts": {
     "preview:native": "node scripts/preview-native-homepage.mjs",
+    "wp:start": "wp-env start --runtime=playground && node scripts/bootstrap-local-wordpress.mjs",
+    "wp:bootstrap": "node scripts/bootstrap-local-wordpress.mjs",
+    "wp:stop": "wp-env stop",
+    "wp:verify": "node scripts/bootstrap-local-wordpress.mjs --verify-only",
     "validate:agents": "node scripts/validate-agent-system.mjs",
     "validate:native": "node scripts/validate-native-foundation.mjs",
     "validate:preview": "node scripts/preview-native-homepage.mjs --check",
+    "validate:visual": "node scripts/validate-visual-baseline.mjs",
     "validate:workflows": "node scripts/validate-native-workflows.mjs",
-    "lint:js": "node --check scripts/preview-native-homepage.mjs && node --check scripts/validate-agent-system.mjs && node --check scripts/validate-native-foundation.mjs && node --check scripts/validate-native-workflows.mjs && node --check stylelint.config.mjs",
+    "lint:js": "node --check scripts/bootstrap-local-wordpress.mjs && node --check scripts/preview-native-homepage.mjs && node --check scripts/validate-agent-system.mjs && node --check scripts/validate-native-foundation.mjs && node --check scripts/validate-native-workflows.mjs && node --check scripts/validate-visual-baseline.mjs && node --check stylelint.config.mjs",
     "lint:css": "stylelint \"wordpress/wp-content/themes/farmtree-native/**/*.css\"",
-    "test": "npm run validate:agents && npm run validate:native && npm run validate:preview && npm run validate:workflows && npm run lint:js && npm run lint:css"
+    "test": "npm run validate:agents && npm run validate:native && npm run validate:preview && npm run validate:visual && npm run validate:workflows && npm run lint:js && npm run lint:css"
   },
   "devDependencies": {
+    "@wordpress/env": "11.14.0",
     "stylelint": "17.14.1",
     "stylelint-config-standard": "40.0.0",
     "yaml": "2.9.0"

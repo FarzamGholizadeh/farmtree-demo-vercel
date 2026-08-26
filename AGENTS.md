@@ -44,6 +44,11 @@ This rule applies to every current and future FarmTree page. Use
 visual reference while preserving the WordPress-native architecture in
 `farmtree-native` and `farmtree-content`.
 
+Migration order is visual baseline first, then progressive WordPress
+editability, content models, clean URLs, multilingual behavior and finally
+SEO/GEO/AEO. Prefer WordPress core blocks, but do not force them when they
+materially damage the approved UI/UX.
+
 ## Approval Boundary
 
 `https://farmtree.eu/` is production. `farmtree` is the current public and

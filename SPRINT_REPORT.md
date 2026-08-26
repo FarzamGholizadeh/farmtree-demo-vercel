@@ -1,7 +1,7 @@
 # FT-NATIVE-002 Sprint Report
 
-Status: Local visual-parity correction and regression gate complete; runtime
-validation blocked by orphaned GitHub Actions run
+Status: Visual-first implementation and real local WordPress validation
+complete; browser-rendered evidence pending
 
 ## Homepage Structure
 
@@ -76,12 +76,28 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
 - Regression validation guards the single-H1/four-image Hero contract,
   approved Platform MP4/poster/screenshot contract, semantic template-part
   ownership and the focus treatment.
+- The visual-first regression gate compares production and native theme source,
+  checks the approved layout/token mappings and proves SHA-256 equality for 17
+  shared logo, Hero, Platform, proof and partner assets. It exposed and fixed
+  the native Header's width formula and two-pixel logo-height drift.
+- `@wordpress/env` 11.14.0 now provides an isolated loopback-only WordPress
+  Playground runtime at `http://localhost:8888` without Docker. The runtime is
+  WordPress 7.1 on PHP 8.2 with SQLite; it mounts the native theme/plugin and the
+  unchanged production theme as an inactive visual reference.
+- The safety-scoped bootstrap refuses non-loopback hosts, activates
+  `farmtree-native` only locally, creates a private Homepage from the registered
+  native pattern and configures that private page as the local front page.
+- Real WordPress integration verifies Block Theme and plugin recognition,
+  Site/Page Editor HTTP 200, seven templates, three template parts, four native
+  patterns, content-only locking, Query Loop rendering, exactly one H1,
+  save/reload persistence, a revision, private status and all 18 rendered theme
+  assets. The frontend is HTTP 200 with no rendered PHP warning or fatal.
 - Workflow validation confirms that private deployment remains manual,
   inactive-code-only and guarded by backup, Coming Soon, noindex,
   `blog_public=0` and active-theme checks.
 - `npm test` passes the agent system, native foundation, workflow safeguards,
-  composed-preview regression, JavaScript syntax and native-theme CSS lint
-  checks.
+  composed-preview regression, visual-baseline/runtime-safety regression,
+  JavaScript syntax and native-theme CSS lint checks.
 - `npm run preview:native` provides a read-only composed local Homepage preview
   using the real native Header/Footer and values derived from `theme.json`.
 - The composed-preview gate confirms the current Frank-approved Hero and copy,
@@ -94,7 +110,8 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
 - Subsequent release-preparation checks verified the public Coming Soon response
   with explicit `X-Robots-Tag: noindex, nofollow`; Coming Soon remains active.
 - The approved baseline commits were pushed to the native-rebuild branch through
-  `897a991`; GitHub native validation run `32956292922` passed.
+  `2f810ef`; GitHub native validation run `32956292922` passed the earlier
+  `897a991` source.
 - PR #3 merged the workflow-only reconciliation to `main` at `3df2ae2`.
   GitHub registers `deploy-wordpress-native.yml` as active and manual-only with
   zero runs, and `deploy-wordpress-staging.yml` is absent from `main`.
@@ -115,16 +132,18 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   project at a Vercel-authenticated `vercel.app` URL. It did not run the native
   Actions workflow or deploy to the WordPress runtime at `farmtree.eu`.
 - Homepage foundation source commit: `c27da77`. The visual-parity correction is
-  the current local release-preparation commit and has not been pushed.
+  included through pushed commit `2f810ef`; this visual-first local-runtime pass
+  remains local and has not been pushed.
 
 ## Preview And Screenshots
 
-The corrected local preview renderer is available without changing WordPress
-state. The in-app browser reported that no browser session was available, so no
-new composed screenshots are claimed. Responsive source contracts cover 320,
-375, 390, 430, 768, 1024, 1280, 1440 and 1920 pixels, but rendered screenshots,
+The corrected static preview and the real local WordPress runtime are both
+available without changing production WordPress state. The in-app browser
+reported that no browser session was available, so no new screenshots are
+claimed. Responsive source contracts cover 320, 375, 390, 430, 768, 1024,
+1280, 1440 and 1920 pixels, but rendered screenshots, console inspection,
 scroll-width measurements, axe and keyboard walkthrough evidence remain pending
-until a supported browser session is available.
+until a supported browser session is connected.
 
 ## Runtime Safety
 
@@ -136,11 +155,10 @@ compensating release policy.
 
 ## Runtime Validation Still Required
 
-- PHP syntax in the approved CI or server environment.
-- Theme/plugin recognition while both remain inactive.
-- Site Editor, Page Editor and Template Editor behavior.
-- Frontend block rendering, Query Loop output, video visibility/playback and
-  responsive visual review at all nine target widths.
+- Production recognition while both native components remain inactive and any
+  later approved temporary production activation remain separately gated.
+- Browser-console, video visibility/playback and responsive visual review at
+  all nine target widths in the real local WordPress renderer.
 - Keyboard, focus, reduced-motion and screen-reader checks in rendered
   WordPress.
 - Locale-aware routing remains deferred to FT-NATIVE-003; the current Header is
@@ -152,7 +170,11 @@ compensating release policy.
 
 ## Next Action
 
-Wait until GitHub run `32985108587` is terminal or absent, then recheck through
-the GitHub APIs that it has no jobs, deployments or pending environment
-approvals before considering a separately approved workflow dispatch. Keep
-Coming Soon and public noindex active and `farmtree-native` inactive.
+Connect a supported in-app browser session and validate the local native
+WordPress Homepage at all nine target widths with screenshots, console,
+overflow, axe, keyboard and reduced-motion checks. Do not dispatch a replacement
+production workflow while GitHub run `32985108587` remains non-terminal; before
+any future approved dispatch, recheck through the GitHub APIs that it is
+terminal or absent and has no jobs, deployments or pending environment
+approvals. Keep Coming Soon and public noindex active and `farmtree-native`
+inactive in production.

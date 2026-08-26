@@ -527,7 +527,7 @@ body.admin-bar .ft-native-site-header {
 }
 
 .ft-native-header-inner {
-  width: min(1360px, calc(100% - (2 * var(--ft-page-gutter)))) !important;
+  width: min(1360px, 90vw) !important;
   max-width: 1360px !important;
   min-height: 74px;
   margin-inline: auto !important;
@@ -568,7 +568,7 @@ body.admin-bar .ft-native-site-header {
   display: block;
   width: auto;
   max-width: 100%;
-  height: 35px;
+  height: 34px;
   object-fit: contain;
 }
 

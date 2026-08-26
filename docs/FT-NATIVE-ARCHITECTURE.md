@@ -106,6 +106,24 @@ to own and lock structural composition and visual controls. Future partner
 evidence pages, complete audience subpages and final proof-story detail pages
 remain separate content work and do not block the Homepage rebuild.
 
+### Visual-First Migration Sequence
+
+The approved production frontend and the repository's existing `farmtree`
+theme are the rendering baseline. Migration proceeds in this order: prove the
+visual baseline, convert content progressively to editor-owned native blocks,
+introduce structured content models, establish clean URLs, add multilingual
+behavior, then implement SEO/GEO/AEO. A core-block implementation is preferred,
+but visual parity takes precedence when a forced conversion would materially
+change approved UI/UX.
+
+Local runtime validation uses `@wordpress/env`'s Playground runtime at
+`http://localhost:8888`. It mounts `farmtree-native`, `farmtree-content` and the
+unchanged `farmtree` reference theme into an isolated SQLite-backed WordPress
+instance. The bootstrap refuses non-loopback hosts, activates only the local
+native theme and creates a private Homepage for editor, save/reload, revision,
+Query Loop and frontend checks. This local runtime never substitutes for the
+production approval gates.
+
 ## Editor Policy
 
 - Authors create drafts and edit assigned editorial content.

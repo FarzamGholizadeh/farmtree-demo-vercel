@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/wp-env.json",
+  "core": null,
+  "phpVersion": "8.2",
+  "port": 8888,
+  "autoPort": false,
+  "testsEnvironment": false,
+  "plugins": [
+    "./wordpress/wp-content/plugins/farmtree-content"
+  ],
+  "themes": [
+    "./wordpress/wp-content/themes/farmtree-native"
+  ],
+  "mappings": {
+    "wp-content/themes/farmtree": "./wordpress/wp-content/themes/farmtree"
+  },
+  "config": {
+    "WP_DEBUG": true,
+    "WP_DEBUG_LOG": true,
+    "WP_DEBUG_DISPLAY": false,
+    "WP_ENVIRONMENT_TYPE": "local",
+    "WP_DEVELOPMENT_MODE": "theme"
+  }
+}
