@@ -92,11 +92,16 @@ jobs:
             test -f $remote_wordpress_path/.htaccess
             command -v wp >/dev/null
             wp core is-installed --path=$remote_wordpress_path
+            echo FARMTREE_NOINDEX_PREFLIGHT_WORDPRESS_OK
             test \"\$(wp option get template --path=$remote_wordpress_path)\" = farmtree
             test \"\$(wp option get stylesheet --path=$remote_wordpress_path)\" = farmtree
+            echo FARMTREE_NOINDEX_PREFLIGHT_THEME_OK
             test \"\$(wp option get blog_public --path=$remote_wordpress_path)\" = 0
+            echo FARMTREE_NOINDEX_PREFLIGHT_SEARCH_VISIBILITY_OK
             wp plugin is-active coming-soon --path=$remote_wordpress_path
+            echo FARMTREE_NOINDEX_PREFLIGHT_COMING_SOON_OK
             ! grep -Fqx '# BEGIN FarmTree rebuild noindex' $remote_wordpress_path/.htaccess
+            echo FARMTREE_NOINDEX_PREFLIGHT_MARKER_ABSENT
             cp -p $remote_wordpress_path/.htaccess $remote_backup_quoted
             cp -p $remote_wordpress_path/.htaccess $remote_candidate_quoted
             printf '\n%s\n%s\n%s\n%s\n%s\n' \
@@ -106,6 +111,7 @@ jobs:
               '</IfModule>' \
               '# END FarmTree rebuild noindex' >> $remote_candidate_quoted
             mv $remote_candidate_quoted $remote_wordpress_path/.htaccess"
+          echo "FARMTREE_NOINDEX_RULE_APPLIED_PENDING_HTTP_VERIFICATION"
 
           cache_bust="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           home_headers="$(mktemp)"
@@ -120,23 +126,30 @@ jobs:
             -o "$home_body" \
             -w '%{http_code}' \
             "https://farmtree.eu/?farmtree_noindex_check=$cache_bust")"
+          echo "FARMTREE_NOINDEX_HOME_STATUS=$home_status"
           test "$home_status" = 200
           grep -qi 'Coming Soon' "$home_body"
-          test "$(tr -d '\r' < "$home_headers" | grep -Eic '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*nofollow[[:space:]]*$')" -eq 1
+          home_header_count="$(tr -d '\r' < "$home_headers" | grep -Eic '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*nofollow[[:space:]]*$' || true)"
+          echo "FARMTREE_NOINDEX_HOME_HEADER_COUNT=$home_header_count"
+          test "$home_header_count" -eq 1
 
           robots_status="$(curl -sS --max-time 30 \
             -D "$robots_headers" \
             -o /dev/null \
             -w '%{http_code}' \
             "https://farmtree.eu/robots.txt?farmtree_noindex_check=$cache_bust")"
+          echo "FARMTREE_NOINDEX_ROBOTS_STATUS=$robots_status"
           test "$robots_status" = 200
-          test "$(tr -d '\r' < "$robots_headers" | grep -Eic '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*nofollow[[:space:]]*$')" -eq 1
+          robots_header_count="$(tr -d '\r' < "$robots_headers" | grep -Eic '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*nofollow[[:space:]]*$' || true)"
+          echo "FARMTREE_NOINDEX_ROBOTS_HEADER_COUNT=$robots_header_count"
+          test "$robots_header_count" -eq 1
 
           login_status="$(curl -sS --max-time 30 \
             -D "$login_headers" \
             -o "$login_body" \
             -w '%{http_code}' \
             "https://farmtree.eu/wp-login.php?farmtree_noindex_check=$cache_bust")"
+          echo "FARMTREE_NOINDEX_LOGIN_STATUS=$login_status"
           test "$login_status" = 200
           grep -qi 'id="loginform"' "$login_body"
           ! grep -Eqi '^x-robots-tag:' "$login_headers"
@@ -146,6 +159,7 @@ jobs:
             -o /dev/null \
             -w '%{http_code}' \
             "https://farmtree.eu/wp-admin/?farmtree_noindex_check=$cache_bust")"
+          echo "FARMTREE_NOINDEX_ADMIN_STATUS=$admin_status"
           [[ "$admin_status" =~ ^30[12378]$ ]]
           grep -Eqi '^location:.*wp-login\.php' "$admin_headers"
           ! grep -Eqi '^x-robots-tag:' "$admin_headers"
