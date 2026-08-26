@@ -93,13 +93,11 @@ jobs:
           HOST: ${{ secrets.VIMEXX_HOST }}
           PORT: ${{ secrets.VIMEXX_PORT }}
           USERNAME: ${{ secrets.VIMEXX_USER }}
-          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
           test -n "$SSH_KEY"
           test -n "$HOST"
           test -n "$PORT"
           test -n "$USERNAME"
-          test -n "$WORDPRESS_PATH"
 
       - name: Verify public rebuild safety
         run: |
@@ -130,14 +128,51 @@ jobs:
           ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
+      - name: Discover and verify the primary-domain WordPress root
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+        run: |
+          set -Eeuo pipefail
+
+          discovery_output="$(
+            ssh \
+              -i ~/.ssh/id_ed25519 \
+              -p "$PORT" \
+              "$USERNAME@$HOST" \
+              'set -eu
+              ssh_home="$(CDPATH= cd -- "$HOME" && pwd -P)"
+              wordpress_candidate="$HOME/domains/farmtree.eu/public_html"
+              test -d "$wordpress_candidate"
+              wordpress_root="$(CDPATH= cd -- "$wordpress_candidate" && pwd -P)"
+              test -d "$wordpress_root/wp-admin"
+              test -d "$wordpress_root/wp-content"
+              test -d "$wordpress_root/wp-includes"
+              test -f "$wordpress_root/wp-config.php"
+              printf "%s\n" "$ssh_home"
+              printf "%s\n" "$wordpress_root"'
+          )"
+          mapfile -t discovered_paths <<< "$discovery_output"
+
+          test "${#discovered_paths[@]}" -eq 2
+          ssh_home="${discovered_paths[0]}"
+          wordpress_root="${discovered_paths[1]}"
+          [[ "$ssh_home" =~ ^/[A-Za-z0-9._/@+-]+$ ]]
+          [[ "$wordpress_root" =~ ^/[A-Za-z0-9._/@+-]+$ ]]
+          printf 'FARMTREE_SSH_HOME=%s\n' "$ssh_home"
+          printf 'FARMTREE_RESOLVED_WORDPRESS_ROOT=%s\n' "$wordpress_root"
+          printf 'WORDPRESS_ROOT=%s\n' "$wordpress_root" >> "$GITHUB_ENV"
+          echo "FARMTREE_PRIMARY_ROOT_STRUCTURE_OK"
+
       - name: Verify private WordPress runtime boundary
         env:
           HOST: ${{ secrets.VIMEXX_HOST }}
           PORT: ${{ secrets.VIMEXX_PORT }}
           USERNAME: ${{ secrets.VIMEXX_USER }}
-          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
-          remote_wordpress_path="$(printf '%q' "$WORDPRESS_PATH")"
+          test -n "$WORDPRESS_ROOT"
+          remote_wordpress_path="$(printf '%q' "$WORDPRESS_ROOT")"
           ssh \
             -i ~/.ssh/id_ed25519 \
             -p "$PORT" \
@@ -162,9 +197,9 @@ jobs:
           HOST: ${{ secrets.VIMEXX_HOST }}
           PORT: ${{ secrets.VIMEXX_PORT }}
           USERNAME: ${{ secrets.VIMEXX_USER }}
-          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
-          remote_wordpress_path="$(printf '%q' "$WORDPRESS_PATH")"
+          test -n "$WORDPRESS_ROOT"
+          remote_wordpress_path="$(printf '%q' "$WORDPRESS_ROOT")"
           ssh \
             -i ~/.ssh/id_ed25519 \
             -p "$PORT" \
@@ -186,50 +221,51 @@ jobs:
           HOST: ${{ secrets.VIMEXX_HOST }}
           PORT: ${{ secrets.VIMEXX_PORT }}
           USERNAME: ${{ secrets.VIMEXX_USER }}
-          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
+          test -n "$WORDPRESS_ROOT"
+          remote_wordpress_path="$(printf '%q' "$WORDPRESS_ROOT")"
           ssh \
             -i ~/.ssh/id_ed25519 \
             -p "$PORT" \
             "$USERNAME@$HOST" \
             "mkdir -p \
-              '$WORDPRESS_PATH/wp-content/themes/farmtree-native' \
-              '$WORDPRESS_PATH/wp-content/plugins/farmtree-content'"
+              $remote_wordpress_path/wp-content/themes/farmtree-native \
+              $remote_wordpress_path/wp-content/plugins/farmtree-content"
 
       - name: Deploy inactive FarmTree Native theme
         env:
           HOST: ${{ secrets.VIMEXX_HOST }}
           PORT: ${{ secrets.VIMEXX_PORT }}
           USERNAME: ${{ secrets.VIMEXX_USER }}
-          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
+          test -n "$WORDPRESS_ROOT"
           # --delete is scoped to the farmtree-native destination only.
-          rsync -az --delete \
+          rsync -az --delete --protect-args \
             -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
             wordpress/wp-content/themes/farmtree-native/ \
-            "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/themes/farmtree-native/"
+            "$USERNAME@$HOST:$WORDPRESS_ROOT/wp-content/themes/farmtree-native/"
 
       - name: Deploy inactive FarmTree Content plugin
         env:
           HOST: ${{ secrets.VIMEXX_HOST }}
           PORT: ${{ secrets.VIMEXX_PORT }}
           USERNAME: ${{ secrets.VIMEXX_USER }}
-          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
+          test -n "$WORDPRESS_ROOT"
           # --delete is scoped to the farmtree-content destination only.
-          rsync -az --delete \
+          rsync -az --delete --protect-args \
             -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
             wordpress/wp-content/plugins/farmtree-content/ \
-            "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/plugins/farmtree-content/"
+            "$USERNAME@$HOST:$WORDPRESS_ROOT/wp-content/plugins/farmtree-content/"
 
       - name: Verify inactive native code on WordPress
         env:
           HOST: ${{ secrets.VIMEXX_HOST }}
           PORT: ${{ secrets.VIMEXX_PORT }}
           USERNAME: ${{ secrets.VIMEXX_USER }}
-          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
-          remote_wordpress_path="$(printf '%q' "$WORDPRESS_PATH")"
+          test -n "$WORDPRESS_ROOT"
+          remote_wordpress_path="$(printf '%q' "$WORDPRESS_ROOT")"
           ssh \
             -i ~/.ssh/id_ed25519 \
             -p "$PORT" \
