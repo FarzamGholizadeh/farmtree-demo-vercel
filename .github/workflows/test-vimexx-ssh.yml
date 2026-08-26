@@ -69,6 +69,20 @@ jobs:
             wordpress_root=/domains/farmtree.eu/public_html
             if ! test -d "$wordpress_root"; then
               echo FARMTREE_PRIMARY_ROOT_MISSING
+              login_relative_root="$(pwd -P)/domains/farmtree.eu/public_html"
+              if test -d "$login_relative_root"; then
+                echo FARMTREE_LOGIN_RELATIVE_PRIMARY_ROOT_DIRECTORY_OK
+                if test -d "$login_relative_root/wp-admin" \
+                  && test -d "$login_relative_root/wp-content" \
+                  && test -d "$login_relative_root/wp-includes" \
+                  && test -f "$login_relative_root/wp-config.php"; then
+                  echo FARMTREE_LOGIN_RELATIVE_PRIMARY_ROOT_COMPLETE
+                else
+                  echo FARMTREE_LOGIN_RELATIVE_PRIMARY_ROOT_INCOMPLETE
+                fi
+              else
+                echo FARMTREE_LOGIN_RELATIVE_PRIMARY_ROOT_MISSING
+              fi
               exit 1
             fi
             echo FARMTREE_PRIMARY_ROOT_DIRECTORY_OK
