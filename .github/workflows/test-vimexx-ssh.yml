@@ -1,4 +1,4 @@
-name: Test Vimexx SSH Connection
+name: Verify FarmTree WordPress Root
 
 on:
   workflow_dispatch:
@@ -7,10 +7,25 @@ permissions:
   contents: read
 
 jobs:
-  test-ssh:
+  verify-primary-root:
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://farmtree.eu/
 
     steps:
+      - name: Validate SSH configuration
+        env:
+          SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+        run: |
+          test -n "$SSH_KEY"
+          test -n "$HOST"
+          test -n "$PORT"
+          test -n "$USERNAME"
+
       - name: Configure SSH
         env:
           SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
@@ -23,15 +38,27 @@ jobs:
           ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
-      - name: Test Vimexx connection
+      - name: Discover and verify the primary-domain WordPress root without WP-CLI
         env:
           HOST: ${{ secrets.VIMEXX_HOST }}
           PORT: ${{ secrets.VIMEXX_PORT }}
           USERNAME: ${{ secrets.VIMEXX_USER }}
-          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
+          set -Eeuo pipefail
+
           ssh \
             -i ~/.ssh/id_ed25519 \
             -p "$PORT" \
             "$USERNAME@$HOST" \
-            "echo 'SSH_CONNECTION_OK'; whoami; pwd; test -d '$WORDPRESS_PATH' && echo 'WORDPRESS_PATH_OK'"
+            'set -eu
+            ssh_home="$(CDPATH= cd -- "$HOME" && pwd -P)"
+            wordpress_candidate="$HOME/domains/farmtree.eu/public_html"
+            test -d "$wordpress_candidate"
+            wordpress_root="$(CDPATH= cd -- "$wordpress_candidate" && pwd -P)"
+            test -d "$wordpress_root/wp-admin"
+            test -d "$wordpress_root/wp-content"
+            test -d "$wordpress_root/wp-includes"
+            test -f "$wordpress_root/wp-config.php"
+            printf "FARMTREE_SSH_HOME=%s\n" "$ssh_home"
+            printf "FARMTREE_RESOLVED_WORDPRESS_ROOT=%s\n" "$wordpress_root"
+            echo FARMTREE_PRIMARY_ROOT_STRUCTURE_OK'
