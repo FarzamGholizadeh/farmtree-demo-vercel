@@ -8,6 +8,7 @@ const themeSettings = JSON.parse(readFileSync(resolve(theme, 'theme.json'), 'utf
 const portArgument = process.argv.find((argument) => argument.startsWith('--port='));
 const requestedPort = Number.parseInt(portArgument?.split('=')[1] ?? '4173', 10);
 const port = Number.isInteger(requestedPort) && requestedPort > 0 ? requestedPort : 4173;
+const checkOnly = process.argv.includes('--check');
 
 const mimeTypes = {
   '.css': 'text/css; charset=utf-8',
@@ -301,10 +302,89 @@ const document = `<!doctype html>
 </body>
 </html>`;
 
+const previewResponseHeaders = {
+  'Content-Type': 'text/html; charset=utf-8',
+  'X-Robots-Tag': 'noindex, nofollow'
+};
+
+function validateComposedPreview() {
+  const requiredContent = [
+    '<meta name="robots" content="noindex,nofollow">',
+    'Make agroforestry measurable, investable and scalable',
+    'The FarmTree Platform',
+    'How agroforestry projects are planned, monitored and reported',
+    'Trust and references',
+    'Proof Stories',
+    'FAQ',
+    'News &amp; Insights',
+    'Ready to build a stronger agroforestry investment case?',
+    'Dynamic WordPress posts appear here in runtime preview',
+    'data-ft-hero-prev',
+    'data-ft-platform-video-toggle',
+    'data-ft-quotation-dialog'
+  ];
+
+  for (const content of requiredContent) {
+    if (!document.includes(content)) {
+      throw new Error(`Composed preview is missing approved content or behavior: ${content}`);
+    }
+  }
+
+  if (previewResponseHeaders['X-Robots-Tag'] !== 'noindex, nofollow') {
+    throw new Error('Preview response must remain explicitly noindex and nofollow.');
+  }
+
+  if ((document.match(/<h1\b/g) ?? []).length !== 1) {
+    throw new Error('Composed preview must contain exactly one H1.');
+  }
+
+  if (document.includes('<?php') || document.includes('<!-- wp:')) {
+    throw new Error('Composed preview contains unresolved PHP or WordPress block markup.');
+  }
+
+  const sectionClasses = [
+    'ft-home-hero',
+    'ft-home-platform',
+    'ft-home-technology',
+    'ft-home-trust',
+    'ft-home-proof',
+    'ft-home-faq',
+    'ft-home-news',
+    'ft-final-cta'
+  ];
+  let previousIndex = -1;
+
+  for (const className of sectionClasses) {
+    const section = new RegExp(`<section\\b[^>]*class="[^"]*\\b${className}\\b[^"]*"`, 'i').exec(document);
+    const markerIndex = section?.index ?? -1;
+    if (markerIndex <= previousIndex) {
+      throw new Error(`Composed preview section is missing or out of order: ${className}`);
+    }
+    previousIndex = markerIndex;
+  }
+
+  const assetPaths = new Set(
+    Array.from(document.matchAll(/(?:src|href|poster)="\/theme\/([^"?#]+)["?#]/g), (match) => match[1])
+  );
+
+  for (const assetPath of assetPaths) {
+    const asset = resolve(theme, decodeURIComponent(assetPath));
+    if (!asset.startsWith(`${theme}${sep}`) || !readFileSync(asset)) {
+      throw new Error(`Composed preview references a missing or unsafe theme asset: ${assetPath}`);
+    }
+  }
+}
+
+if (checkOnly) {
+  validateComposedPreview();
+  console.log('FARMTREE_NATIVE_PREVIEW_OK');
+  process.exit(0);
+}
+
 createServer((request, response) => {
   const pathname = new URL(request.url ?? '/', 'http://localhost').pathname;
   if (pathname === '/' || pathname === '/index.html') {
-    response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    response.writeHead(200, previewResponseHeaders);
     response.end(document);
     return;
   }

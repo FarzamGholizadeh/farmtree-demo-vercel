@@ -48,8 +48,8 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 
 ### FT-NATIVE-002 - Native Homepage
 
-Status: Local implementation and approved visual-parity correction complete;
-runtime/browser validation pending.
+Status: Local implementation, approved visual-parity correction and automated
+preview regression complete; rendered browser/runtime validation pending.
 
 The Frank-approved Homepage has been built in `farmtree-native` with core
 blocks, content-only locked patterns and a read-only local preview sourced from
@@ -65,13 +65,15 @@ Scope, evidence and remaining browser/runtime checks are defined in
 
 ### FT-NATIVE-001B - Private Production Runtime Validation
 
-Status: Pushed source validated; runtime safeguards pending. PR #3 completed
+Status: Pushed source validated; runtime temporarily blocked by orphaned GitHub
+Actions run `32985108587`. PR #3 completed
 the default-branch reconciliation at `3df2ae2`: the native workflow is active
 and manual-only, and the superseded staging workflow is retired. Matching
 recoverable files/database backup evidence and explicit public `noindex` remain
-release gates. Independent Required Reviewer protection is a deferred
-governance enhancement under the private/manual compensating release policy;
-it does not block development or a later explicitly approved dispatch.
+release gates and are now verified. Independent Required Reviewer protection is
+a deferred governance enhancement under the private/manual compensating
+release policy; it does not block development or a later explicitly approved
+dispatch.
 
 ## Deferred Implementation Backlog
 

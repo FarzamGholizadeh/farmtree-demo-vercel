@@ -1,6 +1,7 @@
 # FT-NATIVE-002 Sprint Report
 
-Status: Local visual-parity correction complete; runtime validation pending
+Status: Local visual-parity correction and regression gate complete; runtime
+validation blocked by orphaned GitHub Actions run
 
 ## Homepage Structure
 
@@ -79,17 +80,19 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   inactive-code-only and guarded by backup, Coming Soon, noindex,
   `blog_public=0` and active-theme checks.
 - `npm test` passes the agent system, native foundation, workflow safeguards,
-  JavaScript syntax and native-theme CSS lint checks.
+  composed-preview regression, JavaScript syntax and native-theme CSS lint
+  checks.
 - `npm run preview:native` provides a read-only composed local Homepage preview
   using the real native Header/Footer and values derived from `theme.json`.
-- The served preview at `http://127.0.0.1:4173/` returned HTTP 200. Automated
-  assertions confirmed explicit local `noindex,nofollow`, the approved Hero,
-  exact core palette, one H1, real Header/Footer, section order, included manual
-  interaction script, correct JavaScript MIME type and no autoplay timers.
+- The composed-preview gate confirms the current Frank-approved Hero and copy,
+  one H1, real Header/Footer, exact section order, resolved PHP/block markup,
+  referenced assets, manual controls, quotation fail-safe and explicit local
+  noindex. A fresh served preview returned HTTP 200 with
+  `X-Robots-Tag: noindex, nofollow`.
 - The repository-local `$farmtree-autonomous-delivery` skill passes both the
   project validator and the Codex skill schema validator.
-- Read-only checks on 2026-08-26 reconfirmed Coming Soon without an explicit
-  public `noindex` signal and no protection rules on GitHub `Production`.
+- Subsequent release-preparation checks verified the public Coming Soon response
+  with explicit `X-Robots-Tag: noindex, nofollow`; Coming Soon remains active.
 - The approved baseline commits were pushed to the native-rebuild branch through
   `897a991`; GitHub native validation run `32956292922` passed.
 - PR #3 merged the workflow-only reconciliation to `main` at `3df2ae2`.
@@ -100,11 +103,13 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   deferred governance enhancement under the documented compensating
   manual-release policy; repository visibility, ownership and billing remain
   unchanged.
-- Live checks verified that Coming Soon remains active but neither the Homepage
-  nor intercepted `/robots.txt` exposes a robots meta tag or `X-Robots-Tag`
-  noindex signal.
-- Backup existence remains externally unverified. The deployment workflow now
-  requires a non-secret evidence reference in addition to typed confirmation.
+- Matching recoverable files and database backups were verified and downloaded
+  locally before activation testing was considered. The deployment workflow
+  retains its non-secret evidence reference and typed confirmation gates.
+- GitHub Actions run `32985108587` remains orphaned in `queued`/null state with
+  zero jobs and an unchanged update timestamp. No replacement run is permitted
+  until that stale run is terminal or absent and the GitHub APIs show no jobs,
+  deployments or pending environment approvals.
 - Merging PR #3 caused `vercel[bot]` to create GitHub deployment record
   `6101732202`; its successful status points to the legacy/reference static
   project at a Vercel-authenticated `vercel.app` URL. It did not run the native
@@ -123,11 +128,11 @@ until a supported browser session is available.
 
 ## Runtime Safety
 
-No native deployment workflow run, WordPress deployment, activation, content publication,
-Coming Soon change or database change was made. FT-NATIVE-001B remains blocked
-until a matching recoverable files/database backup is verified and the public
-response exposes explicit noindex. Required Reviewer protection does not block
-the current private/manual compensating release policy.
+This local completion pass did not dispatch a workflow, deploy, activate a
+theme/plugin, publish content, change Coming Soon or modify the database.
+FT-NATIVE-001B is temporarily blocked by the orphaned GitHub Actions run.
+Required Reviewer protection does not block the current private/manual
+compensating release policy.
 
 ## Runtime Validation Still Required
 
@@ -147,7 +152,7 @@ the current private/manual compensating release policy.
 
 ## Next Action
 
-Configure explicit public noindex while Coming Soon remains active, then verify
-matching recoverable files/database backup evidence before seeking separate
-workflow dispatch approval. Keep `farmtree-native` inactive; Required Reviewer
-protection remains deferred.
+Wait until GitHub run `32985108587` is terminal or absent, then recheck through
+the GitHub APIs that it has no jobs, deployments or pending environment
+approvals before considering a separately approved workflow dispatch. Keep
+Coming Soon and public noindex active and `farmtree-native` inactive.

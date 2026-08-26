@@ -2,7 +2,8 @@
 
 ## FT-NATIVE-002 - Native Homepage
 
-Status: Local visual-parity implementation complete; pre-release review
+Status: Local visual-parity implementation and regression gate complete;
+runtime validation blocked by orphaned GitHub Actions run
 
 ### Objective
 
@@ -22,12 +23,13 @@ superseded separate-staging workflow is absent, and the native workflow has
 never run. The current visual-parity correction remains local pending a future
 push approval.
 
-FT-NATIVE-001B still requires a verified matching recoverable files/database
-backup and an explicit public `noindex` signal before deployment or real
-WordPress runtime validation. Independent GitHub Environment Required Reviewer
-protection is a deferred governance enhancement for this private repository,
-not a development or dispatch blocker. The compensating release boundary keeps
-all WordPress production workflows manual-only and requires explicit user
+The matching recoverable files/database backups are verified locally, and the
+public Coming Soon response has an explicit `X-Robots-Tag: noindex, nofollow`.
+Runtime validation is temporarily blocked by GitHub Actions run `32985108587`,
+which remains in an orphaned `queued`/null state with zero jobs. Independent
+GitHub Environment Required Reviewer protection is a deferred governance
+enhancement for this private repository. The compensating release boundary
+keeps all WordPress production workflows manual-only and requires explicit user
 approval before dispatch.
 
 ### Implemented Homepage
@@ -94,7 +96,12 @@ publication gate are approved under FT-WEB-004.
 - A read-only local preview renderer composes the native header, Homepage block
   markup, dynamic-post placeholder and footer from the real native sources and
   `theme.json` tokens without WordPress or PHP. It includes explicit local
-  `noindex,nofollow` and serves the manual interaction script.
+  `noindex,nofollow`, an `X-Robots-Tag: noindex, nofollow` response header and
+  serves the manual interaction script.
+- `npm test` now composes and validates that preview without opening a network
+  listener. The gate checks current Frank-approved copy, one H1, exact native
+  section order, resolved PHP/block markup, referenced assets, manual controls,
+  the quotation fail-safe and both noindex signals.
 - The preview at `http://127.0.0.1:4173/` returns HTTP 200 and source-level
   assertions confirm the approved Hero, one H1, real Header/Footer, exact core
   palette, section order, absence of timer-based slide autoplay and the explicit
@@ -105,6 +112,8 @@ publication gate are approved under FT-WEB-004.
   browser-environment check because no connected in-app browser was available.
 - PHP syntax, Site Editor, Page Editor, Query rendering and frontend behavior in
   real WordPress remain runtime checks.
+- A fresh preview process returned HTTP 200 with the expected
+  `X-Robots-Tag: noindex, nofollow` header.
 - GitHub run `32956292922` validated pushed commit `897a991` successfully.
 - PR #3 merged the manual-only native workflow to `main` at `3df2ae2`; GitHub
   registers it as active with zero runs, and the staging workflow is retired.
@@ -119,8 +128,8 @@ publication gate are approved under FT-WEB-004.
 
 ### Acceptance Status
 
-- Local Homepage implementation, visual parity correction and repository
-  validation: complete to the available environment.
+- Local Homepage implementation, visual parity correction and automated
+  repository/preview validation: complete to the available environment.
 - Frank-approved structure and content direction: implemented.
 - Core-block editability and locked design contract: verified from source.
 - Real WordPress editor/frontend, PHP, rendered browser screenshots, axe and
@@ -132,7 +141,8 @@ publication gate are approved under FT-WEB-004.
 
 ### Next Approval-Bound Action
 
-Configure an explicit public `noindex` signal while Coming Soon remains active,
-then verify a matching recoverable files/database restore point. Required
-Reviewer protection remains deferred. The workflow still requires separate
-explicit dispatch approval; do not activate the theme during validation.
+Do not dispatch another native workflow while run `32985108587` remains
+non-terminal. Before any later explicitly approved dispatch, verify through the
+GitHub APIs that the stale run is terminal or absent and that no jobs,
+deployments or pending environment approvals exist. Keep Coming Soon and public
+noindex active, and keep `farmtree-native` inactive.
