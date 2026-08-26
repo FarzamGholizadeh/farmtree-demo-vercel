@@ -59,11 +59,12 @@ evidence and remaining runtime checks are defined in `CURRENT_SPRINT.md` and
 
 ### FT-NATIVE-001B - Private Production Runtime Validation
 
-Status: Blocked on approved default-branch reconciliation, retirement of the
-superseded staging workflow, exposure of `deploy-wordpress-native.yml`,
-required-reviewer protection for GitHub `Production`, recoverable files/database
-backup verification and explicit public `noindex` evidence. These gates block
-runtime/deployment actions, not local native development.
+Status: Pushed source validated; runtime blocked. A workflow-only default-branch
+replacement is prepared locally and awaits approved push/PR. The remaining
+gates are Enterprise-capable required-reviewer protection for GitHub
+`Production`, matching recoverable files/database backup evidence and explicit
+public `noindex`. These gates block runtime/deployment actions, not local native
+development.
 
 ## Deferred Implementation Backlog
 

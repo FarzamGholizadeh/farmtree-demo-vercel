@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
 
 const root = resolve(import.meta.dirname, '..');
@@ -35,10 +36,17 @@ if (Object.keys(privateRuntime.on ?? {}).join(',') !== 'workflow_dispatch') {
   throw new Error('Private runtime deployment must remain workflow_dispatch-only.');
 }
 
+const dispatchInputs = privateRuntime.on?.workflow_dispatch?.inputs ?? {};
+for (const input of ['source_commit', 'confirmation', 'backup_confirmation', 'backup_reference']) {
+  if (dispatchInputs[input]?.required !== true) {
+    throw new Error(`Private runtime deployment input ${input} must remain required.`);
+  }
+}
+
 const privateRuntimeJob = privateRuntime.jobs?.deploy;
 
 if (privateRuntimeJob?.environment?.name !== 'production') {
-  throw new Error('Private runtime deployment must use the protected production environment.');
+  throw new Error('Private runtime deployment must use the production environment boundary.');
 }
 
 if (privateRuntimeJob?.environment?.url !== 'https://farmtree.eu/') {
@@ -65,6 +73,17 @@ for (const forbidden of [
 for (const required of [
   'PRIVATE NATIVE FILES ONLY',
   'RECOVERABLE FILE AND DB BACKUP VERIFIED',
+  'source_commit:',
+  'SOURCE_COMMIT',
+  'backup_reference:',
+  'BACKUP_REFERENCE',
+  'GITHUB_STEP_SUMMARY',
+  'FARMTREE_BACKUP_EVIDENCE_DIGEST_RECORDED',
+  'ref: ${{ inputs.source_commit }}',
+  'fetch-depth: 0',
+  'git merge-base --is-ancestor',
+  'refs/heads/feat/wordpress-native-rebuild',
+  'FARMTREE_APPROVED_NATIVE_SOURCE_OK',
   'VIMEXX_SSH_KEY',
   'VIMEXX_HOST',
   'VIMEXX_PORT',
@@ -79,6 +98,7 @@ for (const required of [
   'wp option get stylesheet',
   'wp option get blog_public',
   'wp plugin is-active coming-soon',
+  'wp plugin is-active farmtree-content',
   'wordpress/wp-content/themes/farmtree-native/',
   'wordpress/wp-content/plugins/farmtree-content/',
   'wp theme is-installed farmtree-native',
@@ -88,6 +108,24 @@ for (const required of [
 ]) {
   if (!privateRuntimeSource.includes(required)) {
     throw new Error(`Private runtime workflow is missing required boundary: ${required}`);
+  }
+}
+
+if ((privateRuntimeSource.match(/wp plugin is-active farmtree-content/g) ?? []).length < 2) {
+  throw new Error('Private runtime deployment must prove farmtree-content stays inactive before and after sync.');
+}
+
+for (const step of privateRuntimeJob?.steps ?? []) {
+  if (typeof step.run !== 'string') {
+    continue;
+  }
+
+  const syntaxCheck = spawnSync('bash', ['-n'], {
+    input: step.run,
+    encoding: 'utf8'
+  });
+  if (syntaxCheck.status !== 0) {
+    throw new Error(`Private runtime step "${step.name}" has invalid Bash: ${syntaxCheck.stderr.trim()}`);
   }
 }
 

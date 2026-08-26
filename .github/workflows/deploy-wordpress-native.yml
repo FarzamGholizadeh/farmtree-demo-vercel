@@ -3,12 +3,20 @@ name: Deploy FarmTree Native Private Runtime
 on:
   workflow_dispatch:
     inputs:
+      source_commit:
+        description: "Enter the full approved commit SHA from feat/wordpress-native-rebuild"
+        required: true
+        type: string
       confirmation:
         description: "Type PRIVATE NATIVE FILES ONLY to deploy inactive native code"
         required: true
         type: string
       backup_confirmation:
         description: "Type RECOVERABLE FILE AND DB BACKUP VERIFIED before deployment"
+        required: true
+        type: string
+      backup_reference:
+        description: "Enter a non-secret evidence reference for the matching file and database restore point"
         required: true
         type: string
 
@@ -31,12 +39,32 @@ jobs:
         env:
           CONFIRMATION: ${{ inputs.confirmation }}
           BACKUP_CONFIRMATION: ${{ inputs.backup_confirmation }}
+          BACKUP_REFERENCE: ${{ inputs.backup_reference }}
         run: |
           test "$CONFIRMATION" = "PRIVATE NATIVE FILES ONLY"
           test "$BACKUP_CONFIRMATION" = "RECOVERABLE FILE AND DB BACKUP VERIFIED"
+          test -n "${BACKUP_REFERENCE//[[:space:]]/}"
+          reference_digest="$(printf '%s' "$BACKUP_REFERENCE" | sha256sum)"
+          reference_digest="${reference_digest%% *}"
+          printf '### FarmTree backup evidence\n- Reference SHA-256: `%s`\n' \
+            "$reference_digest" >> "$GITHUB_STEP_SUMMARY"
+          echo "FARMTREE_BACKUP_EVIDENCE_DIGEST_RECORDED"
 
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_commit }}
+          fetch-depth: 0
+
+      - name: Verify approved native source commit
+        env:
+          SOURCE_COMMIT: ${{ inputs.source_commit }}
+        run: |
+          [[ "$SOURCE_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          test "$(git rev-parse HEAD)" = "$SOURCE_COMMIT"
+          git fetch --no-tags origin refs/heads/feat/wordpress-native-rebuild
+          git merge-base --is-ancestor "$SOURCE_COMMIT" FETCH_HEAD
+          echo "FARMTREE_APPROVED_NATIVE_SOURCE_OK"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -122,6 +150,10 @@ jobs:
             test \"\$(wp option get stylesheet --path=$remote_wordpress_path)\" = farmtree
             test \"\$(wp option get blog_public --path=$remote_wordpress_path)\" = 0
             wp plugin is-active coming-soon --path=$remote_wordpress_path
+            if wp plugin is-active farmtree-content --path=$remote_wordpress_path; then
+              echo FARMTREE_CONTENT_PLUGIN_MUST_REMAIN_INACTIVE
+              exit 1
+            fi
             test -d $remote_wordpress_path/wp-content/themes/farmtree
             echo CURRENT_THEME_FARMTREE_AND_PRIVATE_RUNTIME_OK"
 
@@ -211,6 +243,10 @@ jobs:
             wp plugin is-installed farmtree-content --path=$remote_wordpress_path
             if wp theme is-active farmtree-native --path=$remote_wordpress_path; then
               echo FARMTREE_NATIVE_THEME_MUST_REMAIN_INACTIVE
+              exit 1
+            fi
+            if wp plugin is-active farmtree-content --path=$remote_wordpress_path; then
+              echo FARMTREE_CONTENT_PLUGIN_MUST_REMAIN_INACTIVE
               exit 1
             fi
             wp eval 'if (!wp_get_theme(\"farmtree-native\")->is_block_theme()) { exit(1); }' --path=$remote_wordpress_path

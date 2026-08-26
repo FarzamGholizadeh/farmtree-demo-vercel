@@ -24,7 +24,8 @@ _Last updated: 2026-08-26_
 
 - [ ] Confirm the branch matches the operation: `feat/wordpress-native-rebuild`
       for native pre-release work and `wordpress-integration` for approved
-      production integration.
+      production integration; use `codex/enable-native-private-runtime` only for
+      the workflow-only pull request targeting `main`.
 - [ ] Confirm working-tree status is understood.
 - [ ] Confirm release diff contains only approved files.
 - [ ] Confirm no secrets or environment files are included.
@@ -50,13 +51,24 @@ _Last updated: 2026-08-26_
 
 - [ ] Confirm `.github/workflows/deploy-wordpress-native.yml` has reached the
       GitHub default `main` branch through an approved release path.
+- [ ] Record the full approved commit SHA from `feat/wordpress-native-rebuild`;
+      use that immutable SHA as `source_commit` rather than deploying `main` or
+      an unpinned branch tip.
 - [ ] Reconcile the default-branch workflow additions and retire the superseded
       `.github/workflows/deploy-wordpress-staging.yml` path.
 - [ ] Confirm the GitHub `Production` environment has required-reviewer
-      protection before the workflow runs.
-- [ ] Confirm a recent recoverable WordPress files and database backup.
+      protection before the workflow runs. For this private repository, first
+      confirm Enterprise-capable ownership and an eligible reviewer with read
+      access; add a second reviewer if self-review prevention is enabled.
+- [ ] Select one recent matching Vimexx restore point for both the FarmTree
+      website files and WordPress database.
+- [ ] Download both backup ZIPs to off-host storage, verify that they open and
+      contain the expected site files and SQL data, and record a non-secret
+      evidence reference for the workflow input. Retain the original reference
+      so its SHA-256 can be reconciled with the workflow job summary.
 - [ ] Confirm Coming Soon remains active and the public response exposes an
-      explicit `noindex` signal.
+      explicit robots meta or `X-Robots-Tag` noindex signal. Do not treat
+      `robots.txt` alone as sufficient evidence.
 - [ ] Confirm the workflow deploys only inactive `farmtree-native` and
       `farmtree-content` files and performs no activation or database change.
 

@@ -48,14 +48,19 @@ GitHub `production` environment before SSH credentials or `rsync`; neither may
 activate themes/plugins or change the database. `.github/workflows/test-vimexx-ssh.yml`
 is manual-only and is not a push-time workflow.
 
-Read-only GitHub API verification on 2026-08-26 confirmed that the `Preview`
-and `Production` environments still have no protection rules or deployment
-branch policy. It also confirmed `main` is the default branch; the native
-private-runtime workflow at `.github/workflows/deploy-wordpress-native.yml` is
-not present there and therefore is not remotely dispatchable yet. `main` does
-contain the earlier `.github/workflows/deploy-wordpress-staging.yml`, which
-targets a separate `STAGING_URL` and is not the current private-runtime path.
-The approved default-branch integration must reconcile the branches, retire
-that superseded staging workflow, expose the private-runtime workflow, add
-required-reviewer protection, and verify a recent recoverable backup plus
-explicit public noindex before any native workflow run.
+Read-only GitHub API verification on 2026-08-26 confirmed that the private,
+personal-account repository uses `main` as its default branch. `Preview` and
+`Production` have no protection rules or deployment branch policy, and only the
+owner currently has repository access. GitHub required reviewers are not
+available for private repositories on Free, Pro or Team; the existing mandatory
+reviewer gate therefore requires Enterprise-capable ownership plus an eligible
+reviewer before it can be enforced.
+
+The private-runtime workflow at
+`.github/workflows/deploy-wordpress-native.yml` is not present on `main` and is
+not remotely dispatchable yet. `main` instead contains the superseded
+`.github/workflows/deploy-wordpress-staging.yml`. A minimal local reconciliation
+branch, `codex/enable-native-private-runtime`, replaces that staging workflow
+with the manual-only private-runtime workflow and awaits an approved push and
+pull request. Required-reviewer protection, matching recoverable file/database
+backup evidence and explicit public noindex remain prerequisites for any run.

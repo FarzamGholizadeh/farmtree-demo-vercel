@@ -3,12 +3,14 @@
 ## Verified Public Runtime State
 
 Repository and unauthenticated HTTPS checks on 2026-08-25, with the public
-Homepage and headers rechecked on 2026-08-26, confirmed:
+Homepage, headers and `robots.txt` rechecked on 2026-08-26, confirmed:
 
 - `https://farmtree.eu/` returns a SeedProd Coming Soon page.
 - `https://farmtree.eu/wp-admin/` redirects to the WordPress login screen.
 - WordPress is running PHP 8.3.31 on Apache.
 - Public cache headers are private/no-store.
+- Neither the Coming Soon Homepage nor its intercepted `robots.txt` response
+  includes an `X-Robots-Tag` header or robots meta noindex signal.
 - Direct native theme and content-plugin URLs are intercepted by Coming Soon,
   so public HTTP checks cannot prove whether those directories already exist.
 
@@ -25,13 +27,45 @@ Runtime validation cannot proceed until these are verified or corrected:
 - The active public theme must remain `farmtree`.
 - Coming Soon must remain active until final launch approval.
 - GitHub's `Production` environment must gain and retain required-reviewer
-  protection before a native workflow run.
+  protection before a native workflow run. The repository is private and only
+  the owner currently has access; GitHub requires Enterprise-capable ownership
+  for required reviewers on a private repository, plus an eligible reviewer
+  with at least read access.
 - `.github/workflows/deploy-wordpress-native.yml` must first reach the GitHub
   default branch through the approved push/merge path; that exact workflow is
   not present on `origin/main` yet.
-- The superseded `.github/workflows/deploy-wordpress-staging.yml` currently on
-  `origin/main` must be retired during approved integration so it cannot remain
-  as a second, misleading native deployment path.
+- A local workflow-only branch, `codex/enable-native-private-runtime`, replaces
+  the superseded `.github/workflows/deploy-wordpress-staging.yml` currently on
+  `origin/main`. It requires an approved push and pull request before the native
+  workflow becomes dispatchable.
+
+## Backup Evidence Requirement
+
+Before entering the workflow confirmation, use Vimexx DirectAdmin's **Restore
+Backups** screen to select one recent restore point and download both the
+`farmtree.eu` website and its WordPress database from that same point. Wait for
+both jobs to report **Finished**, store both ZIP files off-host, verify that the
+archives open and contain the expected site files and SQL data, and record the
+restore timestamp, custodian and an opaque non-secret evidence reference.
+
+Do not commit backup files, database exports, credentials or private storage
+locations. Supply only the non-secret evidence reference through the required
+`backup_reference` workflow input. The workflow records its SHA-256 digest in
+the job summary without echoing the reference itself. A typed confirmation
+without this external evidence does not prove recoverability.
+
+Vimexx documents the download flow at
+<https://www.vimexx.eu/help/hoe-download-ik-een-backup> and notes that file and
+database recovery must use the same moment at
+<https://www.vimexx.eu/help/backup-tot-60-dagen-terug-plaatsen>.
+
+## Public Noindex Requirement
+
+Keep SeedProd Coming Soon active and configure an explicit public noindex in the
+rendered response. Prefer an `X-Robots-Tag: noindex, nofollow` response header so
+the signal does not depend on the Coming Soon template's `<head>` output; a
+verified robots meta noindex is also acceptable. Recheck the public Homepage
+after configuration. `robots.txt` alone does not satisfy this gate.
 
 ## Private Runtime Deployment Boundary
 
@@ -41,12 +75,19 @@ exactly:
 - `wordpress/wp-content/themes/farmtree-native/`
 - `wordpress/wp-content/plugins/farmtree-content/`
 
+Each run requires the full immutable `source_commit` SHA approved from
+`feat/wordpress-native-rebuild`. Checkout is pinned to that SHA, and the
+workflow fails unless the commit is contained in the remote native-rebuild
+branch. This prevents an accidental dispatch on `main`, which intentionally
+does not contain the native implementation source.
+
 The workflow targets the existing `Production` environment and existing
 `VIMEXX_*` server credentials. A read-only GitHub API check on 2026-08-26 found
 no protection rules on that environment, so the repository binding must not be
 described as reviewer-protected until that external rule is configured and
-verified. The workflow requires typed confirmation that a recoverable file and
-database backup has been verified before any SSH or rsync step runs.
+verified. The workflow requires typed confirmation and a non-secret evidence
+reference for a matching recoverable file/database restore point before any SSH
+or rsync step runs.
 
 The workflow does not:
 
@@ -59,10 +100,12 @@ The workflow does not:
 
 Before rsync, the workflow validates local source files, PHP syntax, public
 Coming Soon/noindex signals, WordPress installation state, WP-CLI availability,
-current active theme, WordPress search visibility and Coming Soon activation.
+current active theme, WordPress search visibility, Coming Soon activation and
+that `farmtree-content` is inactive.
 
 After rsync, the workflow verifies that WordPress recognizes the inactive native
-theme and content plugin, and that `farmtree-native` is a valid Block Theme.
+theme and content plugin, that both remain inactive, and that `farmtree-native`
+is a valid Block Theme.
 
 ## Runtime Validation Checklist
 

@@ -53,6 +53,18 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   `.github/workflows/deploy-wordpress-native.yml` on the default `main` branch.
   `main` instead contains the superseded separate-staging workflow, which must
   be retired during approved integration.
+- The five approved commits were pushed to the native-rebuild branch at
+  `8c22624`; GitHub native validation run `32954130310` passed.
+- A workflow-only branch based on current `origin/main` is prepared locally to
+  add `deploy-wordpress-native.yml` and retire `deploy-wordpress-staging.yml`.
+- GitHub API verification found that the repository is private, only the owner
+  has access, and `Production` has no rules. Required reviewers for a private
+  repository require Enterprise-capable ownership plus an eligible reviewer.
+- Live checks verified that Coming Soon remains active but neither the Homepage
+  nor intercepted `/robots.txt` exposes a robots meta tag or `X-Robots-Tag`
+  noindex signal.
+- Backup existence remains externally unverified. The deployment workflow now
+  requires a non-secret evidence reference in addition to typed confirmation.
 - Homepage implementation source commit: `c27da77`.
 
 ## Preview And Screenshots
@@ -65,10 +77,10 @@ order are tested; visual browser and responsive inspection remain pending.
 ## Runtime Safety
 
 No deployment, activation, content publication, Coming Soon change or database
-change was made. FT-NATIVE-001B remains blocked until the native workflow has an
-approved default-branch release path, GitHub `Production` has required-reviewer
-protection, a recent recoverable files/database backup is verified and the
-public response exposes explicit noindex.
+change was made. FT-NATIVE-001B remains blocked until the workflow-only default
+branch change is approved and merged, the private repository can enforce an
+eligible `Production` reviewer, a matching recoverable files/database backup is
+verified and the public response exposes explicit noindex.
 
 ## Runtime Validation Still Required
 
@@ -83,8 +95,8 @@ public response exposes explicit noindex.
 
 ## Next Action
 
-Seek explicit approval to push the local native-rebuild commits. Then
-reconcile the default-branch workflows, retire the superseded staging path, and
-complete the environment-reviewer, backup and noindex safeguards before seeking
-approval for the manual private-runtime workflow. Keep `farmtree-native`
-inactive and Coming Soon in place.
+Seek explicit approval to push the new native pre-release evidence commit, push
+`codex/enable-native-private-runtime`, and open its workflow-only pull request to
+`main`. Keep it unmerged and do not dispatch the workflow until the Enterprise
+reviewer, matching backup and public noindex gates are satisfied. Keep
+`farmtree-native` inactive and Coming Soon in place.

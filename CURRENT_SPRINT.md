@@ -13,12 +13,18 @@ design controls.
 
 ### Runtime Dependency
 
-FT-NATIVE-001B remains blocked on approved default-branch exposure of
-`.github/workflows/deploy-wordpress-native.yml`, retirement of the superseded
-separate-staging workflow, required-reviewer protection for GitHub `Production`,
-a verified recoverable files/database backup and an explicit public `noindex`
-signal. Those safeguards block deployment and real WordPress runtime validation;
-they do not block local native development.
+The five approved native-rebuild commits reached origin at `8c22624`, and the
+resulting GitHub native validation run passed. FT-NATIVE-001B remains blocked on
+approved default-branch exposure of `.github/workflows/deploy-wordpress-native.yml`,
+retirement of the superseded separate-staging workflow, required-reviewer
+protection for GitHub `Production`, a verified matching recoverable
+files/database backup and an explicit public `noindex` signal.
+
+A minimal workflow-only reconciliation branch is prepared locally. The private
+repository's current GitHub plan cannot enforce required reviewers; that gate
+requires Enterprise-capable ownership and an eligible reviewer. These
+safeguards block deployment and real WordPress runtime validation, not local
+native development.
 
 ### Implemented Homepage
 
@@ -54,6 +60,7 @@ legacy concept.
   markup, dynamic-post placeholder and footer without WordPress or PHP.
 - PHP syntax, Site Editor, Page Editor, Query rendering and frontend behavior in
   real WordPress remain runtime checks.
+- GitHub run `32954130310` validated pushed commit `8c22624` successfully.
 
 ### Production Boundary
 
@@ -74,10 +81,10 @@ legacy concept.
 
 ### Next Approval-Bound Action
 
-Request approval to push the local native-rebuild commits. Before any
-private-runtime run, the approved release path must reconcile the default-branch
-workflows, retire the superseded staging path, place
-`.github/workflows/deploy-wordpress-native.yml` on `main`, add required-reviewer
-protection to `Production`, verify a recent recoverable WordPress files/database
-backup and expose explicit public `noindex`. Do not activate the theme during
-that validation.
+Request approval to push the new pre-release evidence commit on the native
+branch, push `codex/enable-native-private-runtime`, and open its workflow-only
+pull request to `main`. Do not merge or dispatch it yet. Before a private-runtime
+run, move or upgrade the private repository to an Enterprise-capable owner, add
+an eligible required reviewer to `Production`, verify a matching recoverable
+files/database restore point, and expose explicit public `noindex`. Do not
+activate the theme during validation.
