@@ -67,18 +67,37 @@ jobs:
             "$USERNAME@$HOST" \
             'set -eu
             wordpress_root=/domains/farmtree.eu/public_html
-            test -d "$wordpress_root"
-            test "$(cd "$wordpress_root" && pwd -P)" = "$wordpress_root"
-            test -d "$wordpress_root/wp-admin"
-            test -d "$wordpress_root/wp-content"
-            test -d "$wordpress_root/wp-includes"
-            test -f "$wordpress_root/wp-config.php"
-            echo FARMTREE_PRIMARY_ROOT=/domains/farmtree.eu/public_html
+            if ! test -d "$wordpress_root"; then
+              echo FARMTREE_PRIMARY_ROOT_MISSING
+              exit 1
+            fi
+            echo FARMTREE_PRIMARY_ROOT_DIRECTORY_OK
+            if ! test "$(cd "$wordpress_root" && pwd -P)" = "$wordpress_root"; then
+              echo FARMTREE_PRIMARY_ROOT_CANONICAL_PATH_MISMATCH
+              exit 1
+            fi
             echo FARMTREE_PRIMARY_ROOT_EXACT_OK
+            if ! test -d "$wordpress_root/wp-admin"; then
+              echo FARMTREE_PRIMARY_ROOT_WP_ADMIN_MISSING
+              exit 1
+            fi
             echo FARMTREE_PRIMARY_ROOT_WP_ADMIN_OK
+            if ! test -d "$wordpress_root/wp-content"; then
+              echo FARMTREE_PRIMARY_ROOT_WP_CONTENT_MISSING
+              exit 1
+            fi
             echo FARMTREE_PRIMARY_ROOT_WP_CONTENT_OK
+            if ! test -d "$wordpress_root/wp-includes"; then
+              echo FARMTREE_PRIMARY_ROOT_WP_INCLUDES_MISSING
+              exit 1
+            fi
             echo FARMTREE_PRIMARY_ROOT_WP_INCLUDES_OK
-            echo FARMTREE_PRIMARY_ROOT_WP_CONFIG_OK'
+            if ! test -f "$wordpress_root/wp-config.php"; then
+              echo FARMTREE_PRIMARY_ROOT_WP_CONFIG_MISSING
+              exit 1
+            fi
+            echo FARMTREE_PRIMARY_ROOT_WP_CONFIG_OK
+            echo FARMTREE_PRIMARY_ROOT=/domains/farmtree.eu/public_html'
 
   noindex-safety:
     if: ${{ inputs.operation == 'apply-noindex' }}
