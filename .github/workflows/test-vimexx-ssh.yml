@@ -9,6 +9,7 @@ on:
         default: apply-noindex
         type: choice
         options:
+          - verify-primary-root
           - apply-noindex
           - validate-inactive-runtime
 
@@ -20,6 +21,65 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  verify-primary-root:
+    if: ${{ inputs.operation == 'verify-primary-root' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://farmtree.eu/
+
+    steps:
+      - name: Validate SSH configuration
+        env:
+          SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+        run: |
+          test -n "$SSH_KEY"
+          test -n "$HOST"
+          test -n "$PORT"
+          test -n "$USERNAME"
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Prove the exact primary-domain WordPress root without WP-CLI
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+        run: |
+          set -Eeuo pipefail
+
+          ssh \
+            -i ~/.ssh/id_ed25519 \
+            -p "$PORT" \
+            "$USERNAME@$HOST" \
+            'set -eu
+            wordpress_root=/domains/farmtree.eu/public_html
+            test -d "$wordpress_root"
+            test "$(cd "$wordpress_root" && pwd -P)" = "$wordpress_root"
+            test -d "$wordpress_root/wp-admin"
+            test -d "$wordpress_root/wp-content"
+            test -d "$wordpress_root/wp-includes"
+            test -f "$wordpress_root/wp-config.php"
+            echo FARMTREE_PRIMARY_ROOT=/domains/farmtree.eu/public_html
+            echo FARMTREE_PRIMARY_ROOT_EXACT_OK
+            echo FARMTREE_PRIMARY_ROOT_WP_ADMIN_OK
+            echo FARMTREE_PRIMARY_ROOT_WP_CONTENT_OK
+            echo FARMTREE_PRIMARY_ROOT_WP_INCLUDES_OK
+            echo FARMTREE_PRIMARY_ROOT_WP_CONFIG_OK'
+
   noindex-safety:
     if: ${{ inputs.operation == 'apply-noindex' }}
     runs-on: ubuntu-latest
