@@ -255,7 +255,9 @@ jobs:
             "set -eu
             trap 'rm -f $remote_script_quoted' EXIT
             php -l $remote_script_quoted
-            wp eval-file $remote_script_quoted $GITHUB_RUN_ID --path=$remote_wordpress_path"
+            administrator_id=\"\$(wp user list --role=administrator --field=ID --path=$remote_wordpress_path | head -n 1)\"
+            test -n \"\$administrator_id\"
+            wp eval-file $remote_script_quoted $GITHUB_RUN_ID --user=\"\$administrator_id\" --path=$remote_wordpress_path"
 
       - name: Reverify private public boundary
         run: |
