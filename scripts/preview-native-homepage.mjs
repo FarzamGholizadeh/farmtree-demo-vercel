@@ -114,6 +114,10 @@ function renderDynamicBlocks(source) {
 function renderSource(source) {
   return renderDynamicBlocks(source)
     .replace(
+      /<figure class="([^"]*\bft-partner-logos\b[^"]*)">/g,
+      '<figure class="$1" aria-label="Partner and reference logos">'
+    )
+    .replace(
       /<\?php echo esc_url\( get_theme_file_uri\( '([^']+)' \) \); \?>/g,
       '/theme/$1'
     )
@@ -177,9 +181,8 @@ const homepageSource = readFileSync(
 const homepage = renderSource(homepageSource)
   .replace(
     /<div class="wp-block-group ft-news-item">\s*<\/div>/,
-    '<div class="ft-preview-news-empty">Dynamic WordPress posts appear here in runtime preview</div>'
-  )
-  .replace('<p>No insights have been published yet</p>', '');
+    ''
+  );
 const header = renderSource(
   readFileSync(resolve(theme, 'parts/header.html'), 'utf8')
     .replace('<!-- wp:pattern {"slug":"farmtree-native/brand-logo"} /-->', brandLogo)
@@ -292,6 +295,7 @@ const document = `<!doctype html>
   <script src="/theme/assets/js/native-interactions.js" defer></script>
 </head>
 <body>
+  <a class="ft-skip-link" href="#main-content">Skip to content</a>
   <div class="wp-site-blocks">
     <header>${header}</header>
     <main id="main-content" class="wp-block-group">${homepage}</main>
@@ -318,7 +322,7 @@ function validateComposedPreview() {
     'FAQ',
     'News &amp; Insights',
     'Ready to build a stronger agroforestry investment case?',
-    'Dynamic WordPress posts appear here in runtime preview',
+    'No insights have been published yet',
     'data-ft-hero-prev',
     'data-ft-platform-video-toggle',
     'data-ft-quotation-dialog'

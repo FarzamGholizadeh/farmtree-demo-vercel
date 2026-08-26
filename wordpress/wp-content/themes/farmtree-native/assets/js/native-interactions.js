@@ -433,8 +433,6 @@
         }
 
         const closeButton = dialog.querySelector('[data-ft-quotation-close]');
-        const form = dialog.querySelector('form');
-        const error = dialog.querySelector('[data-ft-quotation-error]');
         let returnFocus = null;
 
         function closeDialog() {
@@ -458,6 +456,22 @@
         triggers.forEach((trigger) => trigger.addEventListener('click', openDialog));
         closeButton?.addEventListener('click', closeDialog);
         dialog.addEventListener('keydown', (event) => {
+            if (event.key === 'Tab') {
+                const focusable = Array.from(dialog.querySelectorAll(
+                    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                )).filter((element) => !element.hidden && element.getClientRects().length > 0);
+                const first = focusable[0];
+                const last = focusable.at(-1);
+
+                if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+                    event.preventDefault();
+                    last?.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first?.focus();
+                }
+            }
+
             if (event.key === 'Escape' && !event.defaultPrevented && !event.repeat) {
                 event.preventDefault();
                 closeDialog();
@@ -476,14 +490,6 @@
             document.body.classList.remove('ft-quotation-open');
             returnFocus?.focus();
             returnFocus = null;
-        });
-        form?.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            if (error) {
-                error.hidden = false;
-                error.focus();
-            }
         });
     }
 

@@ -54,14 +54,17 @@ to one settings source before public activation.
 The current Header deliberately avoids a configured Site Logo dependency: its
 shared brand-logo pattern links the bundled approved mark to the WordPress home
 URL. The core Navigation block owns the approved five-card Bento submenu. The
-current language selector is English-only, with Nederlands and Deutsch visibly
-disabled until FT-NATIVE-003 defines locale ownership and routing.
+current language selector is English-only at `/`. The content plugin records
+`/nl/` and `/de/` as reserved, unpublished paths; the theme keeps them disabled
+and unlinked. The foundation intentionally registers no rewrite rules, pages,
+canonical alternates, hreflang or sitemap output before approved translations
+exist.
 
 The quotation template part provides the approved dialog shell on native
-templates, but its submit path fails closed and sends no network request.
-FT-WEB-004 must approve the production endpoint, consent/privacy copy, spam
-controls and delivery verification before the form or related content can be
-published.
+templates, but contains no form and collects, stores, transmits or logs no
+personal data. It clearly exposes the unavailable state and an approved email
+fallback. FT-WEB-004 must approve and verify a privacy-reviewed backend before
+online form delivery is introduced.
 
 ## Content Models
 

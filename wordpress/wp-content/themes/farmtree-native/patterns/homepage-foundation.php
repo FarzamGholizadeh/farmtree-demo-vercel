@@ -15,19 +15,19 @@
 <div class="wp-block-group ft-native-home"><!-- wp:group {"tagName":"section","metadata":{"name":"FarmTree Hero"},"align":"full","className":"ft-home-hero","style":{"dimensions":{"minHeight":"780px"},"spacing":{"padding":{"top":"var:preset|spacing|80","right":"var:preset|spacing|50","bottom":"var:preset|spacing|80","left":"var:preset|spacing|50"}}},"backgroundColor":"farmtree-forest","layout":{"type":"constrained"}} -->
 <section class="wp-block-group alignfull ft-home-hero has-farmtree-forest-background-color has-background" style="min-height:780px;padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--50)"><!-- wp:group {"metadata":{"name":"Editable Hero images"},"className":"ft-home-hero-media","layout":{"type":"default"}} -->
 <div class="wp-block-group ft-home-hero-media"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide is-active"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide is-active"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/hero-project-workshop.webp' ) ); ?>" alt="Agroforestry landscape planning with project teams in Madagascar"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide is-active"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/hero-project-workshop.webp' ) ); ?>" alt="People gathered for an agroforestry field visit"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-carbon.webp' ) ); ?>" alt="Science-based carbon and agroforestry modelling"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-carbon.webp' ) ); ?>" alt="Three people reviewing information on a laptop"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/hero-project-teams.webp' ) ); ?>" alt="Project staff discussing an agroforestry plot in the field"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/hero-project-teams.webp' ) ); ?>" alt="Four people discussing crops in a field"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-water.webp' ) ); ?>" alt="Water and landscape resilience planning"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-water.webp' ) ); ?>" alt="Group portrait in a tree-filled landscape"/></figure>
 <!-- /wp:image --></div>
 <!-- /wp:group -->
 
@@ -96,7 +96,7 @@
 <!-- /wp:button -->
 
 <!-- wp:button {"className":"is-style-outline ft-native-quotation-action","textColor":"white"} -->
-<div class="wp-block-button is-style-outline ft-native-quotation-action"><a class="wp-block-button__link has-white-color has-text-color wp-element-button" href="/contact/">Ask for a quotation ↗</a></div>
+<div class="wp-block-button is-style-outline ft-native-quotation-action"><a class="wp-block-button__link has-white-color has-text-color wp-element-button" href="mailto:info@farmtree.earth?subject=FarmTree%20quotation%20request">Ask for a quotation ↗</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:group -->
@@ -182,7 +182,7 @@
 <!-- /wp:html -->
 
 <!-- wp:paragraph {"className":"ft-home-media-caption","fontSize":"caption"} -->
-<p class="ft-home-media-caption has-caption-font-size">Approved FarmTree Platform media</p>
+<p class="ft-home-media-caption has-caption-font-size">FarmTree Platform landscape and plot-definition views</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
@@ -312,7 +312,7 @@
 <div class="wp-block-columns alignwide ft-trust-quotes"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
 <blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades</p>
+<p class="has-lead-font-size">The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.</p>
 <!-- /wp:paragraph --><cite>Mona McCord, SAN</cite></blockquote>
 <!-- /wp:quote --></div>
 <!-- /wp:column -->
@@ -320,7 +320,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
 <blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue</p>
+<p class="has-lead-font-size">FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue — they do everything!</p>
 <!-- /wp:paragraph --><cite>Mathijs de Bruin, TreeScape</cite></blockquote>
 <!-- /wp:quote --></div>
 <!-- /wp:column --></div>
@@ -346,7 +346,7 @@
 <div class="wp-block-columns alignwide ft-proof-grid"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-carbon.webp' ) ); ?>" alt="Project team reviewing carbon planning information"/></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-carbon.webp' ) ); ?>" alt="Three people reviewing information on a laptop"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -355,7 +355,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"lead"} -->
-<h3 class="wp-block-heading has-lead-font-size">Carbon planning</h3>
+<h3 class="wp-block-heading has-lead-font-size">Carbon</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"small"} -->
@@ -368,7 +368,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-farm-value.webp' ) ); ?>" alt="Agroforestry project stakeholders comparing farm value options in the field"/></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-farm-value.webp' ) ); ?>" alt="People gathered for an agroforestry field visit"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -390,7 +390,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-cocoa.webp' ) ); ?>" alt="Cocoa agroforestry landscape under changing weather conditions"/></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-cocoa.webp' ) ); ?>" alt="Dark clouds over a tree-covered agricultural landscape"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -412,7 +412,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-water.webp' ) ); ?>" alt="Project partners working together in an agroforestry landscape"/></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-water.webp' ) ); ?>" alt="Group portrait in a tree-filled landscape"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->

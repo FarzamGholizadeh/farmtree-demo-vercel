@@ -1,30 +1,19 @@
 <!-- wp:html -->
-<dialog class="ft-quotation-modal" aria-labelledby="ft-quotation-title" aria-describedby="ft-quotation-intro" data-ft-quotation-dialog>
+<dialog class="ft-quotation-modal" aria-labelledby="ft-quotation-title" aria-describedby="ft-quotation-status" data-ft-quotation-dialog>
   <div class="ft-quotation-shell">
     <div class="ft-quotation-head">
       <div>
-        <h2 id="ft-quotation-title">Request information</h2>
-        <p id="ft-quotation-intro">Tell FarmTree a little about your organisation, your goals and the question you want to discuss.</p>
+        <h2 id="ft-quotation-title">Ask for a quotation</h2>
+        <p>FarmTree can discuss your project scope, context and reporting needs.</p>
       </div>
-      <button class="ft-quotation-close" type="button" aria-label="Close form" data-ft-quotation-close>×</button>
+      <button class="ft-quotation-close" type="button" aria-label="Close quotation information" data-ft-quotation-close>×</button>
     </div>
-    <form class="ft-quotation-form" method="dialog">
-      <input class="ft-quotation-honeypot" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <div class="ft-quotation-grid">
-        <div class="ft-quotation-field"><label for="ft-quotation-name">Full name</label><input id="ft-quotation-name" name="name" type="text" autocomplete="name" required></div>
-        <div class="ft-quotation-field"><label for="ft-quotation-company">Company or organisation</label><input id="ft-quotation-company" name="company" type="text" autocomplete="organization"></div>
-        <div class="ft-quotation-field"><label for="ft-quotation-email">Email address</label><input id="ft-quotation-email" name="email" type="email" autocomplete="email" required></div>
-        <div class="ft-quotation-field"><label for="ft-quotation-role">Role</label><input id="ft-quotation-role" name="role" type="text" autocomplete="organization-title"></div>
-        <div class="ft-quotation-field"><label for="ft-quotation-interest">Area of interest</label><select id="ft-quotation-interest" name="interest"><option>FarmTree Platform</option><option>Investment support</option><option>Implementation workflow</option><option>Project reporting</option><option>General question</option></select></div>
-        <div class="ft-quotation-field"><label for="ft-quotation-timing">Preferred timing</label><input id="ft-quotation-timing" name="timing" type="text" autocomplete="off"></div>
-      </div>
-      <div class="ft-quotation-field"><label for="ft-quotation-question">Your question or project brief</label><textarea id="ft-quotation-question" name="question" rows="5" required></textarea></div>
-      <div class="ft-quotation-actions">
-        <p>A simple human message is enough. FarmTree can follow up with the right next step after reviewing your request.</p>
-        <button type="submit">Send request</button>
-      </div>
-      <p class="ft-quotation-error" role="alert" tabindex="-1" hidden data-ft-quotation-error>Form submission is not configured yet. Email <a href="mailto:info@farmtree.earth">info@farmtree.earth</a> instead.</p>
-    </form>
+    <div class="ft-quotation-unavailable" id="ft-quotation-status">
+      <p><strong>Online quotation delivery is currently unavailable.</strong></p>
+      <p>This dialog does not collect, store or send personal data.</p>
+      <a class="ft-quotation-email" href="mailto:info@farmtree.earth?subject=FarmTree%20quotation%20request">Email FarmTree about a quotation</a>
+      <p class="ft-quotation-privacy">Please do not include sensitive or confidential information in your first email.</p>
+    </div>
   </div>
 </dialog>
 <!-- /wp:html -->

@@ -90,6 +90,51 @@ async function api(path, options = {}) {
   return body;
 }
 
+const canonicalSamplePost = {
+  slug: 'hello-world',
+  title: 'Hello world!',
+  content: 'Welcome to WordPress. This is your first post. Edit or delete it, then start writing!'
+};
+
+function normaliseSampleText(value) {
+  return String(value ?? '')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replaceAll('&nbsp;', ' ')
+    .replaceAll('&#8217;', '’')
+    .replaceAll('&rsquo;', '’')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function isCanonicalSamplePost(post) {
+  return post.slug === canonicalSamplePost.slug &&
+    normaliseSampleText(post.title?.raw ?? post.title?.rendered) === canonicalSamplePost.title &&
+    normaliseSampleText(post.content?.raw ?? post.content?.rendered) === canonicalSamplePost.content;
+}
+
+const samplePostQuery = '/wp/v2/posts?slug=hello-world&status=publish,draft,pending,private,future&context=edit&per_page=100';
+let samplePostCandidates = await api(samplePostQuery);
+
+if (!verifyOnly) {
+  for (const post of samplePostCandidates.filter(
+    (candidate) => candidate.status === 'publish' && isCanonicalSamplePost(candidate)
+  )) {
+    await api(`/wp/v2/posts/${post.id}`, {
+      method: 'POST',
+      body: JSON.stringify({ status: 'draft' })
+    });
+  }
+
+  samplePostCandidates = await api(samplePostQuery);
+}
+
+const exactSamplePosts = samplePostCandidates.filter(isCanonicalSamplePost);
+if (exactSamplePosts.some(({ status }) => status === 'publish')) {
+  throw new Error('The exact default WordPress sample post remains published in the local runtime.');
+}
+const samplePostState = exactSamplePosts.length > 0 ? 'draft-or-nonpublic' : 'absent';
+
 const patterns = await api('/wp/v2/block-patterns/patterns');
 const homepagePattern = patterns.find(({ name }) => name === 'farmtree-native/homepage-foundation');
 
@@ -155,7 +200,9 @@ const [
   settings,
   siteEditorResponse,
   pageEditorResponse,
-  frontendResponse
+  frontendResponse,
+  dutchRouteResponse,
+  germanRouteResponse
 ] = await Promise.all([
   api(`/wp/v2/pages/${homepage.id}?context=edit`),
   api(`/wp/v2/pages/${homepage.id}/revisions?context=edit`),
@@ -168,7 +215,9 @@ const [
   fetch(new URL(`/wp-admin/post.php?post=${homepage.id}&action=edit`, baseUrl), {
     headers: { Cookie: session.cookie }
   }),
-  fetch(baseUrl, { headers: { Cookie: session.cookie } })
+  fetch(baseUrl, { headers: { Cookie: session.cookie } }),
+  fetch(new URL('/nl/', baseUrl), { headers: { Cookie: session.cookie }, redirect: 'manual' }),
+  fetch(new URL('/de/', baseUrl), { headers: { Cookie: session.cookie }, redirect: 'manual' })
 ]);
 const frontendHtml = await frontendResponse.text();
 const activeTheme = activeThemes.find(({ stylesheet }) => stylesheet === 'farmtree-native');
@@ -215,6 +264,12 @@ for (const content of requiredFrontendContent) {
 }
 if (/PHP (?:Warning|Fatal error)|<b>Warning<\/b>|<b>Fatal error<\/b>/i.test(frontendHtml)) {
   throw new Error('Local WordPress frontend contains a PHP warning or fatal error.');
+}
+if (frontendHtml.includes(canonicalSamplePost.content)) {
+  throw new Error('Local WordPress frontend still exposes the default sample-post content.');
+}
+if (dutchRouteResponse.status !== 404 || germanRouteResponse.status !== 404) {
+  throw new Error('Reserved /nl/ and /de/ locale paths must remain unpublished 404 routes.');
 }
 
 const requiredTemplates = ['404', 'archive', 'content-only-page', 'front-page', 'index', 'page', 'single'];
@@ -290,5 +345,11 @@ console.log(JSON.stringify({
   themeAssets: themeAssets.size,
   siteEditor: siteEditorResponse.status,
   pageEditor: pageEditorResponse.status,
-  frontend: frontendResponse.status
+  frontend: frontendResponse.status,
+  defaultSamplePost: samplePostState,
+  locales: {
+    en: frontendResponse.status,
+    nl: dutchRouteResponse.status,
+    de: germanRouteResponse.status
+  }
 }, null, 2));

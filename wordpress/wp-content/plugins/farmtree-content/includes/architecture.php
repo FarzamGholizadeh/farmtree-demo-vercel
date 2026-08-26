@@ -27,6 +27,37 @@ function farmtree_content_architecture(): array
             'plugin' => 'farmtree-core',
             'policy' => 'Do not duplicate active post types, taxonomies, options or capabilities.',
         ],
+        'locale_routing' => [
+            'strategy' => 'path_prefix',
+            'default' => 'en',
+            'routes' => [
+                'en' => [
+                    'locale' => 'en_GB',
+                    'path' => '/',
+                    'status' => 'active',
+                    'published' => true,
+                ],
+                'nl' => [
+                    'locale' => 'nl_NL',
+                    'path' => '/nl/',
+                    'status' => 'reserved',
+                    'published' => false,
+                ],
+                'de' => [
+                    'locale' => 'de_DE',
+                    'path' => '/de/',
+                    'status' => 'reserved',
+                    'published' => false,
+                ],
+            ],
+            'reserved_policy' => 'Do not register rewrites, pages, navigation links, hreflang, canonical alternates or sitemap entries until an approved translation is complete.',
+        ],
+        'quotation_delivery' => [
+            'status' => 'unconfigured',
+            'owner' => 'farmtree-content',
+            'fallback' => 'mailto:info@farmtree.earth?subject=FarmTree%20quotation%20request',
+            'privacy_policy' => 'The inactive frontend state must collect, store, transmit and log no personal information.',
+        ],
         'post_types' => [
             'case_study' => [
                 'public' => true,

@@ -1,6 +1,6 @@
 # FarmTree WordPress Release Checklist
 
-_Last updated: 2026-08-26_
+_Last updated: 2026-08-27_
 
 ## Release Context
 
@@ -97,13 +97,17 @@ _Last updated: 2026-08-26_
 These items do not block a separately approved inactive-code deployment for
 private runtime validation, but they block public activation and publication:
 
-- [ ] Configure and verify the production quotation endpoint, consent/privacy
-      copy, spam protection and message delivery. Until then, retain the
-      fail-closed dialog and approved `info@farmtree.earth` email fallback.
-- [ ] Complete and validate locale-aware NL/DE routing under FT-NATIVE-003.
-      Keep those locale options disabled until their content and destinations
-      are approved.
-- [ ] Approve final proof labels, testimonials, imagery and partner evidence.
+- [ ] Approve the current no-PII email-only quotation fallback for publication,
+      or configure and verify a privacy-reviewed delivery backend if an online
+      form is required. Never restore a placeholder or simulated success path.
+- [ ] Approve complete NL/DE translations before publishing their reserved
+      `/nl/` and `/de/` routes, navigation, canonicals, hreflang or sitemap
+      entries. Keep both options disabled until then.
+- [ ] Sign off the proof labels, testimonial attribution/permissions, imagery
+      and partner/reference relationships in
+      `docs/FT-NATIVE-002-PUBLICATION-EVIDENCE.md`.
+- [ ] Complete one logged-out real screen-reader listening walkthrough; the
+      automated accessibility-tree smoke test is supporting evidence only.
 - [ ] Confirm no unfinished native content is public before Gate 6 approval.
 
 ## Post-Deployment Verification

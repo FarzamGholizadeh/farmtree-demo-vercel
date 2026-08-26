@@ -58,15 +58,17 @@ the real native Header/Footer and `theme.json`. The production visual language
 is restored without changing the `farmtree` rollback theme. The current source
 includes a one-H1/four-image Hero, approved Platform MP4/poster and screenshot
 with explicit playback control, asset-backed brand-logo pattern, five-card Bento
-menu, English-only disabled locale options and fail-closed quotation submit.
+menu, English `/` plus reserved unpublished `/nl/` and `/de/` locale contracts,
+and a no-PII email-only quotation unavailable state.
 Scope, evidence and remaining production/publication gates are defined in
 `CURRENT_SPRINT.md` and `SPRINT_REPORT.md`.
 
 The isolated loopback-only WordPress Playground runtime recognizes the Block
-Theme and plugin, persists the private Homepage and three revisions, registers the
+Theme and plugin, persists the private Homepage and revision history, registers the
 required templates/parts/patterns and renders its Query Loop and assets. The
-local gate is complete: screenshots, console, keyboard/focus, semantic
-accessibility, contrast, interactions and overflow were reviewed at all nine
+local gate is complete: screenshots, console, sequential keyboard/focus,
+Chrome accessibility-tree smoke testing, semantic accessibility, contrast,
+interactions and overflow were reviewed at all nine
 target widths. Release, production and final-content work remains explicitly
 approval-gated or deferred as recorded in the sprint evidence.
 
@@ -86,13 +88,13 @@ dispatch.
 
 ## Deferred Implementation Backlog
 
-- FT-NATIVE-003 - Register content models, build the admin experience and add
-  locale-aware routing; the current native shell is English-only with NL/DE
-  disabled.
+- FT-NATIVE-003 - Register content models, build the admin experience and
+  publish locale-aware routing only after translated content is approved; `/`
+  is English and `/nl/` plus `/de/` are currently reserved and unpublished.
 - FT-NATIVE-004 - Build real pages, navigation and clean WordPress routes.
 - FT-NATIVE-005 - Migrate content, validate runtime and prepare cutover.
 - FT-SEO-001 - Define SEO metadata, canonical, hreflang, sitemap, and robots ownership across WordPress core, theme, and SEO plugin.
-- FT-WEB-004 - Define the production quotation endpoint, consent/privacy copy,
-  spam controls, delivery verification and publication gate; the current modal
-  intentionally sends no network request.
+- FT-WEB-004 - Add and verify a privacy-reviewed production delivery backend
+  only if online quotation submission is required. The current modal safely
+  collects no data and offers the approved email fallback.
 - FT-WP-005 - Add browser-based production verification checklist after an approved deployment.

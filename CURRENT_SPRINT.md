@@ -71,12 +71,14 @@ muted video pauses whenever its slide or document is not visible. With reduced
 motion requested, it stays on the approved poster unless the visitor explicitly
 presses Play.
 
-The current selector is intentionally English-only: English is active and the
-Nederlands and Deutsch options are visibly disabled. Locale-aware routing is
-deferred to FT-NATIVE-003. The quotation dialog is present for visual parity,
-but submit is intentionally unavailable and sends no network request until a
-production endpoint, consent/privacy copy, delivery verification and the
-publication gate are approved under FT-WEB-004.
+The current selector is intentionally English-only: English owns `/`, while
+Nederlands `/nl/` and Deutsch `/de/` are reserved but unpublished, unlinked and
+visibly disabled. The side-effect-free locale contract creates no rewrites,
+pages, alternates or sitemap entries before approved translations exist. The
+quotation dialog now states up front that online delivery is unavailable,
+collects no personal data and offers only the approved
+`info@farmtree.earth` email fallback. It contains no fake success path,
+placeholder endpoint or client-side logging.
 
 ### WordPress Ownership
 
@@ -102,7 +104,7 @@ publication gate are approved under FT-WEB-004.
   found and corrected a two-pixel logo-height and Header-width drift.
 - The isolated real WordPress runtime recognizes and locally activates
   `farmtree-native` as a Block Theme and activates `farmtree-content`. A private
-  bootstrapped Homepage persists its registered pattern content and three revisions,
+  bootstrapped Homepage persists its registered pattern content and revision history,
   renders exactly one H1 and a Query Loop, loads 19 referenced theme assets,
   and returns HTTP 200 from the Site Editor, Page Editor and frontend without
   rendered PHP warnings or fatals. WordPress registers all seven required
@@ -124,22 +126,25 @@ publication gate are approved under FT-WEB-004.
   430, 768, 1024, 1280, 1440 and 1920 pixels. Every width reported
   `scrollWidth === innerWidth`; the only off-screen children belong to the
   intentionally contained horizontal partner-logo rail. Final screenshots are
-  in `qa/native-foundation/final-rendered/`.
+  in `qa/native-foundation/publication-readiness/chrome/`.
 - Browser error/warning logs were empty after the interaction walkthrough.
   Rendered semantic audits at 390 and 1440 found one H1, complete
   Header/Main/Footer landmarks, no heading-level jumps, duplicate IDs, missing
   image alt text, unnamed controls, positive tabindex values, insecure external
   targets or broken ARIA ID references. Opaque-surface contrast checks covered
   94 mobile and 96 desktop text nodes with no failures.
-- Component-level keyboard and interaction checks covered Hero and Platform click/arrow
-  navigation, live status and focus, video Play/Pause and visibility behavior,
-  language and FAQ disclosure activation, menu scroll lock/Escape/focus return,
-  visible focus treatment, quotation-dialog focus/Escape return and its
-  no-network submit fallback. The browser's active reduced-motion preference
-  was false; the rendered CSSOM and source gate verify the reduced-motion
-  override and manual-only carousel behavior. The browser harness did not
-  reliably advance a page-wide synthetic Tab sequence, so manual sequential-Tab
-  and assistive-technology review remain publication checks.
+- Native Chrome key events completed sequential forward-Tab walkthroughs at
+  390 and 1440 pixels. The sequence reached every enabled header, carousel,
+  FAQ, CTA and footer control, skipped disabled locale choices, showed focus,
+  and wrapped without trapping. Dialog forward/reverse Tab containment, Escape
+  and trigger-focus return also passed. A Chrome accessibility-tree screen-reader
+  smoke test found named landmarks, headings, controls, status and dialog
+  content with no unnamed interactive elements. Reduced-motion emulation kept
+  motion paused until explicit input.
+- The local bootstrap drafts only the exact canonical WordPress sample post
+  fingerprint (`Hello world!` / `hello-world` / canonical sample body), never
+  deletes it, and leaves every unrelated post untouched. Verification rejects a
+  published canonical sample and confirms `/nl/` and `/de/` remain 404.
 - A fresh preview process returned HTTP 200 with the expected
   `X-Robots-Tag: noindex, nofollow` header.
 - GitHub run `32956292922` validated pushed commit `897a991` successfully.
@@ -165,16 +170,22 @@ publication gate are approved under FT-WEB-004.
 - Rendered browser screenshots, browser console, component keyboard/focus, responsive
   overflow, semantic accessibility, contrast, interaction and reduced-motion
   contract validation across all nine target widths: complete locally.
-- Locale-aware NL/DE routing and production quotation submission/privacy:
-  deferred and intentionally unavailable in the current build.
-- Partner evidence links, final theme labels, approved production media and
-  final testimonials: pending later content validation before publication.
+- English `/` ownership plus reserved, unpublished `/nl/` and `/de/` locale
+  contracts: complete; translated pages and public locale routing remain later
+  work.
+- Quotation privacy/failure behavior: complete for the email-only fallback; an
+  online submission backend remains intentionally unconfigured.
+- Copy and claims are recorded in
+  `docs/FT-NATIVE-002-PUBLICATION-EVIDENCE.md`; final human permission/relationship
+  sign-off remains required for testimonial attribution, logos and working
+  proof labels.
 
 ### Pre-release Status
 
-Local implementation and validation are complete. Stop at pre-release until the
-user explicitly approves a release step; final content evidence, locale routing
-and production quotation delivery remain separate publication gates.
+Local publication-readiness implementation and available-environment validation
+are complete. Stop at pre-release until the evidence/permission review and a
+real assistive-technology listening pass receive human sign-off, and the user
+explicitly approves a release step.
 
 ### Production Approval Boundary
 

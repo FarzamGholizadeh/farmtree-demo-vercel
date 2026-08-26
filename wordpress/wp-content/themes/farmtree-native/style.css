@@ -491,7 +491,7 @@ h6 {
   margin-block-start: 0;
 }
 
-.ft-skip-link {
+:where(.ft-skip-link, .wp-block-template-skip-link) {
   position: fixed;
   top: -80px;
   left: 1rem;
@@ -505,7 +505,7 @@ h6 {
   transition: top 180ms ease;
 }
 
-.ft-skip-link:focus {
+:where(.ft-skip-link, .wp-block-template-skip-link):focus {
   top: 0;
 }
 
@@ -899,86 +899,41 @@ body.ft-quotation-open {
   font: 500 2rem/1 var(--wp--preset--font-family--interface);
 }
 
-.ft-quotation-form {
-  padding-top: 1.75rem;
-}
-
-.ft-quotation-grid {
+.ft-quotation-unavailable {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem 1.25rem;
-}
-
-.ft-quotation-field {
-  display: grid;
-  gap: 0.45rem;
-  margin-bottom: 1rem;
-}
-
-.ft-quotation-field label {
-  color: var(--ft-approved-green);
-  font-size: 0.82rem;
-  font-weight: 850;
-}
-
-.ft-quotation-field :where(input, select, textarea) {
-  width: 100%;
-  min-height: 48px;
-  padding: 0.8rem 0.9rem;
-  border: 1px solid rgb(22 49 38 / 25%);
-  border-radius: 12px;
+  gap: 0.9rem;
+  margin-top: 1.75rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-left: 4px solid var(--ft-approved-gold);
+  border-radius: 18px;
   background: var(--wp--preset--color--farmtree-ivory);
-  color: var(--ft-approved-ink);
-  font: 500 1rem/1.45 var(--wp--preset--font-family--interface);
 }
 
-.ft-quotation-field textarea {
-  min-height: 130px;
-  resize: vertical;
-}
-
-.ft-quotation-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  margin-top: 0.5rem;
-}
-
-.ft-quotation-actions p {
-  max-width: 540px;
+.ft-quotation-unavailable p {
+  max-width: 680px;
   margin: 0;
-  color: rgb(22 49 38 / 72%);
-  font-size: 0.82rem;
 }
 
-.ft-quotation-actions button {
+.ft-quotation-unavailable strong {
+  color: var(--ft-approved-green);
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+}
+
+.ft-quotation-email {
+  width: fit-content;
   min-height: 48px;
-  flex: 0 0 auto;
-  padding: 0.9rem 1.5rem;
-  border: 0;
+  margin-top: 0.35rem;
+  padding: 0.85rem 1.25rem;
   border-radius: 999px;
   background: var(--ft-approved-green);
   color: var(--ft-approved-white);
-  cursor: pointer;
   font-weight: 850;
+  text-decoration: none;
 }
 
-.ft-quotation-error {
-  margin: 1rem 0 0;
-  padding: 0.9rem 1rem;
-  border-left: 4px solid #9b2c2c;
-  border-radius: 8px;
-  background: #fff0f0;
-  color: #6f1d1d;
-  font-weight: 700;
-}
-
-.ft-quotation-honeypot {
-  position: absolute !important;
-  left: -10000px !important;
-  width: 1px !important;
-  height: 1px !important;
+.ft-quotation-privacy {
+  color: rgb(22 49 38 / 72%);
+  font-size: 0.82rem;
 }
 
 .ft-native-eyebrow {
@@ -1297,6 +1252,12 @@ body.ft-quotation-open {
   box-shadow: 0 22px 50px -28px rgb(16 47 35 / 45%), 0 1px 0 rgb(255 255 255 / 55%) inset;
 }
 
+.ft-platform-visual:focus-visible {
+  outline: 3px solid var(--ft-approved-white);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px var(--ft-approved-ink);
+}
+
 .ft-platform-screen {
   aspect-ratio: 16 / 9;
   margin: 0;
@@ -1561,6 +1522,12 @@ body.ft-quotation-open {
   scrollbar-width: none;
 }
 
+.ft-partner-logos:focus-visible {
+  outline: 3px solid var(--ft-approved-white);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px var(--ft-approved-ink);
+}
+
 .ft-partner-logos::-webkit-scrollbar {
   display: none;
 }
@@ -1605,15 +1572,6 @@ body.ft-quotation-open {
   border-radius: 20px;
   background: var(--ft-approved-white);
   box-shadow: none;
-}
-
-.ft-trust-quote::before {
-  display: block;
-  margin-bottom: 1.2rem;
-  color: var(--ft-approved-gold);
-  content: "★★★★★";
-  font-size: 0.9rem;
-  letter-spacing: 0.2em;
 }
 
 .ft-trust-quote p {
@@ -1904,7 +1862,9 @@ body.ft-quotation-open {
 }
 
 .ft-native-site-footer .wp-block-navigation-item__content {
+  display: inline-flex;
   min-height: 32px;
+  align-items: center;
   color: var(--ft-approved-white);
   text-decoration: none;
 }
@@ -1916,10 +1876,13 @@ body.ft-quotation-open {
 }
 
 .ft-native-site-footer .wp-block-navigation-item__content::before {
+  width: 0.4rem;
+  height: 0.4rem;
+  flex: 0 0 0.4rem;
   margin-right: 0.5rem;
-  color: var(--ft-approved-gold);
-  content: "○";
-  font-size: 0.65rem;
+  border: 1px solid var(--ft-approved-gold);
+  border-radius: 50%;
+  content: "";
 }
 
 .ft-native-site-footer .wp-block-social-links {
@@ -2180,19 +2143,6 @@ body.ft-quotation-open {
 
   .ft-native-header-actions .wp-block-buttons {
     display: none;
-  }
-
-  .ft-quotation-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .ft-quotation-actions {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .ft-quotation-actions button {
-    width: 100%;
   }
 
   .ft-home-section-heading {

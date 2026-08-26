@@ -28,7 +28,7 @@
 <!-- /wp:button -->
 
 <!-- wp:button {"className":"is-style-outline ft-native-quotation-action","textColor":"white"} -->
-<div class="wp-block-button is-style-outline ft-native-quotation-action"><a class="wp-block-button__link has-white-color has-text-color wp-element-button" href="/contact/">Ask for a quotation</a></div>
+<div class="wp-block-button is-style-outline ft-native-quotation-action"><a class="wp-block-button__link has-white-color has-text-color wp-element-button" href="mailto:info@farmtree.earth?subject=FarmTree%20quotation%20request">Ask for a quotation</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></section>
 <!-- /wp:group -->

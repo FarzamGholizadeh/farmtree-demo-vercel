@@ -104,6 +104,25 @@ for (const file of ['farmtree-content.php', 'includes/architecture.php', 'README
   }
 }
 
+const publicationEvidencePath = resolve(root, 'docs/FT-NATIVE-002-PUBLICATION-EVIDENCE.md');
+if (!existsSync(publicationEvidencePath)) {
+  throw new Error('Missing FT-NATIVE-002 publication evidence register.');
+}
+const publicationEvidence = readFileSync(publicationEvidencePath, 'utf8');
+for (const contract of [
+  'Exact source restored; publication permission/attribution sign-off remains human',
+  'FAO reference logo',
+  'CATIE reference logo',
+  'Helvetas reference logo',
+  'Approved production reference strip only',
+  'final human label approval remains required',
+  'numerical performance claim or star rating'
+]) {
+  if (!publicationEvidence.includes(contract)) {
+    throw new Error(`Publication evidence register is missing: ${contract}`);
+  }
+}
+
 const themeJson = JSON.parse(readFileSync(resolve(theme, 'theme.json'), 'utf8'));
 const variation = JSON.parse(readFileSync(resolve(theme, 'styles/scientific.json'), 'utf8'));
 
@@ -171,7 +190,6 @@ for (const part of ['parts/header.html', 'parts/footer.html']) {
 
 const header = readFileSync(resolve(theme, 'parts/header.html'), 'utf8');
 for (const contract of [
-  'ft-skip-link',
   'ft-native-logo-shell',
   'ft-native-primary-nav',
   'Contact',
@@ -189,6 +207,21 @@ for (const contract of [
   if (!header.includes(contract)) {
     throw new Error(`Header is missing approved visual contract: ${contract}`);
   }
+}
+if (header.includes('ft-skip-link') || (header.match(/Skip to content/g) ?? []).length > 0) {
+  throw new Error('Header must defer to the single skip link injected by WordPress core.');
+}
+for (const localeContract of [
+  'data-ft-locale="en" data-ft-locale-path="/" data-ft-locale-status="active"',
+  'data-ft-locale="nl" data-ft-locale-path="/nl/" data-ft-locale-status="reserved"',
+  'data-ft-locale="de" data-ft-locale-path="/de/" data-ft-locale-status="reserved"'
+]) {
+  if (!header.includes(localeContract)) {
+    throw new Error(`Header is missing locale availability metadata: ${localeContract}`);
+  }
+}
+if (/<a[^>]+(?:href|hreflang)="\/(?:nl|de)\/?"/i.test(header)) {
+  throw new Error('Reserved Dutch and German locales must not be published as links or hreflang alternates.');
 }
 if (header.includes('wp:site-title') || header.includes('wp:site-logo')) {
   throw new Error('Approved Header must use the asset-backed logo pattern without a duplicate/dynamic Site Logo dependency.');
@@ -271,6 +304,7 @@ const callToAction = readFileSync(resolve(theme, 'patterns/call-to-action.php'),
 const interactions = readFileSync(resolve(theme, 'assets/js/native-interactions.js'), 'utf8');
 const functions = readFileSync(resolve(theme, 'functions.php'), 'utf8');
 const preview = readFileSync(resolve(root, 'scripts/preview-native-homepage.mjs'), 'utf8');
+const bootstrap = readFileSync(resolve(root, 'scripts/bootstrap-local-wordpress.mjs'), 'utf8');
 
 for (const part of [header, footer, readFileSync(resolve(theme, 'parts/quotation-modal.html'), 'utf8')]) {
   if (part.includes('<?php')) {
@@ -284,10 +318,6 @@ if (!homepage.includes('"templateLock":"contentOnly"')) {
 
 if (!frontPage.includes('wp:post-content')) {
   throw new Error('The front-page template must render normal WordPress page content.');
-}
-
-if (!header.includes('href="#main-content"')) {
-  throw new Error('Header must retain the shared skip link.');
 }
 
 if (frontPage.includes('wp:pattern')) {
@@ -567,6 +597,7 @@ if (
   !functions.includes('assets/js/native-interactions.js') ||
   !functions.includes('farmtree_native_image_loading_attributes') ||
   !functions.includes('farmtree_native_platform_video_attributes') ||
+  !functions.includes('farmtree_native_partner_gallery_attributes') ||
   !functions.includes("add_action('wp_enqueue_scripts', 'farmtree_native_enqueue_interactions')") ||
   !functions.includes("set_attribute('preload', 'metadata')") ||
   !functions.includes("set_attribute('fetchpriority', 'high')") ||
@@ -582,23 +613,35 @@ if (functions.includes("add_action('enqueue_block_editor_assets', 'farmtree_nati
 const quotationModal = readFileSync(resolve(theme, 'parts/quotation-modal.html'), 'utf8');
 for (const contract of [
   'data-ft-quotation-dialog',
-  'method="dialog"',
-  'Request information',
-  'Full name',
-  'Company or organisation',
-  'Email address',
-  'Area of interest',
-  'Your question or project brief',
-  'data-ft-quotation-error',
-  'Form submission is not configured yet'
+  'aria-describedby="ft-quotation-status"',
+  'Ask for a quotation',
+  'Online quotation delivery is currently unavailable.',
+  'does not collect, store or send personal data',
+  'Email FarmTree about a quotation',
+  'do not include sensitive or confidential information'
 ]) {
   if (!quotationModal.includes(contract)) {
     throw new Error(`Quotation dialog is missing fail-safe parity contract: ${contract}`);
   }
 }
 
-if (/\baction=/.test(quotationModal) || !quotationModal.includes('mailto:info@farmtree.earth')) {
-  throw new Error('Quotation dialog must fail without a network request and expose the approved email fallback.');
+if (
+  /<(?:form|input|textarea|select)\b|type="submit"|\baction=|data-ft-quotation-error|submission (?:succeeded|successful)/i.test(quotationModal) ||
+  !quotationModal.includes('mailto:info@farmtree.earth?subject=FarmTree%20quotation%20request')
+) {
+  throw new Error('Unconfigured quotation delivery must collect no PII, expose no submit/success state and provide the approved email fallback.');
+}
+
+const quotationTriggers = [header, homepage, callToAction].join('\n');
+if (
+  (quotationTriggers.match(/mailto:info@farmtree\.earth\?subject=FarmTree%20quotation%20request/g) ?? []).length !== 4 ||
+  /ft-native-quotation-action[^\n]*\/contact\//.test(quotationTriggers)
+) {
+  throw new Error('All four quotation triggers must use the real email fallback when JavaScript is unavailable.');
+}
+
+if (/\b(?:fetch|XMLHttpRequest|sendBeacon|FormData|localStorage|sessionStorage|console)\b/.test(interactions)) {
+  throw new Error('Native quotation interactions must not transport, persist or log personal information.');
 }
 
 for (const contract of [
@@ -607,8 +650,10 @@ for (const contract of [
   "event.preventDefault()",
   "document.body.classList.add('ft-quotation-open')",
   "dialog.addEventListener('keydown'",
+  "event.key === 'Tab'",
+  "last?.focus()",
+  "first?.focus()",
   "dialog.addEventListener('cancel'",
-  'error.hidden = false',
   'initialiseBentoGroups',
   "document.createElement('h2')",
   'ft-native-menu-card-heading',
@@ -628,8 +673,11 @@ if (interactions.includes("setAttribute('role', 'heading')")) {
 for (const contract of [
   '.ft-quotation-modal',
   '.ft-quotation-modal::backdrop',
-  '.ft-quotation-grid',
+  '.ft-quotation-unavailable',
+  '.ft-quotation-email',
   'body.ft-quotation-open',
+  '.ft-platform-visual:focus-visible',
+  '.ft-partner-logos:focus-visible',
   '.ft-native-menu-segments',
   'grid-template-columns: repeat(12, minmax(0, 1fr))'
 ]) {
@@ -647,6 +695,12 @@ if (
   !preview.includes('noindex,nofollow')
 ) {
   throw new Error('Local preview must use real native parts/tokens and remain explicitly noindex.');
+}
+if (!preview.includes('<a class="ft-skip-link" href="#main-content">Skip to content</a>')) {
+  throw new Error('Static preview must provide one skip link because WordPress core is not present there.');
+}
+if (!preview.includes('aria-label="Partner and reference logos"')) {
+  throw new Error('Static preview must name the keyboard-focusable partner-logo rail.');
 }
 
 const sectionOrder = [
@@ -688,6 +742,46 @@ if ((homepage.match(/assets\/images\/partners\//g) ?? []).length !== 6) {
   throw new Error('Homepage must provide six editable partner/reference logos.');
 }
 
+for (const contract of [
+  'The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.',
+  'FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue — they do everything!',
+  '>Carbon</h3>',
+  '>Farm value modelling</h3>',
+  '>Cocoa scenario planning and monitoring</h3>',
+  '>Water and landscape resilience monitoring</h3>',
+  'alt="People gathered for an agroforestry field visit"',
+  'alt="Three people reviewing information on a laptop"',
+  'alt="Four people discussing crops in a field"',
+  'alt="Dark clouds over a tree-covered agricultural landscape"',
+  'alt="Group portrait in a tree-filled landscape"',
+  'FarmTree Platform landscape and plot-definition views'
+]) {
+  if (!homepage.includes(contract)) {
+    throw new Error(`Homepage is missing approved publication copy or literal media text: ${contract}`);
+  }
+}
+
+for (const unsupported of [
+  'Approved FarmTree Platform media',
+  'Agroforestry landscape planning with project teams in Madagascar',
+  'Science-based carbon and agroforestry modelling',
+  'Water and landscape resilience planning'
+]) {
+  if (homepage.includes(unsupported)) {
+    throw new Error(`Homepage retains unsupported or internal publication copy: ${unsupported}`);
+  }
+}
+
+if (themeStyles.includes('★★★★★') || themeStyles.includes('content: "○"')) {
+  throw new Error('Generated content must not create unsupported ratings or alter accessible footer-link names.');
+}
+if (
+  !themeStyles.includes('.ft-native-site-footer .wp-block-navigation-item__content::before') ||
+  !themeStyles.includes('content: ""')
+) {
+  throw new Error('Footer navigation decoration must remain visual-only generated content.');
+}
+
 for (const match of homepage.matchAll(/<h[12][^>]*>(.*?)<\/h[12]>/g)) {
   const heading = match[1].replace(/<[^>]+>/g, '').trim();
   if (heading.endsWith('.')) {
@@ -701,6 +795,47 @@ const runtimeRegistration = /register_(post_type|taxonomy|setting)\s*\(/;
 
 if (runtimeRegistration.test(pluginBootstrap) || runtimeRegistration.test(pluginArchitecture)) {
   throw new Error('FT-NATIVE-001 must not register runtime content models.');
+}
+
+for (const contract of [
+  "'strategy' => 'path_prefix'",
+  "'default' => 'en'",
+  "'locale' => 'en_GB'",
+  "'path' => '/'",
+  "'locale' => 'nl_NL'",
+  "'path' => '/nl/'",
+  "'locale' => 'de_DE'",
+  "'path' => '/de/'",
+  "'status' => 'reserved'",
+  "'published' => false",
+  "'quotation_delivery'",
+  "'status' => 'unconfigured'",
+  "'owner' => 'farmtree-content'"
+]) {
+  if (!pluginArchitecture.includes(contract)) {
+    throw new Error(`Content architecture is missing publication-readiness contract: ${contract}`);
+  }
+}
+if (/\b(?:add_rewrite_rule|add_rewrite_tag|flush_rewrite_rules)\s*\(/.test(pluginArchitecture)) {
+  throw new Error('Reserved locale metadata must not register or publish routes.');
+}
+
+for (const contract of [
+  "slug: 'hello-world'",
+  "title: 'Hello world!'",
+  'Welcome to WordPress. This is your first post. Edit or delete it, then start writing!',
+  "body: JSON.stringify({ status: 'draft' })",
+  "new URL('/nl/', baseUrl)",
+  "new URL('/de/', baseUrl)",
+  "dutchRouteResponse.status !== 404",
+  "germanRouteResponse.status !== 404"
+]) {
+  if (!bootstrap.includes(contract)) {
+    throw new Error(`Local bootstrap is missing publication-readiness contract: ${contract}`);
+  }
+}
+if (/method:\s*['"]DELETE['"]|\/wp\/v2\/posts\/\$\{post\.id\}[^\n]*delete/i.test(bootstrap)) {
+  throw new Error('Local sample-post neutralization must never delete WordPress content.');
 }
 
 console.log('FARMTREE_NATIVE_FOUNDATION_OK');

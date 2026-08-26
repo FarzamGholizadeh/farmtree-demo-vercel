@@ -198,6 +198,43 @@ function farmtree_native_platform_video_attributes(string $block_content, array 
 add_filter('render_block', 'farmtree_native_platform_video_attributes', 10, 2);
 
 /**
+ * Give the horizontally scrollable partner rail a stable accessible name.
+ *
+ * Chromium includes scroll containers in the keyboard sequence even without an
+ * explicit tabindex. Adding the name at render time preserves strict core
+ * Gallery serialization in the editor while keeping the frontend focus stop
+ * understandable to assistive-technology and keyboard users.
+ *
+ * @param string               $block_content Rendered block HTML.
+ * @param array<string, mixed> $block         Parsed block data.
+ * @return string
+ */
+function farmtree_native_partner_gallery_attributes(string $block_content, array $block): string
+{
+    $classes = (string) ($block['attrs']['className'] ?? '');
+    if (
+        ($block['blockName'] ?? '') !== 'core/gallery'
+        || !str_contains($classes, 'ft-partner-logos')
+        || !class_exists('WP_HTML_Tag_Processor')
+    ) {
+        return $block_content;
+    }
+
+    $processor = new WP_HTML_Tag_Processor($block_content);
+    if (!$processor->next_tag('figure')) {
+        return $block_content;
+    }
+
+    $processor->set_attribute(
+        'aria-label',
+        __('Partner and reference logos', 'farmtree-native')
+    );
+
+    return $processor->get_updated_html();
+}
+add_filter('render_block', 'farmtree_native_partner_gallery_attributes', 10, 2);
+
+/**
  * Register the FarmTree pattern category.
  */
 function farmtree_native_register_pattern_categories(): void

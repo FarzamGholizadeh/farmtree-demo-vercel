@@ -34,11 +34,13 @@ muted and visibility-aware: it pauses whenever the video slide or document is
 not visible. With reduced motion requested, it stays on the poster unless the
 visitor explicitly presses Play.
 
-The current selector is explicitly English-only, with Nederlands and Deutsch
-shown disabled; locale routing is deferred to FT-NATIVE-003. The quotation
-dialog matches the approved shell, but submit deliberately sends no network
-request. A production endpoint, consent/privacy copy, delivery verification and
-publication approval remain gated under FT-WEB-004.
+The selector is explicitly English-only: English owns `/`, while Nederlands
+`/nl/` and Deutsch `/de/` are reserved but unpublished, unlinked and disabled.
+The locale contract creates no routes or SEO alternates until approved
+translations exist. The quotation dialog matches the approved shell, states
+that online delivery is unavailable, collects no personal data and exposes
+only the approved email fallback. There is no submit-success simulation,
+placeholder endpoint, storage or logging path.
 
 The correction stays in the Block Theme architecture. It does not modify the
 current production `farmtree` theme or restore the legacy SPA as the runtime.
@@ -98,7 +100,7 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
 - Real WordPress integration verifies Block Theme and plugin recognition,
   Site/Page Editor HTTP 200, seven templates, three template parts, four native
   patterns, content-only locking, Query Loop rendering, exactly one H1,
-  save/reload persistence, three revisions, private status and all 19 rendered theme
+  save/reload persistence, revision history, private status and all 19 rendered theme
   assets. The frontend is HTTP 200 with no rendered PHP warning or fatal.
 - Workflow validation confirms that private deployment remains manual,
   inactive-code-only and guarded by backup, Coming Soon, noindex,
@@ -150,7 +152,7 @@ available without changing production WordPress state. The in-app browser
 captured the real WordPress frontend at 320, 375, 390, 430, 768, 1024, 1280,
 1440 and 1920 pixels; exact-width approved-reference and native screenshots,
 mobile/desktop section captures and interaction states are stored in
-`qa/native-foundation/final-rendered/`. All nine widths reported zero document
+`qa/native-foundation/publication-readiness/chrome/`. All nine widths reported zero document
 overflow. The horizontal partner-logo rail remains intentionally scrollable
 inside its container, and the signed-in WordPress toolbar was excluded from the
 final presentation crops.
@@ -158,22 +160,24 @@ final presentation crops.
 The final browser walkthrough found no console errors or warnings. It verified
 Hero and Platform navigation/status/focus, video playback control and
 visibility behavior, language/FAQ disclosures, menu scroll lock/Escape/focus
-return, quotation-dialog focus/Escape return and the no-network submit fallback.
+return, quotation-dialog focus/Escape return and the email-only unavailable state.
 Rendered semantic audits at 390 and 1440 found one H1, complete landmarks and
 no heading jumps, duplicate IDs, missing alt text, unnamed controls, positive
 tabindex values, insecure external targets or broken ARIA references. Contrast
 checks covered 94 mobile and 96 desktop opaque-surface text nodes without a
-failure. The active browser preference was not reduced motion, so preference
-emulation remains an environment limitation; the rendered CSSOM and static
-gate verify the reduced-motion override. The in-app harness did not reliably
-advance a page-wide synthetic Tab sequence; component-level keyboard behavior
-was exercised, while manual sequential-Tab review remains a publication check.
+failure. Reduced-motion emulation confirmed that motion remains paused until
+explicit input. Native Chrome key events completed sequential forward-Tab
+walkthroughs at 390 and 1440 pixels, including the whole page and dialog
+forward/reverse focus containment. A Chrome accessibility-tree screen-reader
+smoke test found named landmarks, headings, controls, statuses and dialog
+content with no unnamed interactive element.
 
-The remaining News difference is editorial runtime data: the isolated private
-WordPress instance contains its default `Hello world!` post rather than final
-approved news content. The four-slide native Hero, English-only selector and
-updated Frank-approved copy/IA are intentional product differences inside the
-approved visual language.
+The bootstrap now drafts only the exact canonical WordPress `Hello world!`
+sample fingerprint and never deletes or changes unrelated posts. The visitor
+News section therefore exposes its approved empty state until real posts are
+published. The four-slide native Hero, English-only selector and updated
+Frank-approved copy/IA are intentional product differences inside the approved
+visual language.
 
 ## Runtime Safety
 
@@ -188,15 +192,15 @@ compensating release policy.
 
 - Production recognition while both native components remain inactive and any
   later approved temporary production activation remain separately gated.
-- Manual sequential-Tab, screen-reader and assistive-technology review remains
-  a publication check; the completed local evidence is browser-semantic and
-  component-keyboard based.
-- Locale-aware routing remains deferred to FT-NATIVE-003; the current Header is
-  English-only and its NL/DE choices are disabled.
-- Production quotation endpoint, consent/privacy copy and delivery verification
-  remain deferred to FT-WEB-004; the current submit control sends no request.
-- Final approved imagery, proof labels, testimonials and partner evidence before
-  publication.
+- A real screen-reader listening walkthrough remains a human publication check;
+  Chrome's accessibility-tree smoke test passed in the available environment.
+- NL/DE translations and public routes remain unpublished. Their reserved path
+  contract is complete and deliberately creates no incomplete locale output.
+- Human approval is required for the email-only quotation fallback; an online
+  backend remains deferred if form delivery is required.
+- Human permission/relationship sign-off remains required for testimonial
+  attribution, partner/reference logos and the working proof labels recorded in
+  `docs/FT-NATIVE-002-PUBLICATION-EVIDENCE.md`.
 
 ## Next Action
 

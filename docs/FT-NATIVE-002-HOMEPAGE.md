@@ -52,12 +52,15 @@ display headlines where punctuation is not narratively required.
 - The Header uses the shared asset-backed `farmtree-native/brand-logo` pattern,
   rather than depending on configured Site Logo or Site Title blocks, and the
   Navigation block exposes the approved five-card Bento submenu.
-- The current native shell is English-only. Nederlands and Deutsch are shown as
-  disabled options; locale-aware routing belongs to FT-NATIVE-003.
-- The quotation dialog is present for approved visual parity, but submit is
-  intentionally unavailable and sends no network request. Endpoint selection,
-  consent/privacy copy, spam protection, delivery verification and publication
-  approval remain gated under FT-WEB-004.
+- The current native shell is English-only at `/`. Nederlands `/nl/` and
+  Deutsch `/de/` are reserved but unpublished, unlinked and disabled. The
+  locale contract creates no rewrite, page, alternate or sitemap output until
+  approved translations exist.
+- The quotation dialog is present for approved visual parity, states that
+  online delivery is unavailable, collects no personal data and offers the
+  approved email fallback. It has no submit, placeholder endpoint, simulated
+  success, storage or logging path. A real online backend remains gated under
+  FT-WEB-004 if one is required.
 
 ## Section Priorities
 
@@ -191,16 +194,17 @@ Prepare the architecture, but do not block FT-NATIVE-002 on:
 - Required content is editable by normal WordPress Editors and structural design
   remains locked.
 - Exact theme labels, imagery, footage, testimonials and partner references are
-  validated against approved source material before publication.
+  registered in `docs/FT-NATIVE-002-PUBLICATION-EVIDENCE.md`; the listed human
+  permissions and relationship approvals remain required before publication.
 - Source and rendered responsive validation covers 320, 375, 390, 430, 768,
   1024, 1280, 1440 and 1920 pixels without page zoom, root transforms, viewport
   tricks or root overflow masking. Exact-width screenshots, zero document
   overflow, clean browser logs and mobile/desktop section evidence are recorded
-  in `qa/native-foundation/final-rendered/` and the sprint report.
+  in `qa/native-foundation/publication-readiness/chrome/` and the sprint report.
 - Real WordPress editor/frontend and PHP validation plus rendered semantic,
-  contrast, keyboard/focus, reduced-motion-contract and interaction checks are
-  complete locally. Manual assistive-technology review and production runtime
-  validation remain publication/release evidence rather than local blockers.
+  contrast, sequential keyboard/focus, reduced-motion and interaction checks
+  are complete locally. Chrome's accessibility-tree smoke test passed; a real
+  screen-reader listening walkthrough remains human publication evidence.
 - A recoverable WordPress files/database backup and explicit public `noindex`
   while Coming Soon remains active gate any runtime deployment. Independent
   Required Reviewer protection remains a deferred governance enhancement under
