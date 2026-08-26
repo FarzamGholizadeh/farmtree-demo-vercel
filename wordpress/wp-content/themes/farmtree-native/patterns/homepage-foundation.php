@@ -170,14 +170,14 @@
 
 <!-- wp:html -->
 <div class="ft-platform-controls">
-<button class="ft-platform-nav ft-platform-prev" type="button" aria-label="Previous Platform media item" data-ft-platform-prev>‹</button>
+<button class="ft-platform-nav ft-platform-prev" type="button" aria-label="Previous Platform media item" data-ft-platform-prev><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <button class="ft-platform-video-toggle" type="button" aria-label="Play landscape video" data-ft-platform-video-toggle>Play video</button>
+<button class="ft-platform-nav ft-platform-next" type="button" aria-label="Next Platform media item" data-ft-platform-next><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<p class="screen-reader-text" aria-live="polite" data-ft-platform-status>Agroforestry landscape selected</p>
+</div>
 <div class="ft-platform-dots" role="group" aria-label="Choose Platform media item">
 <button class="ft-platform-dot is-active" type="button" aria-label="Agroforestry landscape" aria-pressed="true" data-ft-platform-dot></button>
 <button class="ft-platform-dot" type="button" aria-label="FarmTree plot definition" aria-pressed="false" data-ft-platform-dot></button>
-</div>
-<button class="ft-platform-nav ft-platform-next" type="button" aria-label="Next Platform media item" data-ft-platform-next>›</button>
-<p class="screen-reader-text" aria-live="polite" data-ft-platform-status>Agroforestry landscape selected</p>
 </div>
 <!-- /wp:html -->
 

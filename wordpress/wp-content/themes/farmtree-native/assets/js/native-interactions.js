@@ -367,6 +367,16 @@
         }
 
         selector.addEventListener('keydown', (event) => {
+            if (
+                event.target === summary &&
+                !event.repeat &&
+                (event.key === 'Enter' || event.key === ' ')
+            ) {
+                event.preventDefault();
+                selector.open = !selector.open;
+                return;
+            }
+
             if (event.key === 'Escape' && selector.open) {
                 selector.removeAttribute('open');
                 summary.focus();
@@ -396,6 +406,19 @@
             heading.hidden = true;
             heading.setAttribute('aria-hidden', 'true');
             heading.setAttribute('tabindex', '-1');
+        });
+    }
+
+    function initialiseFaqDetails() {
+        document.querySelectorAll('.ft-faq-list summary').forEach((summary) => {
+            summary.addEventListener('keydown', (event) => {
+                if (event.repeat || (event.key !== 'Enter' && event.key !== ' ')) {
+                    return;
+                }
+
+                event.preventDefault();
+                summary.parentElement.open = !summary.parentElement.open;
+            });
         });
     }
 
@@ -434,6 +457,16 @@
 
         triggers.forEach((trigger) => trigger.addEventListener('click', openDialog));
         closeButton?.addEventListener('click', closeDialog);
+        dialog.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !event.defaultPrevented && !event.repeat) {
+                event.preventDefault();
+                closeDialog();
+            }
+        });
+        dialog.addEventListener('cancel', (event) => {
+            event.preventDefault();
+            closeDialog();
+        });
         dialog.addEventListener('click', (event) => {
             if (event.target === dialog) {
                 closeDialog();
@@ -459,6 +492,7 @@
         document.querySelectorAll(platformSelector).forEach(initialisePlatform);
         initialiseLanguageSelector();
         initialiseBentoGroups();
+        initialiseFaqDetails();
         initialiseQuotationDialog();
     }
 

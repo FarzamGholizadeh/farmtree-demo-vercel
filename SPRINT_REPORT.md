@@ -1,7 +1,7 @@
 # FT-NATIVE-002 Sprint Report
 
-Status: Visual-first implementation and real local WordPress validation
-complete; browser-rendered evidence pending
+Status: Rendered local WordPress/browser validation complete; stopped at
+pre-release
 
 ## Homepage Structure
 
@@ -80,6 +80,14 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   checks the approved layout/token mappings and proves SHA-256 equality for 17
   shared logo, Hero, Platform, proof and partner assets. It exposed and fixed
   the native Header's width formula and two-pixel logo-height drift.
+- Final rendered QA exposed and corrected the missing Block Theme stylesheet
+  enqueue, WordPress core Header spacing inflation, Hero control/call-to-action
+  drift, Platform component geometry/media fit and normal-flow indicator strip,
+  approved SVG chevrons/insets/hover feedback, Technology badge color,
+  partner-logo wrapping, Footer breakpoint drift, menu cascade/nested-list
+  overlap, hover sheen and 280 ms card easing, external navigation rel values
+  and deterministic component keyboard/focus contracts. The full matrix and
+  interaction walkthrough were rerun after the corrections.
 - `@wordpress/env` 11.14.0 now provides an isolated loopback-only WordPress
   Playground runtime at `http://localhost:8888` without Docker. The runtime is
   WordPress 7.1 on PHP 8.2 with SQLite; it mounts the native theme/plugin and the
@@ -90,7 +98,7 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
 - Real WordPress integration verifies Block Theme and plugin recognition,
   Site/Page Editor HTTP 200, seven templates, three template parts, four native
   patterns, content-only locking, Query Loop rendering, exactly one H1,
-  save/reload persistence, a revision, private status and all 18 rendered theme
+  save/reload persistence, three revisions, private status and all 19 rendered theme
   assets. The frontend is HTTP 200 with no rendered PHP warning or fatal.
 - Workflow validation confirms that private deployment remains manual,
   inactive-code-only and guarded by backup, Coming Soon, noindex,
@@ -139,28 +147,50 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
 
 The corrected static preview and the real local WordPress runtime are both
 available without changing production WordPress state. The in-app browser
-reported that no browser session was available, so no new screenshots are
-claimed. Responsive source contracts cover 320, 375, 390, 430, 768, 1024,
-1280, 1440 and 1920 pixels, but rendered screenshots, console inspection,
-scroll-width measurements, axe and keyboard walkthrough evidence remain pending
-until a supported browser session is connected.
+captured the real WordPress frontend at 320, 375, 390, 430, 768, 1024, 1280,
+1440 and 1920 pixels; exact-width approved-reference and native screenshots,
+mobile/desktop section captures and interaction states are stored in
+`qa/native-foundation/final-rendered/`. All nine widths reported zero document
+overflow. The horizontal partner-logo rail remains intentionally scrollable
+inside its container, and the signed-in WordPress toolbar was excluded from the
+final presentation crops.
+
+The final browser walkthrough found no console errors or warnings. It verified
+Hero and Platform navigation/status/focus, video playback control and
+visibility behavior, language/FAQ disclosures, menu scroll lock/Escape/focus
+return, quotation-dialog focus/Escape return and the no-network submit fallback.
+Rendered semantic audits at 390 and 1440 found one H1, complete landmarks and
+no heading jumps, duplicate IDs, missing alt text, unnamed controls, positive
+tabindex values, insecure external targets or broken ARIA references. Contrast
+checks covered 94 mobile and 96 desktop opaque-surface text nodes without a
+failure. The active browser preference was not reduced motion, so preference
+emulation remains an environment limitation; the rendered CSSOM and static
+gate verify the reduced-motion override. The in-app harness did not reliably
+advance a page-wide synthetic Tab sequence; component-level keyboard behavior
+was exercised, while manual sequential-Tab review remains a publication check.
+
+The remaining News difference is editorial runtime data: the isolated private
+WordPress instance contains its default `Hello world!` post rather than final
+approved news content. The four-slide native Hero, English-only selector and
+updated Frank-approved copy/IA are intentional product differences inside the
+approved visual language.
 
 ## Runtime Safety
 
-This local completion pass did not dispatch a workflow, deploy, activate a
-theme/plugin, publish content, change Coming Soon or modify the database.
+This rendered-QA pass did not dispatch a workflow, deploy, change production
+theme/plugin activation, publish content, change Coming Soon or modify the
+production database.
 FT-NATIVE-001B is temporarily blocked by the orphaned GitHub Actions run.
 Required Reviewer protection does not block the current private/manual
 compensating release policy.
 
-## Runtime Validation Still Required
+## Production/Publication Validation Still Required
 
 - Production recognition while both native components remain inactive and any
   later approved temporary production activation remain separately gated.
-- Browser-console, video visibility/playback and responsive visual review at
-  all nine target widths in the real local WordPress renderer.
-- Keyboard, focus, reduced-motion and screen-reader checks in rendered
-  WordPress.
+- Manual sequential-Tab, screen-reader and assistive-technology review remains
+  a publication check; the completed local evidence is browser-semantic and
+  component-keyboard based.
 - Locale-aware routing remains deferred to FT-NATIVE-003; the current Header is
   English-only and its NL/DE choices are disabled.
 - Production quotation endpoint, consent/privacy copy and delivery verification
@@ -170,11 +200,9 @@ compensating release policy.
 
 ## Next Action
 
-Connect a supported in-app browser session and validate the local native
-WordPress Homepage at all nine target widths with screenshots, console,
-overflow, axe, keyboard and reduced-motion checks. Do not dispatch a replacement
-production workflow while GitHub run `32985108587` remains non-terminal; before
-any future approved dispatch, recheck through the GitHub APIs that it is
-terminal or absent and has no jobs, deployments or pending environment
-approvals. Keep Coming Soon and public noindex active and `farmtree-native`
-inactive in production.
+Stop at pre-release and wait for explicit user approval before any release or
+production action. Do not dispatch a replacement production workflow while
+GitHub run `32985108587` remains non-terminal; before any future approved
+dispatch, recheck through the GitHub APIs that it is terminal or absent and has
+no jobs, deployments or pending environment approvals. Keep Coming Soon and
+public noindex active and `farmtree-native` inactive in production.

@@ -43,6 +43,28 @@ add_action('wp_enqueue_scripts', 'farmtree_native_enqueue_fonts');
 add_action('enqueue_block_editor_assets', 'farmtree_native_enqueue_fonts');
 
 /**
+ * Load the native theme stylesheet on the frontend with cache-safe versioning.
+ *
+ * Block themes do not automatically enqueue style.css on the frontend. The
+ * same file remains registered as an editor style in farmtree_native_setup().
+ */
+function farmtree_native_enqueue_styles(): void
+{
+    $style_path = get_stylesheet_directory() . '/style.css';
+    $version = is_readable($style_path)
+        ? (string) filemtime($style_path)
+        : (string) wp_get_theme()->get('Version');
+
+    wp_enqueue_style(
+        'farmtree-native-style',
+        get_stylesheet_uri(),
+        ['farmtree-native-fonts'],
+        $version
+    );
+}
+add_action('wp_enqueue_scripts', 'farmtree_native_enqueue_styles');
+
+/**
  * Load manual-only native interactions on the frontend.
  *
  * The script is deliberately excluded from the Block Editor so every

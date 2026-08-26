@@ -439,6 +439,12 @@ for (const link of `${homepage}\n${callToAction}\n${header}\n${footer}`.matchAll
   }
 }
 
+for (const link of `${header}\n${footer}`.matchAll(/<!-- wp:navigation-link (\{[^\n]+"opensInNewTab":true[^\n]+\}) \/-->/g)) {
+  if (!link[1].includes('"rel":"noreferrer noopener"')) {
+    throw new Error(`External Navigation Link block must retain noopener and noreferrer: ${link[0]}`);
+  }
+}
+
 for (const contract of [
   'ft-final-cta',
   'Make agroforestry measurable, investable and scalable.',
@@ -448,6 +454,20 @@ for (const contract of [
 ]) {
   if (!callToAction.includes(contract)) {
     throw new Error(`Call To Action is missing approved visual contract: ${contract}`);
+  }
+}
+
+for (const contract of [
+  "event.key === 'Enter'",
+  "event.key === ' '",
+  'selector.open = !selector.open',
+  '!event.repeat',
+  "event.key === 'Escape'",
+  "selector.removeAttribute('open')",
+  'summary.focus()'
+]) {
+  if (!interactions.includes(contract)) {
+    throw new Error(`Language selector is missing keyboard accessibility contract: ${contract}`);
   }
 }
 
@@ -539,8 +559,11 @@ if (/\bsetInterval\s*\(|\bsetTimeout\s*\(/.test(interactions)) {
 
 if (
   !functions.includes('farmtree-native-fonts') ||
+  !functions.includes('farmtree-native-style') ||
   !functions.includes('family=Manrope') ||
   !functions.includes('family=Inter') ||
+  !functions.includes('get_stylesheet_uri()') ||
+  !functions.includes("add_action('wp_enqueue_scripts', 'farmtree_native_enqueue_styles')") ||
   !functions.includes('assets/js/native-interactions.js') ||
   !functions.includes('farmtree_native_image_loading_attributes') ||
   !functions.includes('farmtree_native_platform_video_attributes') ||
@@ -583,11 +606,15 @@ for (const contract of [
   'showModal',
   "event.preventDefault()",
   "document.body.classList.add('ft-quotation-open')",
+  "dialog.addEventListener('keydown'",
+  "dialog.addEventListener('cancel'",
   'error.hidden = false',
   'initialiseBentoGroups',
   "document.createElement('h2')",
   'ft-native-menu-card-heading',
-  'heading.hidden = true'
+  'heading.hidden = true',
+  'initialiseFaqDetails',
+  'summary.parentElement.open = !summary.parentElement.open'
 ]) {
   if (!interactions.includes(contract)) {
     throw new Error(`Native interactions are missing menu/dialog contract: ${contract}`);

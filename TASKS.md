@@ -49,8 +49,8 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 ### FT-NATIVE-002 - Native Homepage
 
 Status: Local implementation, approved visual-parity correction, automated
-regression and real local WordPress runtime validation complete; rendered
-browser evidence pending.
+regression, real local WordPress runtime validation and rendered browser QA
+complete; stopped at pre-release.
 
 The Frank-approved Homepage has been built in `farmtree-native` with core
 blocks, content-only locked patterns and a read-only local preview sourced from
@@ -59,14 +59,16 @@ is restored without changing the `farmtree` rollback theme. The current source
 includes a one-H1/four-image Hero, approved Platform MP4/poster and screenshot
 with explicit playback control, asset-backed brand-logo pattern, five-card Bento
 menu, English-only disabled locale options and fail-closed quotation submit.
-Scope, evidence and remaining browser/runtime checks are defined in
+Scope, evidence and remaining production/publication gates are defined in
 `CURRENT_SPRINT.md` and `SPRINT_REPORT.md`.
 
 The isolated loopback-only WordPress Playground runtime recognizes the Block
-Theme and plugin, persists the private Homepage and its revision, registers the
+Theme and plugin, persists the private Homepage and three revisions, registers the
 required templates/parts/patterns and renders its Query Loop and assets. The
-remaining local gate is screenshots, console, keyboard, axe and overflow review
-at all nine target widths in a supported in-app browser session.
+local gate is complete: screenshots, console, keyboard/focus, semantic
+accessibility, contrast, interactions and overflow were reviewed at all nine
+target widths. Release, production and final-content work remains explicitly
+approval-gated or deferred as recorded in the sprint evidence.
 
 ## Parallel Runtime Gate
 

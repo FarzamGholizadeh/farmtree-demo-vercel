@@ -2,8 +2,8 @@
 
 ## FT-NATIVE-002 - Native Homepage
 
-Status: Visual-first implementation and real local WordPress validation
-complete; browser-rendered evidence pending
+Status: Rendered local WordPress/browser validation complete; stopped at
+pre-release
 
 ### Objective
 
@@ -102,8 +102,8 @@ publication gate are approved under FT-WEB-004.
   found and corrected a two-pixel logo-height and Header-width drift.
 - The isolated real WordPress runtime recognizes and locally activates
   `farmtree-native` as a Block Theme and activates `farmtree-content`. A private
-  bootstrapped Homepage persists its registered pattern content and revision,
-  renders exactly one H1 and a Query Loop, loads 18 referenced theme assets,
+  bootstrapped Homepage persists its registered pattern content and three revisions,
+  renders exactly one H1 and a Query Loop, loads 19 referenced theme assets,
   and returns HTTP 200 from the Site Editor, Page Editor and frontend without
   rendered PHP warnings or fatals. WordPress registers all seven required
   templates, three template parts and four native patterns.
@@ -120,13 +120,26 @@ publication gate are approved under FT-WEB-004.
   assertions confirm the approved Hero, one H1, real Header/Footer, exact core
   palette, section order, absence of timer-based slide autoplay and the explicit
   Platform video Play/Pause control.
-- The responsive CSS contract covers the requested 320, 375, 390, 430, 768,
-  1024, 1280, 1440 and 1920 widths without page-level zoom, root transforms or
-  overflow masking. Rendered scroll-width and screenshot evidence remains a
-  browser-environment check because no connected in-app browser was available.
-- Browser console, keyboard, axe, overflow and screenshot validation across all
-  nine target widths remain pending because no supported in-app browser session
-  is connected.
+- The real local WordPress frontend was rendered and captured at 320, 375, 390,
+  430, 768, 1024, 1280, 1440 and 1920 pixels. Every width reported
+  `scrollWidth === innerWidth`; the only off-screen children belong to the
+  intentionally contained horizontal partner-logo rail. Final screenshots are
+  in `qa/native-foundation/final-rendered/`.
+- Browser error/warning logs were empty after the interaction walkthrough.
+  Rendered semantic audits at 390 and 1440 found one H1, complete
+  Header/Main/Footer landmarks, no heading-level jumps, duplicate IDs, missing
+  image alt text, unnamed controls, positive tabindex values, insecure external
+  targets or broken ARIA ID references. Opaque-surface contrast checks covered
+  94 mobile and 96 desktop text nodes with no failures.
+- Component-level keyboard and interaction checks covered Hero and Platform click/arrow
+  navigation, live status and focus, video Play/Pause and visibility behavior,
+  language and FAQ disclosure activation, menu scroll lock/Escape/focus return,
+  visible focus treatment, quotation-dialog focus/Escape return and its
+  no-network submit fallback. The browser's active reduced-motion preference
+  was false; the rendered CSSOM and source gate verify the reduced-motion
+  override and manual-only carousel behavior. The browser harness did not
+  reliably advance a page-wide synthetic Tab sequence, so manual sequential-Tab
+  and assistive-technology review remain publication checks.
 - A fresh preview process returned HTTP 200 with the expected
   `X-Robots-Tag: noindex, nofollow` header.
 - GitHub run `32956292922` validated pushed commit `897a991` successfully.
@@ -149,18 +162,19 @@ publication gate are approved under FT-WEB-004.
 - Core-block editability and locked design contract: verified from source.
 - Real local WordPress editor/frontend recognition, save/reload, revisions,
   locking, Query Loop, asset and PHP-rendering checks: complete.
-- Rendered browser screenshots, browser-console, axe, keyboard and scroll-width
-  validation: pending a supported in-app browser session.
+- Rendered browser screenshots, browser console, component keyboard/focus, responsive
+  overflow, semantic accessibility, contrast, interaction and reduced-motion
+  contract validation across all nine target widths: complete locally.
 - Locale-aware NL/DE routing and production quotation submission/privacy:
   deferred and intentionally unavailable in the current build.
 - Partner evidence links, final theme labels, approved production media and
   final testimonials: pending later content validation before publication.
 
-### Next Local Validation Action
+### Pre-release Status
 
-Connect a supported in-app browser session, then run the rendered native
-WordPress Homepage through 320, 375, 390, 430, 768, 1024, 1280, 1440 and 1920
-pixel screenshots plus keyboard, axe, console and overflow checks.
+Local implementation and validation are complete. Stop at pre-release until the
+user explicitly approves a release step; final content evidence, locale routing
+and production quotation delivery remain separate publication gates.
 
 ### Production Approval Boundary
 

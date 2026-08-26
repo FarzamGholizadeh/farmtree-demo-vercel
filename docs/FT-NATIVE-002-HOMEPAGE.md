@@ -1,13 +1,14 @@
 # FT-NATIVE-002 Homepage Direction
 
-Status: Implemented locally; runtime validation pending
+Status: Implemented and validated locally; pre-release
 
 ## Dependency And Source
 
 FT-NATIVE-002 local development can proceed while FT-NATIVE-001B is blocked.
-Backup and noindex safeguards gate deployment and real WordPress runtime
-validation, not repository implementation. FT-NATIVE-002 must not expand or
-alter the runtime-validation responsibilities of FT-NATIVE-001B.
+Backup and noindex safeguards gate deployment and production WordPress runtime
+validation, not repository implementation or the completed isolated local
+WordPress validation. FT-NATIVE-002 must not expand or alter the
+runtime-validation responsibilities of FT-NATIVE-001B.
 
 The Frank-approved requirements derived from the 25 August 2026 website review
 transcript are a product and content source of truth for this sprint. Interpret
@@ -191,12 +192,15 @@ Prepare the architecture, but do not block FT-NATIVE-002 on:
   remains locked.
 - Exact theme labels, imagery, footage, testimonials and partner references are
   validated against approved source material before publication.
-- Source-level responsive rules cover 320, 375, 390, 430, 768, 1024, 1280,
-  1440 and 1920 pixels without page zoom, root transforms, viewport tricks or
-  root overflow masking; rendered browser evidence is still required before
-  release.
-- Real WordPress editor/frontend and PHP validation, rendered screenshots, axe
-  and keyboard walkthroughs remain pending release evidence.
+- Source and rendered responsive validation covers 320, 375, 390, 430, 768,
+  1024, 1280, 1440 and 1920 pixels without page zoom, root transforms, viewport
+  tricks or root overflow masking. Exact-width screenshots, zero document
+  overflow, clean browser logs and mobile/desktop section evidence are recorded
+  in `qa/native-foundation/final-rendered/` and the sprint report.
+- Real WordPress editor/frontend and PHP validation plus rendered semantic,
+  contrast, keyboard/focus, reduced-motion-contract and interaction checks are
+  complete locally. Manual assistive-technology review and production runtime
+  validation remain publication/release evidence rather than local blockers.
 - A recoverable WordPress files/database backup and explicit public `noindex`
   while Coming Soon remains active gate any runtime deployment. Independent
   Required Reviewer protection remains a deferred governance enhancement under

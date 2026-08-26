@@ -16,6 +16,138 @@ function digest(path) {
   return createHash('sha256').update(readFileSync(path)).digest('hex');
 }
 
+function normaliseSelector(selector) {
+  return selector.replace(/\s+/g, ' ').trim();
+}
+
+function selectorListIncludes(selectorList, wanted) {
+  return selectorList === wanted ||
+    selectorList.startsWith(`${wanted},`) ||
+    selectorList.endsWith(`, ${wanted}`) ||
+    selectorList.includes(`, ${wanted},`);
+}
+
+function cssRuleBlocks(source, selector) {
+  const wanted = normaliseSelector(selector);
+  const cssWithoutComments = source.replace(/\/\*[\s\S]*?\*\//g, '');
+
+  return Array.from(cssWithoutComments.matchAll(/([^{}]+)\{([^{}]*)\}/g))
+    .filter((match) => {
+      const selectorList = normaliseSelector(match[1]);
+
+      return selectorListIncludes(selectorList, wanted);
+    })
+    .map((match) => match[2]);
+}
+
+function cssTopLevelRuleBlocks(source, selector) {
+  const wanted = normaliseSelector(selector);
+  const cssWithoutComments = source.replace(/\/\*[\s\S]*?\*\//g, '');
+  const blocks = [];
+  let depth = 0;
+  let headerStart = 0;
+
+  for (let index = 0; index < cssWithoutComments.length; index += 1) {
+    if (cssWithoutComments[index] === '{') {
+      const selectorList = normaliseSelector(cssWithoutComments.slice(headerStart, index));
+
+      if (depth === 0 && selectorListIncludes(selectorList, wanted)) {
+        const blockEnd = cssWithoutComments.indexOf('}', index + 1);
+
+        if (blockEnd === -1) {
+          break;
+        }
+
+        blocks.push(cssWithoutComments.slice(index + 1, blockEnd));
+        index = blockEnd;
+        headerStart = blockEnd + 1;
+        continue;
+      }
+
+      depth += 1;
+    } else if (cssWithoutComments[index] === '}') {
+      depth -= 1;
+
+      if (depth === 0) {
+        headerStart = index + 1;
+      }
+    }
+  }
+
+  return blocks;
+}
+
+function assertTopLevelCssRule(source, selector, declarations) {
+  const blocks = cssTopLevelRuleBlocks(source, selector);
+
+  if (!blocks.some((block) => declarations.every((declaration) => block.includes(declaration)))) {
+    throw new Error(
+      `Native reduced-motion-safe visual feedback drifted: ${selector} -> ${declarations.join(', ')}`
+    );
+  }
+}
+
+function assertCssRule(source, selector, declarations) {
+  const blocks = cssRuleBlocks(source, selector);
+
+  if (!blocks.some((block) => declarations.every((declaration) => block.includes(declaration)))) {
+    throw new Error(
+      `Native theme drifted from approved production geometry: ${selector} -> ${declarations.join(', ')}`
+    );
+  }
+}
+
+function cssAtRuleBlocks(source, atRule) {
+  const cssWithoutComments = source.replace(/\/\*[\s\S]*?\*\//g, '');
+  const blocks = [];
+  let searchFrom = 0;
+
+  while (searchFrom < cssWithoutComments.length) {
+    const atRuleStart = cssWithoutComments.indexOf(atRule, searchFrom);
+
+    if (atRuleStart === -1) {
+      break;
+    }
+
+    const blockStart = cssWithoutComments.indexOf('{', atRuleStart + atRule.length);
+
+    if (blockStart === -1) {
+      break;
+    }
+
+    let depth = 1;
+    let blockEnd = blockStart + 1;
+
+    for (; blockEnd < cssWithoutComments.length && depth > 0; blockEnd += 1) {
+      if (cssWithoutComments[blockEnd] === '{') {
+        depth += 1;
+      } else if (cssWithoutComments[blockEnd] === '}') {
+        depth -= 1;
+      }
+    }
+
+    if (depth !== 0) {
+      break;
+    }
+
+    blocks.push(cssWithoutComments.slice(blockStart + 1, blockEnd - 1));
+    searchFrom = blockEnd;
+  }
+
+  return blocks;
+}
+
+function assertCssRuleInAtRule(source, atRule, selector, declarations) {
+  const blocks = cssAtRuleBlocks(source, atRule)
+    .flatMap((atRuleBlock) => cssRuleBlocks(atRuleBlock, selector));
+
+  if (!blocks.some((block) => declarations.every((declaration) => block.includes(declaration)))) {
+    throw new Error(
+      `Native responsive parity drifted: ${atRule} / ${selector} -> ${declarations.join(', ')}`
+    );
+  }
+}
+
 const productionBase = read(productionTheme, 'assets/css/base.css');
 const productionComponents = read(productionTheme, 'assets/css/components.css');
 const productionResponsive = read(productionTheme, 'assets/css/responsive.css');
@@ -77,28 +209,181 @@ for (const contract of sharedProductionContracts) {
   }
 }
 
-const nativeGeometryContracts = [
-  '--ft-approved-green: #00613f',
-  '--ft-approved-cream: #f5f1e8',
-  '--ft-approved-gold: #d3b06b',
-  '--ft-approved-mist: #dce7d2',
-  '--ft-content-wide: 1240px',
-  'width: min(1360px, 90vw) !important',
-  'min-height: 74px',
-  'width: 174px',
-  'height: 48px',
-  'height: 34px',
-  'font-size: clamp(58px, calc(3vw + 1.6rem), 76px) !important',
-  'font-size: clamp(15px, 1.2vw, 18px) !important',
-  'width: min(1180px, 88vw) !important',
-  'min-height: 430px',
-  'padding: 56px',
-  'gap: 34px !important'
+const nativeRuleContracts = [
+  [':root', [
+    '--ft-approved-green: #00613f',
+    '--ft-approved-green-2: #2e6a35',
+    '--ft-approved-cream: #f5f1e8',
+    '--ft-approved-gold: #d3b06b',
+    '--ft-approved-mist: #dce7d2',
+    '--ft-content-wide: 1240px'
+  ]],
+  ['.ft-native-site-header', ['padding: 0 !important', 'background: var(--ft-approved-green) !important']],
+  ['.ft-native-header-inner', [
+    'width: min(1360px, 90vw) !important',
+    'min-height: 74px',
+    'margin-block: 0 !important'
+  ]],
+  ['.ft-native-logo-shell', ['width: 174px', 'height: 48px']],
+  ['.ft-native-logo-shell img', ['height: 34px']],
+  ['.ft-home-hero-content :where(h1, h2)', [
+    'font-size: clamp(58px, calc(3vw + 1.6rem), 76px) !important'
+  ]],
+  ['.ft-home-hero-current > .has-lead-font-size', [
+    'font-size: clamp(15px, 1.2vw, 18px) !important'
+  ]],
+  ['.ft-home-hero-actions .wp-block-button__link', [
+    'border-color: rgb(255 255 255 / 62%) !important',
+    'background: rgb(255 255 255 / 10%) !important'
+  ]],
+  ['.ft-home-hero-copy-sources', ['display: none !important']],
+  ['.ft-platform-layout', [
+    'width: min(1180px, 88vw) !important',
+    'grid-template-columns: minmax(360px, 1fr) minmax(360px, 0.92fr)',
+    'gap: 34px !important'
+  ]],
+  ['.ft-platform-copy', ['min-height: 430px', 'margin-left: 0', 'padding: 56px']],
+  ['.ft-platform-visual', [
+    'padding: 16px',
+    'background: linear-gradient(160deg, #edf3e9 0%, #dce7d2 100%)'
+  ]],
+  ['.ft-platform-video-slide video', ['object-fit: contain !important']],
+  ['.ft-platform-controls', ['top: 16px', 'right: 16px', 'left: 16px', 'aspect-ratio: 16 / 9']],
+  ['.ft-platform-nav', [
+    'position: absolute',
+    'top: 50%',
+    'z-index: 3',
+    'width: 42px',
+    'height: 42px',
+    'transform: translateY(-50%)'
+  ]],
+  ['.ft-platform-nav svg', ['width: 22px', 'height: 22px']],
+  ['.ft-platform-prev', ['left: 12px']],
+  ['.ft-platform-next', ['right: 12px']],
+  ['.ft-platform-nav:hover', ['background: #fff']],
+  ['.ft-platform-nav:focus-visible', [
+    'outline: 2px solid var(--ft-approved-ink)',
+    'outline-offset: 2px',
+    'box-shadow: none'
+  ]],
+  ['.ft-platform-dots', ['align-items: center', 'justify-content: center', 'gap: 9px', 'margin-top: 14px']],
+  ['.ft-platform-dot', ['width: 9px', 'height: 9px']],
+  ['.ft-platform-dot.is-active', ['width: 22px']],
+  ['.ft-platform-dot:hover::before', ['background: rgb(33 79 42 / 50%)']],
+  ['.ft-platform-dot.is-active::before', ['width: 100%', 'background: #214f2a']],
+  ['.ft-platform-dot:focus-visible', [
+    'outline: 2px solid var(--ft-approved-ink)',
+    'outline-offset: 3px',
+    'box-shadow: none'
+  ]],
+  ['.ft-home-input-number', ['color: var(--ft-approved-green-2)']],
+  [
+    '.ft-native-menu-trigger .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > .ft-native-menu-card:hover',
+    ['border-color: rgb(211 176 107 / 42%)', 'background: rgb(255 255 255 / 8.5%) !important']
+  ],
+  [
+    '.ft-native-menu-trigger .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > .ft-native-menu-card::before',
+    ['background: linear-gradient(135deg, rgb(211 176 107 / 16%), transparent 48%)', 'opacity: 0']
+  ],
+  [
+    '.ft-native-menu-trigger .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > .ft-native-menu-card:hover::before',
+    ['opacity: 1']
+  ],
+  ['.ft-home-inputs', ['grid-template-columns: repeat(2, minmax(0, 1fr))']]
 ];
 
-for (const contract of nativeGeometryContracts) {
-  if (!nativeStyles.includes(contract)) {
-    throw new Error(`Native theme drifted from approved production geometry: ${contract}`);
+for (const [selector, declarations] of nativeRuleContracts) {
+  assertCssRule(nativeStyles, selector, declarations);
+}
+
+for (const [selector, declarations] of [
+  [
+    '.ft-native-menu-trigger .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > .ft-native-menu-card:hover',
+    ['border-color: rgb(211 176 107 / 42%)', 'background: rgb(255 255 255 / 8.5%) !important']
+  ],
+  [
+    '.ft-native-menu-trigger .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > .ft-native-menu-card::before',
+    ['background: linear-gradient(135deg, rgb(211 176 107 / 16%), transparent 48%)', 'opacity: 0']
+  ],
+  [
+    '.ft-native-menu-trigger .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > .ft-native-menu-card:hover::before',
+    ['opacity: 1']
+  ]
+]) {
+  assertTopLevelCssRule(nativeStyles, selector, declarations);
+}
+
+const nativeMobileRuleContracts = [
+  ['.ft-platform-dots', ['gap: 0']],
+  ['.ft-platform-dot', ['width: 44px', 'height: 44px']],
+  ['.ft-platform-dot.is-active', ['width: 44px']],
+  ['.ft-platform-dot.is-active::before', ['width: 9px']],
+  ['.ft-platform-dot:focus-visible', ['outline: none', 'box-shadow: none']],
+  ['.ft-platform-dot:focus-visible::before', [
+    'outline: 2px solid var(--ft-approved-ink)',
+    'outline-offset: 3px'
+  ]]
+];
+
+for (const [selector, declarations] of nativeMobileRuleContracts) {
+  assertCssRuleInAtRule(nativeStyles, '@media (width <= 768px)', selector, declarations);
+}
+
+assertCssRuleInAtRule(
+  nativeStyles,
+  '@media (prefers-reduced-motion: no-preference)',
+  '.ft-native-menu-trigger .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > .ft-native-menu-card:hover',
+  ['transform: translateY(-4px) !important']
+);
+
+assertCssRuleInAtRule(
+  nativeStyles,
+  '@media (prefers-reduced-motion: no-preference)',
+  '.ft-native-menu-trigger .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > .ft-native-menu-card',
+  ['transition: background 280ms ease, border-color 280ms ease, transform 280ms ease']
+);
+
+assertCssRuleInAtRule(
+  nativeStyles,
+  '@media (prefers-reduced-motion: no-preference)',
+  '.ft-platform-nav',
+  ['transition: background 200ms ease, transform 200ms ease']
+);
+
+assertCssRuleInAtRule(
+  nativeStyles,
+  '@media (prefers-reduced-motion: no-preference)',
+  '.ft-platform-nav:hover',
+  ['transform: translateY(-50%) scale(1.06)']
+);
+
+assertCssRuleInAtRule(
+  nativeStyles,
+  '@media (width <= 560px)',
+  '.ft-platform-nav',
+  ['width: 36px', 'height: 36px']
+);
+
+assertCssRuleInAtRule(
+  nativeStyles,
+  '@media (width <= 560px)',
+  '.ft-platform-nav svg',
+  ['width: 18px', 'height: 18px']
+);
+
+if (!nativeHomepage.includes(
+  '</div>\n<div class="ft-platform-dots" role="group" aria-label="Choose Platform media item">'
+)) {
+  throw new Error('Platform dots must remain in the approved normal-flow strip outside the media overlay controls.');
+}
+
+for (const platformArrowContract of [
+  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">',
+  'd="M15 5l-7 7 7 7"',
+  'd="M9 5l7 7-7 7"'
+]) {
+  if (!nativeHomepage.includes(platformArrowContract)) {
+    throw new Error(`Platform carousel control drifted from the approved SVG geometry: ${platformArrowContract}`);
   }
 }
 
