@@ -367,6 +367,8 @@ $draft = get_post($draft_id);
 farmtree_runtime_assert($draft instanceof WP_Post, 'Draft could not be reloaded.');
 farmtree_runtime_assert($draft->post_status === 'draft', 'Runtime validation page is not a draft.');
 farmtree_runtime_assert(wp_revisions_enabled($draft), 'Page revisions are disabled.');
+farmtree_runtime_assert(get_current_user_id() > 0, 'WP-CLI did not establish an editor user context.');
+farmtree_runtime_assert(current_user_can('edit_pages'), 'The runtime validation user cannot edit pages.');
 
 $revisions_before = wp_get_post_revisions($draft_id);
 $revision_ids_before = array_map('intval', array_keys($revisions_before));
@@ -382,7 +384,29 @@ if (is_wp_error($marked_update)) {
 
 $saved_draft = get_post($draft_id);
 farmtree_runtime_assert($saved_draft instanceof WP_Post, 'Saved draft could not be reloaded.');
-farmtree_runtime_assert($saved_draft->post_content === $marked_content, 'Draft content did not persist after reload.');
+if ($saved_draft->post_content !== $marked_content) {
+    $expected_length = strlen($marked_content);
+    $actual_length = strlen($saved_draft->post_content);
+    $comparison_length = min($expected_length, $actual_length);
+    $first_difference = $comparison_length;
+
+    for ($index = 0; $index < $comparison_length; $index++) {
+        if ($marked_content[$index] !== $saved_draft->post_content[$index]) {
+            $first_difference = $index;
+            break;
+        }
+    }
+
+    farmtree_runtime_fail(sprintf(
+        'Draft content changed on save (expected_bytes=%d actual_bytes=%d first_difference=%d trailing_newline_only=%s kses_equivalent=%s unfiltered_html=%s).',
+        $expected_length,
+        $actual_length,
+        $first_difference,
+        rtrim($saved_draft->post_content, "\r\n") === rtrim($marked_content, "\r\n") ? 'yes' : 'no',
+        wp_kses_post($marked_content) === $saved_draft->post_content ? 'yes' : 'no',
+        current_user_can('unfiltered_html') ? 'yes' : 'no'
+    ));
+}
 $revisions_after = wp_get_post_revisions($draft_id);
 $revision_ids_after = array_map('intval', array_keys($revisions_after));
 $new_revision_ids = array_diff($revision_ids_after, $revision_ids_before);
