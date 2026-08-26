@@ -11,14 +11,6 @@ on:
         description: "Type PRIVATE NATIVE FILES ONLY to deploy inactive native code"
         required: true
         type: string
-      backup_confirmation:
-        description: "Type RECOVERABLE FILE AND DB BACKUP VERIFIED before deployment"
-        required: true
-        type: string
-      backup_reference:
-        description: "Enter a non-secret evidence reference for the matching file and database restore point"
-        required: true
-        type: string
 
 permissions:
   contents: read
@@ -38,17 +30,15 @@ jobs:
       - name: Require explicit private-runtime confirmation
         env:
           CONFIRMATION: ${{ inputs.confirmation }}
-          BACKUP_CONFIRMATION: ${{ inputs.backup_confirmation }}
-          BACKUP_REFERENCE: ${{ inputs.backup_reference }}
         run: |
           test "$CONFIRMATION" = "PRIVATE NATIVE FILES ONLY"
-          test "$BACKUP_CONFIRMATION" = "RECOVERABLE FILE AND DB BACKUP VERIFIED"
-          test -n "${BACKUP_REFERENCE//[[:space:]]/}"
-          reference_digest="$(printf '%s' "$BACKUP_REFERENCE" | sha256sum)"
-          reference_digest="${reference_digest%% *}"
-          printf '### FarmTree backup evidence\n- Reference SHA-256: `%s`\n' \
-            "$reference_digest" >> "$GITHUB_STEP_SUMMARY"
-          echo "FARMTREE_BACKUP_EVIDENCE_DIGEST_RECORDED"
+          printf '%s\n' \
+            '### FarmTree inactive-code deployment boundary' \
+            '- Deploys only farmtree-native and farmtree-content files.' \
+            '- Does not activate code or change WordPress database content.' \
+            '- Recoverable files/database backup remains mandatory before activation, migration, destructive work or cutover.' \
+            >> "$GITHUB_STEP_SUMMARY"
+          echo "FARMTREE_INACTIVE_FILE_ONLY_CONFIRMATION_OK"
 
       - name: Checkout repository
         uses: actions/checkout@v4

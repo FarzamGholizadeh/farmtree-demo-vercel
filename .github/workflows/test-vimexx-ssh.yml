@@ -1,16 +1,47 @@
-name: Test Vimexx SSH Connection
+name: Apply FarmTree Coming Soon Noindex Safety
 
 on:
   workflow_dispatch:
+    inputs:
+      operation:
+        description: "Choose the bounded private-runtime operation"
+        required: true
+        default: apply-noindex
+        type: choice
+        options:
+          - apply-noindex
+          - validate-inactive-runtime
 
 permissions:
   contents: read
 
+concurrency:
+  group: farmtree-coming-soon-noindex-safety
+  cancel-in-progress: false
+
 jobs:
-  test-ssh:
+  noindex-safety:
+    if: ${{ inputs.operation == 'apply-noindex' }}
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://farmtree.eu/
 
     steps:
+      - name: Validate production configuration
+        env:
+          SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          test -n "$SSH_KEY"
+          test -n "$HOST"
+          test -n "$PORT"
+          test -n "$USERNAME"
+          test -n "$WORDPRESS_PATH"
+
       - name: Configure SSH
         env:
           SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
@@ -23,15 +54,223 @@ jobs:
           ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
-      - name: Test Vimexx connection
+      - name: Apply and verify frontend-only noindex header
         env:
           HOST: ${{ secrets.VIMEXX_HOST }}
           PORT: ${{ secrets.VIMEXX_PORT }}
           USERNAME: ${{ secrets.VIMEXX_USER }}
           WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
-          ssh \
+          set -Eeuo pipefail
+
+          remote_wordpress_path="$(printf '%q' "$WORDPRESS_PATH")"
+          remote_backup="/tmp/farmtree-htaccess-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.bak"
+          remote_backup_quoted="$(printf '%q' "$remote_backup")"
+          remote_candidate="$WORDPRESS_PATH/.htaccess.farmtree-noindex-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.tmp"
+          remote_candidate_quoted="$(printf '%q' "$remote_candidate")"
+          ssh_target="$USERNAME@$HOST"
+          ssh_args=(-i ~/.ssh/id_ed25519 -p "$PORT")
+          applied=0
+
+          rollback() {
+            if [ "$applied" -eq 1 ]; then
+              ssh "${ssh_args[@]}" "$ssh_target" \
+                "set -eu
+                if test -f $remote_backup_quoted; then
+                  cp -p $remote_backup_quoted $remote_wordpress_path/.htaccess
+                fi
+                rm -f $remote_backup_quoted $remote_candidate_quoted"
+              echo "FARMTREE_NOINDEX_ROLLED_BACK"
+            fi
+          }
+          trap rollback ERR INT TERM
+          applied=1
+
+          ssh "${ssh_args[@]}" "$ssh_target" \
+            "set -eu
+            test -f $remote_wordpress_path/wp-load.php
+            test -f $remote_wordpress_path/.htaccess
+            command -v wp >/dev/null
+            wp core is-installed --path=$remote_wordpress_path
+            test \"\$(wp option get template --path=$remote_wordpress_path)\" = farmtree
+            test \"\$(wp option get stylesheet --path=$remote_wordpress_path)\" = farmtree
+            test \"\$(wp option get blog_public --path=$remote_wordpress_path)\" = 0
+            wp plugin is-active coming-soon --path=$remote_wordpress_path
+            ! grep -Fqx '# BEGIN FarmTree rebuild noindex' $remote_wordpress_path/.htaccess
+            cp -p $remote_wordpress_path/.htaccess $remote_backup_quoted
+            cp -p $remote_wordpress_path/.htaccess $remote_candidate_quoted
+            printf '\n%s\n%s\n%s\n%s\n%s\n' \
+              '# BEGIN FarmTree rebuild noindex' \
+              '<IfModule mod_headers.c>' \
+              'Header always set X-Robots-Tag \"noindex, nofollow\" \"expr=%{REQUEST_URI} !~ m#^/(wp-admin(/|$)|wp-login\\.php(/|$))#\"' \
+              '</IfModule>' \
+              '# END FarmTree rebuild noindex' >> $remote_candidate_quoted
+            mv $remote_candidate_quoted $remote_wordpress_path/.htaccess"
+
+          cache_bust="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          home_headers="$(mktemp)"
+          home_body="$(mktemp)"
+          robots_headers="$(mktemp)"
+          login_headers="$(mktemp)"
+          login_body="$(mktemp)"
+          admin_headers="$(mktemp)"
+
+          home_status="$(curl -sS --max-time 30 \
+            -D "$home_headers" \
+            -o "$home_body" \
+            -w '%{http_code}' \
+            "https://farmtree.eu/?farmtree_noindex_check=$cache_bust")"
+          test "$home_status" = 200
+          grep -qi 'Coming Soon' "$home_body"
+          test "$(tr -d '\r' < "$home_headers" | grep -Eic '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*nofollow[[:space:]]*$')" -eq 1
+
+          robots_status="$(curl -sS --max-time 30 \
+            -D "$robots_headers" \
+            -o /dev/null \
+            -w '%{http_code}' \
+            "https://farmtree.eu/robots.txt?farmtree_noindex_check=$cache_bust")"
+          test "$robots_status" = 200
+          test "$(tr -d '\r' < "$robots_headers" | grep -Eic '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*nofollow[[:space:]]*$')" -eq 1
+
+          login_status="$(curl -sS --max-time 30 \
+            -D "$login_headers" \
+            -o "$login_body" \
+            -w '%{http_code}' \
+            "https://farmtree.eu/wp-login.php?farmtree_noindex_check=$cache_bust")"
+          test "$login_status" = 200
+          grep -qi 'id="loginform"' "$login_body"
+          ! grep -Eqi '^x-robots-tag:' "$login_headers"
+
+          admin_status="$(curl -sS --max-time 30 \
+            -D "$admin_headers" \
+            -o /dev/null \
+            -w '%{http_code}' \
+            "https://farmtree.eu/wp-admin/?farmtree_noindex_check=$cache_bust")"
+          [[ "$admin_status" =~ ^30[12378]$ ]]
+          grep -Eqi '^location:.*wp-login\.php' "$admin_headers"
+          ! grep -Eqi '^x-robots-tag:' "$admin_headers"
+
+          ssh "${ssh_args[@]}" "$ssh_target" \
+            "set -eu
+            test \"\$(wp option get template --path=$remote_wordpress_path)\" = farmtree
+            test \"\$(wp option get stylesheet --path=$remote_wordpress_path)\" = farmtree
+            test \"\$(wp option get blog_public --path=$remote_wordpress_path)\" = 0
+            wp plugin is-active coming-soon --path=$remote_wordpress_path
+            grep -Fqx '# BEGIN FarmTree rebuild noindex' $remote_wordpress_path/.htaccess
+            grep -Fqx '# END FarmTree rebuild noindex' $remote_wordpress_path/.htaccess
+            rm -f $remote_backup_quoted"
+
+          applied=0
+          trap - ERR INT TERM
+          echo "FARMTREE_PUBLIC_NOINDEX_NOFOLLOW_OK"
+          echo "FARMTREE_LOGIN_AND_ADMIN_EXCLUDED_OK"
+          echo "FARMTREE_COMING_SOON_PRESERVED"
+
+  validate-inactive-runtime:
+    if: ${{ inputs.operation == 'validate-inactive-runtime' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://farmtree.eu/
+
+    steps:
+      - name: Checkout runtime validator
+        uses: actions/checkout@v4
+
+      - name: Validate production configuration
+        env:
+          SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          test -n "$SSH_KEY"
+          test -n "$HOST"
+          test -n "$PORT"
+          test -n "$USERNAME"
+          test -n "$WORDPRESS_PATH"
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Validate installed inactive native packages in WordPress
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          set -Eeuo pipefail
+
+          remote_wordpress_path="$(printf '%q' "$WORDPRESS_PATH")"
+          remote_script="/tmp/farmtree-native-runtime-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.php"
+          remote_script_quoted="$(printf '%q' "$remote_script")"
+          ssh_target="$USERNAME@$HOST"
+          ssh_args=(-i ~/.ssh/id_ed25519 -p "$PORT")
+
+          ssh "${ssh_args[@]}" "$ssh_target" \
+            "set -eu
+            test -f $remote_wordpress_path/wp-load.php
+            command -v wp >/dev/null
+            wp core is-installed --path=$remote_wordpress_path
+            test \"\$(wp option get template --path=$remote_wordpress_path)\" = farmtree
+            test \"\$(wp option get stylesheet --path=$remote_wordpress_path)\" = farmtree
+            test \"\$(wp option get blog_public --path=$remote_wordpress_path)\" = 0
+            wp plugin is-active coming-soon --path=$remote_wordpress_path
+            wp theme is-installed farmtree-native --path=$remote_wordpress_path
+            ! wp theme is-active farmtree-native --path=$remote_wordpress_path
+            wp plugin is-installed farmtree-content --path=$remote_wordpress_path
+            ! wp plugin is-active farmtree-content --path=$remote_wordpress_path"
+
+          scp \
             -i ~/.ssh/id_ed25519 \
-            -p "$PORT" \
-            "$USERNAME@$HOST" \
-            "echo 'SSH_CONNECTION_OK'; whoami; pwd; test -d '$WORDPRESS_PATH' && echo 'WORDPRESS_PATH_OK'"
+            -P "$PORT" \
+            .github/scripts/validate-native-runtime.php \
+            "$ssh_target:$remote_script"
+
+          ssh "${ssh_args[@]}" "$ssh_target" \
+            "set -eu
+            trap 'rm -f $remote_script_quoted' EXIT
+            php -l $remote_script_quoted
+            wp eval-file $remote_script_quoted $GITHUB_RUN_ID --path=$remote_wordpress_path"
+
+      - name: Reverify private public boundary
+        run: |
+          set -Eeuo pipefail
+
+          cache_bust="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          home_headers="$(mktemp)"
+          home_body="$(mktemp)"
+          login_headers="$(mktemp)"
+          login_body="$(mktemp)"
+
+          home_status="$(curl -sS --max-time 30 \
+            -D "$home_headers" \
+            -o "$home_body" \
+            -w '%{http_code}' \
+            "https://farmtree.eu/?farmtree_runtime_check=$cache_bust")"
+          test "$home_status" = 200
+          grep -qi 'Coming Soon' "$home_body"
+          test "$(tr -d '\r' < "$home_headers" | grep -Eic '^x-robots-tag:[[:space:]]*noindex,[[:space:]]*nofollow[[:space:]]*$')" -eq 1
+
+          login_status="$(curl -sS --max-time 30 \
+            -D "$login_headers" \
+            -o "$login_body" \
+            -w '%{http_code}' \
+            "https://farmtree.eu/wp-login.php?farmtree_runtime_check=$cache_bust")"
+          test "$login_status" = 200
+          grep -qi 'id="loginform"' "$login_body"
+          ! grep -Eqi '^x-robots-tag:' "$login_headers"
+
+          echo "FARMTREE_INACTIVE_RUNTIME_VALIDATION_OK"
+          echo "FARMTREE_COMING_SOON_AND_NOINDEX_PRESERVED"
