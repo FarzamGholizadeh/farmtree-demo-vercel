@@ -36,7 +36,9 @@ production and rollback theme until an explicitly approved cutover.
 - Gate 2 - Implementation approval: local edits are reviewed and accepted.
 - Gate 3 - Push approval: a human explicitly approves pushing commits.
 - Gate 4 - Merge/release-candidate approval: a human explicitly approves the release candidate.
-- Gate 5 - Deployment approval: the GitHub `production` environment approval is granted before SSH/rsync deployment.
+- Gate 5 - Deployment approval: a human explicitly approves the manual workflow
+  dispatch before SSH/rsync deployment; the workflow remains bound to the
+  GitHub `production` environment.
 - Gate 6 - WordPress publication/activation/database approval: content publication, theme/plugin activation changes, and database changes require separate explicit approval.
 
 ## Deployment Boundary
@@ -57,14 +59,18 @@ runtime at `farmtree.eu`.
 Read-only GitHub API verification on 2026-08-26 confirmed that the private,
 personal-account repository uses `main` as its default branch. `Preview` and
 `Production` have no protection rules or deployment branch policy, and only the
-owner currently has repository access. GitHub required reviewers are not
-available for private repositories on Free, Pro or Team; the existing mandatory
-reviewer gate therefore requires Enterprise-capable ownership plus an eligible
-reviewer before it can be enforced.
+owner currently has repository access. Independent Required Reviewer protection
+is therefore recorded as a deferred governance enhancement, not a current
+development or release-preparation blocker. Keep the repository private and do
+not change its owner, billing or plan to obtain that enhancement.
 
 PR #3 merged the private-runtime workflow reconciliation to `main` at
 `3df2ae2`. GitHub registers `.github/workflows/deploy-wordpress-native.yml` as
 active and manual-only with zero runs, and the superseded
 `.github/workflows/deploy-wordpress-staging.yml` is absent. Required-reviewer
-protection, matching recoverable file/database backup evidence, explicit public
-noindex and separate dispatch approval remain prerequisites for any run.
+protection is deferred; matching recoverable file/database backup evidence,
+explicit public noindex and separate user dispatch approval remain prerequisites
+for any run. The compensating boundary is the private repository, manual-only
+workflow, no automatic WordPress production deployment, autonomous pre-release
+stop, explicit approval, Coming Soon, the unchanged `farmtree` rollback theme
+and the documented rollback path.

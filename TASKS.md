@@ -48,30 +48,40 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 
 ### FT-NATIVE-002 - Native Homepage
 
-Status: Local implementation complete; runtime validation pending.
+Status: Local implementation and approved visual-parity correction complete;
+runtime/browser validation pending.
 
 The Frank-approved Homepage has been built in `farmtree-native` with core
-blocks, content-only locked patterns and a read-only local preview. Scope,
-evidence and remaining runtime checks are defined in `CURRENT_SPRINT.md` and
-`SPRINT_REPORT.md`.
+blocks, content-only locked patterns and a read-only local preview sourced from
+the real native Header/Footer and `theme.json`. The production visual language
+is restored without changing the `farmtree` rollback theme. The current source
+includes a one-H1/four-image Hero, approved Platform MP4/poster and screenshot
+with explicit playback control, asset-backed brand-logo pattern, five-card Bento
+menu, English-only disabled locale options and fail-closed quotation submit.
+Scope, evidence and remaining browser/runtime checks are defined in
+`CURRENT_SPRINT.md` and `SPRINT_REPORT.md`.
 
 ## Parallel Runtime Gate
 
 ### FT-NATIVE-001B - Private Production Runtime Validation
 
-Status: Pushed source validated; runtime blocked. PR #3 completed the
-default-branch reconciliation at `3df2ae2`: the native workflow is active and
-manual-only, and the superseded staging workflow is retired. The remaining
-gates are Enterprise-capable required-reviewer protection for GitHub
-`Production`, matching recoverable files/database backup evidence and explicit
-public `noindex`. These gates block runtime/deployment actions, not local native
-development.
+Status: Pushed source validated; runtime safeguards pending. PR #3 completed
+the default-branch reconciliation at `3df2ae2`: the native workflow is active
+and manual-only, and the superseded staging workflow is retired. Matching
+recoverable files/database backup evidence and explicit public `noindex` remain
+release gates. Independent Required Reviewer protection is a deferred
+governance enhancement under the private/manual compensating release policy;
+it does not block development or a later explicitly approved dispatch.
 
 ## Deferred Implementation Backlog
 
-- FT-NATIVE-003 - Register content models and build the admin experience.
+- FT-NATIVE-003 - Register content models, build the admin experience and add
+  locale-aware routing; the current native shell is English-only with NL/DE
+  disabled.
 - FT-NATIVE-004 - Build real pages, navigation and clean WordPress routes.
 - FT-NATIVE-005 - Migrate content, validate runtime and prepare cutover.
 - FT-SEO-001 - Define SEO metadata, canonical, hreflang, sitemap, and robots ownership across WordPress core, theme, and SEO plugin.
-- FT-WEB-004 - Define production form handling and delivery verification.
+- FT-WEB-004 - Define the production quotation endpoint, consent/privacy copy,
+  spam controls, delivery verification and publication gate; the current modal
+  intentionally sends no network request.
 - FT-WP-005 - Add browser-based production verification checklist after an approved deployment.

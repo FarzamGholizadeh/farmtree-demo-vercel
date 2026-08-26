@@ -8,12 +8,12 @@
         {
           "slug": "farmtree-green",
           "name": "FarmTree Green",
-          "color": "#214F2A"
+          "color": "#00613F"
         },
         {
           "slug": "farmtree-forest",
           "name": "FarmTree Forest",
-          "color": "#123A2A"
+          "color": "#00613F"
         },
         {
           "slug": "farmtree-ink",
@@ -28,7 +28,7 @@
         {
           "slug": "farmtree-cream",
           "name": "FarmTree Cream",
-          "color": "#F2ECDD"
+          "color": "#F5F1E8"
         },
         {
           "slug": "farmtree-mist",
@@ -38,12 +38,12 @@
         {
           "slug": "farmtree-gold",
           "name": "FarmTree Gold",
-          "color": "#C9A85F"
+          "color": "#D3B06B"
         },
         {
           "slug": "farmtree-sky",
           "name": "FarmTree Sky",
-          "color": "#C9DDE3"
+          "color": "#F5F0E4"
         },
         {
           "slug": "white",
@@ -55,7 +55,7 @@
   },
   "styles": {
     "color": {
-      "background": "#FFFFFF",
+      "background": "#F5F1E8",
       "text": "#163126"
     }
   }

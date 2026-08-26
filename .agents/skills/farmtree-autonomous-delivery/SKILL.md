@@ -21,6 +21,24 @@ validated local pre-release result without waiting for routine confirmations.
 Keep project-specific facts in repository documentation. Keep this skill
 focused on the reusable delivery loop.
 
+## VISUAL DESIGN LOCK
+
+The currently approved FarmTree frontend is the mandatory visual source of
+truth for the WordPress-native rebuild. Architecture may be replaced
+completely, but approved UI/UX must not be materially redesigned unless the
+user explicitly requests redesign. Frank/Max/user-approved content and IA
+changes must be implemented inside the existing approved visual language.
+
+Apply this lock to every current and future FarmTree page. Use the approved
+frontend at `https://farmtree.eu/#home` and existing production `farmtree`
+theme for visual composition, layout, typography, color, spacing, components,
+responsive behavior and motion. Do not reinterpret, modernize or replace that
+approved visual language without an explicit redesign request. Use the relevant
+approved brief for content and information architecture, and keep technical
+ownership in the WordPress-native Block Theme, Gutenberg patterns/templates
+and `farmtree-content`. Visual parity must not be achieved by returning to the
+legacy static SPA architecture.
+
 ## Run The Delivery Loop
 
 1. Translate the approved brief into concrete acceptance checks.
@@ -57,6 +75,17 @@ external or production state.
 
 Backup, noindex, Coming Soon and production-access blockers prevent deployment
 or runtime mutation. They do not prevent local development or local validation.
+
+Independent GitHub Environment Required Reviewer protection may remain a
+deferred governance enhancement when the private repository's current plan
+cannot provide it. Do not recommend making the repository public, moving it,
+changing ownership or billing, or purchasing/migrating a GitHub plan as a
+routine development prerequisite. Preserve the compensating release boundary:
+the repository stays private, production workflows stay `workflow_dispatch`
+only, no push automatically deploys WordPress production, Coming Soon stays active,
+the rollback theme and documented rollback path stay in place, and the loop
+stops at pre-release for explicit user approval before any manual dispatch.
+Never weaken existing workflow protections.
 
 ## Preserve The Production Boundary
 

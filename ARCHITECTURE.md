@@ -145,8 +145,10 @@ Phase-1 port of the approved static site into a **classic** custom theme
   registered yet**, so activation shows complete approved content immediately.
 - **Deploy.** `.github/workflows/deploy-wordpress.yml` — manual-only via
   `workflow_dispatch`. The workflow validates files and PHP syntax, then
-  deploys the theme and plugins to Vimexx over SSH/rsync only after the GitHub
-  `production` environment approval boundary is cleared.
+  deploys the theme and plugins to Vimexx over SSH/rsync only after explicit
+  user approval is recorded before dispatch. The job is bound to GitHub's
+  `production` environment for environment-scoped configuration; that binding
+  does not currently provide an independent reviewer rule.
   `.github/workflows/test-vimexx-ssh.yml` is manual-only.
 
 ## WordPress-native foundation (`FT-WP-001`)

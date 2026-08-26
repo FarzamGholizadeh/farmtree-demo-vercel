@@ -6,7 +6,7 @@
     "useRootPaddingAwareAlignments": true,
     "layout": {
       "contentSize": "760px",
-      "wideSize": "1280px"
+      "wideSize": "1240px"
     },
     "color": {
       "custom": false,
@@ -19,12 +19,12 @@
         {
           "slug": "farmtree-green",
           "name": "FarmTree Green",
-          "color": "#214F2A"
+          "color": "#00613F"
         },
         {
           "slug": "farmtree-forest",
           "name": "FarmTree Forest",
-          "color": "#123A2A"
+          "color": "#00613F"
         },
         {
           "slug": "farmtree-ink",
@@ -39,7 +39,7 @@
         {
           "slug": "farmtree-cream",
           "name": "FarmTree Cream",
-          "color": "#F2ECDD"
+          "color": "#F5F1E8"
         },
         {
           "slug": "farmtree-mist",
@@ -49,12 +49,12 @@
         {
           "slug": "farmtree-gold",
           "name": "FarmTree Gold",
-          "color": "#C9A85F"
+          "color": "#D3B06B"
         },
         {
           "slug": "farmtree-sky",
           "name": "FarmTree Sky",
-          "color": "#C9DDE3"
+          "color": "#F5F0E4"
         },
         {
           "slug": "white",
@@ -89,22 +89,22 @@
         {
           "slug": "50",
           "name": "L",
-          "size": "1.5rem"
+          "size": "1.625rem"
         },
         {
           "slug": "60",
           "name": "XL",
-          "size": "2rem"
+          "size": "2.25rem"
         },
         {
           "slug": "70",
           "name": "2XL",
-          "size": "clamp(2.5rem, 6vw, 5rem)"
+          "size": "clamp(3.5rem, 6vw, 5.5rem)"
         },
         {
           "slug": "80",
           "name": "3XL",
-          "size": "clamp(4rem, 9vw, 8rem)"
+          "size": "clamp(4.5rem, 8vw, 7rem)"
         }
       ],
       "units": [
@@ -138,22 +138,22 @@
         {
           "slug": "small",
           "name": "Small",
-          "size": "0.9375rem"
+          "size": "0.875rem"
         },
         {
           "slug": "body",
           "name": "Body",
-          "size": "1.0625rem"
+          "size": "1rem"
         },
         {
           "slug": "lead",
           "name": "Lead",
-          "size": "1.375rem"
+          "size": "1.125rem"
         },
         {
           "slug": "heading-small",
           "name": "Heading Small",
-          "size": "2.5rem"
+          "size": "2.875rem"
         },
         {
           "slug": "heading",
@@ -217,7 +217,7 @@
   },
   "styles": {
     "color": {
-      "background": "var:preset|color|farmtree-ivory",
+      "background": "var:preset|color|farmtree-cream",
       "text": "var:preset|color|farmtree-ink"
     },
     "spacing": {
@@ -238,21 +238,21 @@
           "radius": "999px"
         },
         "color": {
-          "background": "var:preset|color|farmtree-green",
+          "background": "var:preset|color|farmtree-forest",
           "text": "var:preset|color|white"
         },
         "spacing": {
           "padding": {
-            "top": "0.8rem",
-            "right": "1.2rem",
-            "bottom": "0.8rem",
-            "left": "1.2rem"
+            "top": "0.95rem",
+            "right": "1.625rem",
+            "bottom": "0.95rem",
+            "left": "1.625rem"
           }
         },
         "typography": {
           "fontFamily": "var:preset|font-family|editorial",
           "fontSize": "var:preset|font-size|small",
-          "fontWeight": "700"
+          "fontWeight": "800"
         }
       },
       "caption": {
@@ -307,6 +307,11 @@
       "name": "footer",
       "title": "FarmTree Footer",
       "area": "footer"
+    },
+    {
+      "name": "quotation-modal",
+      "title": "FarmTree Quotation Modal",
+      "area": "uncategorized"
     }
   ],
   "customTemplates": [

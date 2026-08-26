@@ -36,6 +36,14 @@ assert.match(agentMap, /https:\/\/farmtree\.eu\//);
 assert.match(agentMap, /`farmtree` is the current public and\s+rollback-safe theme/);
 assert.match(agentMap, /`farmtree-native` remains inactive and must not become\s+public without explicit approval/);
 assert.match(agentMap, /Coming Soon removal/);
+assert.match(agentMap, /VISUAL DESIGN LOCK/);
+assert.match(
+  agentMap,
+  /currently approved FarmTree frontend is the mandatory visual source of\s+truth/,
+);
+assert.match(agentMap, /approved UI\/UX must not be materially redesigned/);
+assert.match(agentMap, /every current and future FarmTree page/);
+assert.match(agentMap, /Required Reviewer protection is a deferred\s+governance enhancement/);
 
 const frontmatter = skill.match(/^---\n([\s\S]+?)\n---/);
 assert.ok(frontmatter, 'SKILL.md must start with YAML frontmatter');
@@ -60,6 +68,17 @@ for (const trigger of [
 }
 assert.match(skill, /Run The Delivery Loop/);
 assert.match(skill, /Preserve The Production Boundary/);
+assert.match(skill, /VISUAL DESIGN LOCK/);
+assert.match(
+  skill,
+  /currently approved FarmTree frontend is the mandatory visual source of\s+truth/,
+);
+assert.match(skill, /approved UI\/UX must not be materially redesigned/);
+assert.match(skill, /every current and future FarmTree page/);
+assert.match(skill, /https:\/\/farmtree\.eu\/#home/);
+assert.match(skill, /Do not reinterpret, modernize or replace/);
+assert.match(skill, /Required Reviewer protection may remain a\s+deferred governance enhancement/);
+assert.match(skill, /production workflows stay `workflow_dispatch`\s+only/);
 assert.match(skill, /reproduce it when possible/);
 assert.match(skill, /multiple\s+evidence-based attempts/);
 assert.match(skill, /Do not make speculative code changes/);

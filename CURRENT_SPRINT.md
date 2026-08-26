@@ -2,7 +2,7 @@
 
 ## FT-NATIVE-002 - Native Homepage
 
-Status: Local implementation complete; pre-release review
+Status: Local visual-parity implementation complete; pre-release review
 
 ### Objective
 
@@ -13,19 +13,22 @@ design controls.
 
 ### Runtime Dependency
 
-The six approved native-rebuild commits reached origin at `897a991`, and GitHub
-native validation run `32956292922` passed that source. PR #3 merged the
-workflow-only reconciliation to `main` at `3df2ae2`: GitHub now registers
+The pushed native-rebuild source reaches `897a991`, and GitHub native validation
+run `32956292922` passed that source. Local commit `416500a` then reconciled the
+runtime release-readiness evidence. PR #3 merged the workflow-only
+reconciliation to `main` at `3df2ae2`: GitHub registers
 `.github/workflows/deploy-wordpress-native.yml` as active and manual-only, the
 superseded separate-staging workflow is absent, and the native workflow has
-never run.
+never run. The current visual-parity correction remains local pending a future
+push approval.
 
-FT-NATIVE-001B remains blocked on required-reviewer protection for GitHub
-`Production`, a verified matching recoverable files/database backup and an
-explicit public `noindex` signal. The private repository's current GitHub plan
-cannot enforce required reviewers; that gate requires Enterprise-capable
-ownership and an eligible reviewer. These safeguards block deployment and real
-WordPress runtime validation, not local native development.
+FT-NATIVE-001B still requires a verified matching recoverable files/database
+backup and an explicit public `noindex` signal before deployment or real
+WordPress runtime validation. Independent GitHub Environment Required Reviewer
+protection is a deferred governance enhancement for this private repository,
+not a development or dispatch blocker. The compensating release boundary keeps
+all WordPress production workflows manual-only and requires explicit user
+approval before dispatch.
 
 ### Implemented Homepage
 
@@ -42,6 +45,34 @@ The large audience section and Homepage Use Cases are omitted. News is lower,
 trust appears before proof stories, and the page is materially shorter than the
 legacy concept.
 
+The dedicated visual-parity correction restores the approved production
+theme's fixed green Header, asset-backed brand-logo pill, five-card Bento menu,
+cinematic centered Hero, manual image navigation, green/cream/gold palette,
+typography, wide section rhythm, media-first Platform composition, light Trust
+cards, 2x2 Proof Stories, centered FAQ cards, rounded News cards, dark Final CTA
+and four-column Footer. These are visual corrections inside the approved
+content architecture, not a return to the legacy SPA implementation.
+
+The Hero uses four editor-owned core Image slides, not a Cover block. One
+persistent, editable primary H1 and its supporting copy remain in the rendered
+Hero; three alternate editor-visible core-block message sources supply the
+other manually selected states without introducing additional H1 elements.
+
+The Platform module uses the byte-identical approved MP4 and poster plus the
+approved plot-definition screenshot in an editor-visible two-slide media
+carousel. Arrow, dot and keyboard controls select the slides manually, and a
+visible Play/Pause control lets the visitor stop or restart the footage. The
+muted video pauses whenever its slide or document is not visible. With reduced
+motion requested, it stays on the approved poster unless the visitor explicitly
+presses Play.
+
+The current selector is intentionally English-only: English is active and the
+Nederlands and Deutsch options are visibly disabled. Locale-aware routing is
+deferred to FT-NATIVE-003. The quotation dialog is present for visual parity,
+but submit is intentionally unavailable and sends no network request until a
+production endpoint, consent/privacy copy, delivery verification and the
+publication gate are approved under FT-WEB-004.
+
 ### WordPress Ownership
 
 - Editors can change headings, body copy, media, testimonials, proof stories,
@@ -54,11 +85,24 @@ legacy concept.
 
 ### Available Validation
 
-- Repository checks cover required native files, JSON, block markup, homepage
-  hierarchy, approved copy constraints, Cover serialization, semantic landmark
-  ownership, focus treatment, workflow policy, JavaScript and CSS.
+- Repository checks cover required native files, exact approved design tokens,
+  valid block markup (including self-closing blocks), Homepage hierarchy,
+  approved Hero/content constraints, Header/Footer contracts, core Image and
+  Video serialization, semantic landmark ownership, manual-only Hero and
+  Platform controls, responsive layout rules, focus treatment, workflow policy,
+  JavaScript and CSS.
 - A read-only local preview renderer composes the native header, Homepage block
-  markup, dynamic-post placeholder and footer without WordPress or PHP.
+  markup, dynamic-post placeholder and footer from the real native sources and
+  `theme.json` tokens without WordPress or PHP. It includes explicit local
+  `noindex,nofollow` and serves the manual interaction script.
+- The preview at `http://127.0.0.1:4173/` returns HTTP 200 and source-level
+  assertions confirm the approved Hero, one H1, real Header/Footer, exact core
+  palette, section order, absence of timer-based slide autoplay and the explicit
+  Platform video Play/Pause control.
+- The responsive CSS contract covers the requested 320, 375, 390, 430, 768,
+  1024, 1280, 1440 and 1920 widths without page-level zoom, root transforms or
+  overflow masking. Rendered scroll-width and screenshot evidence remains a
+  browser-environment check because no connected in-app browser was available.
 - PHP syntax, Site Editor, Page Editor, Query rendering and frontend behavior in
   real WordPress remain runtime checks.
 - GitHub run `32956292922` validated pushed commit `897a991` successfully.
@@ -75,17 +119,20 @@ legacy concept.
 
 ### Acceptance Status
 
-- Local Homepage implementation and repository validation: complete.
+- Local Homepage implementation, visual parity correction and repository
+  validation: complete to the available environment.
 - Frank-approved structure and content direction: implemented.
 - Core-block editability and locked design contract: verified from source.
-- Real WordPress editor/frontend and PHP runtime validation: pending.
+- Real WordPress editor/frontend, PHP, rendered browser screenshots, axe and
+  keyboard validation: pending.
+- Locale-aware NL/DE routing and production quotation submission/privacy:
+  deferred and intentionally unavailable in the current build.
 - Partner evidence links, final theme labels, approved production media and
   final testimonials: pending later content validation before publication.
 
 ### Next Approval-Bound Action
 
-Configure an eligible required reviewer on GitHub `Production`, which first
-requires Enterprise-capable ownership for this private repository. Then verify
-a matching recoverable files/database restore point and expose explicit public
-`noindex`. The workflow still requires separate explicit dispatch approval; do
-not activate the theme during validation.
+Configure an explicit public `noindex` signal while Coming Soon remains active,
+then verify a matching recoverable files/database restore point. Required
+Reviewer protection remains deferred. The workflow still requires separate
+explicit dispatch approval; do not activate the theme during validation.

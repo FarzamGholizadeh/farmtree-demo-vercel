@@ -6,3 +6,100 @@
 .editor-styles-wrapper .ft-native-site-footer {
   border: 1px dashed rgb(22 49 38 / 22%);
 }
+
+.editor-styles-wrapper .ft-native-site-header {
+  position: relative !important;
+  top: auto !important;
+}
+
+.editor-styles-wrapper .ft-home-hero {
+  display: block;
+  min-height: 0 !important;
+  overflow: visible;
+  padding-block: 2rem !important;
+}
+
+.editor-styles-wrapper .ft-home-hero::after {
+  display: none;
+}
+
+.editor-styles-wrapper .ft-home-hero-media {
+  position: relative;
+  inset: auto;
+  display: grid;
+  height: auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem !important;
+}
+
+.editor-styles-wrapper .ft-home-hero-slide,
+.editor-styles-wrapper .ft-home-hero-slide:not(.is-active),
+.editor-styles-wrapper .ft-home-hero-slide[hidden] {
+  position: relative;
+  inset: auto;
+  display: block !important;
+  height: auto;
+}
+
+.editor-styles-wrapper .ft-home-hero-slide img {
+  height: auto;
+  aspect-ratio: 4 / 3;
+  opacity: 1;
+}
+
+.editor-styles-wrapper .ft-home-hero-content {
+  padding: 1.5rem !important;
+  border-radius: 18px;
+  background: rgb(0 45 29 / 78%);
+}
+
+.editor-styles-wrapper .ft-home-hero-copy-sources {
+  display: block !important;
+  margin-top: 1rem;
+  padding: 1rem !important;
+  border: 1px dashed rgb(255 255 255 / 42%);
+  border-radius: 12px;
+}
+
+.editor-styles-wrapper .ft-home-hero-copy-source {
+  display: block !important;
+  margin-bottom: 1rem;
+  padding: 1rem !important;
+  border: 1px dashed rgb(255 255 255 / 42%);
+  border-radius: 12px;
+}
+
+.editor-styles-wrapper .ft-home-hero-copy-source:last-child {
+  margin-bottom: 0;
+}
+
+.editor-styles-wrapper .ft-home-hero-controls,
+.editor-styles-wrapper .ft-platform-controls {
+  display: none;
+}
+
+.editor-styles-wrapper .ft-platform-slide,
+.editor-styles-wrapper .ft-platform-slide:not(.is-active),
+.editor-styles-wrapper .ft-platform-slide[hidden] {
+  display: block !important;
+  margin-bottom: 0.75rem;
+}
+
+.editor-styles-wrapper .ft-platform-slide:last-of-type {
+  margin-bottom: 0;
+}
+
+.editor-styles-wrapper .ft-platform-video-slide video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+@media (width <= 600px) {
+  .editor-styles-wrapper .ft-home-hero-media {
+    grid-template-columns: 1fr;
+  }
+}

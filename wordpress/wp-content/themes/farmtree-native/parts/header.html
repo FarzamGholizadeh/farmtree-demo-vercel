@@ -1,22 +1,82 @@
-<!-- wp:group {"metadata":{"name":"FarmTree Header"},"className":"ft-native-site-header","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}}},"backgroundColor":"farmtree-ivory","layout":{"type":"constrained"},"templateLock":"contentOnly"} -->
-<div class="wp-block-group ft-native-site-header has-farmtree-ivory-background-color has-background" style="padding-top:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40)"><!-- wp:group {"align":"wide","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
-<div class="wp-block-group alignwide"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:site-logo {"width":132,"shouldSyncIcon":true} /-->
+<!-- wp:group {"metadata":{"name":"FarmTree Header"},"className":"ft-native-site-header","backgroundColor":"farmtree-forest","textColor":"white","layout":{"type":"constrained"},"templateLock":"contentOnly"} -->
+<div class="wp-block-group ft-native-site-header has-white-color has-farmtree-forest-background-color has-text-color has-background"><!-- wp:html -->
+<a class="ft-skip-link" href="#main-content">Skip to content</a>
+<!-- /wp:html -->
 
-<!-- wp:site-title {"level":0,"fontSize":"small","fontFamily":"editorial"} /--></div>
+<!-- wp:group {"align":"wide","className":"ft-native-header-inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+<div class="wp-block-group alignwide ft-native-header-inner"><!-- wp:group {"className":"ft-native-logo-shell","backgroundColor":"white","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center","verticalAlignment":"center"}} -->
+<div class="wp-block-group ft-native-logo-shell has-white-background-color has-background"><!-- wp:pattern {"slug":"farmtree-native/brand-logo"} /--></div>
 <!-- /wp:group -->
 
-<!-- wp:navigation {"overlayMenu":"mobile","icon":"menu","layout":{"type":"flex","justifyContent":"center"},"fontSize":"small"} -->
-<!-- wp:navigation-link {"label":"Platform","url":"/platform/","kind":"custom"} /-->
-<!-- wp:navigation-link {"label":"Case studies","url":"/case-studies/","kind":"custom"} /-->
-<!-- wp:navigation-link {"label":"Customer segments","url":"/customer-segments/","kind":"custom"} /-->
-<!-- wp:navigation-link {"label":"About","url":"/team/","kind":"custom"} /-->
+<!-- wp:navigation {"overlayMenu":"never","ariaLabel":"Primary navigation","className":"ft-native-primary-nav","textColor":"white","layout":{"type":"flex","justifyContent":"center"},"fontSize":"small"} -->
+<!-- wp:navigation-link {"label":"Home","url":"/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Design tool","url":"/contact/","kind":"custom","className":"ft-native-quotation-action"} /-->
 <!-- /wp:navigation -->
 
-<!-- wp:buttons {"className":"ft-native-header-actions","layout":{"type":"flex","justifyContent":"right"}} -->
-<div class="wp-block-buttons ft-native-header-actions"><!-- wp:button {"className":"is-style-fill"} -->
-<div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button" href="https://tool.farmtree.earth/Identity/Account/Register" target="_blank" rel="noreferrer noopener">Request a demo</a></div>
+<!-- wp:group {"className":"ft-native-header-actions","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right","verticalAlignment":"center"}} -->
+<div class="wp-block-group ft-native-header-actions"><!-- wp:buttons {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+<div class="wp-block-buttons"><!-- wp:button {"backgroundColor":"farmtree-gold","textColor":"farmtree-ink","className":"ft-native-contact-action"} -->
+<div class="wp-block-button ft-native-contact-action"><a class="wp-block-button__link has-farmtree-ink-color has-farmtree-gold-background-color has-text-color has-background wp-element-button" href="/contact/">Contact</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"backgroundColor":"white","textColor":"farmtree-ink","className":"ft-native-platform-action"} -->
+<div class="wp-block-button ft-native-platform-action"><a class="wp-block-button__link has-farmtree-ink-color has-white-background-color has-text-color has-background wp-element-button" href="https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F" target="_blank" rel="noreferrer noopener">FarmTree Platform</a></div>
 <!-- /wp:button --></div>
-<!-- /wp:buttons --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:details {"className":"ft-native-language"} -->
+<details class="wp-block-details ft-native-language"><summary><span aria-hidden="true">◎</span> <span>EN</span></summary><!-- wp:html -->
+<div class="ft-native-language-options" aria-label="Language availability">
+<a href="/" lang="en" hreflang="en" aria-current="page">English</a>
+<button type="button" lang="nl" disabled aria-label="Nederlands is not yet available">Nederlands</button>
+<button type="button" lang="de" disabled aria-label="Deutsch is not yet available">Deutsch</button>
+</div>
+<!-- /wp:html --></details>
+<!-- /wp:details -->
+
+<!-- wp:navigation {"overlayMenu":"always","icon":"menu","openSubmenusOnClick":true,"ariaLabel":"Site navigation","className":"ft-native-menu-trigger","textColor":"white","layout":{"type":"flex","justifyContent":"right"},"fontSize":"small"} -->
+<!-- wp:navigation-submenu {"label":"Main","kind":"custom","className":"ft-native-menu-card ft-native-menu-main"} -->
+<!-- wp:navigation-link {"label":"Home","url":"/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Solutions","url":"/solutions/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Track Record","url":"/case-studies/","kind":"custom"} /-->
+<!-- /wp:navigation-submenu -->
+
+<!-- wp:navigation-submenu {"label":"FarmTree","kind":"custom","className":"ft-native-menu-card ft-native-menu-farmtree"} -->
+<!-- wp:navigation-link {"label":"Platform","url":"https://tool.farmtree.earth/Identity/Account/Login?ReturnUrl=%2F","opensInNewTab":true,"kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"User Videos","url":"/user-videos/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Cocoa Focus","url":"/cocoa-focus/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Case Studies","url":"/case-studies/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"For Investors","url":"/customer-segments/investors/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"For Implementers","url":"/customer-segments/implementation-organisations/","kind":"custom"} /-->
+<!-- /wp:navigation-submenu -->
+
+<!-- wp:navigation-submenu {"label":"Company","kind":"custom","className":"ft-native-menu-card ft-native-menu-company"} -->
+<!-- wp:navigation-link {"label":"Team","url":"/team/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Vacancies","url":"/vacancies/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Contact us","url":"/contact/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Blog","url":"/blog/","kind":"custom"} /-->
+<!-- /wp:navigation-submenu -->
+
+<!-- wp:navigation-submenu {"label":"Customer segments","kind":"custom","className":"ft-native-menu-card ft-native-menu-segments"} -->
+<!-- wp:navigation-link {"label":"Advisors","url":"/customer-segments/advisors/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Development Banks & Donors","url":"/customer-segments/development-banks-donors/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"NGOs & Conservation","url":"/customer-segments/ngos-conservation/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"NbS & Carbon Developers","url":"/customer-segments/nbs-carbon/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"MRV & ESG Platforms","url":"/customer-segments/mrv-esg/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Government & Parastatals","url":"/customer-segments/government-parastatals/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Industry Associations & MSPs","url":"/customer-segments/industry-associations/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Large Agri-Corporates","url":"/customer-segments/large-agri-corporates/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Social Enterprise","url":"/customer-segments/social-enterprise/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Implementation Organisations","url":"/customer-segments/implementation-organisations/","kind":"custom"} /-->
+<!-- /wp:navigation-submenu -->
+
+<!-- wp:navigation-submenu {"label":"Forms & Legal","kind":"custom","className":"ft-native-menu-card ft-native-menu-forms"} -->
+<!-- wp:navigation-link {"label":"Request a demo","url":"https://tool.farmtree.earth/Identity/Account/Register","opensInNewTab":true,"kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Ask for a quotation","url":"/contact/","kind":"custom","className":"ft-native-quotation-action"} /-->
+<!-- wp:navigation-link {"label":"Acknowledgements","url":"/acknowledgements/","kind":"custom"} /-->
+<!-- wp:navigation-link {"label":"Licenses","url":"/licenses/","kind":"custom"} /-->
+<!-- /wp:navigation-submenu -->
+<!-- /wp:navigation --></div>
+<!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group -->

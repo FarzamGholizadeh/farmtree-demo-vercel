@@ -15,6 +15,17 @@ obvious speech-to-text mistakes from context, but do not invent business claims,
 partner evidence or unsupported content. Cross-check exact public-facing theme
 titles against existing approved FarmTree content before publication.
 
+## Permanent Visual Design Lock
+
+The currently approved FarmTree frontend and current production `farmtree`
+theme are the mandatory visual source of truth. FT-NATIVE-002 replaces the
+architecture with a WordPress Block Theme; it does not redesign the approved
+website. Header, Hero, section composition, typography, palette, spacing, card
+language, media treatment, controls, CTA hierarchy, FAQ, Footer, responsive
+behavior and approved motion must remain materially recognizable as the same
+FarmTree design. Frank-approved content and information-architecture changes
+must be implemented inside that visual language.
+
 ## Homepage Outcome
 
 Build a shorter, clearer and more trust-oriented Homepage in `farmtree-native`,
@@ -24,6 +35,28 @@ Homepage Hero pilot architecture.
 
 Use concise editorial headings. Remove unnecessary full stops after large
 display headlines where punctuation is not narratively required.
+
+## Local Implementation Snapshot
+
+- The Hero uses four editable core Image slides, not a Cover block. One
+  persistent editable primary H1 and its supporting copy are rendered; three
+  alternate editor-visible core-block message sources feed the same H1 when a
+  visitor manually selects another state.
+- The Platform module uses the approved MP4/poster and plot-definition
+  screenshot. Arrow, dot and keyboard controls navigate the two media slides,
+  and a visible Play/Pause control lets the visitor stop or restart the footage.
+  The muted video pauses whenever its slide or document is not visible. With
+  reduced motion requested, it stays on the approved poster unless the visitor
+  explicitly presses Play.
+- The Header uses the shared asset-backed `farmtree-native/brand-logo` pattern,
+  rather than depending on configured Site Logo or Site Title blocks, and the
+  Navigation block exposes the approved five-card Bento submenu.
+- The current native shell is English-only. Nederlands and Deutsch are shown as
+  disabled options; locale-aware routing belongs to FT-NATIVE-003.
+- The quotation dialog is present for approved visual parity, but submit is
+  intentionally unavailable and sends no network request. Endpoint selection,
+  consent/privacy copy, spam protection, delivery verification and publication
+  approval remain gated under FT-WEB-004.
 
 ## Section Priorities
 
@@ -138,7 +171,10 @@ Prepare the architecture, but do not block FT-NATIVE-002 on:
 - Rabobank, GIZ or other partner evidence pages;
 - partner certificates or downloadable collaboration documents;
 - complete audience subpages;
-- final proof-story or case-study detail pages.
+- final proof-story or case-study detail pages;
+- locale-aware NL/DE routing and global locale ownership under FT-NATIVE-003;
+- production quotation submission, consent/privacy and delivery verification
+  under FT-WEB-004.
 
 ## Acceptance Direction
 
@@ -155,3 +191,13 @@ Prepare the architecture, but do not block FT-NATIVE-002 on:
   remains locked.
 - Exact theme labels, imagery, footage, testimonials and partner references are
   validated against approved source material before publication.
+- Source-level responsive rules cover 320, 375, 390, 430, 768, 1024, 1280,
+  1440 and 1920 pixels without page zoom, root transforms, viewport tricks or
+  root overflow masking; rendered browser evidence is still required before
+  release.
+- Real WordPress editor/frontend and PHP validation, rendered screenshots, axe
+  and keyboard walkthroughs remain pending release evidence.
+- A recoverable WordPress files/database backup and explicit public `noindex`
+  while Coming Soon remains active gate any runtime deployment. Independent
+  Required Reviewer protection remains a deferred governance enhancement under
+  the private, manual-only release policy.

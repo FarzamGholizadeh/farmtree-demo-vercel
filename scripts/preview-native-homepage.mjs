@@ -4,27 +4,168 @@ import { extname, resolve, sep } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
 const theme = resolve(root, 'wordpress/wp-content/themes/farmtree-native');
+const themeSettings = JSON.parse(readFileSync(resolve(theme, 'theme.json'), 'utf8'));
 const portArgument = process.argv.find((argument) => argument.startsWith('--port='));
 const requestedPort = Number.parseInt(portArgument?.split('=')[1] ?? '4173', 10);
 const port = Number.isInteger(requestedPort) && requestedPort > 0 ? requestedPort : 4173;
 
 const mimeTypes = {
   '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
   '.jpg': 'image/jpeg',
+  '.mp4': 'video/mp4',
   '.png': 'image/png',
   '.webp': 'image/webp'
 };
 
-function renderSource(source) {
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function parseBlockAttributes(serialised) {
+  try {
+    return JSON.parse(serialised);
+  } catch {
+    return {};
+  }
+}
+
+function renderNavigation(serialised, innerMarkup) {
+  const attributes = parseBlockAttributes(serialised);
+  const classNames = [
+    'wp-block-navigation',
+    attributes.className,
+    attributes.textColor ? `has-${attributes.textColor}-color has-text-color` : '',
+    attributes.fontSize ? `has-${attributes.fontSize}-font-size` : '',
+    attributes.layout?.orientation === 'vertical' ? 'is-vertical' : ''
+  ].filter(Boolean).join(' ');
+  const label = attributes.ariaLabel || (
+    attributes.className?.includes('ft-native-primary-nav')
+      ? 'Primary navigation'
+      : attributes.className?.includes('ft-native-menu-trigger')
+        ? 'Site navigation'
+        : 'Footer navigation'
+  );
+
+  function renderLink(link) {
+    const target = link.opensInNewTab ? ' target="_blank" rel="noreferrer noopener"' : '';
+    const itemClasses = ['wp-block-navigation-item', link.className].filter(Boolean).join(' ');
+
+    return `<li class="${itemClasses}"><a class="wp-block-navigation-item__content" href="${escapeHtml(link.url ?? '#')}"${target}>${escapeHtml(link.label ?? '')}</a></li>`;
+  }
+
+  const submenuItems = Array.from(
+    innerMarkup.matchAll(
+      /<!-- wp:navigation-submenu ([^\n]*?) -->([\s\S]*?)<!-- \/wp:navigation-submenu -->/g
+    ),
+    (match) => {
+      const submenu = parseBlockAttributes(match[1]);
+      const links = Array.from(
+        match[2].matchAll(/<!-- wp:navigation-link ([^\n]*?) \/-->/g),
+        (linkMatch) => parseBlockAttributes(linkMatch[1])
+      ).map(renderLink).join('');
+      const itemClasses = [
+        'wp-block-navigation-item',
+        'has-child',
+        'wp-block-navigation-submenu',
+        submenu.className
+      ].filter(Boolean).join(' ');
+
+      return `<li class="${itemClasses}"><button class="wp-block-navigation-submenu__toggle" type="button" aria-expanded="true">${escapeHtml(submenu.label ?? '')}</button><ul class="wp-block-navigation__submenu-container">${links}</ul></li>`;
+    }
+  );
+  const items = submenuItems.length > 0
+    ? submenuItems.join('')
+    : Array.from(
+      innerMarkup.matchAll(/<!-- wp:navigation-link ([^\n]*?) \/-->/g),
+      (match) => renderLink(parseBlockAttributes(match[1]))
+    ).join('');
+
+  if (attributes.overlayMenu === 'always') {
+    const menuId = 'ft-preview-site-menu';
+
+    return `<nav class="${classNames}" aria-label="${label}"><button class="wp-block-navigation__responsive-container-open" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="${menuId}" data-ft-preview-menu-open><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M4 7.5h16v1.5H4zm0 7.5h16v1.5H4z"></path></svg></button><div class="wp-block-navigation__responsive-container" id="${menuId}" hidden data-ft-preview-menu><button class="wp-block-navigation__responsive-container-close" type="button" aria-label="Close menu" data-ft-preview-menu-close><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="m6.7 5.6 5.3 5.3 5.3-5.3 1.1 1.1-5.3 5.3 5.3 5.3-1.1 1.1-5.3-5.3-5.3 5.3-1.1-1.1 5.3-5.3-5.3-5.3z"></path></svg></button><div class="wp-block-navigation__responsive-container-content"><ul class="wp-block-navigation__container">${items}</ul></div></div></nav>`;
+  }
+
+  return `<nav class="${classNames}" aria-label="${label}"><ul class="wp-block-navigation__container">${items}</ul></nav>`;
+}
+
+function renderDynamicBlocks(source) {
   return source
+    .replace(
+      /<!-- wp:navigation ([^\n]*?) -->([\s\S]*?)<!-- \/wp:navigation -->/g,
+      (_match, serialised, innerMarkup) => renderNavigation(serialised, innerMarkup)
+    )
+    .replace(/<!-- wp:social-link ([^\n]*?) \/-->/g, (_match, serialised) => {
+      const attributes = parseBlockAttributes(serialised);
+      const service = String(attributes.service ?? 'social');
+      const label = service.charAt(0).toUpperCase() + service.slice(1);
+      const symbol = service === 'linkedin' ? 'in' : service === 'youtube' ? '▶' : '↗';
+      return `<li class="wp-social-link wp-social-link-${escapeHtml(service)}"><a href="${escapeHtml(attributes.url ?? '#')}" target="_blank" rel="noreferrer noopener"><span class="screen-reader-text">${escapeHtml(label)}</span><span aria-hidden="true">${symbol}</span></a></li>`;
+    });
+}
+
+function renderSource(source) {
+  return renderDynamicBlocks(source)
     .replace(
       /<\?php echo esc_url\( get_theme_file_uri\( '([^']+)' \) \); \?>/g,
       '/theme/$1'
+    )
+    .replace(
+      /<\?php echo esc_url\( home_url\( '\/' \) \); \?>/g,
+      '/'
     )
     .replace(/<\?php[\s\S]*?\?>/g, '')
     .replace(/<!--\s*\/?wp:[\s\S]*?-->/g, '');
 }
 
+function themePresetVariables(settings) {
+  const presetGroups = [
+    ['color', settings.settings?.color?.palette ?? [], 'color'],
+    ['spacing', settings.settings?.spacing?.spacingSizes ?? [], 'size'],
+    ['font-family', settings.settings?.typography?.fontFamilies ?? [], 'fontFamily'],
+    ['font-size', settings.settings?.typography?.fontSizes ?? [], 'size']
+  ];
+
+  return presetGroups.flatMap(([namespace, presets, valueKey]) => presets.map(
+    (preset) => `--wp--preset--${namespace}--${preset.slug}:${preset[valueKey]}`
+  )).join(';');
+}
+
+function themeUtilityClasses(settings) {
+  const palette = settings.settings?.color?.palette ?? [];
+  const fontSizes = settings.settings?.typography?.fontSizes ?? [];
+  const fontFamilies = settings.settings?.typography?.fontFamilies ?? [];
+
+  return [
+    ...palette.flatMap((preset) => [
+      `.has-${preset.slug}-background-color{background-color:var(--wp--preset--color--${preset.slug})}`,
+      `.has-${preset.slug}-color{color:var(--wp--preset--color--${preset.slug})}`
+    ]),
+    ...fontSizes.map(
+      (preset) => `.has-${preset.slug}-font-size{font-size:var(--wp--preset--font-size--${preset.slug})}`
+    ),
+    ...fontFamilies.map(
+      (preset) => `.has-${preset.slug}-font-family{font-family:var(--wp--preset--font-family--${preset.slug})}`
+    )
+  ].join('');
+}
+
+function resolveThemePreset(value) {
+  return String(value).replace(
+    /var:preset\|([a-z-]+)\|([a-z0-9-]+)/gi,
+    'var(--wp--preset--$1--$2)'
+  );
+}
+
+const brandLogo = renderSource(
+  readFileSync(resolve(theme, 'patterns/brand-logo.php'), 'utf8')
+);
 const callToAction = renderSource(
   readFileSync(resolve(theme, 'patterns/call-to-action.php'), 'utf8')
 );
@@ -38,14 +179,127 @@ const homepage = renderSource(homepageSource)
     '<div class="ft-preview-news-empty">Dynamic WordPress posts appear here in runtime preview</div>'
   )
   .replace('<p>No insights have been published yet</p>', '');
+const header = renderSource(
+  readFileSync(resolve(theme, 'parts/header.html'), 'utf8')
+    .replace('<!-- wp:pattern {"slug":"farmtree-native/brand-logo"} /-->', brandLogo)
+);
+const footer = renderSource(
+  readFileSync(resolve(theme, 'parts/footer.html'), 'utf8')
+    .replace('<!-- wp:pattern {"slug":"farmtree-native/brand-logo"} /-->', brandLogo)
+);
+const quotationModal = renderSource(
+  readFileSync(resolve(theme, 'parts/quotation-modal.html'), 'utf8')
+);
+
+const wideSize = themeSettings.settings?.layout?.wideSize ?? '1280px';
+const contentSize = themeSettings.settings?.layout?.contentSize ?? '760px';
+const bodyBackground = resolveThemePreset(
+  themeSettings.styles?.color?.background ?? 'var:preset|color|farmtree-cream'
+);
+const bodyText = resolveThemePreset(
+  themeSettings.styles?.color?.text ?? 'var:preset|color|farmtree-ink'
+);
 
 const previewCss = `
-:root{--wp--preset--color--farmtree-green:#214f2a;--wp--preset--color--farmtree-forest:#123a2a;--wp--preset--color--farmtree-ink:#163126;--wp--preset--color--farmtree-ivory:#faf8f1;--wp--preset--color--farmtree-cream:#f2ecdd;--wp--preset--color--farmtree-mist:#dce7d2;--wp--preset--color--farmtree-gold:#c9a85f;--wp--preset--color--farmtree-sky:#c9dde3;--wp--preset--color--white:#fff;--wp--preset--spacing--20:.5rem;--wp--preset--spacing--30:.75rem;--wp--preset--spacing--40:1rem;--wp--preset--spacing--50:1.5rem;--wp--preset--spacing--60:2rem;--wp--preset--spacing--70:4rem;--wp--preset--spacing--80:6rem;--wp--preset--font-family--editorial:Manrope,Inter,system-ui,sans-serif;--wp--preset--font-family--interface:Inter,system-ui,sans-serif;--wp--preset--font-size--caption:.8125rem;--wp--preset--font-size--small:.9375rem;--wp--preset--font-size--body:1.0625rem;--wp--preset--font-size--lead:1.375rem;--wp--preset--font-size--heading-small:2.5rem;--wp--preset--font-size--heading:4.75rem}
-*{box-sizing:border-box}body{margin:0;color:var(--wp--preset--color--farmtree-ink);background:var(--wp--preset--color--farmtree-ivory);font:400 var(--wp--preset--font-size--body)/1.65 var(--wp--preset--font-family--interface)}h1,h2,h3{margin-block:0 1.25rem;font-family:var(--wp--preset--font-family--editorial);font-weight:800;line-height:1.08}p,ul,blockquote{margin-block:0 1.5rem}a{color:var(--wp--preset--color--farmtree-green);text-decoration:none}img{max-width:100%}.alignwide{width:min(100%,1280px);margin-inline:auto}.wp-block-group,.wp-block-cover{padding-inline:var(--wp--preset--spacing--50)}.wp-block-group .wp-block-group,.wp-block-cover .wp-block-group{padding-inline:0}.wp-block-columns{display:flex;gap:var(--wp--preset--spacing--50)}.wp-block-column{min-width:0;flex:1}.wp-block-cover{position:relative;display:flex;align-items:center;overflow:hidden}.wp-block-cover__image-background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.wp-block-cover__background{position:absolute;z-index:1;inset:0;opacity:.65}.wp-block-cover__inner-container{position:relative;z-index:2;width:100%}.wp-block-buttons{display:flex;flex-wrap:wrap;gap:.75rem}.wp-block-button__link{display:inline-block;padding:.8rem 1.2rem;border:2px solid transparent;border-radius:999px;background:var(--wp--preset--color--farmtree-green);color:#fff;font-weight:700}.is-style-outline .wp-block-button__link{border-color:currentcolor;background:transparent;color:var(--wp--preset--color--farmtree-green)}.has-white-background-color{background:#fff}.has-farmtree-ivory-background-color{background:var(--wp--preset--color--farmtree-ivory)}.has-farmtree-cream-background-color{background:var(--wp--preset--color--farmtree-cream)}.has-farmtree-sky-background-color{background:var(--wp--preset--color--farmtree-sky)}.has-farmtree-mist-background-color{background:var(--wp--preset--color--farmtree-mist)}.has-farmtree-forest-background-color{background:var(--wp--preset--color--farmtree-forest)}.has-farmtree-gold-background-color{background:var(--wp--preset--color--farmtree-gold)}.has-white-color{color:#fff}.has-farmtree-ink-color{color:var(--wp--preset--color--farmtree-ink)}.has-farmtree-green-color{color:var(--wp--preset--color--farmtree-green)}.has-farmtree-mist-color{color:var(--wp--preset--color--farmtree-mist)}.has-caption-font-size{font-size:var(--wp--preset--font-size--caption)}.has-small-font-size{font-size:var(--wp--preset--font-size--small)}.has-lead-font-size{font-size:var(--wp--preset--font-size--lead)}.has-heading-small-font-size{font-size:var(--wp--preset--font-size--heading-small)}.has-heading-font-size{font-size:var(--wp--preset--font-size--heading)}.wp-block-gallery{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}.wp-block-gallery>.wp-block-image{width:auto!important}.wp-block-post-template{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:0;list-style:none}.ft-preview-header{position:relative;z-index:10;border-bottom:1px solid rgb(22 49 38/14%);background:var(--wp--preset--color--farmtree-ivory)}.ft-preview-header-inner{display:flex;min-height:78px;align-items:center;justify-content:space-between;gap:1.5rem}.ft-preview-header img{display:block;width:126px}.ft-preview-nav{display:flex;align-items:center;gap:1.5rem;font-size:.9375rem;font-weight:700}.ft-preview-demo{padding:.65rem 1rem;border-radius:999px;background:var(--wp--preset--color--farmtree-green);color:#fff!important}.ft-preview-footer{padding-block:4rem;background:var(--wp--preset--color--farmtree-forest);color:#fff}.ft-preview-footer-inner{display:flex;align-items:end;justify-content:space-between;gap:2rem}.ft-preview-footer img{width:150px;filter:brightness(0) invert(1)}.ft-preview-news-empty{grid-column:1/-1;padding:2rem 0;border-top:2px solid var(--wp--preset--color--farmtree-green);color:var(--wp--preset--color--farmtree-green)}
-@media(width <= 781px){:root{--wp--preset--font-size--heading:3rem;--wp--preset--font-size--heading-small:2rem;--wp--preset--font-size--lead:1.2rem;--wp--preset--spacing--70:3rem;--wp--preset--spacing--80:4rem}.wp-block-columns{flex-direction:column}.wp-block-column{flex-basis:auto!important}.ft-preview-nav a:not(.ft-preview-demo){display:none}.ft-preview-footer-inner{align-items:start;flex-direction:column}}
+:root{${themePresetVariables(themeSettings)};--wp--style--global--wide-size:${wideSize};--wp--style--global--content-size:${contentSize}}
+${themeUtilityClasses(themeSettings)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:${bodyText};background:${bodyBackground};font:400 var(--wp--preset--font-size--body)/1.65 var(--wp--preset--font-family--interface)}
+h1,h2,h3{margin-block:0 1.25rem;font-family:var(--wp--preset--font-family--editorial);font-weight:800;line-height:1.08}
+p,ul,blockquote{margin-block:0 1.5rem}
+a{color:var(--wp--preset--color--farmtree-green);text-decoration:none}
+img{max-width:100%;height:auto}
+button{font:inherit}
+.screen-reader-text{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.alignwide{width:min(100%,var(--wp--style--global--wide-size));margin-inline:auto}
+.wp-block-group,.wp-block-cover{padding-inline:var(--wp--preset--spacing--50)}
+.wp-block-group .wp-block-group,.wp-block-cover .wp-block-group{padding-inline:0}
+.wp-block-columns{display:flex;gap:var(--wp--preset--spacing--50)}
+.wp-block-column{min-width:0;flex:1}
+.wp-block-cover{position:relative;display:flex;align-items:center;overflow:hidden}
+.wp-block-cover__image-background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.wp-block-cover__background{position:absolute;z-index:1;inset:0;opacity:.5}
+.wp-block-cover__inner-container{position:relative;z-index:2;width:100%}
+.wp-block-buttons{display:flex;flex-wrap:wrap;gap:.75rem}
+.wp-block-button__link{display:inline-block;padding:.95rem 1.625rem;border:2px solid transparent;border-radius:999px;background:var(--wp--preset--color--farmtree-green);color:var(--wp--preset--color--white);font-weight:800}
+.is-style-outline .wp-block-button__link{border-color:currentcolor;background:transparent;color:var(--wp--preset--color--farmtree-green)}
+.wp-block-navigation{display:flex;align-items:center}
+.wp-block-navigation__container{display:flex;align-items:center;gap:1.5rem;padding:0;margin:0;list-style:none}
+.wp-block-navigation.is-vertical .wp-block-navigation__container{align-items:flex-start;flex-direction:column;gap:.5rem}
+.wp-block-navigation__responsive-container-open{display:flex;padding:0;border:0;background:transparent;color:inherit;cursor:pointer}
+.ft-native-menu-trigger .wp-block-navigation__responsive-container.is-menu-open{position:fixed;inset:0;z-index:100;display:flex;overflow:auto}
+.ft-native-menu-trigger .wp-block-navigation__responsive-container-close{position:absolute;top:1.25rem;right:1.25rem}
+body.ft-preview-menu-open{overflow:hidden}
+.wp-block-gallery{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.wp-block-gallery>.wp-block-image{width:auto!important}
+.wp-block-post-template{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:0;list-style:none}
+.wp-block-social-links{display:flex;gap:.75rem;padding:0;list-style:none}
+.wp-block-social-links a{display:grid;width:2.5rem;height:2.5rem;place-items:center;border:1px solid currentcolor;border-radius:999px;color:inherit;font-weight:800}
+.ft-native-header-inner,.ft-native-logo-shell,.ft-native-footer-logo-shell,.ft-native-footer-bottom,.ft-home-news-header{display:flex;align-items:center}
+.ft-native-header-inner,.ft-native-footer-bottom,.ft-home-news-header{justify-content:space-between}
+.ft-native-header-inner{flex-wrap:nowrap}
+.ft-native-logo-shell,.ft-native-footer-logo-shell{justify-content:center}
+.ft-native-footer-bottom,.ft-home-news-header{flex-wrap:wrap}
+.ft-preview-news-empty{grid-column:1/-1;padding:2rem 0;border-top:2px solid var(--wp--preset--color--farmtree-green);color:var(--wp--preset--color--farmtree-green)}
+@media(width <= 781px){.wp-block-columns{flex-direction:column}.wp-block-column{flex-basis:auto!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 `;
 
-const document = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FarmTree Native Homepage Preview</title><style>${previewCss}</style><link rel="stylesheet" href="/theme/style.css"></head><body><div class="wp-site-blocks"><header class="ft-preview-header"><div class="alignwide ft-preview-header-inner"><img src="/theme/assets/images/brand/farmtree-logo.webp" alt="FarmTree"><nav class="ft-preview-nav" aria-label="Preview navigation"><a href="#platform">Platform</a><a href="#proof">Proof Stories</a><a href="#faq">FAQ</a><a class="ft-preview-demo" href="#contact">Request a demo</a></nav></div></header><main>${homepage}</main><footer class="ft-preview-footer"><div class="alignwide ft-preview-footer-inner"><div><img src="/theme/assets/images/brand/farmtree-logo.webp" alt="FarmTree"><p>Plan agroforestry with scientific confidence</p></div><p>Native local preview</p></div></footer></div></body></html>`;
+const previewMenuScript = `
+(() => {
+  const openButton = document.querySelector('[data-ft-preview-menu-open]');
+  const closeButton = document.querySelector('[data-ft-preview-menu-close]');
+  const menu = document.querySelector('[data-ft-preview-menu]');
+
+  if (!openButton || !closeButton || !menu) return;
+
+  const closeMenu = () => {
+    menu.hidden = true;
+    menu.classList.remove('is-menu-open');
+    document.body.classList.remove('ft-preview-menu-open');
+    openButton.setAttribute('aria-expanded', 'false');
+    openButton.focus();
+  };
+
+  openButton.addEventListener('click', () => {
+    menu.hidden = false;
+    menu.classList.add('is-menu-open');
+    document.body.classList.add('ft-preview-menu-open');
+    openButton.setAttribute('aria-expanded', 'true');
+    closeButton.focus();
+  });
+  closeButton.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !menu.hidden) closeMenu();
+  });
+})();
+`;
+
+const document = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>FarmTree Native Homepage Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap">
+  <style>${previewCss}</style>
+  <link rel="stylesheet" href="/theme/style.css">
+  <script src="/theme/assets/js/native-interactions.js" defer></script>
+</head>
+<body>
+  <div class="wp-site-blocks">
+    <header>${header}</header>
+    <main id="main-content" class="wp-block-group">${homepage}</main>
+    <footer>${footer}</footer>
+  </div>
+  ${quotationModal}
+  <script>${previewMenuScript}</script>
+</body>
+</html>`;
 
 createServer((request, response) => {
   const pathname = new URL(request.url ?? '/', 'http://localhost').pathname;

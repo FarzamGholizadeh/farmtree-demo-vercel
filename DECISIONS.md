@@ -1,6 +1,6 @@
 # FarmTree Decisions
 
-_Last updated: 2026-08-25_
+_Last updated: 2026-08-26_
 
 ## DEC-001: WordPress Is The Production Source
 
@@ -31,9 +31,13 @@ FarmTree website work follows six approval gates:
 
 Governance baseline changes must not alter the runtime behavior of the WordPress theme, the FarmTree Core plugin, or the FarmTree AI Assistant plugin.
 
-## DEC-006: Production Deployments Require Environment Approval
+## DEC-006: Production Deployments Use The Production Environment Boundary
 
-The WordPress deployment workflow must use the GitHub `production` environment so a reviewer approval boundary is reached before SSH setup or `rsync` deployment begins.
+WordPress deployment workflows must remain bound to the GitHub `Production`
+environment and must remain manual-only. A workflow environment binding does
+not by itself prove that an independent reviewer rule is configured. Every
+production or private-runtime dispatch still requires separate explicit user
+approval before SSH setup or `rsync` begins.
 
 ## DEC-007: SSH Test Workflow Is Manual-Only
 
@@ -80,3 +84,36 @@ Normal FarmTree implementation work proceeds autonomously through local edits,
 validation, self-review, documentation and a focused local commit. Pushes,
 merges, workflow runs, deployments, publication, activation and production data
 or configuration changes retain their explicit approval gates.
+
+## DEC-015: Approved FarmTree Visual Design Is Locked
+
+The currently approved FarmTree frontend and existing production `farmtree`
+theme are the mandatory visual source of truth for every current and future
+WordPress-native page. The architecture may be rebuilt completely in
+WordPress, but approved UI/UX must not be materially redesigned unless the user
+explicitly requests a redesign. Frank-, Max- and user-approved content and
+information-architecture changes must fit the existing approved visual
+language.
+
+## DEC-016: Required Reviewer Protection Is A Deferred Governance Enhancement
+
+Independent GitHub Environment Required Reviewer protection is desirable but
+is not a development or release-preparation blocker for the current private
+repository. Do not make the repository public, change ownership or billing, or
+purchase/migrate a GitHub plan to enable it.
+
+Until that enhancement is available, the compensating release boundary is:
+
+- the repository remains private;
+- WordPress production deployment workflows remain `workflow_dispatch` only
+  and no push automatically deploys WordPress production;
+- autonomous work completes local implementation and validation, then stops at
+  the pre-release touchpoint;
+- a user explicitly approves each manual production or private-runtime
+  workflow dispatch;
+- Coming Soon remains active during the rebuild; and
+- the current `farmtree` theme remains the rollback-safe public theme and the
+  documented rollback procedure remains available.
+
+Existing workflow protections must not be weakened. Backup and explicit public
+noindex requirements remain separate runtime gates.

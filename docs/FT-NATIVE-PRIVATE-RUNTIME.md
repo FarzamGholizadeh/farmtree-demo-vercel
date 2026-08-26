@@ -16,7 +16,8 @@ Homepage, headers and `robots.txt` rechecked on 2026-08-26, confirmed:
 
 ## Safety Gaps
 
-Runtime validation cannot proceed until these are verified or corrected:
+Runtime validation cannot proceed until these runtime safeguards are verified
+or corrected:
 
 - A recent recoverable backup must exist for both WordPress files and the
   WordPress database.
@@ -26,14 +27,24 @@ Runtime validation cannot proceed until these are verified or corrected:
   (`blog_public=0`).
 - The active public theme must remain `farmtree`.
 - Coming Soon must remain active until final launch approval.
-- GitHub's `Production` environment must gain and retain required-reviewer
-  protection before a native workflow run. The repository is private and only
-  the owner currently has access; GitHub requires Enterprise-capable ownership
-  for required reviewers on a private repository, plus an eligible reviewer
-  with at least read access.
+- The workflow must remain manual-only, bound to GitHub's `Production`
+  environment and undispatched until explicit user approval is recorded.
 
-GitHub documents the reviewer access and private-repository plan requirements at
+Independent GitHub Environment Required Reviewer protection is recorded as a
+deferred governance enhancement for the current private repository, not a
+development, release-preparation or dispatch blocker. Do not make the
+repository public, move it, change ownership or billing, or purchase/migrate a
+GitHub plan to enable that enhancement. GitHub documents the reviewer access
+and private-repository plan requirements at
 <https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments#required-reviewers>.
+
+The compensating policy keeps the repository private, keeps production-related
+workflows `workflow_dispatch` only, permits no automatic WordPress production
+deployment, stops autonomous delivery at pre-release, requires explicit user
+approval before each manual dispatch, keeps Coming Soon active and preserves
+the current `farmtree` theme as the rollback-safe public theme together with
+the rollback procedure below. Existing workflow protections must not be
+weakened.
 
 ## Verified Repository Workflow State
 
@@ -44,9 +55,8 @@ PR #3 merged the workflow-only reconciliation to `main` at `3df2ae2` on
 `.github/workflows/deploy-wordpress-staging.yml` is absent from `main`.
 
 The workflow is therefore available for manual dispatch, but availability is
-not deployment approval. Do not dispatch it until required-reviewer protection,
-matching backup evidence and explicit public noindex are verified and a human
-separately approves the run.
+not deployment approval. Do not dispatch it until matching backup evidence and
+explicit public noindex are verified and a human separately approves the run.
 
 ## Backup Evidence Requirement
 
@@ -90,18 +100,21 @@ workflow fails unless the commit is contained in the remote native-rebuild
 branch. This prevents an accidental dispatch on `main`, which intentionally
 does not contain the native implementation source.
 
-The current validated candidate is
+The last pushed/CI-validated baseline is
 `897a991fbdd9f301d0409d1a015282baac8fce61`; GitHub validation run
-`32956292922` passed it. This is recorded evidence, not dispatch approval, and
-the SHA must be explicitly reconfirmed before a run.
+`32956292922` passed it. That SHA predates the local visual-parity correction
+and must not be selected for the next parity release. After an explicitly
+approved push and passing CI, record and reconfirm the new parity commit's full
+SHA before any run. Recorded CI evidence is never dispatch approval.
 
 The workflow targets the existing `Production` environment and existing
 `VIMEXX_*` server credentials. A read-only GitHub API check on 2026-08-26 found
 no protection rules on that environment, so the repository binding must not be
-described as reviewer-protected until that external rule is configured and
-verified. The workflow requires typed confirmation and a non-secret evidence
-reference for a matching recoverable file/database restore point before any SSH
-or rsync step runs.
+described as reviewer-protected. Required Reviewer protection is a deferred
+governance enhancement under the compensating manual-release policy. The
+workflow requires typed confirmation and a non-secret evidence reference for a
+matching recoverable file/database restore point before any SSH or rsync step
+runs.
 
 The workflow does not:
 

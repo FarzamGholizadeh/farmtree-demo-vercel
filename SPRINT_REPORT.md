@@ -1,12 +1,46 @@
 # FT-NATIVE-002 Sprint Report
 
-Status: Local implementation complete; runtime validation pending
+Status: Local visual-parity correction complete; runtime validation pending
 
 ## Homepage Structure
 
 The native Homepage now follows Hero, Platform, Technology, Trust, Proof
 Stories, FAQ, News & Insights and Final CTA. It is implemented in
 `farmtree-native` as core block markup and a content-only locked pattern.
+
+## Visual Parity Correction
+
+The approved public FarmTree frontend and existing production `farmtree` theme
+are now the permanent visual source of truth. The native implementation restores
+the fixed green Header, asset-backed brand-logo pill, approved Header actions
+and five-card Bento menu; centered cinematic Hero with the approved positioning
+statement and manual image controls; Manrope/Inter type system; exact green,
+cream and gold palette; approved wide layout and section rhythm; media-first
+Platform composition; warm Technology cards; light Trust/testimonial treatment;
+2x2 Proof Stories; centered FAQ cards; rounded News cards; dark conversion CTA;
+and the approved four-column Footer language.
+
+The Hero is built from four editor-owned core Image slides rather than a Cover
+block. Its manually selected states reuse one persistent editable primary H1;
+three alternate editor-visible core-block sources provide the other approved
+messages without adding frontend H1 elements.
+
+The Platform module uses the byte-identical approved MP4 and poster plus the
+approved plot-definition screenshot in an editor-visible two-slide carousel.
+Arrows, dots and keyboard navigation select slides manually, and a visible
+Play/Pause control lets the visitor stop or restart the footage. Playback is
+muted and visibility-aware: it pauses whenever the video slide or document is
+not visible. With reduced motion requested, it stays on the poster unless the
+visitor explicitly presses Play.
+
+The current selector is explicitly English-only, with Nederlands and Deutsch
+shown disabled; locale routing is deferred to FT-NATIVE-003. The quotation
+dialog matches the approved shell, but submit deliberately sends no network
+request. A production endpoint, consent/privacy copy, delivery verification and
+publication approval remain gated under FT-WEB-004.
+
+The correction stays in the Block Theme architecture. It does not modify the
+current production `farmtree` theme or restore the legacy SPA as the runtime.
 
 ## Frank Feedback Implemented
 
@@ -31,33 +65,41 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
 ## Local Evidence
 
 - Native foundation validation checks required files, JSON, valid block
-  structure, Homepage order, prohibited legacy sections, editable content and
-  the content-only pattern lock.
-- Final source review aligned the Hero Cover attributes with Gutenberg save
-  markup, removed duplicate header/footer landmark wrappers and added a
-  two-tone focus indicator that remains visible on light and dark sections.
-- Regression validation now guards Cover dim/alt serialization, semantic
-  template-part ownership and the focus treatment.
+  structure (including self-closing block comments), exact approved palette and
+  typography, Homepage order, prohibited legacy sections, Header/Footer and CTA
+  contracts, manual Hero behavior, editable content and content-only locks.
+- Final source review aligned the core Image and Video markup with Gutenberg
+  save serialization, removed duplicate header/footer landmark wrappers and
+  added a two-tone focus indicator that remains visible on light and dark
+  sections.
+- Regression validation guards the single-H1/four-image Hero contract,
+  approved Platform MP4/poster/screenshot contract, semantic template-part
+  ownership and the focus treatment.
 - Workflow validation confirms that private deployment remains manual,
   inactive-code-only and guarded by backup, Coming Soon, noindex,
   `blog_public=0` and active-theme checks.
 - `npm test` passes the agent system, native foundation, workflow safeguards,
   JavaScript syntax and native-theme CSS lint checks.
-- `npm run preview:native` provides a read-only composed local Homepage preview.
-- The served preview returned HTTP 200 with the approved section order, final
-  CTA and dynamic-News placeholder resolved and no raw PHP/pattern markers.
+- `npm run preview:native` provides a read-only composed local Homepage preview
+  using the real native Header/Footer and values derived from `theme.json`.
+- The served preview at `http://127.0.0.1:4173/` returned HTTP 200. Automated
+  assertions confirmed explicit local `noindex,nofollow`, the approved Hero,
+  exact core palette, one H1, real Header/Footer, section order, included manual
+  interaction script, correct JavaScript MIME type and no autoplay timers.
 - The repository-local `$farmtree-autonomous-delivery` skill passes both the
   project validator and the Codex skill schema validator.
 - Read-only checks on 2026-08-26 reconfirmed Coming Soon without an explicit
   public `noindex` signal and no protection rules on GitHub `Production`.
-- The six approved commits were pushed to the native-rebuild branch through
+- The approved baseline commits were pushed to the native-rebuild branch through
   `897a991`; GitHub native validation run `32956292922` passed.
 - PR #3 merged the workflow-only reconciliation to `main` at `3df2ae2`.
   GitHub registers `deploy-wordpress-native.yml` as active and manual-only with
   zero runs, and `deploy-wordpress-staging.yml` is absent from `main`.
 - GitHub API verification found that the repository is private, only the owner
-  has access, and `Production` has no rules. Required reviewers for a private
-  repository require Enterprise-capable ownership plus an eligible reviewer.
+  has access, and `Production` has no rules. Required Reviewer protection is a
+  deferred governance enhancement under the documented compensating
+  manual-release policy; repository visibility, ownership and billing remain
+  unchanged.
 - Live checks verified that Coming Soon remains active but neither the Homepage
   nor intercepted `/robots.txt` exposes a robots meta tag or `X-Robots-Tag`
   noindex signal.
@@ -67,37 +109,45 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   `6101732202`; its successful status points to the legacy/reference static
   project at a Vercel-authenticated `vercel.app` URL. It did not run the native
   Actions workflow or deploy to the WordPress runtime at `farmtree.eu`.
-- Homepage implementation source commit: `c27da77`.
+- Homepage foundation source commit: `c27da77`. The visual-parity correction is
+  the current local release-preparation commit and has not been pushed.
 
 ## Preview And Screenshots
 
-The local preview renderer is available without changing WordPress state.
-Automated in-app browser capture was unavailable in the current environment, so
-no new composed screenshots are claimed. Static preview composition and content
-order are tested; visual browser and responsive inspection remain pending.
+The corrected local preview renderer is available without changing WordPress
+state. The in-app browser reported that no browser session was available, so no
+new composed screenshots are claimed. Responsive source contracts cover 320,
+375, 390, 430, 768, 1024, 1280, 1440 and 1920 pixels, but rendered screenshots,
+scroll-width measurements, axe and keyboard walkthrough evidence remain pending
+until a supported browser session is available.
 
 ## Runtime Safety
 
-No native workflow run, WordPress deployment, activation, content publication,
+No native deployment workflow run, WordPress deployment, activation, content publication,
 Coming Soon change or database change was made. FT-NATIVE-001B remains blocked
-until the private repository can enforce an eligible `Production` reviewer, a
-matching recoverable files/database backup is verified and the public response
-exposes explicit noindex.
+until a matching recoverable files/database backup is verified and the public
+response exposes explicit noindex. Required Reviewer protection does not block
+the current private/manual compensating release policy.
 
 ## Runtime Validation Still Required
 
 - PHP syntax in the approved CI or server environment.
 - Theme/plugin recognition while both remain inactive.
 - Site Editor, Page Editor and Template Editor behavior.
-- Frontend block rendering, Query Loop output and responsive visual review.
+- Frontend block rendering, Query Loop output, video visibility/playback and
+  responsive visual review at all nine target widths.
 - Keyboard, focus, reduced-motion and screen-reader checks in rendered
   WordPress.
+- Locale-aware routing remains deferred to FT-NATIVE-003; the current Header is
+  English-only and its NL/DE choices are disabled.
+- Production quotation endpoint, consent/privacy copy and delivery verification
+  remain deferred to FT-WEB-004; the current submit control sends no request.
 - Final approved imagery, proof labels, testimonials and partner evidence before
   publication.
 
 ## Next Action
 
-Configure an eligible required reviewer on GitHub `Production`, which requires
-Enterprise-capable ownership for this private repository. Then verify matching
-backup evidence and explicit public noindex before seeking separate workflow
-dispatch approval. Keep `farmtree-native` inactive and Coming Soon in place.
+Configure explicit public noindex while Coming Soon remains active, then verify
+matching recoverable files/database backup evidence before seeking separate
+workflow dispatch approval. Keep `farmtree-native` inactive; Required Reviewer
+protection remains deferred.

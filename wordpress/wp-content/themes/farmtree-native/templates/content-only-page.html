@@ -1,9 +1,11 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","metadata":{"name":"FarmTree Content-Only Page"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|80"}}},"layout":{"type":"constrained"},"templateLock":"contentOnly"} -->
-<main class="wp-block-group" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:post-title {"level":1,"align":"wide"} /-->
+<!-- wp:group {"tagName":"main","anchor":"main-content","className":"ft-native-page-main","metadata":{"name":"FarmTree Content-Only Page"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|80"}}},"layout":{"type":"constrained"},"templateLock":"contentOnly"} -->
+<main id="main-content" class="wp-block-group ft-native-page-main" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:post-title {"level":1,"align":"wide"} /-->
 
 <!-- wp:post-content {"layout":{"type":"constrained"}} /--></main>
 <!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer"} /-->
+
+<!-- wp:template-part {"slug":"quotation-modal"} /-->

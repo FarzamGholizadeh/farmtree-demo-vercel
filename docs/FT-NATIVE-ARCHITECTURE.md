@@ -40,7 +40,7 @@ templates when governance requires it.
 
 | Content | Canonical WordPress Source |
 |---|---|
-| Logo and site identity | Site Logo and Site Title blocks |
+| Logo and site identity | Shared asset-backed `farmtree-native/brand-logo` pattern; future managed identity source in FT-NATIVE-003 |
 | Primary and footer navigation | Navigation blocks and reusable Navigation entities |
 | Header and footer composition | Template parts |
 | Platform, demo and social URLs | Future `farmtree-content` global settings |
@@ -50,6 +50,18 @@ templates when governance requires it.
 The initial template-part fallbacks include approved destinations only to make
 the inactive theme reviewable. FT-NATIVE-003 will connect repeated destinations
 to one settings source before public activation.
+
+The current Header deliberately avoids a configured Site Logo dependency: its
+shared brand-logo pattern links the bundled approved mark to the WordPress home
+URL. The core Navigation block owns the approved five-card Bento submenu. The
+current language selector is English-only, with Nederlands and Deutsch visibly
+disabled until FT-NATIVE-003 defines locale ownership and routing.
+
+The quotation template part provides the approved dialog shell on native
+templates, but its submit path fails closed and sends no network request.
+FT-WEB-004 must approve the production endpoint, consent/privacy copy, spam
+controls and delivery verification before the form or related content can be
+published.
 
 ## Content Models
 
@@ -80,6 +92,13 @@ The native Homepage will prioritise positioning, planning value, technology,
 trust and proof stories. Testimonials belong to the Trust architecture, Use
 Cases are removed from the Homepage, News & Insights moves lower, and any
 remaining audience segmentation is reduced to the three approved groups.
+
+The current Hero keeps one persistent editable primary H1 and three alternate
+editor-visible message sources beside four editable core Image slides; it does
+not use a Cover block. The Platform module uses the approved MP4/poster and
+plot-definition screenshot as core Video/Image media, with manual slide
+navigation, an explicit Play/Pause control and visibility-, document- and
+reduced-motion-aware playback.
 
 Editors own approved headings, text, media, proof stories, testimonials, theme
 cards, calls to action, FAQs and partner/reference content. The theme continues
