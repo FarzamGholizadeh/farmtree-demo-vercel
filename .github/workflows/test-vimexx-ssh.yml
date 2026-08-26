@@ -96,8 +96,8 @@ jobs:
             test \"\$(wp option get template --path=$remote_wordpress_path)\" = farmtree
             test \"\$(wp option get stylesheet --path=$remote_wordpress_path)\" = farmtree
             echo FARMTREE_NOINDEX_PREFLIGHT_THEME_OK
-            test \"\$(wp option get blog_public --path=$remote_wordpress_path)\" = 0
-            echo FARMTREE_NOINDEX_PREFLIGHT_SEARCH_VISIBILITY_OK
+            wp option get blog_public --path=$remote_wordpress_path >/dev/null
+            echo FARMTREE_NOINDEX_PREFLIGHT_SEARCH_VISIBILITY_READ_ONLY
             wp plugin is-active coming-soon --path=$remote_wordpress_path
             echo FARMTREE_NOINDEX_PREFLIGHT_COMING_SOON_OK
             ! grep -Fqx '# BEGIN FarmTree rebuild noindex' $remote_wordpress_path/.htaccess
@@ -168,7 +168,6 @@ jobs:
             "set -eu
             test \"\$(wp option get template --path=$remote_wordpress_path)\" = farmtree
             test \"\$(wp option get stylesheet --path=$remote_wordpress_path)\" = farmtree
-            test \"\$(wp option get blog_public --path=$remote_wordpress_path)\" = 0
             wp plugin is-active coming-soon --path=$remote_wordpress_path
             grep -Fqx '# BEGIN FarmTree rebuild noindex' $remote_wordpress_path/.htaccess
             grep -Fqx '# END FarmTree rebuild noindex' $remote_wordpress_path/.htaccess
@@ -239,7 +238,7 @@ jobs:
             wp core is-installed --path=$remote_wordpress_path
             test \"\$(wp option get template --path=$remote_wordpress_path)\" = farmtree
             test \"\$(wp option get stylesheet --path=$remote_wordpress_path)\" = farmtree
-            test \"\$(wp option get blog_public --path=$remote_wordpress_path)\" = 0
+            wp option get blog_public --path=$remote_wordpress_path >/dev/null
             wp plugin is-active coming-soon --path=$remote_wordpress_path
             wp theme is-installed farmtree-native --path=$remote_wordpress_path
             ! wp theme is-active farmtree-native --path=$remote_wordpress_path

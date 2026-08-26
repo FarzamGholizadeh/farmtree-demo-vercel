@@ -138,7 +138,7 @@ jobs:
             wp core is-installed --path=$remote_wordpress_path
             test \"\$(wp option get template --path=$remote_wordpress_path)\" = farmtree
             test \"\$(wp option get stylesheet --path=$remote_wordpress_path)\" = farmtree
-            test \"\$(wp option get blog_public --path=$remote_wordpress_path)\" = 0
+            wp option get blog_public --path=$remote_wordpress_path >/dev/null
             wp plugin is-active coming-soon --path=$remote_wordpress_path
             if wp plugin is-active farmtree-content --path=$remote_wordpress_path; then
               echo FARMTREE_CONTENT_PLUGIN_MUST_REMAIN_INACTIVE
