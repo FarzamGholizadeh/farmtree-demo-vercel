@@ -879,7 +879,9 @@ for (const contract of [
 if (
   !functions.includes('farmtree_native_pre_release_robots') ||
   !functions.includes("$robots['noindex'] = true") ||
-  !functions.includes("$robots['nofollow'] = true")
+  !functions.includes("$robots['nofollow'] = true") ||
+  !functions.includes("$headers['X-Robots-Tag'] = 'noindex, nofollow'") ||
+  !functions.includes("add_filter('pre_option_blog_public', 'farmtree_native_pre_release_search_visibility', 99)")
 ) {
   throw new Error('Native theme must enforce the pre-release noindex/nofollow gate.');
 }

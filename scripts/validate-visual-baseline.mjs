@@ -180,7 +180,8 @@ if (
 
 for (const contract of [
   "['127.0.0.1', 'localhost', '::1']",
-  "status: 'private'",
+  "const localQaStatus = 'publish';",
+  'Source content remains approval-gated and production is untouched.',
   "name === 'farmtree-native/homepage-foundation'",
   "stylesheet === 'farmtree-native'",
   "plugin === 'farmtree-content/farmtree-content'"

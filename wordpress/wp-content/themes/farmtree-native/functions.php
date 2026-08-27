@@ -242,6 +242,29 @@ function farmtree_native_partner_gallery_attributes(string $block_content, array
 add_filter('render_block', 'farmtree_native_partner_gallery_attributes', 10, 2);
 
 /**
+ * Keep reserved locale roots unpublished until complete translations exist.
+ *
+ * WordPress can otherwise canonically fall back to the published front page
+ * for an unknown first path segment. Returning the native 404 makes the locale
+ * reservation explicit without adding rewrites, pages or hreflang entries.
+ */
+function farmtree_native_reserved_locale_404(): void
+{
+    $path = trailingslashit((string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH));
+    if (!in_array($path, ['/nl/', '/de/'], true)) {
+        return;
+    }
+
+    global $wp_query;
+    $wp_query->set_404();
+    status_header(404);
+    nocache_headers();
+    include get_query_template('404');
+    exit;
+}
+add_action('template_redirect', 'farmtree_native_reserved_locale_404', 0);
+
+/**
  * Register the FarmTree pattern category.
  */
 function farmtree_native_register_pattern_categories(): void
@@ -421,3 +444,19 @@ function farmtree_native_pre_release_robots(array $robots): array
     return $robots;
 }
 add_filter('wp_robots', 'farmtree_native_pre_release_robots', 99);
+
+/** Add an explicit HTTP-level indexing safeguard for pre-release responses. */
+function farmtree_native_pre_release_headers(array $headers): array
+{
+    $headers['X-Robots-Tag'] = 'noindex, nofollow';
+
+    return $headers;
+}
+add_filter('wp_headers', 'farmtree_native_pre_release_headers', 99);
+
+/** Keep WordPress' effective search-engine visibility disabled pre-release. */
+function farmtree_native_pre_release_search_visibility(): int
+{
+    return 0;
+}
+add_filter('pre_option_blog_public', 'farmtree_native_pre_release_search_visibility', 99);

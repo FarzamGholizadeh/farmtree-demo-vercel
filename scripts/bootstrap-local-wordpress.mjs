@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 const baseUrl = new URL(process.env.FARMTREE_LOCAL_WP_URL ?? 'http://localhost:8888');
 const verifyOnly = process.argv.includes('--verify-only');
+const localQaStatus = 'publish';
 
 if (!['127.0.0.1', 'localhost', '::1'].includes(baseUrl.hostname)) {
   throw new Error('Local WordPress bootstrap refuses to modify a non-loopback host.');
@@ -154,6 +155,66 @@ const englishPageDefinitions = JSON.parse(await readFile(
   'utf8'
 ));
 
+// These publication settings are deliberately confined to the loopback-only QA
+// bootstrap. Source content remains approval-gated and production is untouched.
+const localEnglishPageDefinitions = [
+  ...englishPageDefinitions,
+  {
+    title: 'News & Insights',
+    slug: 'news-insights',
+    excerpt: 'Source-led FarmTree analysis for agroforestry planning teams.',
+    body: 'news'
+  }
+];
+
+const editorialPresentation = {
+  'farmtree-water-erosion-microclimate-model-update-2026': {
+    category: 'FarmTree Updates',
+    image: 'news-water-erosion-microclimate-2026-v1-1600.webp',
+    alt: 'Agroforestry rows after rainfall with surface water moving between planted contours'
+  },
+  'eu-carbon-farming-methodologies-agroforestry-2026': {
+    category: 'Policy & Standards',
+    image: 'news-eu-carbon-farming-methodologies-2026-v1-1600.webp',
+    alt: 'Soil sampling equipment and scenario-planning materials beside an agroforestry field'
+  },
+  'eudr-2026-agroforestry-data-readiness': {
+    category: 'Policy & Standards',
+    image: 'news-eudr-data-readiness-2026-v1-1600.webp',
+    alt: 'Field technician reviewing a parcel map at the edge of a mixed agroforestry plot'
+  },
+  'verra-vm0042-v22-agricultural-land-management': {
+    category: 'Data & Evidence',
+    image: 'news-verra-vm0042-v22-v1-1600.webp',
+    alt: 'Careful soil-core sampling in a diversified agroforestry field'
+  },
+  'verra-vm0042-v30-consultation-lessons': {
+    category: 'Data & Evidence',
+    image: 'news-verra-vm0042-v30-governance-v1-1600.webp',
+    alt: 'Scenario diagrams and field measurements being compared beside agroforestry rows'
+  },
+  'smallholder-agroforestry-wood-production-lessons-2025': {
+    category: 'Species & Design',
+    image: 'news-smallholder-wood-production-v1-1600.webp',
+    alt: 'A small diversified farm combining managed trees, crops and stacked pruning wood'
+  },
+  'carbon-pricing-2026-nature-project-quality': {
+    category: 'Project Finance',
+    image: 'news-carbon-pricing-2026-v1-1600.webp',
+    alt: 'A planner comparing scenario materials while overlooking an agroforestry landscape'
+  },
+  'agroforestry-species-data-switchboard-2025': {
+    category: 'Species & Design',
+    image: 'news-species-data-provenance-v1-1600.webp',
+    alt: 'Leaves and seed pods being compared with field records at a botanical work table'
+  },
+  'nature-restoration-plans-report-once-agroforestry-2025': {
+    category: 'Landscape Planning',
+    image: 'news-nature-restoration-planning-v1-1600.webp',
+    alt: 'Landscape planners reviewing a restoration map above a mosaic of fields and tree corridors'
+  }
+};
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll('&', '&amp;')
@@ -195,6 +256,23 @@ function editorialContent(article) {
   ].join('\n\n');
 }
 
+function newsHubContent() {
+  return [
+    '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Source-led analysis and practical interpretation for agroforestry planning teams.</p><!-- /wp:paragraph -->',
+    '<!-- wp:query {"queryId":9,"query":{"perPage":9,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"ft-home-news-query"} -->',
+    '<div class="wp-block-query ft-home-news-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->',
+    '<!-- wp:group {"className":"ft-news-item","layout":{"type":"constrained"}} --><div class="wp-block-group ft-news-item">',
+    '<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->',
+    '<!-- wp:post-terms {"term":"category","fontSize":"caption"} /-->',
+    '<!-- wp:post-date {"fontSize":"caption"} /-->',
+    '<!-- wp:post-title {"level":2,"isLink":true,"fontSize":"lead"} /-->',
+    '<!-- wp:post-excerpt {"moreText":"","excerptLength":24,"fontSize":"small"} /-->',
+    '<!-- wp:read-more {"content":"Read article","className":"ft-news-read-more"} /-->',
+    '</div><!-- /wp:group -->',
+    '<!-- /wp:post-template --></div><!-- /wp:query -->'
+  ].join('\n');
+}
+
 function proofStoryContent(story) {
   return story.sections.map(([heading, paragraph]) => [
     `<!-- wp:heading --><h2 class="wp-block-heading">${escapeHtml(heading)}</h2><!-- /wp:heading -->`,
@@ -203,6 +281,9 @@ function proofStoryContent(story) {
 }
 
 function englishPageContent(page) {
+  if (page.body === 'news' || page.slug === 'blog') {
+    return newsHubContent();
+  }
   if (page.body === 'contact') {
     return [
       '<!-- wp:paragraph --><p>The local pre-release form is intentionally unavailable until an approved delivery backend and privacy review are complete. No information entered here is transmitted, stored or logged.</p><!-- /wp:paragraph -->',
@@ -248,7 +329,7 @@ for (const segment of segmentDefinitions) {
       body: JSON.stringify({
         title: segment.title,
         slug: segment.slug,
-        status: 'private',
+        status: localQaStatus,
         excerpt: segment.excerpt,
         content: segmentContent(segment),
         menu_order: segment.order
@@ -259,12 +340,12 @@ for (const segment of segmentDefinitions) {
   if (!verifyOnly) {
     post = await api(`/wp/v2/customer-segments/${post.id}`, {
       method: 'POST',
-      body: JSON.stringify({ title: segment.title, slug: segment.slug, status: 'private', excerpt: segment.excerpt, content: segmentContent(segment), menu_order: segment.order })
+      body: JSON.stringify({ title: segment.title, slug: segment.slug, status: localQaStatus, excerpt: segment.excerpt, content: segmentContent(segment), menu_order: segment.order })
     });
   }
 
-  if (post.status !== 'private') {
-    throw new Error(`Customer segment must remain private before approval: ${segment.slug}`);
+  if (post.status !== localQaStatus) {
+    throw new Error(`Customer segment is not published in the loopback QA runtime: ${segment.slug}`);
   }
   if (normaliseSampleText(post.title?.raw ?? post.title?.rendered) !== segment.title) {
     throw new Error(`Customer segment title differs from the approved order: ${segment.slug}`);
@@ -275,6 +356,32 @@ for (const segment of segmentDefinitions) {
 
 const editorialDrafts = [];
 for (const article of editorialDefinitions) {
+  const presentation = editorialPresentation[article.slug];
+  if (!presentation) throw new Error(`Editorial presentation metadata is missing: ${article.slug}`);
+  let categories = await api(`/wp/v2/categories?slug=${encodeURIComponent(presentation.category.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-').replaceAll(/^-|-$/g, ''))}&context=edit&per_page=1`);
+  if (!categories[0] && verifyOnly) throw new Error(`Editorial category is missing: ${presentation.category}`);
+  if (!categories[0]) categories = [await api('/wp/v2/categories', { method: 'POST', body: JSON.stringify({ name: presentation.category }) })];
+
+  const mediaSlug = presentation.image.replace(/\.[^.]+$/, '');
+  let media = await api(`/wp/v2/media?slug=${encodeURIComponent(mediaSlug)}&context=edit&per_page=1`);
+  if (!media[0] && verifyOnly) throw new Error(`Editorial featured image is missing: ${presentation.image}`);
+  if (!media[0]) {
+    const imageBuffer = await readFile(new URL(`../wordpress/wp-content/themes/farmtree-native/assets/images/news/${presentation.image}`, import.meta.url));
+    media = [await api('/wp/v2/media', {
+      method: 'POST',
+      headers: {
+        'Content-Disposition': `attachment; filename="${presentation.image}"`,
+        'Content-Type': 'image/webp'
+      },
+      body: imageBuffer
+    })];
+  }
+  if (!verifyOnly) {
+    media[0] = await api(`/wp/v2/media/${media[0].id}`, {
+      method: 'POST',
+      body: JSON.stringify({ alt_text: presentation.alt, title: article.title })
+    });
+  }
   const existing = await api(
     `/wp/v2/posts?slug=${encodeURIComponent(article.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`
   );
@@ -290,9 +397,12 @@ for (const article of editorialDefinitions) {
       body: JSON.stringify({
         title: article.title,
         slug: article.slug,
-        status: 'draft',
+        status: localQaStatus,
         excerpt: article.excerpt,
-        content: editorialContent(article)
+        content: editorialContent(article),
+        date: `${article.sourceDate}T09:00:00`,
+        categories: [categories[0].id],
+        featured_media: media[0].id
       })
     });
   }
@@ -301,12 +411,12 @@ for (const article of editorialDefinitions) {
   if (!verifyOnly) {
     post = await api(`/wp/v2/posts/${post.id}`, {
       method: 'POST',
-      body: JSON.stringify({ title: article.title, slug: article.slug, status: 'draft', excerpt: article.excerpt, content: editorialContent(article) })
+      body: JSON.stringify({ title: article.title, slug: article.slug, status: localQaStatus, excerpt: article.excerpt, content: editorialContent(article), date: `${article.sourceDate}T09:00:00`, categories: [categories[0].id], featured_media: media[0].id })
     });
   }
 
-  if (post.status !== 'draft') {
-    throw new Error(`Editorial foundation content must remain draft: ${article.slug}`);
+  if (post.status !== localQaStatus || post.featured_media !== media[0].id || !post.categories.includes(categories[0].id)) {
+    throw new Error(`Editorial post is not fully published in the loopback QA runtime: ${article.slug}`);
   }
   editorialDrafts.push(post);
 }
@@ -316,20 +426,20 @@ for (const story of proofStoryDefinitions) {
   const existing = await api(`/wp/v2/proof-stories?slug=${encodeURIComponent(story.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`);
   let post = existing[0];
   if (!post && verifyOnly) throw new Error(`Private Proof Story is missing: ${story.slug}`);
-  if (!post) post = await api('/wp/v2/proof-stories', { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: 'private', excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order }) });
-  if (!verifyOnly) post = await api(`/wp/v2/proof-stories/${post.id}`, { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: 'private', excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order }) });
-  if (post.status !== 'private') throw new Error(`Proof Story must remain private: ${story.slug}`);
+  if (!post) post = await api('/wp/v2/proof-stories', { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: localQaStatus, excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order }) });
+  if (!verifyOnly) post = await api(`/wp/v2/proof-stories/${post.id}`, { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: localQaStatus, excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order }) });
+  if (post.status !== localQaStatus) throw new Error(`Proof Story is not published in the loopback QA runtime: ${story.slug}`);
   proofStories.push(post);
 }
 
 const englishPages = [];
-for (const page of englishPageDefinitions) {
+for (const page of localEnglishPageDefinitions) {
   const existing = await api(`/wp/v2/pages?slug=${encodeURIComponent(page.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`);
   let post = existing[0];
   if (!post && verifyOnly) throw new Error(`Private English page is missing: ${page.slug}`);
-  if (!post) post = await api('/wp/v2/pages', { method: 'POST', body: JSON.stringify({ title: page.title, slug: page.slug, status: 'private', excerpt: page.excerpt, content: englishPageContent(page) }) });
-  if (!verifyOnly) post = await api(`/wp/v2/pages/${post.id}`, { method: 'POST', body: JSON.stringify({ title: page.title, slug: page.slug, status: 'private', excerpt: page.excerpt, content: englishPageContent(page) }) });
-  if (post.status !== 'private') throw new Error(`English page must remain private: ${page.slug}`);
+  if (!post) post = await api('/wp/v2/pages', { method: 'POST', body: JSON.stringify({ title: page.title, slug: page.slug, status: localQaStatus, excerpt: page.excerpt, content: englishPageContent(page) }) });
+  if (!verifyOnly) post = await api(`/wp/v2/pages/${post.id}`, { method: 'POST', body: JSON.stringify({ title: page.title, slug: page.slug, status: localQaStatus, excerpt: page.excerpt, content: englishPageContent(page) }) });
+  if (post.status !== localQaStatus) throw new Error(`English page is not published in the loopback QA runtime: ${page.slug}`);
   englishPages.push(post);
 }
 
@@ -355,19 +465,19 @@ if (!homepage) {
     body: JSON.stringify({
       title: 'FarmTree Native Local Homepage',
       slug: 'farmtree-native-local-home',
-      status: 'private',
+      status: localQaStatus,
       content: '<!-- wp:paragraph --><p>Local runtime bootstrap</p><!-- /wp:paragraph -->'
     })
   });
 }
 
-if (!verifyOnly && homepage.content?.raw !== homepagePattern.content) {
+if (!verifyOnly) {
   homepage = await api(`/wp/v2/pages/${homepage.id}`, {
     method: 'POST',
     body: JSON.stringify({
       title: 'FarmTree Native Local Homepage',
       slug: 'farmtree-native-local-home',
-      status: 'private',
+      status: localQaStatus,
       content: homepagePattern.content
     })
   });
@@ -381,7 +491,7 @@ if (!verifyOnly) {
       description: 'Isolated visual-first WordPress development runtime',
       show_on_front: 'page',
       page_on_front: homepage.id,
-      posts_per_page: 3,
+      posts_per_page: 9,
       default_comment_status: 'closed',
       default_ping_status: 'closed'
     })
@@ -447,8 +557,8 @@ if (frontendHtml.includes('id="ft-ai-root"')) {
 if (savedPage.content.raw !== homepagePattern.content) {
   throw new Error('Local Homepage content did not persist after save/reload.');
 }
-if (savedPage.status !== 'private') {
-  throw new Error('The local Homepage must remain private.');
+if (savedPage.status !== localQaStatus) {
+  throw new Error('The local Homepage is not published for anonymous loopback QA.');
 }
 if (revisions.length < 1) {
   throw new Error('Local Homepage revision history was not created.');
@@ -516,7 +626,7 @@ if (!frontendHtml.includes('wp-block-query') || (frontendHtml.match(/<h1\b/g) ??
 }
 
 if (settings.show_on_front !== 'page' || settings.page_on_front !== homepage.id) {
-  throw new Error('Local WordPress is not configured to render the private native Homepage on the front.');
+  throw new Error('Local WordPress is not configured to render the native QA Homepage on the front.');
 }
 if (!/<meta name=['"]robots['"][^>]*content=['"][^'"]*noindex/i.test(frontendHtml)) {
   throw new Error('The native frontend must remain noindex before release approval.');
@@ -558,15 +668,15 @@ console.log(JSON.stringify({
   defaultSamplePost: samplePostState,
   customerSegments: {
     count: segmentPosts.length,
-    status: 'private',
+    status: localQaStatus,
     order: segmentDefinitions.map(({ title }) => title)
   },
   editorialDrafts: {
     count: editorialDrafts.length,
-    status: 'draft'
+    status: localQaStatus
   },
-  proofStories: { count: proofStories.length, status: 'private' },
-  englishPages: { count: englishPages.length, status: 'private', routes: englishPageDefinitions.map(({ slug }) => `/${slug}/`) },
+  proofStories: { count: proofStories.length, status: localQaStatus },
+  englishPages: { count: englishPages.length, status: localQaStatus, routes: localEnglishPageDefinitions.map(({ slug }) => `/${slug}/`) },
   locales: {
     en: frontendResponse.status,
     nl: dutchRouteResponse.status,

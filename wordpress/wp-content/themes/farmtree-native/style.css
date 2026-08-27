@@ -1713,7 +1713,8 @@ body.ft-quotation-open {
 
 .ft-home-news-header > p a,
 .ft-news-item .wp-block-post-title a,
-.ft-news-item .wp-block-post-excerpt__more-link {
+.ft-news-item .wp-block-post-excerpt__more-link,
+.ft-news-item .ft-news-read-more {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
@@ -1741,8 +1742,22 @@ body.ft-quotation-open {
 
 .ft-news-item .wp-block-post-title,
 .ft-news-item .wp-block-post-date,
-.ft-news-item .wp-block-post-excerpt {
+.ft-news-item .wp-block-post-excerpt,
+.ft-news-item .wp-block-post-terms,
+.ft-news-item .ft-news-read-more {
   margin-inline: 0.5rem;
+}
+
+.ft-news-item .wp-block-post-terms {
+  margin-bottom: 0.25rem;
+  color: var(--wp--preset--color--farmtree-green);
+  font-weight: 700;
+}
+
+.ft-news-item .ft-news-read-more {
+  color: var(--wp--preset--color--farmtree-green);
+  font-weight: 700;
+  text-underline-offset: 0.2em;
 }
 
 .ft-final-cta {

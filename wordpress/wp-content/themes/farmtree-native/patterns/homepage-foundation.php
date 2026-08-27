@@ -545,11 +545,15 @@
 <!-- wp:group {"className":"ft-news-item","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-news-item"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
 
+<!-- wp:post-terms {"term":"category","fontSize":"caption"} /-->
+
 <!-- wp:post-date {"fontSize":"caption"} /-->
 
 <!-- wp:post-title {"level":3,"isLink":true,"fontSize":"lead"} /-->
 
-<!-- wp:post-excerpt {"moreText":"Read insight","excerptLength":18,"fontSize":"small"} /--></div>
+<!-- wp:post-excerpt {"moreText":"","excerptLength":18,"fontSize":"small"} /-->
+
+<!-- wp:read-more {"content":"Read article","className":"ft-news-read-more"} /--></div>
 <!-- /wp:group -->
 <!-- /wp:post-template -->
 
