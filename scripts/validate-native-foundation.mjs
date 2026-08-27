@@ -38,6 +38,10 @@ const required = [
   'assets/images/home/proof-farm-value.webp',
   'assets/images/home/proof-cocoa.webp',
   'assets/images/home/proof-water.webp',
+  'assets/images/proof/proof-carbon-planning-1600.webp',
+  'assets/images/proof/proof-farm-value-modelling-1600.webp',
+  'assets/images/proof/proof-cocoa-scenario-planning-1600.webp',
+  'assets/images/proof/proof-water-landscape-resilience-1600.webp',
   'assets/images/partners/giz.png',
   'assets/images/partners/rabobank.png',
   'assets/images/partners/cgiar.png',
@@ -47,6 +51,8 @@ const required = [
   'assets/media/farmtree-platform-final-tools-review-poster.jpg',
   'assets/media/farmtree-platform-final-tools-review.mp4',
   'assets/media/farmtree-platform-final-tools-review.webm',
+  'assets/media/final-tools-review-11s-to-40s-2x.gif',
+  'assets/media/final-tools-review-11s-to-40s-poster.png',
   'assets/media/power-project-staff-plot-definition.png'
 ];
 
@@ -401,10 +407,10 @@ for (const contract of [
   'ft-platform-layout',
   'ft-platform-copy',
   'ft-platform-media',
-  'farmtree-platform-final-tools-review-poster.jpg',
-  'farmtree-platform-final-tools-review.mp4',
-  'data-ft-platform-video-toggle',
-  'The approved FarmTree Platform sequence',
+  'final-tools-review-11s-to-40s-poster.png',
+  'final-tools-review-11s-to-40s-2x.gif',
+  'prefers-reduced-motion: reduce',
+  'The approved FarmTree Platform workflow',
   'Site information',
   'Climate, soil and terrain',
   'Species database',
@@ -443,28 +449,15 @@ if (
   throw new Error('Homepage Hero must pair one persistent H1 with four editable approved media/message states.');
 }
 
-if (
-  (homepage.match(/class="wp-block-group ft-platform-screen ft-platform-video-slide"/g) ?? []).length !== 1 ||
-  (homepage.match(/class="wp-block-video ft-platform-video"/g) ?? []).length !== 1 ||
-  /data-ft-platform-(?:dot|prev|next)/.test(homepage)
-) {
-  throw new Error('Platform media must expose one approved editable animation with no obsolete carousel controls.');
-}
-
-if (
-  !homepage.includes('"controls":false') ||
-  !homepage.includes('loop muted playsinline') ||
-  homepage.includes('preload="metadata"') ||
-  /<video\b[^>]*\bautoplay\b/i.test(homepage)
-) {
-  throw new Error('Platform footage saved markup must stay canonical, muted, looping, inline and visibility-controlled.');
+if ((homepage.match(/class="ft-platform-screen ft-platform-gif"/g) ?? []).length !== 1 || /data-ft-platform-(?:dot|prev|next)|<video\b/i.test(homepage)) {
+  throw new Error('Platform media must expose the single approved GIF with no obsolete video or carousel controls.');
 }
 
 for (const image of homepage.matchAll(/<img\b[\s\S]*?\/>/g)) {
   if (!/\balt="[^"\s][^"]*"/.test(image[0])) {
     throw new Error(`Homepage image must have meaningful alternative text: ${image[0]}`);
   }
-  if (/\s(?:width|height|loading|decoding|fetchpriority)="/i.test(image[0])) {
+  if (!image[0].includes('assets/images/proof/') && !image[0].includes('assets/media/final-tools-review-11s-to-40s-2x.gif') && /\s(?:width|height|loading|decoding|fetchpriority)="/i.test(image[0])) {
     throw new Error(`Core Image saved markup must leave runtime-only image attributes to WordPress: ${image[0]}`);
   }
 }
@@ -563,24 +556,11 @@ for (const contract of [
   'aria-pressed',
   'aria-controls',
   'prefers-reduced-motion: reduce'
+  ,'touchstart'
+  ,'touchend'
 ]) {
   if (!interactions.includes(contract)) {
     throw new Error(`Manual Hero interactions are missing accessibility contract: ${contract}`);
-  }
-}
-
-for (const contract of [
-  'FarmTree Platform landscape animation',
-  'IntersectionObserver',
-  'document.hidden',
-  'reducedMotionQuery.matches',
-  'video.play()',
-  'video.pause()',
-  'userPausedVideo',
-  'Pause FarmTree Platform animation'
-]) {
-  if (!interactions.includes(contract)) {
-    throw new Error(`Manual Platform interactions are missing accessibility contract: ${contract}`);
   }
 }
 
@@ -597,10 +577,8 @@ if (
   !functions.includes("add_action('wp_enqueue_scripts', 'farmtree_native_enqueue_styles')") ||
   !functions.includes('assets/js/native-interactions.js') ||
   !functions.includes('farmtree_native_image_loading_attributes') ||
-  !functions.includes('farmtree_native_platform_video_attributes') ||
   !functions.includes('farmtree_native_partner_gallery_attributes') ||
   !functions.includes("add_action('wp_enqueue_scripts', 'farmtree_native_enqueue_interactions')") ||
-  !functions.includes("set_attribute('preload', 'metadata')") ||
   !functions.includes("set_attribute('fetchpriority', 'high')") ||
   !functions.includes("set_attribute('loading', $is_primary_hero ? 'eager' : 'lazy')")
 ) {
@@ -735,8 +713,8 @@ for (const match of homepage.matchAll(/<!-- wp:([^\s]+)(?:\s|\/-->)/g)) {
   }
 }
 
-if ((homepage.match(/class="wp-block-details"/g) ?? []).length !== 4) {
-  throw new Error('Homepage must provide four editable core Details FAQ entries.');
+if ((homepage.match(/class="wp-block-details"/g) ?? []).length !== 8) {
+  throw new Error('Homepage must provide eight editable core Details FAQ entries.');
 }
 
 if ((homepage.match(/class="wp-block-group ft-proof-card /g) ?? []).length !== 4) {
@@ -757,9 +735,9 @@ for (const contract of [
   'alt="People gathered for an agroforestry field visit"',
   'alt="Three people reviewing information on a laptop"',
   'alt="Four people discussing crops in a field"',
-  'alt="Dark clouds over a tree-covered agricultural landscape"',
-  'alt="Group portrait in a tree-filled landscape"',
-  'The approved FarmTree Platform sequence'
+  'alt="Ripe cocoa pods in a shaded agroforestry plot with a field technician in the distance"',
+  'alt="Water moving through a vegetated agroforestry landscape while a technician takes field measurements"',
+  'The approved FarmTree Platform workflow'
 ]) {
   if (!homepage.includes(contract)) {
     throw new Error(`Homepage is missing approved publication copy or literal media text: ${contract}`);

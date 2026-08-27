@@ -54,18 +54,41 @@ if (failures.length > 0) {
 }
 
 const homepage = routeResults.find(({ path }) => path === '/')?.body ?? '';
-for (const article of articles) {
+const newestHomepageArticles = [...articles]
+  .sort((left, right) => right.sourceDate.localeCompare(left.sourceDate))
+  .slice(0, 4);
+for (const article of newestHomepageArticles) {
   if (!homepage.includes(`/${article.slug}/`)) throw new Error(`Homepage News omits: ${article.slug}`);
 }
-if ((homepage.match(/class="[^"\n]*ft-news-item/g) ?? []).length !== 9) throw new Error('Homepage News does not render exactly nine cards.');
-if ((homepage.match(/class="[^"\n]*wp-block-post-featured-image/g) ?? []).length < 9) throw new Error('Homepage News cards are missing featured images.');
-if ((homepage.match(/>Read article<span class="screen-reader-text">/g) ?? []).length !== 9) throw new Error('Homepage News cards do not each expose the Read article CTA.');
-if ((homepage.match(/class="[^"\n]*wp-block-post-terms/g) ?? []).length < 9) throw new Error('Homepage News cards are missing topics.');
-if ((homepage.match(/<time\b/g) ?? []).length < 9) throw new Error('Homepage News cards are missing publication dates.');
-if ((homepage.match(/class="[^"\n]*wp-block-post-excerpt/g) ?? []).length < 9) throw new Error('Homepage News cards are missing excerpts.');
-if ((homepage.match(/\bsrcset=/g) ?? []).length < 9) throw new Error('Homepage News images are missing responsive srcset attributes.');
-if ((homepage.match(/<img\b[^>]*\bwidth=/g) ?? []).length < 9 || (homepage.match(/<img\b[^>]*\bheight=/g) ?? []).length < 9) {
+if ((homepage.match(/class="[^"\n]*ft-news-item/g) ?? []).length !== 4) throw new Error('Homepage News does not render exactly four latest cards.');
+if ((homepage.match(/class="[^"\n]*wp-block-post-featured-image/g) ?? []).length < 4) throw new Error('Homepage News cards are missing featured images.');
+if ((homepage.match(/>Read article<span class="screen-reader-text">/g) ?? []).length !== 4) throw new Error('Homepage News cards do not each expose the Read article CTA.');
+if ((homepage.match(/class="[^"\n]*wp-block-post-terms/g) ?? []).length < 4) throw new Error('Homepage News cards are missing topics.');
+if ((homepage.match(/<time\b/g) ?? []).length < 4) throw new Error('Homepage News cards are missing publication dates.');
+if ((homepage.match(/class="[^"\n]*wp-block-post-excerpt/g) ?? []).length < 4) throw new Error('Homepage News cards are missing excerpts.');
+if ((homepage.match(/\bsrcset=/g) ?? []).length < 4) throw new Error('Homepage News images are missing responsive srcset attributes.');
+if ((homepage.match(/<img\b[^>]*\bwidth=/g) ?? []).length < 4 || (homepage.match(/<img\b[^>]*\bheight=/g) ?? []).length < 4) {
   throw new Error('Homepage News images are missing intrinsic dimensions.');
+}
+
+const blog = routeResults.find(({ path }) => path === '/blog/')?.body ?? '';
+for (const article of articles) {
+  if (!blog.includes(`/${article.slug}/`)) throw new Error(`Blog omits: ${article.slug}`);
+}
+if ((blog.match(/class="[^"\n]*ft-blog-featured-card/g) ?? []).length !== 1 || (blog.match(/class="[^"\n]*ft-news-item/g) ?? []).length !== 8) {
+  throw new Error('Blog must render one featured article and eight editorial cards.');
+}
+
+const team = routeResults.find(({ path }) => path === '/team/')?.body ?? '';
+if ((team.match(/class="[^"\n]*ft-team-card/g) ?? []).length !== 13 || (team.match(/class="[^"\n]*ft-team-portrait/g) ?? []).length !== 13) {
+  throw new Error('Team page must render 13 factual member cards and portraits.');
+}
+
+for (const segment of segments) {
+  const body = routeResults.find(({ path }) => path === `/customer-segments/${segment.slug}/`)?.body ?? '';
+  if (!body.includes('ft-segment-intro-image') || !/class="[^"\n]*ft-segment-intro-image[^"\n]*"[\s\S]*?<img\b/.test(body)) {
+    throw new Error(`Customer segment is missing its distinct hero image: ${segment.slug}`);
+  }
 }
 
 const restChecks = [
@@ -113,7 +136,10 @@ console.log(JSON.stringify({
   targetRoutes: targetRoutes.length,
   routeStatus: Object.fromEntries(routeResults.map(({ path, status }) => [path, status])),
   published: { pages: pages.length + 2, proofStories: proofs.length, customerSegments: segments.length, news: articles.length },
-  homepageNews: { cards: 9, featuredImages: 9, topics: 9, excerpts: 9, dates: 9, ctas: 9, responsiveImages: true },
+  homepageNews: { cards: 4, featuredImages: 4, topics: 4, excerpts: 4, dates: 4, ctas: 4, responsiveImages: true },
+  blog: { featured: 1, cards: 8, total: 9 },
+  team: { members: 13, portraits: 13 },
+  segmentHeroes: segments.length,
   checkedInternalLinks: linkResults.length,
   brokenInternalLinks: brokenLinks.length,
   noindex: { meta: true, xRobotsTag: 'noindex, nofollow', searchVisibility: 'disabled' },

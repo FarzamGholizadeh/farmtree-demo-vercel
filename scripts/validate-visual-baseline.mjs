@@ -348,10 +348,10 @@ assertCssRuleInAtRule(
 );
 
 for (const platformContract of [
-  'farmtree-platform-final-tools-review-poster.jpg',
-  'farmtree-platform-final-tools-review.mp4',
-  'data-ft-platform-video-toggle',
-  'The approved FarmTree Platform sequence'
+  'final-tools-review-11s-to-40s-poster.png',
+  'final-tools-review-11s-to-40s-2x.gif',
+  'prefers-reduced-motion: reduce',
+  'The approved FarmTree Platform workflow'
 ]) {
   if (!nativeHomepage.includes(platformContract)) {
     throw new Error(`Approved single-media Platform contract is missing: ${platformContract}`);

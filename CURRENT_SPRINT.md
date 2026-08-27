@@ -14,20 +14,21 @@ design controls.
 
 ### Final English Master Delivery
 
-The final English experience now includes six-second Hero autoplay with
-interaction pause; the exact user-supplied 57-second Platform sequence through
-optimized MP4/poster delivery; an animated, visibility-aware technology-flow
-overlay; approved-theme counters; opposing logo/testimonial rails; four private
-Proof Stories; ten private PDF-directed customer-segment pages; 15 private
-English support pages; nine source-attributed editorial drafts; a safe disabled
-Contact form with email fallback; and an expanded source-first FT Bot plugin
-with OpenAI-compatible and Anthropic provider adapters.
+The final English experience now includes six-second Hero autoplay with edge
+controls, interaction pause and a mobile swipe handler; the exact user-supplied
+14.5-second Platform GIF with a reduced-motion poster; a clean static technology
+diagram; glass metrics; seamless opposing logo/testimonial rails; four
+image-backed Proof Stories; ten distinct image-backed customer-segment pages;
+16 English support pages; a factual 13-person Team page; a featured-story Blog
+with all nine source-attributed articles; a premium Vacancies empty state; and
+the existing privacy-safe Contact/quotation fallbacks.
 
-No native content was published. The canonical sample post is draft-only, the
-Homepage and every new page/custom entry are private, and all News posts are
-drafts. English owns `/`; `/nl/` and `/de/` remain unpublished 404s without
-hreflang. Coming Soon, noindex/nofollow, production `farmtree` theme ownership
-and the rollback path remain unchanged.
+For anonymous loopback QA only, the native Homepage, English pages, custom
+entries and News posts are locally published. Nothing was published or
+activated in production. The canonical sample post is non-public. English owns
+`/`; `/nl/` and `/de/` remain unpublished 404s without hreflang. Coming Soon,
+noindex/nofollow, production `farmtree` theme ownership and the rollback path
+remain unchanged.
 
 ### Runtime Dependency
 
@@ -80,12 +81,10 @@ persistent, editable primary H1 and its supporting copy remain in the rendered
 Hero; three alternate editor-visible core-block message sources supply the
 other manually selected states without introducing additional H1 elements.
 
-The Platform module now uses the approved source GIF through its byte-stable,
-far smaller MP4/poster delivery pair in one editor-owned media composition.
-The original GIF remains in `assets/media/source/`. A visible Play/Pause
-control lets visitors stop or restart the footage. The muted video pauses when
-the section or document is not visible; reduced-motion users see the poster
-unless they explicitly press Play.
+The Platform module now uses the exact supplied GIF byte-for-byte in one media
+composition. The source is preserved under `assets/media/source/platform/` and
+the theme copy has the same SHA-256 digest. A static extracted poster replaces
+the animated GIF when reduced motion is requested.
 
 The current selector is intentionally English-only: English owns `/`, while
 Nederlands `/nl/` and Deutsch `/de/` are reserved but unpublished, unlinked and
@@ -115,10 +114,10 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
 
 - Repository checks cover required native files, exact approved design tokens,
   valid block markup (including self-closing blocks), Homepage hierarchy,
-  approved Hero/content constraints, Header/Footer contracts, core Image and
-  Video serialization, semantic landmark ownership, manual-only Hero and
-  Platform controls, responsive layout rules, focus treatment, workflow policy,
-  JavaScript and CSS.
+  approved Hero/content constraints, Header/Footer contracts, the supplied GIF
+  and responsive image serialization, semantic landmark ownership, Hero
+  controls/swipe contracts, responsive layout rules, focus treatment, workflow
+  policy, JavaScript and CSS.
 - A deterministic visual-baseline gate compares the native theme with the
   production `farmtree` source, including shared layout contracts and SHA-256
   equality for 17 approved brand, Hero, Platform, proof and partner assets. It
@@ -147,7 +146,7 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   430, 768, 1024, 1280, 1440 and 1920 pixels. Every width reported
   `scrollWidth === innerWidth`; the only off-screen children belong to the
   intentionally contained horizontal partner-logo rail. Final screenshots are
-  in `qa/native-foundation/publication-readiness/chrome/`.
+  in `qa/screenshots/final-english-experience/`.
 - Browser error/warning logs were empty after the interaction walkthrough.
   Rendered semantic audits at 390 and 1440 found one H1, complete
   Header/Main/Footer landmarks, no heading-level jumps, duplicate IDs, missing
@@ -166,15 +165,15 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   fingerprint (`Hello world!` / `hello-world` / canonical sample body), never
   deletes it, and leaves every unrelated post untouched. Verification rejects a
   published canonical sample and confirms `/nl/` and `/de/` remain 404.
-- The final route audit checked 30 intended English URLs with HTTP 200, one H1,
-  noindex and no placeholder `#` destinations in the authenticated local
-  runtime. Every generated page/custom entry remained private and all nine
-  articles remained draft.
-- Final browser evidence is in `qa/final-english-master/2026-08-27/`: nine
-  full-page widths, 24 focused section/contact captures, machine-readable
-  interaction, route, focused-motion, performance and accessibility results.
-  The 1440 performance detail recorded FCP 1,092 ms, LCP 1,160 ms, CLS 0.00284,
-  1,186,225 transferred bytes across 21 resources and zero long tasks.
+- The final anonymous route audit checked 40 intended English URLs with HTTP
+  200, one H1 and noindex, plus 103 internal links with zero broken results.
+  The loopback runtime locally publishes its QA fixtures only; production
+  content remains unchanged.
+- Current browser evidence is in
+  `qa/screenshots/final-english-experience/`: nine full-page widths plus Blog,
+  Team, Vacancies, segment, News-detail and focus-state captures. The local
+  evidence README records the current route, interaction, semantic and
+  reduced-motion checks.
 - A fresh preview process returned HTTP 200 with the expected
   `X-Robots-Tag: noindex, nofollow` header.
 - GitHub run `32956292922` validated pushed commit `897a991` successfully.

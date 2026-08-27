@@ -154,6 +154,30 @@ const englishPageDefinitions = JSON.parse(await readFile(
   new URL('../wordpress/wp-content/plugins/farmtree-content/data/english-pages.json', import.meta.url),
   'utf8'
 ));
+const teamMemberDefinitions = JSON.parse(await readFile(
+  new URL('../wordpress/wp-content/plugins/farmtree-content/data/team-members.json', import.meta.url),
+  'utf8'
+));
+
+const segmentPresentation = {
+  'consultancy-agroforestry-advisors': ['segment-consultancy-advisors-v1-1600.webp', 'Agroforestry advisers reviewing a field plan with a farmer'],
+  'development-banks-donor-organisations': ['segment-development-banks-donors-v1-1600.webp', 'Development finance specialists reviewing an agroforestry landscape investment plan'],
+  'ngos-conservation-organisations': ['segment-ngos-conservation-v1-1600.webp', 'Conservation practitioners surveying a diverse agroforestry landscape'],
+  'nbs-carbon-project-developers': ['segment-nbs-carbon-developers-v1-1600.webp', 'Nature-based project developers documenting an agroforestry plot'],
+  'mrv-esg-platforms': ['segment-mrv-esg-platforms-v1-1600.webp', 'Field data specialist comparing digital records in an agroforestry landscape'],
+  'government-parastatal-institutions': ['segment-government-institutions-v1-1600.webp', 'Public-sector planners discussing a regional agroforestry map'],
+  'industry-associations-multi-stakeholder-platforms': ['segment-industry-associations-v1-1600.webp', 'Representatives from several organisations meeting beside an agroforestry site'],
+  'large-agri-corporate': ['segment-large-agri-corporate-v1-1600.webp', 'Agricultural supply-chain team walking through a mixed tree and crop system'],
+  'social-enterprise': ['segment-social-enterprise-v1-1600.webp', 'Social-enterprise team discussing a farm plan with local producers'],
+  investors: ['segment-investors-v1-1600.webp', 'Investment team reviewing landscape information overlooking an agroforestry project']
+};
+
+const proofPresentation = {
+  'carbon-planning': ['proof-carbon-planning-1600.webp', 'Agroforestry planners comparing maps and a laptop in a field office'],
+  'farm-value-modelling': ['proof-farm-value-modelling-1600.webp', 'Farmer and adviser reviewing a farm plan and calculator in an agroforestry field'],
+  'cocoa-scenario-planning': ['proof-cocoa-scenario-planning-1600.webp', 'Ripe cocoa pods in a shaded agroforestry plot with a field technician in the distance'],
+  'water-landscape-resilience': ['proof-water-landscape-resilience-1600.webp', 'Water moving through a vegetated agroforestry landscape while a technician takes measurements']
+};
 
 // These publication settings are deliberately confined to the loopback-only QA
 // bootstrap. Source content remains approval-gated and production is untouched.
@@ -223,6 +247,30 @@ function escapeHtml(value) {
     .replaceAll('"', '&quot;');
 }
 
+async function ensureThemeMedia({ directory, filename, alt, title }) {
+  const mediaSlug = filename.replace(/\.[^.]+$/, '');
+  let media = await api(`/wp/v2/media?slug=${encodeURIComponent(mediaSlug)}&context=edit&per_page=1`);
+  if (!media[0] && verifyOnly) throw new Error(`Required media is missing: ${filename}`);
+  if (!media[0]) {
+    const imageBuffer = await readFile(new URL(`../wordpress/wp-content/themes/farmtree-native/assets/images/${directory}/${filename}`, import.meta.url));
+    media = [await api('/wp/v2/media', {
+      method: 'POST',
+      headers: {
+        'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Type': 'image/webp'
+      },
+      body: imageBuffer
+    })];
+  }
+  if (!verifyOnly) {
+    media[0] = await api(`/wp/v2/media/${media[0].id}`, {
+      method: 'POST',
+      body: JSON.stringify({ alt_text: alt, title })
+    });
+  }
+  return media[0];
+}
+
 function segmentContent(segment) {
   return [
     '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->',
@@ -258,9 +306,12 @@ function editorialContent(article) {
 
 function newsHubContent() {
   return [
-    '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Source-led analysis and practical interpretation for agroforestry planning teams.</p><!-- /wp:paragraph -->',
-    '<!-- wp:query {"queryId":9,"query":{"perPage":9,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"ft-home-news-query"} -->',
-    '<div class="wp-block-query ft-home-news-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->',
+    '<!-- wp:group {"className":"ft-blog-intro","layout":{"type":"constrained"}} --><div class="wp-block-group ft-blog-intro"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Ideas for better decisions</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Source-led FarmTree analysis and practical interpretation for agroforestry planning teams.</p><!-- /wp:paragraph --></div><!-- /wp:group -->',
+    '<!-- wp:query {"queryId":8,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"ft-blog-featured"} -->',
+    '<div class="wp-block-query ft-blog-featured"><!-- wp:post-template --><!-- wp:group {"className":"ft-blog-featured-card","layout":{"type":"constrained"}} --><div class="wp-block-group ft-blog-featured-card"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9"} /--><div class="ft-blog-featured-copy"><!-- wp:post-terms {"term":"category","fontSize":"caption"} /--><!-- wp:post-date {"fontSize":"caption"} /--><!-- wp:post-title {"level":2,"isLink":true,"fontSize":"heading-small"} /--><!-- wp:post-excerpt {"moreText":"","excerptLength":34} /--><!-- wp:read-more {"content":"Read feature","className":"ft-news-read-more"} /--></div></div><!-- /wp:group --><!-- /wp:post-template --></div><!-- /wp:query -->',
+    '<!-- wp:heading {"level":2,"className":"ft-blog-latest","fontSize":"heading-small"} --><h2 class="wp-block-heading ft-blog-latest has-heading-small-font-size">Latest insights</h2><!-- /wp:heading -->',
+    '<!-- wp:query {"queryId":9,"query":{"perPage":8,"pages":0,"offset":1,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"ft-blog-grid"} -->',
+    '<div class="wp-block-query ft-blog-grid"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->',
     '<!-- wp:group {"className":"ft-news-item","layout":{"type":"constrained"}} --><div class="wp-block-group ft-news-item">',
     '<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->',
     '<!-- wp:post-terms {"term":"category","fontSize":"caption"} /-->',
@@ -273,6 +324,21 @@ function newsHubContent() {
   ].join('\n');
 }
 
+function teamPageContent(mediaBySlug) {
+  const cards = teamMemberDefinitions.map((member) => {
+    const media = mediaBySlug.get(member.slug);
+    const linkedin = member.linkedin
+      ? `<!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="${escapeHtml(member.linkedin)}" target="_blank" rel="noreferrer noopener">LinkedIn ↗</a></p><!-- /wp:paragraph -->`
+      : '';
+    return `<!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":${media.id},"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="${escapeHtml(media.source_url)}" alt="${escapeHtml(member.name)}, ${escapeHtml(member.role)}" class="wp-image-${media.id}"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">${escapeHtml(member.name)}</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">${escapeHtml(member.role)}</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">${escapeHtml(member.bio)}</p><!-- /wp:paragraph -->${linkedin}</article><!-- /wp:group -->`;
+  }).join('');
+  return `<!-- wp:paragraph {"className":"ft-team-intro","fontSize":"lead"} --><p class="ft-team-intro has-lead-font-size">FarmTree combines agroforestry science, modelling, technology and project experience. Meet the people building and supporting the Platform.</p><!-- /wp:paragraph --><!-- wp:group {"className":"ft-team-grid","layout":{"type":"grid","minimumColumnWidth":"18rem"}} --><div class="wp-block-group ft-team-grid">${cards}</div><!-- /wp:group -->`;
+}
+
+function vacanciesPageContent() {
+  return '<!-- wp:group {"className":"ft-careers-empty","layout":{"type":"constrained"}} --><section class="wp-block-group ft-careers-empty"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Careers at FarmTree</p><!-- /wp:paragraph --><!-- wp:heading {"level":2,"fontSize":"heading-small"} --><h2 class="wp-block-heading has-heading-small-font-size">No approved vacancies are open right now</h2><!-- /wp:heading --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">New roles will appear here after they have been approved for publication. Until then, learn more about the people and work behind FarmTree.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/team/">Meet the team</a></div><!-- /wp:button --><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/contact/">Contact FarmTree</a></div><!-- /wp:button --></div><!-- /wp:buttons --></section><!-- /wp:group -->';
+}
+
 function proofStoryContent(story) {
   return story.sections.map(([heading, paragraph]) => [
     `<!-- wp:heading --><h2 class="wp-block-heading">${escapeHtml(heading)}</h2><!-- /wp:heading -->`,
@@ -280,7 +346,7 @@ function proofStoryContent(story) {
   ].join('\n\n')).join('\n\n');
 }
 
-function englishPageContent(page) {
+function englishPageContent(page, teamMedia = new Map()) {
   if (page.body === 'news' || page.slug === 'blog') {
     return newsHubContent();
   }
@@ -293,6 +359,8 @@ function englishPageContent(page) {
       '<!-- wp:paragraph --><p><a href="https://www.openstreetmap.org/search?query=Bronland%2012C-1%2C%206708%20WH%20Wageningen" target="_blank" rel="noreferrer noopener">View the location on OpenStreetMap ↗</a></p><!-- /wp:paragraph -->'
     ].join('\n\n');
   }
+  if (page.slug === 'team') return teamPageContent(teamMedia);
+  if (page.slug === 'vacancies') return vacanciesPageContent();
   if (page.slug === 'proof-stories') {
     const links = proofStoryDefinitions.map((story) => `<li><a href="/proof-stories/${escapeHtml(story.slug)}/">${escapeHtml(story.title)}</a> — ${escapeHtml(story.excerpt)}</li>`).join('');
     return `<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">${escapeHtml(page.body)}</p><!-- /wp:paragraph --><!-- wp:list --><ul>${links}</ul><!-- /wp:list -->`;
@@ -308,8 +376,28 @@ function englishPageContent(page) {
   ].join('\n\n');
 }
 
+const segmentMedia = new Map();
+for (const segment of segmentDefinitions) {
+  const [filename, alt] = segmentPresentation[segment.slug] ?? [];
+  if (!filename) throw new Error(`Segment presentation metadata is missing: ${segment.slug}`);
+  segmentMedia.set(segment.slug, await ensureThemeMedia({ directory: 'segments', filename, alt, title: segment.title }));
+}
+
+const proofMedia = new Map();
+for (const story of proofStoryDefinitions) {
+  const [filename, alt] = proofPresentation[story.slug] ?? [];
+  if (!filename) throw new Error(`Proof presentation metadata is missing: ${story.slug}`);
+  proofMedia.set(story.slug, await ensureThemeMedia({ directory: 'proof', filename, alt, title: story.title }));
+}
+
+const teamMedia = new Map();
+for (const member of teamMemberDefinitions) {
+  teamMedia.set(member.slug, await ensureThemeMedia({ directory: 'team', filename: member.image, alt: `${member.name}, ${member.role}`, title: member.name }));
+}
+
 const segmentPosts = [];
 for (const segment of segmentDefinitions) {
+  const featuredMedia = segmentMedia.get(segment.slug);
   let existing = await api(
     `/wp/v2/customer-segments?slug=${encodeURIComponent(segment.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`
   );
@@ -332,7 +420,8 @@ for (const segment of segmentDefinitions) {
         status: localQaStatus,
         excerpt: segment.excerpt,
         content: segmentContent(segment),
-        menu_order: segment.order
+        menu_order: segment.order,
+        featured_media: featuredMedia.id
       })
     });
   }
@@ -340,11 +429,11 @@ for (const segment of segmentDefinitions) {
   if (!verifyOnly) {
     post = await api(`/wp/v2/customer-segments/${post.id}`, {
       method: 'POST',
-      body: JSON.stringify({ title: segment.title, slug: segment.slug, status: localQaStatus, excerpt: segment.excerpt, content: segmentContent(segment), menu_order: segment.order })
+      body: JSON.stringify({ title: segment.title, slug: segment.slug, status: localQaStatus, excerpt: segment.excerpt, content: segmentContent(segment), menu_order: segment.order, featured_media: featuredMedia.id })
     });
   }
 
-  if (post.status !== localQaStatus) {
+  if (post.status !== localQaStatus || post.featured_media !== featuredMedia.id) {
     throw new Error(`Customer segment is not published in the loopback QA runtime: ${segment.slug}`);
   }
   if (normaliseSampleText(post.title?.raw ?? post.title?.rendered) !== segment.title) {
@@ -423,12 +512,13 @@ for (const article of editorialDefinitions) {
 
 const proofStories = [];
 for (const story of proofStoryDefinitions) {
+  const featuredMedia = proofMedia.get(story.slug);
   const existing = await api(`/wp/v2/proof-stories?slug=${encodeURIComponent(story.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`);
   let post = existing[0];
   if (!post && verifyOnly) throw new Error(`Private Proof Story is missing: ${story.slug}`);
-  if (!post) post = await api('/wp/v2/proof-stories', { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: localQaStatus, excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order }) });
-  if (!verifyOnly) post = await api(`/wp/v2/proof-stories/${post.id}`, { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: localQaStatus, excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order }) });
-  if (post.status !== localQaStatus) throw new Error(`Proof Story is not published in the loopback QA runtime: ${story.slug}`);
+  if (!post) post = await api('/wp/v2/proof-stories', { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: localQaStatus, excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order, featured_media: featuredMedia.id }) });
+  if (!verifyOnly) post = await api(`/wp/v2/proof-stories/${post.id}`, { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: localQaStatus, excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order, featured_media: featuredMedia.id }) });
+  if (post.status !== localQaStatus || post.featured_media !== featuredMedia.id) throw new Error(`Proof Story is not fully published in the loopback QA runtime: ${story.slug}`);
   proofStories.push(post);
 }
 
@@ -437,8 +527,8 @@ for (const page of localEnglishPageDefinitions) {
   const existing = await api(`/wp/v2/pages?slug=${encodeURIComponent(page.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`);
   let post = existing[0];
   if (!post && verifyOnly) throw new Error(`Private English page is missing: ${page.slug}`);
-  if (!post) post = await api('/wp/v2/pages', { method: 'POST', body: JSON.stringify({ title: page.title, slug: page.slug, status: localQaStatus, excerpt: page.excerpt, content: englishPageContent(page) }) });
-  if (!verifyOnly) post = await api(`/wp/v2/pages/${post.id}`, { method: 'POST', body: JSON.stringify({ title: page.title, slug: page.slug, status: localQaStatus, excerpt: page.excerpt, content: englishPageContent(page) }) });
+  if (!post) post = await api('/wp/v2/pages', { method: 'POST', body: JSON.stringify({ title: page.title, slug: page.slug, status: localQaStatus, excerpt: page.excerpt, content: englishPageContent(page, teamMedia) }) });
+  if (!verifyOnly) post = await api(`/wp/v2/pages/${post.id}`, { method: 'POST', body: JSON.stringify({ title: page.title, slug: page.slug, status: localQaStatus, excerpt: page.excerpt, content: englishPageContent(page, teamMedia) }) });
   if (post.status !== localQaStatus) throw new Error(`English page is not published in the loopback QA runtime: ${page.slug}`);
   englishPages.push(post);
 }

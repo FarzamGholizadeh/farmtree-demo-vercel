@@ -26,12 +26,11 @@ block. Its manually selected states reuse one persistent editable primary H1;
 three alternate editor-visible core-block sources provide the other approved
 messages without adding frontend H1 elements.
 
-The Platform module uses the approved source GIF through its optimized
-MP4/poster delivery pair in one editor-owned composition; the original source
-remains preserved under `assets/media/source/`. A visible Play/Pause control
-lets visitors stop or restart the footage. Playback is muted and
-visibility-aware. With reduced motion requested, the approved poster remains
-until the visitor explicitly presses Play.
+The Platform module uses the exact supplied 14.5-second GIF byte-for-byte in
+one media composition; the original remains under
+`assets/media/source/platform/`. Reduced-motion visitors receive a static
+poster extracted from that file. The obsolete video controls and decorative
+technology-flow overlay are removed.
 
 The selector is explicitly English-only: English owns `/`, while Nederlands
 `/nl/` and Deutsch `/de/` are reserved but unpublished, unlinked and disabled.
@@ -154,10 +153,11 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
 
 ## Final English Experience Evidence
 
-The final local runtime contains one private Homepage, ten private segment
-entries, four private Proof Stories, 15 private support pages and nine draft
-articles. The exact canonical sample post is non-public. All 30 intended English
-routes resolve in the authenticated local runtime; `/nl/` and `/de/` remain 404.
+The final loopback QA runtime contains one locally published Homepage, ten
+segment entries, four Proof Stories, 16 English support pages and nine News
+articles so anonymous rendering can be tested. The exact canonical sample post
+is non-public. All 40 intended English routes resolve anonymously; `/nl/` and
+`/de/` remain 404. Production content and activation were not changed.
 Contact fields are disabled until an approved backend/privacy design exists,
 with no endpoint, fake success, transmission, storage or logging. FT Bot is
 invisible until configured with a valid server-side provider.
@@ -174,15 +174,14 @@ The corrected static preview and the real local WordPress runtime are both
 available without changing production WordPress state. The in-app browser
 captured the real WordPress frontend at 320, 375, 390, 430, 768, 1024, 1280,
 1440 and 1920 pixels. Final full-page, mobile/desktop section, contact and
-interaction evidence is stored in `qa/final-english-master/2026-08-27/`. All
-nine widths reported zero document overflow and passed axe WCAG 2.0/2.1/2.2
-A/AA with no console/page error. The horizontal partner-logo rail remains
-intentionally contained inside its component.
+interaction evidence is stored in `qa/screenshots/final-english-experience/`.
+All nine widths reported zero document overflow with one H1, four Proof cards,
+eight FAQs and four Homepage News cards. The Blog, Team, Vacancies, segment and
+News detail captures also reported zero overflow and no console warning/error.
 
 The final browser walkthrough found no console errors or warnings. It verified
-Hero and Platform navigation/status/focus, video playback control and
-visibility behavior, language/FAQ disclosures, menu scroll lock/Escape/focus
-return, quotation-dialog focus/Escape return and the email-only unavailable state.
+Hero navigation/live status, FAQ disclosure, focus treatment, full-bleed
+segment imagery, lazy-media loading and the email-only unavailable state.
 Rendered semantic audits at 390 and 1440 found one H1, complete landmarks and
 no heading jumps, duplicate IDs, missing alt text, unnamed controls, positive
 tabindex values, insecure external targets or broken ARIA references. Contrast

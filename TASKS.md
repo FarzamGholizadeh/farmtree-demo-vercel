@@ -56,15 +56,15 @@ The Frank-approved Homepage has been built in `farmtree-native` with core
 blocks, content-only locked patterns and a read-only local preview sourced from
 the real native Header/Footer and `theme.json`. The production visual language
 is restored without changing the `farmtree` rollback theme. The current source
-includes a one-H1/four-image Hero, approved GIF-equivalent Platform MP4/poster
-with explicit playback control, asset-backed brand-logo pattern, five-card Bento
+includes a one-H1/four-image Hero, the exact supplied Platform GIF with a
+reduced-motion poster, asset-backed brand-logo pattern, five-card Bento
 menu, English `/` plus reserved unpublished `/nl/` and `/de/` locale contracts,
 and a no-PII email-only quotation unavailable state.
 Scope, evidence and remaining production/publication gates are defined in
 `CURRENT_SPRINT.md` and `SPRINT_REPORT.md`.
 
 The isolated loopback-only WordPress Playground runtime recognizes the Block
-Theme and plugin, persists the private Homepage and revision history, registers the
+Theme and plugin, persists the locally published QA Homepage and revision history, registers the
 required templates/parts/patterns and renders its Query Loop and assets. The
 local gate is complete: screenshots, console, sequential keyboard/focus,
 Chrome accessibility-tree smoke testing, semantic accessibility, contrast,

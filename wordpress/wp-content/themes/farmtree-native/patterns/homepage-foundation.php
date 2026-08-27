@@ -154,24 +154,15 @@
 
 <!-- wp:column {"verticalAlignment":"center","width":"58%","className":"ft-platform-media"} -->
 <div class="wp-block-column is-vertically-aligned-center ft-platform-media" style="flex-basis:58%"><!-- wp:group {"metadata":{"name":"Editable FarmTree Platform media"},"className":"ft-platform-visual","layout":{"type":"default"}} -->
-<div class="wp-block-group ft-platform-visual"><!-- wp:group {"className":"ft-platform-screen ft-platform-video-slide","layout":{"type":"default"}} -->
-<div class="wp-block-group ft-platform-screen ft-platform-video-slide"><!-- wp:video {"controls":false,"loop":true,"muted":true,"playsInline":true,"poster":"<?php echo esc_url( get_theme_file_uri( 'assets/media/farmtree-platform-final-tools-review-poster.jpg' ) ); ?>","src":"<?php echo esc_url( get_theme_file_uri( 'assets/media/farmtree-platform-final-tools-review.mp4' ) ); ?>","className":"ft-platform-video"} -->
-<figure class="wp-block-video ft-platform-video"><video loop muted playsinline poster="<?php echo esc_url( get_theme_file_uri( 'assets/media/farmtree-platform-final-tools-review-poster.jpg' ) ); ?>" src="<?php echo esc_url( get_theme_file_uri( 'assets/media/farmtree-platform-final-tools-review.mp4' ) ); ?>"></video></figure>
-<!-- /wp:video -->
-
-<!-- wp:paragraph {"className":"screen-reader-text ft-platform-video-description"} -->
-<p class="screen-reader-text ft-platform-video-description">Silent FarmTree sequence moving from a connected agroforestry landscape into the FarmTree planning interface and model outputs</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<!-- wp:html -->
-<div class="ft-platform-controls">
-<button class="ft-platform-video-toggle" type="button" aria-label="Play FarmTree Platform animation" data-ft-platform-video-toggle>Play animation</button>
-</div>
+<div class="wp-block-group ft-platform-visual"><!-- wp:html -->
+<picture class="ft-platform-screen ft-platform-gif">
+<source media="(prefers-reduced-motion: reduce)" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/media/final-tools-review-11s-to-40s-poster.png' ) ); ?>">
+<img src="<?php echo esc_url( get_theme_file_uri( 'assets/media/final-tools-review-11s-to-40s-2x.gif' ) ); ?>" width="960" height="540" loading="lazy" decoding="async" alt="FarmTree Platform workflow moving from portfolio selection through plot configuration and modelling tools"/>
+</picture>
 <!-- /wp:html -->
 
 <!-- wp:paragraph {"className":"ft-home-media-caption","fontSize":"caption"} -->
-<p class="ft-home-media-caption has-caption-font-size">The approved FarmTree Platform sequence — optimized for web delivery</p>
+<p class="ft-home-media-caption has-caption-font-size">The approved FarmTree Platform workflow</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
@@ -198,16 +189,7 @@
 <figure class="wp-block-image size-full ft-technology-model"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/technology-model.webp' ) ); ?>" alt="FarmTree model connecting site, climate, soil and species information to impact monitoring and future projections"/></figure>
 <!-- /wp:image -->
 
-<!-- wp:html -->
-<svg class="ft-technology-flow" viewBox="0 0 1000 560" role="img" aria-labelledby="ft-technology-flow-title ft-technology-flow-desc" data-ft-technology-flow>
-<title id="ft-technology-flow-title">FarmTree data flow</title>
-<desc id="ft-technology-flow-desc">Site information, climate, soil, terrain and species data flow into the FarmTree model, then into impact monitoring and projections.</desc>
-<g class="ft-flow-lines" fill="none" pathLength="1">
-<path d="M120 190 C260 190 300 280 465 280"/><path d="M120 280 C260 280 315 280 465 280"/><path d="M120 370 C260 370 300 280 465 280"/><path d="M535 280 C680 280 710 205 865 205"/><path d="M535 280 C680 280 710 355 865 355"/>
-</g>
-<g class="ft-flow-signals" aria-hidden="true"><circle r="7"><animateMotion dur="3.8s" repeatCount="indefinite" path="M120 190 C260 190 300 280 465 280"/></circle><circle r="7"><animateMotion dur="4.4s" begin=".6s" repeatCount="indefinite" path="M120 370 C260 370 300 280 465 280"/></circle><circle r="7"><animateMotion dur="4.1s" begin="1.2s" repeatCount="indefinite" path="M535 280 C680 280 710 205 865 205"/></circle><circle r="7"><animateMotion dur="4.7s" begin="1.8s" repeatCount="indefinite" path="M535 280 C680 280 710 355 865 355"/></circle></g>
-</svg>
-<!-- /wp:html --></div>
+</div>
 <!-- /wp:group -->
 
 <!-- wp:columns {"align":"wide","className":"ft-home-inputs"} -->
@@ -330,42 +312,42 @@
 <div class="wp-block-columns alignwide ft-trust-quotes">
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
+<blockquote class="wp-block-quote ft-trust-quote"><span class="ft-testimonial-avatar" aria-hidden="true">MM</span><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.</p>
 <!-- /wp:paragraph --><cite>Mona McCord, SAN</cite></blockquote>
 <!-- /wp:quote --></div>
 <!-- /wp:column -->
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
+<blockquote class="wp-block-quote ft-trust-quote"><span class="ft-testimonial-avatar" aria-hidden="true">MB</span><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue — they do everything!</p>
 <!-- /wp:paragraph --><cite>Mathijs de Bruin, TreeScape</cite></blockquote>
 <!-- /wp:quote --></div>
 <!-- /wp:column -->
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
+<blockquote class="wp-block-quote ft-trust-quote"><span class="ft-testimonial-avatar" aria-hidden="true">KL</span><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do.</p>
 <!-- /wp:paragraph --><cite>Katharina Lima de Miranda, HRNS</cite></blockquote>
 <!-- /wp:quote --></div>
 <!-- /wp:column -->
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
+<blockquote class="wp-block-quote ft-trust-quote"><span class="ft-testimonial-avatar" aria-hidden="true">RK</span><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios!</p>
 <!-- /wp:paragraph --><cite>Rob Kelly, World Vision Australia</cite></blockquote>
 <!-- /wp:quote --></div>
 <!-- /wp:column -->
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
+<blockquote class="wp-block-quote ft-trust-quote"><span class="ft-testimonial-avatar" aria-hidden="true">LM</span><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">We found the FarmTree Tool essential for predicting outcomes of highly complex farm scenarios, among many, also agroforestry systems.</p>
 <!-- /wp:paragraph --><cite>Lorenzo Mento, Nectaerra</cite></blockquote>
 <!-- /wp:quote --></div>
 <!-- /wp:column -->
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote ft-testimonial-placeholder"} -->
-<blockquote class="wp-block-quote ft-trust-quote ft-testimonial-placeholder"><!-- wp:paragraph {"fontSize":"lead"} -->
+<blockquote class="wp-block-quote ft-trust-quote ft-testimonial-placeholder"><span class="ft-testimonial-avatar" aria-hidden="true">—</span><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">Approved testimonial and portrait pending. Editors must replace this labelled CMS placeholder before publication.</p>
 <!-- /wp:paragraph --><cite>Placeholder — not approved for publication</cite></blockquote>
 <!-- /wp:quote --></div>
@@ -392,7 +374,7 @@
 <div class="wp-block-columns alignwide ft-proof-grid"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-carbon.webp' ) ); ?>" alt="Three people reviewing information on a laptop"/></figure>
+<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-carbon-planning-1600.webp' ) ); ?>" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-carbon-planning-768.webp' ) ); ?> 768w, <?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-carbon-planning-1600.webp' ) ); ?> 1600w" sizes="(max-width: 780px) 88vw, 25vw" width="1600" height="900" loading="lazy" decoding="async" alt="Agroforestry planners comparing maps and a laptop in a field office"/></picture></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -414,7 +396,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-farm-value.webp' ) ); ?>" alt="People gathered for an agroforestry field visit"/></figure>
+<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-farm-value-modelling-1600.webp' ) ); ?>" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-farm-value-modelling-768.webp' ) ); ?> 768w, <?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-farm-value-modelling-1600.webp' ) ); ?> 1600w" sizes="(max-width: 780px) 88vw, 25vw" width="1600" height="900" loading="lazy" decoding="async" alt="Farmer and adviser reviewing a farm plan and calculator in an agroforestry field"/></picture></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -436,7 +418,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-cocoa.webp' ) ); ?>" alt="Dark clouds over a tree-covered agricultural landscape"/></figure>
+<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-cocoa-scenario-planning-1600.webp' ) ); ?>" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-cocoa-scenario-planning-768.webp' ) ); ?> 768w, <?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-cocoa-scenario-planning-1600.webp' ) ); ?> 1600w" sizes="(max-width: 780px) 88vw, 25vw" width="1600" height="900" loading="lazy" decoding="async" alt="Ripe cocoa pods in a shaded agroforestry plot with a field technician in the distance"/></picture></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -458,7 +440,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-water.webp' ) ); ?>" alt="Group portrait in a tree-filled landscape"/></figure>
+<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-water-landscape-resilience-1600.webp' ) ); ?>" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-water-landscape-resilience-768.webp' ) ); ?> 768w, <?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-water-landscape-resilience-1600.webp' ) ); ?> 1600w" sizes="(max-width: 780px) 88vw, 25vw" width="1600" height="900" loading="lazy" decoding="async" alt="Water moving through a vegetated agroforestry landscape while a technician takes field measurements"/></picture></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -515,6 +497,30 @@
 <!-- /wp:details -->
 
 <!-- wp:details -->
+<details class="wp-block-details"><summary>What information is needed to get started?</summary><!-- wp:paragraph -->
+<p>The starting point depends on the project, but typically combines a location and site baseline with species, management and economic assumptions. The FarmTree team can help identify the appropriate inputs</p>
+<!-- /wp:paragraph --></details>
+<!-- /wp:details -->
+
+<!-- wp:details -->
+<details class="wp-block-details"><summary>Are FarmTree results measurements or projections?</summary><!-- wp:paragraph -->
+<p>FarmTree produces modelled projections from the inputs and assumptions supplied. They should be interpreted alongside measured field data and the documented scenario context</p>
+<!-- /wp:paragraph --></details>
+<!-- /wp:details -->
+
+<!-- wp:details -->
+<details class="wp-block-details"><summary>Can FarmTree compare different project scenarios?</summary><!-- wp:paragraph -->
+<p>Yes. Teams can compare species mixes, management choices and other project assumptions to understand potential trade-offs before selecting a plan</p>
+<!-- /wp:paragraph --></details>
+<!-- /wp:details -->
+
+<!-- wp:details -->
+<details class="wp-block-details"><summary>Can FarmTree connect with other reporting systems?</summary><!-- wp:paragraph -->
+<p>Data exchange and reporting options depend on the required workflow and system. Discuss the intended integration and data format with the FarmTree team during scoping</p>
+<!-- /wp:paragraph --></details>
+<!-- /wp:details -->
+
+<!-- wp:details -->
 <details class="wp-block-details"><summary>How do we request a demo?</summary><!-- wp:paragraph -->
 <p>Request a demo and the FarmTree team will follow up to discuss your project context, scope and reporting needs</p>
 <!-- /wp:paragraph --></details>
@@ -540,7 +546,7 @@
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:query {"queryId":2,"query":{"perPage":9,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"align":"wide","className":"ft-home-news-query"} -->
+<!-- wp:query {"queryId":2,"query":{"perPage":4,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"align":"wide","className":"ft-home-news-query"} -->
 <div class="wp-block-query alignwide ft-home-news-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
 <!-- wp:group {"className":"ft-news-item","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-news-item"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->

@@ -7,24 +7,23 @@ person, outcome or certification. Human editorial approval remains required.
 All new imagery follows the approved natural-documentary FarmTree language:
 restrained forest greens and earth tones, credible field detail, natural light,
 no embedded text, logos, flags, seals, watermarks or guaranteed outcomes.
-Source PNGs live in `assets/media/source/news/`; responsive 1600 px and 768 px
-WebP/AVIF derivatives live in
-`wordpress/wp-content/themes/farmtree-native/assets/images/news/`. WordPress
+Source PNGs live under `assets/media/source/`; responsive 1600 px and 768 px
+WebP/AVIF derivatives live in the matching directories under
+`wordpress/wp-content/themes/farmtree-native/assets/images/`. WordPress
 Media Library uploads use the 1600 px WebP and WordPress-generated `srcset` and
 dimensions. The 768 px derivative is the intentional mobile crop source.
 
 ## Proof Stories (4)
 
-Existing homepage images remain the approved-frontend baseline but are generic
-and are not source evidence for the claims. Replacement candidates are not yet
-generated because the story owners must first approve the intended subject.
+Four claim-neutral editorial visuals are generated and assigned. They improve
+subject relevance but are not source evidence for the story claims.
 
 | Page / section | Intended subject and concept | Ratio | Desktop crop | Mobile crop | Style | Alt-text intent | Filename / status |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Carbon planning | Team reviewing bounded carbon scenarios; no verified-result cues | 16:9 | People, device and field context | Hands/device and one person | Natural documentary | People reviewing carbon scenario assumptions | `proof-carbon-planning-v1` — requested; current `proof-carbon.webp` is generic |
-| Farm value modelling | Field and desk comparison of costs, benefits and time horizons | 16:9 | Planner with farm context | Planning materials and hands | Natural documentary | Farm options being compared during a field visit | `proof-farm-value-modelling-v1` — requested; current `proof-farm-value.webp` is generic |
-| Cocoa scenario planning | Cocoa agroforestry plot with shade-tree structure and field measurements | 16:9 | Cocoa rows and canopy | Cocoa plants and measuring activity | Natural documentary | Cocoa agroforestry structure being assessed | `proof-cocoa-scenario-planning-v1` — requested; current `proof-cocoa.webp` is not visibly cocoa-specific |
-| Water and landscape resilience | Water-flow observation and landscape monitoring, without outcome claims | 16:9 | Catchment context and observer | Water/soil detail and device | Natural documentary | Surface-water conditions being observed in a farm landscape | `proof-water-landscape-resilience-v1` — requested; current `proof-water.webp` is a generic group portrait |
+| Carbon planning | Team reviewing bounded carbon scenarios; no verified-result cues | 16:9 | People, device and field context | Hands/device and one person | Natural documentary | People reviewing carbon scenario assumptions | `proof-carbon-planning-v1` — generated and assigned |
+| Farm value modelling | Field and desk comparison of costs, benefits and time horizons | 16:9 | Planner with farm context | Planning materials and hands | Natural documentary | Farm options being compared during a field visit | `proof-farm-value-modelling-v1` — generated and assigned |
+| Cocoa scenario planning | Cocoa agroforestry plot with shade-tree structure and field measurements | 16:9 | Cocoa rows and canopy | Cocoa plants and measuring activity | Natural documentary | Cocoa agroforestry structure being assessed | `proof-cocoa-scenario-planning-v1` — generated and assigned |
+| Water and landscape resilience | Water-flow observation and landscape monitoring, without outcome claims | 16:9 | Catchment context and observer | Water/soil detail and device | Natural documentary | Surface-water conditions being observed in a farm landscape | `proof-water-landscape-resilience-v1` — generated and assigned |
 
 ## News & Insights (9)
 
@@ -46,26 +45,26 @@ and AVIF derivatives at 1600 px and 768 px.
 
 ## Customer Segments (10)
 
-No segment currently has a dedicated generated image. The public local QA pages
-remain complete without them; generation should follow segment-owner approval
-so images do not imply a customer identity or contractual relationship.
+Each segment has a distinct claim-neutral editorial hero. None depicts a named
+customer or substantiates a contractual relationship.
 
 | Page / section | Intended subject and concept | Ratio | Desktop crop | Mobile crop | Style | Alt-text intent | Filename / status |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Consultancy & Agroforestry Advisors | Advisor comparing field observations with scenarios | 3:2 | Advisor and farm | Hands, device and trees | Natural documentary | Advisor reviewing agroforestry options in the field | `segment-consultancy-advisors-v1` — requested |
-| Development Banks & Donor Organisations | Neutral portfolio-planning workshop; no funding claim | 3:2 | Team and landscape materials | Materials and hands | Editorial documentary | Programme scenarios being reviewed at a planning table | `segment-development-banks-donors-v1` — requested |
-| NGOs & Conservation Organisations | Community landscape-planning session without identifiable brands | 3:2 | Group and map | Map and participants | Respectful documentary | Community landscape options being discussed around a map | `segment-ngos-conservation-v1` — requested |
-| NbS & Carbon Project Developers | Field baseline collection and bounded scenario comparison | 3:2 | Field team and plot | Measurement activity | Scientific editorial | Baseline observations being recorded in a mixed farm landscape | `segment-nbs-carbon-developers-v1` — requested |
-| MRV & ESG Platforms | Interoperable data review using abstract, unreadable interfaces | 3:2 | Analyst, device and field | Device and field | Technical editorial | Field records and scenario data being reviewed together | `segment-mrv-esg-platforms-v1` — requested |
-| Government & Parastatal Institutions | Regional planning workshop without flags or seals | 3:2 | Table and regional map | Participants and map | Editorial documentary | Regional agroforestry scenarios being compared in a workshop | `segment-government-institutions-v1` — requested |
-| Industry Associations & Multi-Stakeholder Platforms | Diverse stakeholder working session; no partner implication | 3:2 | Group and planning wall | Central participants | Respectful documentary | Stakeholders discussing agroforestry planning priorities | `segment-industry-associations-v1` — requested |
-| Large Agri-Corporate | Landscape-scale supply-area planning without a named company | 3:2 | Planner and production mosaic | Planner and field | Editorial documentary | A large agricultural landscape being assessed for tree integration | `segment-large-agri-corporate-v1` — requested |
-| Social Enterprise | Small team designing a practical agroforestry service | 3:2 | Team and field materials | People and prototype | Respectful documentary | A small team reviewing an agroforestry service concept | `segment-social-enterprise-v1` — requested |
-| Investors | Assumption-led scenario review; no currency or return claims | 3:2 | Landscape and neutral charts | Materials and landscape | Editorial documentary | Investment assumptions being compared against an agroforestry scenario | `segment-investors-v1` — requested |
+| Consultancy & Agroforestry Advisors | Advisor comparing field observations with scenarios | 3:2 | Advisor and farm | Hands, device and trees | Natural documentary | Advisor reviewing agroforestry options in the field | `segment-consultancy-advisors-v1` — generated and assigned |
+| Development Banks & Donor Organisations | Neutral portfolio-planning workshop; no funding claim | 3:2 | Team and landscape materials | Materials and hands | Editorial documentary | Programme scenarios being reviewed at a planning table | `segment-development-banks-donors-v1` — generated and assigned |
+| NGOs & Conservation Organisations | Community landscape-planning session without identifiable brands | 3:2 | Group and map | Map and participants | Respectful documentary | Community landscape options being discussed around a map | `segment-ngos-conservation-v1` — generated and assigned |
+| NbS & Carbon Project Developers | Field baseline collection and bounded scenario comparison | 3:2 | Field team and plot | Measurement activity | Scientific editorial | Baseline observations being recorded in a mixed farm landscape | `segment-nbs-carbon-developers-v1` — generated and assigned |
+| MRV & ESG Platforms | Interoperable data review using abstract, unreadable interfaces | 3:2 | Analyst, device and field | Device and field | Technical editorial | Field records and scenario data being reviewed together | `segment-mrv-esg-platforms-v1` — generated and assigned |
+| Government & Parastatal Institutions | Regional planning workshop without flags or seals | 3:2 | Table and regional map | Participants and map | Editorial documentary | Regional agroforestry scenarios being compared in a workshop | `segment-government-institutions-v1` — generated and assigned |
+| Industry Associations & Multi-Stakeholder Platforms | Diverse stakeholder working session; no partner implication | 3:2 | Group and planning wall | Central participants | Respectful documentary | Stakeholders discussing agroforestry planning priorities | `segment-industry-associations-v1` — generated and assigned |
+| Large Agri-Corporate | Landscape-scale supply-area planning without a named company | 3:2 | Planner and production mosaic | Planner and field | Editorial documentary | A large agricultural landscape being assessed for tree integration | `segment-large-agri-corporate-v1` — generated and assigned |
+| Social Enterprise | Small team designing a practical agroforestry service | 3:2 | Team and field materials | People and prototype | Respectful documentary | A small team reviewing an agroforestry service concept | `segment-social-enterprise-v1` — generated and assigned |
+| Investors | Assumption-led scenario review; no currency or return claims | 3:2 | Landscape and neutral charts | Materials and landscape | Editorial documentary | Investment assumptions being compared against an agroforestry scenario | `segment-investors-v1` — generated and assigned |
 
 ## Testimonials (6)
 
-No portrait is generated or displayed. A synthetic face must never be attached
+No testimonial portrait is generated or displayed; neutral initial discs reserve
+the image area without implying identity. A synthetic face must never be attached
 to a named quote because it could imply identity and publication permission.
 If a neutral placeholder is ever required in the CMS, it must be visibly
 labelled “AI-generated placeholder — not the quoted person” and kept off the
@@ -80,6 +79,18 @@ must remain an explicit text placeholder or be removed before launch.
 | Rob Kelly / World Vision Australia | Approved real portrait supplied by rights holder | 1:1 | Head and shoulders | Same | Natural professional | Person's name, only after identity and permission verification | `testimonial-rob-kelly-approved` — required; not generated |
 | Lorenzo Mento / Nectaerra | Approved real portrait supplied by rights holder | 1:1 | Head and shoulders | Same | Natural professional | Person's name, only after identity and permission verification | `testimonial-lorenzo-mento-approved` — required; not generated |
 | Sixth unapproved testimonial | No subject until approved quote, author and permission exist | 1:1 | Not applicable | Not applicable | Not applicable | Empty until a real, permitted portrait exists | `testimonial-sixth-approved` — blocked; not generated |
+
+## Supplied Platform media and Team portraits
+
+- The Homepage Platform visual is the exact user-supplied
+  `Final-Tools-Review-11s-to-40s-2x.gif` (SHA-256
+  `af72bcfb622679b44a811a67b69fbf42a5b6537789ac6583bd0ca5590e61f99b`).
+  Reduced-motion visitors receive a static poster extracted from that file.
+- Thirteen Team portraits are production-source assets from the current
+  FarmTree Team page, not AI-generated imagery. Local WebP derivatives are
+  paired with factual names, roles, biographies and available LinkedIn links
+  in `team-members.json`. Publication rights and the current roster remain a
+  human approval gate.
 
 ## Editorial handling
 

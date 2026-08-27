@@ -170,41 +170,6 @@ function farmtree_native_image_loading_attributes(string $block_content, array $
 add_filter('render_block', 'farmtree_native_image_loading_attributes', 10, 2);
 
 /**
- * Keep the bundled silent Platform loop out of the accessibility tree.
- *
- * The surrounding slide owns the approved description. Editor-replaced video
- * remains untouched because its source will no longer match the bundled asset.
- *
- * @param string               $block_content Rendered block HTML.
- * @param array<string, mixed> $block         Parsed block data.
- * @return string
- */
-function farmtree_native_platform_video_attributes(string $block_content, array $block): string
-{
-    if (($block['blockName'] ?? '') !== 'core/video' || !class_exists('WP_HTML_Tag_Processor')) {
-        return $block_content;
-    }
-
-    $processor = new WP_HTML_Tag_Processor($block_content);
-    if (!$processor->next_tag('video')) {
-        return $block_content;
-    }
-
-    $source = (string) $processor->get_attribute('src');
-    $bundled_source = get_theme_file_uri('assets/media/farmtree-platform-final-tools-review.mp4');
-    if ($source !== $bundled_source) {
-        return $block_content;
-    }
-
-    $processor->set_attribute('aria-hidden', 'true');
-    $processor->set_attribute('tabindex', '-1');
-    $processor->set_attribute('preload', 'metadata');
-
-    return $processor->get_updated_html();
-}
-add_filter('render_block', 'farmtree_native_platform_video_attributes', 10, 2);
-
-/**
  * Give the horizontally scrollable partner rail a stable accessible name.
  *
  * Adding a name and explicit focus stop at render time preserves strict core
@@ -379,6 +344,36 @@ function farmtree_native_render_discovery_metadata(): void
                             '@type' => 'Answer',
                             'text' => 'Yes. Project teams can turn site data and species assumptions into comparable scenarios and structured investment plans.',
                         ],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => 'How far ahead can FarmTree project?',
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'FarmTree supports projections of up to 50 years for long-term planning, investment cases and project monitoring.'],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => 'What information is needed to get started?',
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'The starting point depends on the project, but typically combines a location and site baseline with species, management and economic assumptions.'],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => 'Are FarmTree results measurements or projections?',
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'FarmTree produces modelled projections from the inputs and assumptions supplied. They should be interpreted alongside measured field data and the documented scenario context.'],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => 'Can FarmTree compare different project scenarios?',
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. Teams can compare species mixes, management choices and other project assumptions to understand potential trade-offs before selecting a plan.'],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => 'Can FarmTree connect with other reporting systems?',
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Data exchange and reporting options depend on the required workflow and system and should be scoped with the FarmTree team.'],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => 'How do we request a demo?',
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Request a demo and the FarmTree team will follow up to discuss your project context, scope and reporting needs.'],
                     ],
                 ],
             ];

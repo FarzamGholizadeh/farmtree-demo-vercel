@@ -11,7 +11,6 @@
     const heroSelector = '.ft-home-hero';
     const heroSlideSelector = '.ft-home-hero-slide';
     const heroDotSelector = '[data-ft-hero-dot]';
-    const platformSelector = '.ft-platform-visual';
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     function initialiseHero(hero, heroIndex) {
@@ -176,6 +175,25 @@
         previousButton?.addEventListener('click', () => selectSlide(currentIndex - 1));
         nextButton?.addEventListener('click', () => selectSlide(currentIndex + 1));
 
+        let touchStartX = 0;
+        let touchStartY = 0;
+        hero.addEventListener('touchstart', (event) => {
+            const touch = event.changedTouches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+        }, { passive: true });
+        hero.addEventListener('touchend', (event) => {
+            if (!window.matchMedia('(max-width: 768px)').matches) {
+                return;
+            }
+            const touch = event.changedTouches[0];
+            const deltaX = touch.clientX - touchStartX;
+            const deltaY = touch.clientY - touchStartY;
+            if (Math.abs(deltaX) >= 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                selectSlide(currentIndex + (deltaX < 0 ? 1 : -1));
+            }
+        }, { passive: true });
+
         hero.querySelector('.ft-home-hero-dots')?.addEventListener('keydown', (event) => {
             const keyTargets = {
                 ArrowLeft: currentIndex - 1,
@@ -215,133 +233,6 @@
 
         selectSlide(currentIndex);
         scheduleAutoAdvance();
-    }
-
-    function initialisePlatform(carousel) {
-        const video = carousel.querySelector('.ft-platform-video-slide video');
-        const videoDescription = carousel.querySelector('.ft-platform-video-description');
-        const videoToggle = carousel.querySelector('[data-ft-platform-video-toggle]');
-
-        if (!video || !videoToggle || carousel.dataset.ftPlatformReady === 'true') {
-            return;
-        }
-
-        carousel.dataset.ftPlatformReady = 'true';
-        carousel.setAttribute('role', 'region');
-        carousel.setAttribute('aria-label', 'FarmTree Platform landscape animation');
-        if (videoDescription) {
-            videoDescription.id = videoDescription.id || 'ft-platform-video-description';
-            carousel.setAttribute('aria-describedby', videoDescription.id);
-        }
-
-        let sectionVisible = false;
-        let userPausedVideo = false;
-        let userRequestedVideo = false;
-
-        function updateVideoToggle() {
-            if (!video || !videoToggle) {
-                return;
-            }
-
-            const isPlaying = !video.paused;
-
-            videoToggle.textContent = isPlaying ? 'Pause animation' : 'Play animation';
-            videoToggle.setAttribute(
-                'aria-label',
-                isPlaying ? 'Pause FarmTree Platform animation' : 'Play FarmTree Platform animation'
-            );
-        }
-
-        function updateVideoPlayback() {
-            if (!video) {
-                return;
-            }
-
-            const shouldPlay = (
-                sectionVisible &&
-                !document.hidden &&
-                !userPausedVideo &&
-                (!reducedMotionQuery.matches || userRequestedVideo)
-            );
-
-            if (shouldPlay && video.paused) {
-                video.muted = true;
-                const playRequest = video.play();
-
-                playRequest?.catch(() => {
-                    // Browser autoplay rejection is harmless; the poster remains visible.
-                    updateVideoToggle();
-                });
-            } else if (!shouldPlay && !video.paused) {
-                video.pause();
-            }
-
-            updateVideoToggle();
-        }
-
-        videoToggle?.addEventListener('click', () => {
-            if (video.paused) {
-                userPausedVideo = false;
-                userRequestedVideo = true;
-                updateVideoPlayback();
-            } else {
-                userPausedVideo = true;
-                userRequestedVideo = false;
-                video.pause();
-            }
-        });
-
-        video.muted = true;
-        video.setAttribute('aria-hidden', 'true');
-        video.setAttribute('tabindex', '-1');
-        video.addEventListener('play', updateVideoToggle);
-        video.addEventListener('pause', updateVideoToggle);
-
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                const entry = entries.at(-1);
-
-                sectionVisible = Boolean(
-                    entry?.isIntersecting && entry.intersectionRatio >= 0.25
-                );
-                updateVideoPlayback();
-            }, { threshold: [0, 0.25, 0.6] });
-
-            observer.observe(carousel);
-        } else {
-            sectionVisible = true;
-        }
-
-        document.addEventListener('visibilitychange', updateVideoPlayback);
-        reducedMotionQuery.addEventListener?.('change', updateVideoPlayback);
-        updateVideoPlayback();
-    }
-
-    function initialiseTechnologyFlow() {
-        document.querySelectorAll('[data-ft-technology-flow]').forEach((flow) => {
-            const story = flow.closest('.ft-technology-story');
-            if (!story) {
-                return;
-            }
-
-            if (reducedMotionQuery.matches || !('IntersectionObserver' in window)) {
-                story.classList.add('is-flow-static');
-                flow.pauseAnimations?.();
-                return;
-            }
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    story.classList.toggle('is-flow-active', entry.isIntersecting);
-                    if (entry.isIntersecting) {
-                        flow.unpauseAnimations?.();
-                    } else {
-                        flow.pauseAnimations?.();
-                    }
-                });
-            }, { threshold: 0.2 });
-            observer.observe(story);
-        });
     }
 
     function initialiseCounters() {
@@ -473,20 +364,27 @@
             rail.dataset.ftRailReady = 'true';
             rail.classList.add('ft-moving-rail');
             const track = document.createElement('div');
+            const sequence = document.createElement('div');
             const items = Array.from(rail.children);
 
             track.className = 'ft-moving-rail-track';
-            items.forEach((item) => track.append(item));
-            items.forEach((item) => {
-                const clone = item.cloneNode(true);
-
-                clone.setAttribute('aria-hidden', 'true');
-                clone.querySelectorAll('a, button, input, summary, [tabindex]').forEach((control) => {
-                    control.setAttribute('tabindex', '-1');
-                });
-                track.append(clone);
+            sequence.className = 'ft-moving-rail-sequence';
+            items.forEach((item) => sequence.append(item));
+            const clone = sequence.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            clone.querySelectorAll('a, button, input, summary, [tabindex]').forEach((control) => {
+                control.setAttribute('tabindex', '-1');
             });
+            track.append(sequence, clone);
             rail.append(track);
+
+            const updateDistance = () => {
+                track.style.setProperty('--ft-rail-distance', `${sequence.getBoundingClientRect().width}px`);
+            };
+            window.requestAnimationFrame(updateDistance);
+            if ('ResizeObserver' in window) {
+                new ResizeObserver(updateDistance).observe(sequence);
+            }
         });
     }
 
@@ -627,14 +525,12 @@
 
     function initialise() {
         document.querySelectorAll(heroSelector).forEach(initialiseHero);
-        document.querySelectorAll(platformSelector).forEach(initialisePlatform);
         initialiseLanguageSelector();
         initialiseBentoGroups();
         initialiseFaqDetails();
         initialiseQuotationDialog();
         initialiseMotion();
         initialiseMovingRails();
-        initialiseTechnologyFlow();
         initialiseCounters();
         initialiseHeaderState();
         initialiseFooterQuotes();

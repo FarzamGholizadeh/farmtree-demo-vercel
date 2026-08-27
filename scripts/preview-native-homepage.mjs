@@ -14,6 +14,8 @@ const mimeTypes = {
   '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.jpg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.avif': 'image/avif',
   '.mp4': 'video/mp4',
   '.png': 'image/png',
   '.webp': 'image/webp'
@@ -324,7 +326,8 @@ function validateComposedPreview() {
     'Ready to build a stronger agroforestry investment case?',
     'No insights have been published yet',
     'data-ft-hero-prev',
-    'data-ft-platform-video-toggle',
+    'final-tools-review-11s-to-40s-2x.gif',
+    'final-tools-review-11s-to-40s-poster.png',
     'data-ft-quotation-dialog'
   ];
 
