@@ -217,6 +217,9 @@ are complete. Stop at pre-release until the evidence/permission review and a
 real assistive-technology listening pass receive human sign-off, and the user
 explicitly approves a release step.
 
+The consolidated decision-only review package is
+`PRE_RELEASE_HUMAN_SIGNOFF.md`.
+
 ### Production Approval Boundary
 
 Do not dispatch another native workflow while run `32985108587` remains

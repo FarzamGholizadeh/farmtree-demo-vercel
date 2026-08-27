@@ -229,9 +229,11 @@ compensating release policy.
 
 ## Next Action
 
-Stop at pre-release and wait for explicit user approval before any release or
-production action. Do not dispatch a replacement production workflow while
-GitHub run `32985108587` remains non-terminal; before any future approved
-dispatch, recheck through the GitHub APIs that it is terminal or absent and has
-no jobs, deployments or pending environment approvals. Keep Coming Soon and
-public noindex active and `farmtree-native` inactive in production.
+Complete the decision-only checklist in `PRE_RELEASE_HUMAN_SIGNOFF.md` and wait
+for explicit user approval before any release or production action. A read-only
+27 August recheck found GitHub run `32985108587` still `queued`, with zero jobs
+and zero pending deployment approvals. Do not dispatch a replacement while it
+remains non-terminal; before any future approved dispatch, recheck that it is
+terminal or absent and has no jobs, deployments or pending approvals. Keep
+Coming Soon and public noindex active and `farmtree-native` inactive in
+production.
