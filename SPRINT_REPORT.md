@@ -1,6 +1,6 @@
 # FT-NATIVE-002 Sprint Report
 
-Status: Rendered local WordPress/browser validation complete; stopped at
+Status: Final English experience implemented and locally validated; stopped at
 pre-release
 
 ## Homepage Structure
@@ -41,10 +41,13 @@ that online delivery is unavailable, collects no personal data and exposes
 only the approved email fallback. There is no submit-success simulation,
 placeholder endpoint, storage or logging path.
 
-The subsequent pre-release enhancement adds the private-first customer-segment
-model, three editorial drafts, the approved single-media Platform delivery,
-restrained motion/density tuning and source-backed discovery metadata. Full
-evidence is in `docs/FT-NATIVE-003-ENHANCEMENT-READINESS.md`.
+The final pre-release enhancement adds private-first customer-segment and Proof
+Story models, 15 private English support pages, nine source-attributed editorial
+drafts, the supplied Platform sequence, technology flow, counters, opposing
+rails, a disabled Contact form with safe fallback, restrained motion/density
+tuning, expanded discovery metadata and the configurable source-first FT Bot
+plugin. Full evidence is in
+`docs/FT-NATIVE-003-ENHANCEMENT-READINESS.md`.
 
 The correction stays in the Block Theme architecture. It does not modify the
 current production `farmtree` theme or restore the legacy SPA as the runtime.
@@ -149,17 +152,32 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   included through pushed commit `2f810ef`; this visual-first local-runtime pass
   remains local and has not been pushed.
 
+## Final English Experience Evidence
+
+The final local runtime contains one private Homepage, ten private segment
+entries, four private Proof Stories, 15 private support pages and nine draft
+articles. The exact canonical sample post is non-public. All 30 intended English
+routes resolve in the authenticated local runtime; `/nl/` and `/de/` remain 404.
+Contact fields are disabled until an approved backend/privacy design exists,
+with no endpoint, fake success, transmission, storage or logging. FT Bot is
+invisible until configured with a valid server-side provider.
+
+Five testimonials and the four counter values match the approved production
+theme source. The sixth testimonial remains explicitly labelled unapproved.
+Logo relationships, testimonial permissions, metric currency, proof/editorial
+claims, legal copy, Contact delivery and FT Bot provider configuration remain
+human publication gates.
+
 ## Preview And Screenshots
 
 The corrected static preview and the real local WordPress runtime are both
 available without changing production WordPress state. The in-app browser
 captured the real WordPress frontend at 320, 375, 390, 430, 768, 1024, 1280,
-1440 and 1920 pixels; exact-width approved-reference and native screenshots,
-mobile/desktop section captures and interaction states are stored in
-`qa/native-foundation/publication-readiness/chrome/`. All nine widths reported zero document
-overflow. The horizontal partner-logo rail remains intentionally scrollable
-inside its container, and the signed-in WordPress toolbar was excluded from the
-final presentation crops.
+1440 and 1920 pixels. Final full-page, mobile/desktop section, contact and
+interaction evidence is stored in `qa/final-english-master/2026-08-27/`. All
+nine widths reported zero document overflow and passed axe WCAG 2.0/2.1/2.2
+A/AA with no console/page error. The horizontal partner-logo rail remains
+intentionally contained inside its component.
 
 The final browser walkthrough found no console errors or warnings. It verified
 Hero and Platform navigation/status/focus, video playback control and
@@ -173,8 +191,11 @@ failure. Reduced-motion emulation confirmed that motion remains paused until
 explicit input. Native Chrome key events completed sequential forward-Tab
 walkthroughs at 390 and 1440 pixels, including the whole page and dialog
 forward/reverse focus containment. A Chrome accessibility-tree screen-reader
-smoke test found named landmarks, headings, controls, statuses and dialog
-content with no unnamed interactive element.
+smoke test found one banner, one main, one contentinfo, four navigation regions,
+26 headings and no ignored focusable node. The sequential Tab pass covered 34
+unique stops and every stop exposed a visible focus indicator. The detailed
+performance sample recorded 1,186,225 transferred bytes across 21 resources,
+FCP 1,092 ms, LCP 1,160 ms, CLS 0.00284 and zero long tasks.
 
 The bootstrap now drafts only the exact canonical WordPress `Hello world!`
 sample fingerprint and never deletes or changes unrelated posts. The visitor

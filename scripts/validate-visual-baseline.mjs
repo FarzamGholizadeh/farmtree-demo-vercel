@@ -159,7 +159,10 @@ const nativeFooter = read(nativeTheme, 'parts/footer.html');
 const nativeHomepage = read(nativeTheme, 'patterns/homepage-foundation.php');
 
 const expectedRuntimeMounts = {
-  plugins: ['./wordpress/wp-content/plugins/farmtree-content'],
+  plugins: [
+    './wordpress/wp-content/plugins/farmtree-content',
+    './wordpress/wp-content/plugins/farmtree-ai-assistant'
+  ],
   themes: ['./wordpress/wp-content/themes/farmtree-native']
 };
 
@@ -344,10 +347,10 @@ assertCssRuleInAtRule(
 );
 
 for (const platformContract of [
-  'power-project-staff-landscape-poster.webp',
-  'power-project-staff-landscape.mp4',
+  'farmtree-platform-final-tools-review-poster.jpg',
+  'farmtree-platform-final-tools-review.mp4',
   'data-ft-platform-video-toggle',
-  'Approved FarmTree agroforestry landscape animation'
+  'The approved FarmTree Platform sequence'
 ]) {
   if (!nativeHomepage.includes(platformContract)) {
     throw new Error(`Approved single-media Platform contract is missing: ${platformContract}`);
@@ -391,8 +394,6 @@ const assetPairs = [
   ['assets/embedded_059.png', 'assets/images/partners/fao.png'],
   ['assets/embedded_060.png', 'assets/images/partners/catie.png'],
   ['assets/embedded_056.png', 'assets/images/partners/helvetas.png'],
-  ['assets/media/power-project-staff-landscape-poster.webp', 'assets/media/power-project-staff-landscape-poster.webp'],
-  ['assets/media/power-project-staff-landscape.mp4', 'assets/media/power-project-staff-landscape.mp4'],
   ['assets/media/power-project-staff-plot-definition.png', 'assets/media/power-project-staff-plot-definition.png']
 ];
 

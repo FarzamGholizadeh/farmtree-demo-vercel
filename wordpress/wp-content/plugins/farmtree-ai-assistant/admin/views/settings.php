@@ -54,6 +54,7 @@ $notice = isset($_GET['ft_notice']) ? FT_AI_Admin::notice(sanitize_key(wp_unslas
                         <pre class="ft-ai-code">define('FARMTREE_AI_PROVIDER', 'openai');
 define('FARMTREE_AI_API_KEY',  'sk-...');   // keep this out of version control
 define('FARMTREE_AI_MODEL',    'gpt-4o-mini');</pre>
+                        <p class="description"><?php esc_html_e("Use provider 'anthropic' with an Anthropic model name to select the Anthropic adapter.", 'farmtree-ai-assistant'); ?></p>
                     <?php endif; ?>
                 </td>
             </tr>
@@ -127,6 +128,14 @@ define('FARMTREE_AI_MODEL',    'gpt-4o-mini');</pre>
                 <tr>
                     <th scope="row"><label for="ft_rl"><?php esc_html_e('Rate limit', 'farmtree-ai-assistant'); ?></label></th>
                     <td><input type="number" min="1" max="120" id="ft_rl" name="rate_limit_per_min" value="<?php echo esc_attr((string) $s['rate_limit_per_min']); ?>" class="small-text"> <?php esc_html_e('messages per minute per visitor', 'farmtree-ai-assistant'); ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="ft_tokens"><?php esc_html_e('Max output tokens', 'farmtree-ai-assistant'); ?></label></th>
+                    <td><input type="number" min="100" max="2000" id="ft_tokens" name="max_output_tokens" value="<?php echo esc_attr((string) $s['max_output_tokens']); ?>" class="small-text"> <?php esc_html_e('per response', 'farmtree-ai-assistant'); ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="ft_daily"><?php esc_html_e('Daily request limit', 'farmtree-ai-assistant'); ?></label></th>
+                    <td><input type="number" min="1" max="5000" id="ft_daily" name="daily_limit" value="<?php echo esc_attr((string) $s['daily_limit']); ?>" class="small-text"> <?php esc_html_e('requests per visitor hash per day', 'farmtree-ai-assistant'); ?></td>
                 </tr>
                 <tr>
                     <th scope="row"><?php esc_html_e('Conversation logging', 'farmtree-ai-assistant'); ?></th>

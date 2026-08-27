@@ -106,6 +106,14 @@ private runtime validation, but they block public activation and publication:
 - [ ] Sign off the proof labels, testimonial attribution/permissions, imagery
       and partner/reference relationships in
       `docs/FT-NATIVE-002-PUBLICATION-EVIDENCE.md`.
+- [ ] Verify that the approved-theme counter values remain current, replace or
+      remove the explicitly unapproved sixth testimonial, and approve every
+      Proof Story, customer-segment page and News draft before publication.
+- [ ] Obtain legal approval for Privacy, Terms, consent wording and the official
+      address; configure and verify a privacy-reviewed Contact delivery backend
+      only if online submission is required.
+- [ ] Configure and test FT Bot's provider, model, limits, behavior and approved
+      knowledge server-side before enabling it. Never commit an API key.
 - [ ] Complete one logged-out real screen-reader listening walkthrough; the
       automated accessibility-tree smoke test is supporting evidence only.
 - [ ] Confirm no unfinished native content is public before Gate 6 approval.

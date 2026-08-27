@@ -3,7 +3,7 @@
  * Plugin Name: FarmTree Content
  * Plugin URI: https://farmtree.eu/
  * Description: Canonical native content-model and global-settings layer for the isolated FarmTree rebuild.
- * Version: 0.2.0
+ * Version: 0.3.0
  * Author: FarmTree
  * Text Domain: farmtree-content
  * Requires at least: 6.6
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('FARMTREE_CONTENT_VERSION', '0.2.0');
+define('FARMTREE_CONTENT_VERSION', '0.3.0');
 define('FARMTREE_CONTENT_FILE', __FILE__);
 define('FARMTREE_CONTENT_DIR', plugin_dir_path(__FILE__));
 
@@ -67,11 +67,40 @@ function farmtree_content_register_customer_segments(): void
 add_action('init', 'farmtree_content_register_customer_segments');
 
 /**
+ * Register private-first Proof Stories with editor-owned content and theme-owned structure.
+ */
+function farmtree_content_register_proof_stories(): void
+{
+    register_post_type('proof_story', [
+        'labels' => [
+            'name' => __('Proof Stories', 'farmtree-content'),
+            'singular_name' => __('Proof Story', 'farmtree-content'),
+            'add_new_item' => __('Add Proof Story', 'farmtree-content'),
+            'edit_item' => __('Edit Proof Story', 'farmtree-content'),
+            'all_items' => __('All Proof Stories', 'farmtree-content'),
+        ],
+        'public' => true,
+        'show_in_rest' => true,
+        'rest_base' => 'proof-stories',
+        'has_archive' => false,
+        'rewrite' => ['slug' => 'proof-stories', 'with_front' => false],
+        'menu_icon' => 'dashicons-chart-area',
+        'menu_position' => 22,
+        'supports' => ['title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes'],
+        'template_lock' => 'contentOnly',
+        'show_in_nav_menus' => true,
+        'delete_with_user' => false,
+    ]);
+}
+add_action('init', 'farmtree_content_register_proof_stories');
+
+/**
  * Keep activation side-effect free during the foundation sprint.
  */
 function farmtree_content_activate(): void
 {
     farmtree_content_register_customer_segments();
+    farmtree_content_register_proof_stories();
     flush_rewrite_rules();
 }
 register_activation_hook(FARMTREE_CONTENT_FILE, 'farmtree_content_activate');

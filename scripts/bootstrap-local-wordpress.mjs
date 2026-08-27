@@ -145,6 +145,14 @@ const editorialDefinitions = JSON.parse(await readFile(
   new URL('../wordpress/wp-content/plugins/farmtree-content/data/editorial-drafts.json', import.meta.url),
   'utf8'
 ));
+const proofStoryDefinitions = JSON.parse(await readFile(
+  new URL('../wordpress/wp-content/plugins/farmtree-content/data/proof-stories.json', import.meta.url),
+  'utf8'
+));
+const englishPageDefinitions = JSON.parse(await readFile(
+  new URL('../wordpress/wp-content/plugins/farmtree-content/data/english-pages.json', import.meta.url),
+  'utf8'
+));
 
 function escapeHtml(value) {
   return String(value)
@@ -156,27 +164,78 @@ function escapeHtml(value) {
 
 function segmentContent(segment) {
   return [
+    '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->',
+    `<!-- wp:paragraph --><p>${escapeHtml(segment.excerpt)}</p><!-- /wp:paragraph -->`,
     '<!-- wp:heading --><h2 class="wp-block-heading">The planning need</h2><!-- /wp:heading -->',
     `<!-- wp:paragraph --><p>${escapeHtml(segment.need)}</p><!-- /wp:paragraph -->`,
+    '<!-- wp:heading --><h2 class="wp-block-heading">Common challenges</h2><!-- /wp:heading -->',
+    `<!-- wp:list --><ul>${segment.challenges.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul><!-- /wp:list -->`,
     '<!-- wp:heading --><h2 class="wp-block-heading">How FarmTree can support the work</h2><!-- /wp:heading -->',
     `<!-- wp:paragraph --><p>${escapeHtml(segment.use)}</p><!-- /wp:paragraph -->`,
-    '<!-- wp:heading --><h2 class="wp-block-heading">A practical next step</h2><!-- /wp:heading -->',
-    '<!-- wp:paragraph --><p>Start with the project decision, available site information and the scenarios your team needs to compare. FarmTree can then help clarify an appropriate modelling scope.</p><!-- /wp:paragraph -->'
+    '<!-- wp:heading --><h2 class="wp-block-heading">Relevant capabilities</h2><!-- /wp:heading -->',
+    `<!-- wp:list --><ul>${segment.capabilities.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul><!-- /wp:list -->`,
+    '<!-- wp:heading --><h2 class="wp-block-heading">Example workflow</h2><!-- /wp:heading -->',
+    `<!-- wp:paragraph --><p>${escapeHtml(segment.workflow)}</p><!-- /wp:paragraph -->`,
+    '<!-- wp:heading --><h2 class="wp-block-heading">Frequently asked question</h2><!-- /wp:heading -->',
+    `<!-- wp:details --><details class="wp-block-details"><summary>${escapeHtml(segment.faq[0])}</summary><!-- wp:paragraph --><p>${escapeHtml(segment.faq[1])}</p><!-- /wp:paragraph --></details><!-- /wp:details -->`,
+    '<!-- wp:heading --><h2 class="wp-block-heading">Related evidence</h2><!-- /wp:heading -->',
+    '<!-- wp:paragraph --><p><a href="/proof-stories/">Explore Proof Stories</a> or <a href="/blog/">read source-led insights</a>. When you are ready, <a href="/contact/">contact FarmTree</a> to define a proportionate modelling scope.</p><!-- /wp:paragraph -->'
   ].join('\n\n');
 }
 
 function editorialContent(article) {
-  return article.sections.map(([heading, paragraph]) => [
+  return [
+    ...article.sections.map(([heading, paragraph]) => [
+    `<!-- wp:heading --><h2 class="wp-block-heading">${escapeHtml(heading)}</h2><!-- /wp:heading -->`,
+    `<!-- wp:paragraph --><p>${escapeHtml(paragraph)}</p><!-- /wp:paragraph -->`
+    ].join('\n\n')),
+    '<!-- wp:heading --><h2 class="wp-block-heading">Primary source</h2><!-- /wp:heading -->',
+    `<!-- wp:paragraph --><p><a href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noreferrer noopener">${escapeHtml(article.sourceTitle)}</a>, published ${escapeHtml(article.sourceDate)}. External facts above are attributed to this source; interpretation is FarmTree editorial analysis.</p><!-- /wp:paragraph -->`,
+    '<!-- wp:paragraph --><p>Continue with <a href="/platform/">the FarmTree Platform</a>, <a href="/proof-stories/">Proof Stories</a> or <a href="/contact/">contact the team</a>.</p><!-- /wp:paragraph -->'
+  ].join('\n\n');
+}
+
+function proofStoryContent(story) {
+  return story.sections.map(([heading, paragraph]) => [
     `<!-- wp:heading --><h2 class="wp-block-heading">${escapeHtml(heading)}</h2><!-- /wp:heading -->`,
     `<!-- wp:paragraph --><p>${escapeHtml(paragraph)}</p><!-- /wp:paragraph -->`
   ].join('\n\n')).join('\n\n');
 }
 
+function englishPageContent(page) {
+  if (page.body === 'contact') {
+    return [
+      '<!-- wp:paragraph --><p>The local pre-release form is intentionally unavailable until an approved delivery backend and privacy review are complete. No information entered here is transmitted, stored or logged.</p><!-- /wp:paragraph -->',
+      '<!-- wp:html --><form class="ft-contact-form" aria-describedby="ft-contact-unavailable"><fieldset disabled><legend>Contact details</legend><label>Name *<input name="name" autocomplete="name" required></label><label>Email *<input type="email" name="email" autocomplete="email" required></label><label>Phone <input type="tel" name="phone" autocomplete="tel"></label><label>Organisation <input name="organisation" autocomplete="organization"></label><label>Topic *<select name="topic" required><option value="">Choose a topic</option><option>Platform and demo</option><option>Project modelling</option><option>Quotation</option><option>Other</option></select></label><label>Message *<textarea name="message" rows="6" required></textarea></label><label><input type="checkbox" name="consent" required> I agree that FarmTree may use my details to respond.</label><button type="submit" disabled>Delivery unavailable</button></fieldset></form><p id="ft-contact-unavailable"><strong>Safe fallback:</strong> email <a href="mailto:info@farmtree.earth?subject=FarmTree%20contact%20request">info@farmtree.earth</a>. Your mail application will show exactly what is sent.</p><!-- /wp:html -->',
+      '<!-- wp:heading --><h2 class="wp-block-heading">Visit FarmTree</h2><!-- /wp:heading -->',
+      '<!-- wp:paragraph --><p>FarmTree B.V.<br>Plus Ultra Building<br>Bronland 12C-1<br>6708 WH Wageningen<br>The Netherlands</p><!-- /wp:paragraph -->',
+      '<!-- wp:paragraph --><p><a href="https://www.openstreetmap.org/search?query=Bronland%2012C-1%2C%206708%20WH%20Wageningen" target="_blank" rel="noreferrer noopener">View the location on OpenStreetMap ↗</a></p><!-- /wp:paragraph -->'
+    ].join('\n\n');
+  }
+  if (page.slug === 'proof-stories') {
+    const links = proofStoryDefinitions.map((story) => `<li><a href="/proof-stories/${escapeHtml(story.slug)}/">${escapeHtml(story.title)}</a> — ${escapeHtml(story.excerpt)}</li>`).join('');
+    return `<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">${escapeHtml(page.body)}</p><!-- /wp:paragraph --><!-- wp:list --><ul>${links}</ul><!-- /wp:list -->`;
+  }
+  if (page.slug === 'customer-segments') {
+    const links = segmentDefinitions.map((segment) => `<li><a href="/customer-segments/${escapeHtml(segment.slug)}/">${escapeHtml(segment.title)}</a> — ${escapeHtml(segment.excerpt)}</li>`).join('');
+    return `<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">${escapeHtml(page.body)}</p><!-- /wp:paragraph --><!-- wp:list {"ordered":true} --><ol>${links}</ol><!-- /wp:list -->`;
+  }
+  return [
+    `<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">${escapeHtml(page.body)}</p><!-- /wp:paragraph -->`,
+    '<!-- wp:heading --><h2 class="wp-block-heading">A useful next step</h2><!-- /wp:heading -->',
+    '<!-- wp:paragraph --><p>Explore <a href="/platform/">the Platform</a>, review <a href="/proof-stories/">Proof Stories</a>, or <a href="/contact/">contact FarmTree</a> with a specific planning question.</p><!-- /wp:paragraph -->'
+  ].join('\n\n');
+}
+
 const segmentPosts = [];
 for (const segment of segmentDefinitions) {
-  const existing = await api(
+  let existing = await api(
     `/wp/v2/customer-segments?slug=${encodeURIComponent(segment.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`
   );
+  if (!verifyOnly && existing.length === 0) {
+    const possibleRenames = await api(`/wp/v2/customer-segments?search=${encodeURIComponent(segment.title)}&status=publish,draft,pending,private,future&context=edit&per_page=100`);
+    existing = possibleRenames.filter((candidate) => normaliseSampleText(candidate.title?.raw ?? candidate.title?.rendered) === segment.title);
+  }
   let post = existing[0];
 
   if (!post) {
@@ -194,6 +253,13 @@ for (const segment of segmentDefinitions) {
         content: segmentContent(segment),
         menu_order: segment.order
       })
+    });
+  }
+
+  if (!verifyOnly) {
+    post = await api(`/wp/v2/customer-segments/${post.id}`, {
+      method: 'POST',
+      body: JSON.stringify({ title: segment.title, slug: segment.slug, status: 'private', excerpt: segment.excerpt, content: segmentContent(segment), menu_order: segment.order })
     });
   }
 
@@ -231,10 +297,40 @@ for (const article of editorialDefinitions) {
     });
   }
 
+
+  if (!verifyOnly) {
+    post = await api(`/wp/v2/posts/${post.id}`, {
+      method: 'POST',
+      body: JSON.stringify({ title: article.title, slug: article.slug, status: 'draft', excerpt: article.excerpt, content: editorialContent(article) })
+    });
+  }
+
   if (post.status !== 'draft') {
     throw new Error(`Editorial foundation content must remain draft: ${article.slug}`);
   }
   editorialDrafts.push(post);
+}
+
+const proofStories = [];
+for (const story of proofStoryDefinitions) {
+  const existing = await api(`/wp/v2/proof-stories?slug=${encodeURIComponent(story.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`);
+  let post = existing[0];
+  if (!post && verifyOnly) throw new Error(`Private Proof Story is missing: ${story.slug}`);
+  if (!post) post = await api('/wp/v2/proof-stories', { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: 'private', excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order }) });
+  if (!verifyOnly) post = await api(`/wp/v2/proof-stories/${post.id}`, { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: 'private', excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order }) });
+  if (post.status !== 'private') throw new Error(`Proof Story must remain private: ${story.slug}`);
+  proofStories.push(post);
+}
+
+const englishPages = [];
+for (const page of englishPageDefinitions) {
+  const existing = await api(`/wp/v2/pages?slug=${encodeURIComponent(page.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`);
+  let post = existing[0];
+  if (!post && verifyOnly) throw new Error(`Private English page is missing: ${page.slug}`);
+  if (!post) post = await api('/wp/v2/pages', { method: 'POST', body: JSON.stringify({ title: page.title, slug: page.slug, status: 'private', excerpt: page.excerpt, content: englishPageContent(page) }) });
+  if (!verifyOnly) post = await api(`/wp/v2/pages/${post.id}`, { method: 'POST', body: JSON.stringify({ title: page.title, slug: page.slug, status: 'private', excerpt: page.excerpt, content: englishPageContent(page) }) });
+  if (post.status !== 'private') throw new Error(`English page must remain private: ${page.slug}`);
+  englishPages.push(post);
 }
 
 const patterns = await api('/wp/v2/block-patterns/patterns');
@@ -324,6 +420,7 @@ const [
 const frontendHtml = await frontendResponse.text();
 const activeTheme = activeThemes.find(({ stylesheet }) => stylesheet === 'farmtree-native');
 const activePlugin = activePlugins.find(({ plugin }) => plugin === 'farmtree-content/farmtree-content');
+const activeAiPlugin = activePlugins.find(({ plugin }) => plugin === 'farmtree-ai-assistant/farmtree-ai-assistant');
 const requiredFrontendContent = [
   'ft-native-site-header',
   'Make agroforestry measurable, investable and scalable',
@@ -340,6 +437,12 @@ if (!activeTheme || !activeTheme.is_block_theme) {
 }
 if (!activePlugin) {
   throw new Error('farmtree-content is not active in local WordPress.');
+}
+if (!activeAiPlugin) {
+  throw new Error('farmtree-ai-assistant is not active in local WordPress for safe configuration testing.');
+}
+if (frontendHtml.includes('id="ft-ai-root"')) {
+  throw new Error('FT Bot must remain absent while no valid provider configuration exists.');
 }
 if (savedPage.content.raw !== homepagePattern.content) {
   throw new Error('Local Homepage content did not persist after save/reload.');
@@ -374,7 +477,7 @@ if (dutchRouteResponse.status !== 404 || germanRouteResponse.status !== 404) {
   throw new Error('Reserved /nl/ and /de/ locale paths must remain unpublished 404 routes.');
 }
 
-const requiredTemplates = ['404', 'archive', 'content-only-page', 'front-page', 'index', 'page', 'single', 'single-customer_segment'];
+const requiredTemplates = ['404', 'archive', 'content-only-page', 'front-page', 'index', 'page', 'single', 'single-customer_segment', 'single-proof_story'];
 const registeredTemplates = new Set(templates.map(({ slug }) => slug));
 for (const template of requiredTemplates) {
   if (!registeredTemplates.has(template)) {
@@ -441,6 +544,7 @@ console.log(JSON.stringify({
   theme: activeTheme.stylesheet,
   blockTheme: activeTheme.is_block_theme,
   plugin: activePlugin.plugin,
+  aiPlugin: { plugin: activeAiPlugin.plugin, frontend: 'inactive-until-configured' },
   homepageId: homepage.id,
   homepageStatus: savedPage.status,
   revisions: revisions.length,
@@ -461,6 +565,8 @@ console.log(JSON.stringify({
     count: editorialDrafts.length,
     status: 'draft'
   },
+  proofStories: { count: proofStories.length, status: 'private' },
+  englishPages: { count: englishPages.length, status: 'private', routes: englishPageDefinitions.map(({ slug }) => `/${slug}/`) },
   locales: {
     en: frontendResponse.status,
     nl: dutchRouteResponse.status,

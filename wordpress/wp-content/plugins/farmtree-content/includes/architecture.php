@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 function farmtree_content_architecture(): array
 {
     $architecture = [
-        'status' => 'segment_model_active',
+        'status' => 'english_private_release_candidate',
         'owner' => 'farmtree-content',
         'legacy_compatibility' => [
             'plugin' => 'farmtree-core',
@@ -72,6 +72,14 @@ function farmtree_content_architecture(): array
                 'file' => 'data/editorial-drafts.json',
                 'publication_status' => 'draft',
             ],
+            'proof_stories' => [
+                'file' => 'data/proof-stories.json',
+                'publication_status' => 'private_until_editor_approval',
+            ],
+            'english_pages' => [
+                'file' => 'data/english-pages.json',
+                'publication_status' => 'private_until_editor_approval',
+            ],
         ],
         'post_types' => [
             'case_study' => [
@@ -85,6 +93,14 @@ function farmtree_content_architecture(): array
                 'rest' => true,
                 'archive' => false,
                 'single' => '/customer-segments/{slug}/',
+                'runtime_status' => 'registered',
+                'taxonomies' => [],
+            ],
+            'proof_story' => [
+                'public' => true,
+                'rest' => true,
+                'archive' => false,
+                'single' => '/proof-stories/{slug}/',
                 'runtime_status' => 'registered',
                 'taxonomies' => [],
             ],

@@ -1,35 +1,101 @@
 [
   {
-    "slug": "compare-agroforestry-scenarios-before-implementation",
-    "title": "How to compare agroforestry scenarios before implementation",
-    "excerpt": "A practical framework for comparing site conditions, species choices, management assumptions and long-term project scenarios.",
-    "sections": [
-      ["Start with the decision", "Define the choice the team needs to make. A useful comparison is specific about location, project boundary, time horizon and the alternatives under review."],
-      ["Keep assumptions visible", "Record the climate, soil, species, management, labour and price assumptions used in each scenario. Visible assumptions make differences easier to discuss and revise."],
-      ["Compare more than one outcome", "Review production, carbon, water, soil, labour and economics together where relevant. A scenario that improves one indicator may introduce a trade-off elsewhere."],
-      ["Use projections as decision support", "Modelled results are not guarantees. Treat them as structured evidence for field validation, specialist review and better-informed planning."]
-    ]
+    "slug": "farmtree-water-erosion-microclimate-model-update-2026",
+    "title": "What FarmTree's 2026 water, erosion and microclimate update means for scenario planning",
+    "excerpt": "A source-led guide to the July 2026 FarmTree model update and the questions project teams should revisit in existing scenarios.",
+    "searchIntent": "FarmTree model update 2026",
+    "metaDescription": "Understand FarmTree's July 2026 water, erosion, microclimate and soil-model updates and what they mean for agroforestry scenario review.",
+    "sourceTitle": "Release notes FarmTree Tool",
+    "sourceUrl": "https://www.farmtree.earth/release-blog",
+    "sourceDate": "2026-07-10",
+    "sections": [["Answer first", "FarmTree's July 2026 release updates the water and erosion models, adds microclimate effects to growth, and changes nutrient uptake and release in the soil model. Teams should review affected scenarios rather than assume older and newer runs are directly comparable."], ["Why model version matters", "A projection records a model, its inputs and its assumptions at a point in time. When interconnected sub-models change, version notes become part of the evidence trail for any decision or report."], ["A practical review", "Record the scenario version, rerun a representative sample, compare water stress and erosion outputs, and document material differences before updating a wider portfolio."], ["FarmTree context", "This article explains FarmTree's published release notes. It does not claim that a software update independently validates a project outcome. See the Platform and Proof Stories pages for the wider planning workflow."]]
   },
   {
-    "slug": "what-an-agroforestry-investment-plan-should-make-clear",
-    "title": "What an agroforestry investment plan should make clear",
-    "excerpt": "The essential questions an agroforestry investment plan should answer for project teams, funders and delivery partners.",
-    "sections": [
-      ["What is being implemented?", "Describe the site, intended land-use system, species mix, management approach and delivery responsibilities in terms that each stakeholder can understand."],
-      ["Which assumptions drive the plan?", "Make biological, operational and financial assumptions explicit. This helps reviewers distinguish known inputs from projections and uncertainties."],
-      ["How will progress be reviewed?", "Connect the plan to practical monitoring questions, data ownership and review points. Keep modelling, measurement and independent verification clearly separated."],
-      ["Where are the trade-offs?", "Explain how alternative designs affect farmer value, programme cost, environmental outcomes and timing. A useful plan supports a decision rather than hiding uncertainty."]
-    ]
+    "slug": "eu-carbon-farming-methodologies-agroforestry-2026",
+    "title": "EU carbon-farming methodologies: what agroforestry planners should prepare",
+    "excerpt": "The European Commission's 2026 carbon-farming methodology work reinforces the need for traceable baselines, monitoring and clearly separated projections.",
+    "searchIntent": "EU carbon farming agroforestry methodology 2026",
+    "metaDescription": "What the EU CRCF carbon-farming methodology direction means for agroforestry baselines, monitoring, assumptions and project planning.",
+    "sourceTitle": "Certification methodologies",
+    "sourceUrl": "https://climate.ec.europa.eu/areas-action/carbon-removals-and-carbon-farming/certification-methodologies_en",
+    "sourceDate": "2026-07-01",
+    "sections": [["Answer first", "The European Commission reports that carbon-farming methodologies now explicitly cover agriculture and agroforestry on mineral soils. Project teams should prepare transparent activity boundaries, baselines, monitoring responsibilities and durability assumptions."], ["Planning is not certification", "Scenario modelling can help teams test designs and document assumptions, but recognised schemes, audits and third-party verification remain separate requirements."], ["Build a reviewable evidence trail", "Keep source data, scenario definitions, model versions and uncertainty notes together. This makes later technical review more efficient and helps prevent modelled values being presented as measured outcomes."], ["Where FarmTree fits", "FarmTree can support early scenario comparison across carbon, production, water and economics. Certification eligibility and quantified credits must be determined under the applicable approved methodology."]]
   },
   {
-    "slug": "from-site-data-to-agroforestry-monitoring-reporting",
-    "title": "From site data to agroforestry monitoring and reporting",
-    "excerpt": "How project teams can connect baseline information and scenario assumptions to a coherent monitoring and reporting approach.",
-    "sections": [
-      ["Build a usable baseline", "Start with the location, current land use, inventory, management context and data quality. Document gaps instead of filling them with unsupported precision."],
-      ["Connect design and monitoring", "Choose indicators that relate to the project decisions and assumptions. Monitoring becomes more useful when teams know which question each data point helps answer."],
-      ["Separate measured and modelled information", "Label observed data, calculated values and forward-looking projections clearly. This distinction helps readers interpret results and limits overclaiming."],
-      ["Keep the reporting trail reviewable", "Retain source notes, model versions, scenario definitions and decision records so results can be revisited as field information improves."]
-    ]
+    "slug": "eudr-2026-agroforestry-data-readiness",
+    "title": "EUDR 2026: a data-readiness checklist for agroforestry programmes",
+    "excerpt": "A practical distinction between EUDR due-diligence information and the wider scenario evidence used to plan resilient agroforestry systems.",
+    "searchIntent": "EUDR agroforestry data readiness 2026",
+    "metaDescription": "Prepare agroforestry programme data for the revised EUDR timeline while keeping regulatory due diligence separate from scenario modelling.",
+    "sourceTitle": "Regulation on Deforestation-free products",
+    "sourceUrl": "https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en",
+    "sourceDate": "2026-05-04",
+    "sections": [["Answer first", "The European Commission states that the revised EUDR applies from 30 December 2026 for large and medium operators and later for most micro and small operators. Teams should use the time to verify geolocation, product and due-diligence workflows."], ["Do not confuse two evidence jobs", "EUDR due diligence addresses deforestation-free product requirements. Agroforestry scenario modelling addresses design choices and projected outcomes. One does not automatically satisfy the other."], ["Prepare the data chain", "Identify data owners, map plot identifiers to source records, document quality checks, and retain a clear boundary between observed field information and model assumptions."], ["Use scenarios carefully", "FarmTree scenarios can help explore production, environmental and economic trade-offs. Legal interpretation and compliance decisions require the responsible organisation's qualified advisers."]]
+  },
+  {
+    "slug": "verra-vm0042-v22-agricultural-land-management",
+    "title": "Reading Verra VM0042 v2.2 through an agroforestry planning lens",
+    "excerpt": "What the active improved agricultural land-management methodology signals about soil data, baselines and disciplined claims.",
+    "searchIntent": "Verra VM0042 v2.2 agroforestry",
+    "metaDescription": "A planning-focused explanation of Verra VM0042 v2.2, soil carbon evidence, baselines and boundaries for agroforestry claims.",
+    "sourceTitle": "VM0042 Improved Agricultural Land Management, v2.2",
+    "sourceUrl": "https://verra.org/methodologies/vm0042-improved-agricultural-land-management-v2-2/",
+    "sourceDate": "2025-10-21",
+    "sections": [["Answer first", "VM0042 v2.2 is an active Verra methodology for quantifying emission reductions and soil organic carbon removals from improved agricultural land management. Its existence does not make every agroforestry activity eligible."], ["Begin with applicability", "Project developers should first confirm whether the activity, baseline and monitoring approach fall within the methodology. Avoid forcing a planning scenario into a certification claim."], ["Treat soil evidence with care", "Sampling design, processing, laboratory analysis and modelling choices affect soil-carbon conclusions. Record data quality and use conservative language where evidence is incomplete."], ["FarmTree's role", "FarmTree can organise scenario assumptions and compare linked indicators. Validation, verification and issuance remain governed by the standard and independent bodies."]]
+  },
+  {
+    "slug": "verra-vm0042-v30-consultation-lessons",
+    "title": "What the VM0042 v3.0 revision process teaches project teams about model governance",
+    "excerpt": "Methodology revisions show why agroforestry teams need version control, documented assumptions and change-aware reporting.",
+    "searchIntent": "VM0042 v3.0 revision agroforestry",
+    "metaDescription": "Use the Verra VM0042 v3.0 revision process as a practical lesson in model versioning, baseline governance and change control.",
+    "sourceTitle": "Major Revision to VM0042 Methodology for Improved Agricultural Land Management",
+    "sourceUrl": "https://verra.org/methodologies/revision-to-vm0042-methodology-for-improved-agricultural-land-management/",
+    "sourceDate": "2026-03-31",
+    "sections": [["Answer first", "Verra's revision process for VM0042 highlights a simple operational lesson: methods evolve, so project evidence must preserve the version, inputs and decisions used at each stage."], ["Track the change", "Maintain a change log that links scenario versions to source datasets, review dates and responsible people. Never silently overwrite a result used in an earlier decision."], ["Reassess material assumptions", "When baseline, sampling or calculation guidance changes, identify which project conclusions may be affected and prioritise those for expert review."], ["Keep claims bounded", "A consultation draft is not an approved method. Describe it as a development signal, not as a current compliance requirement."]]
+  },
+  {
+    "slug": "smallholder-agroforestry-wood-production-lessons-2025",
+    "title": "Smallholder wood production: seven planning questions for multifunctional agroforestry",
+    "excerpt": "Lessons from the 2025 FAO and CIFOR-ICRAF report for teams comparing wood, crop, livelihood and resilience objectives.",
+    "searchIntent": "smallholder agroforestry wood production planning",
+    "metaDescription": "Seven planning questions inspired by the 2025 FAO and CIFOR-ICRAF report on multifunctional smallholder tree-farming systems.",
+    "sourceTitle": "Agroforestry for wood production — insights from multifunctional smallholder tree farming systems",
+    "sourceUrl": "https://www.fao.org/in-action/forest-landscape-restoration-mechanism/news-and-events/news/news-detail/agroforestry-for-wood-production---insights-from-multifunctional-smallholder-tree-farming-systems-in-asia-and-the-pacific/en",
+    "sourceDate": "2025-11-03",
+    "sections": [["Answer first", "Multifunctional smallholder tree systems differ widely. A useful plan asks who manages the trees, which products matter, when value arrives, what labour is required, how crops interact, which markets exist and how risk is shared."], ["Avoid one-size-fits-all design", "The FAO and CIFOR-ICRAF cases span woodlots, intercropping, home gardens and boundary planting. Each structure creates different production and livelihood dynamics."], ["Model timing and trade-offs", "Compare establishment cost, labour, thinning or harvest timing, crop interactions and uncertainty. Long horizons should make assumptions more visible, not more certain."], ["From evidence to decision", "Use local knowledge and field validation to refine candidate scenarios. FarmTree can support comparison, while implementation choices remain with farmers and programme teams."]]
+  },
+  {
+    "slug": "carbon-pricing-2026-nature-project-quality",
+    "title": "Carbon pricing in 2026: why nature projects still need a grounded investment case",
+    "excerpt": "The World Bank's 2026 market overview reinforces the value of quality signals, transparent assumptions and diversified project economics.",
+    "searchIntent": "carbon pricing 2026 nature based projects",
+    "metaDescription": "What the World Bank's 2026 carbon-pricing findings mean for quality, uncertainty and agroforestry investment planning.",
+    "sourceTitle": "State and Trends of Carbon Pricing 2026",
+    "sourceUrl": "https://www.worldbank.org/en/publication/state-and-trends-of-carbon-pricing",
+    "sourceDate": "2026-05-21",
+    "sections": [["Answer first", "The World Bank reports wider carbon-pricing coverage and continued price differentiation by project quality. Agroforestry plans should not depend on a single assumed credit price."], ["Build a broader value case", "Test production, farmer value, programme cost and environmental indicators alongside carbon. A diversified decision case is more informative than a headline carbon estimate."], ["Use sensitivities", "Compare conservative, central and alternative assumptions for prices, timing, survival and verification cost. Label scenarios as projections rather than forecasts guaranteed to occur."], ["Keep market and project facts separate", "Market reports describe sector-level trends. They do not establish the quality, eligibility or future price of a particular FarmTree-supported project."]]
+  },
+  {
+    "slug": "agroforestry-species-data-switchboard-2025",
+    "title": "Better species data starts with better provenance",
+    "excerpt": "The Agroforestry Species Switchboard 4.0 shows how discoverable source provenance can strengthen species selection and model review.",
+    "searchIntent": "agroforestry species data provenance",
+    "metaDescription": "How Agroforestry Species Switchboard 4.0 can inform source provenance, species selection and reviewable agroforestry models.",
+    "sourceTitle": "Agroforestry Species Switchboard 4.0",
+    "sourceUrl": "https://switchboard.cifor-icraf.org/index.php/about",
+    "sourceDate": "2025-07-02",
+    "sections": [["Answer first", "Species databases become more useful when users can see where information comes from, which taxa it describes and how it can be accessed. Provenance is a quality feature, not administrative overhead."], ["Match data to the decision", "Growth, yield, management, product and ecological information may come from different sources. Record why each value is appropriate for the location and scenario."], ["Treat gaps honestly", "A missing local parameter should trigger a research or calibration task, not unsupported precision. Document defaults and sensitivity ranges."], ["FarmTree context", "FarmTree combines species characteristics with site, climate, soil and management data. Source review and local calibration remain important parts of responsible scenario design."]]
+  },
+  {
+    "slug": "nature-restoration-plans-report-once-agroforestry-2025",
+    "title": "Report once, use evidence well: a lesson from EU nature-restoration planning",
+    "excerpt": "The EU's common restoration-plan format offers a useful principle for agroforestry programmes: design information so it can support decisions and reporting without duplication.",
+    "searchIntent": "nature restoration planning agroforestry reporting",
+    "metaDescription": "Apply the EU nature-restoration plan's report-once principle to coherent agroforestry data, monitoring and scenario workflows.",
+    "sourceTitle": "Commission adopts a user-friendly planning tool to support Member States in implementing the Nature Restoration Regulation",
+    "sourceUrl": "https://environment.ec.europa.eu/news/commission-adopts-user-friendly-planning-tool-support-member-states-implementing-nature-restoration-2025-05-20_en",
+    "sourceDate": "2025-05-20",
+    "sections": [["Answer first", "The European Commission's common format for national restoration plans emphasises comparable information, reused data and tracking over time. Agroforestry programmes can apply the same design principle at project scale."], ["Define a shared information model", "Agree identifiers, units, source labels and responsibilities before collecting more data. This reduces reconciliation work later."], ["Connect plans and monitoring", "Each indicator should answer a project question. Keep baseline observations, management actions and projected values clearly distinguishable."], ["Use digital tools deliberately", "A platform should make evidence easier to review and update. It cannot repair unclear governance or turn weak source data into a verified outcome."]]
   }
 ]

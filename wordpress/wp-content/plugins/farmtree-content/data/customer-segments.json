@@ -5,7 +5,11 @@
     "title": "Consultancy & Agroforestry Advisors",
     "excerpt": "Build consistent, evidence-led agroforestry scenarios for client strategy, design and investment planning.",
     "need": "Advisors need a repeatable way to connect site conditions, species choices, management assumptions and financial expectations.",
-    "use": "FarmTree can help teams compare options, document assumptions and turn modelling outputs into a clearer client decision process."
+    "use": "FarmTree can help teams compare options, document assumptions and turn modelling outputs into a clearer client decision process.",
+    "challenges": ["Keeping site, species and price assumptions consistent across assignments", "Explaining long-term trade-offs without hiding uncertainty", "Producing reviewable outputs efficiently"],
+    "capabilities": ["Location-specific scenario comparison", "Species and management assumptions", "Multi-KPI business-plan outputs"],
+    "workflow": "Define the client decision, assemble available site data, compare a small set of designs, review assumptions with specialists, and export the selected scenario for the advisory process.",
+    "faq": ["Does FarmTree replace specialist judgement?", "No. It structures scenario evidence; professional and local judgement remain essential."]
   },
   {
     "order": 2,
@@ -13,7 +17,11 @@
     "title": "Development Banks & Donor Organisations",
     "excerpt": "Assess agroforestry programmes with clearer assumptions, comparable scenarios and long-term impact context.",
     "need": "Finance and donor teams need transparent project logic before committing resources and a consistent basis for later review.",
-    "use": "FarmTree can structure scenario comparisons across economic, environmental and operational considerations without replacing due diligence."
+    "use": "FarmTree can structure scenario comparisons across economic, environmental and operational considerations without replacing due diligence.",
+    "challenges": ["Comparing programmes built on different assumptions", "Reviewing long time horizons before funding decisions", "Connecting planning evidence to later monitoring"],
+    "capabilities": ["Transparent scenario assumptions", "Long-term economic and environmental projections", "Exportable project-planning evidence"],
+    "workflow": "Agree the appraisal question, model representative project scenarios, document sensitivity and data gaps, then use the outputs alongside technical, financial and safeguards due diligence.",
+    "faq": ["Are projections investment assurance?", "No. They are decision-support evidence and do not replace due diligence or independent assurance."]
   },
   {
     "order": 3,
@@ -21,7 +29,11 @@
     "title": "NGOs & Conservation Organisations",
     "excerpt": "Connect conservation goals and livelihood priorities to practical agroforestry planning and monitoring.",
     "need": "Programme teams often need to balance ecological objectives, farmer realities and implementation constraints across varied sites.",
-    "use": "FarmTree can make assumptions and trade-offs visible so programmes can compare designs and communicate their planning rationale."
+    "use": "FarmTree can make assumptions and trade-offs visible so programmes can compare designs and communicate their planning rationale.",
+    "challenges": ["Balancing livelihood and conservation priorities", "Adapting programme designs across sites", "Separating measured progress from modelled futures"],
+    "capabilities": ["Scenario co-design", "Production, carbon, water and economic indicators", "Clear measured-versus-modelled reporting"],
+    "workflow": "Frame the programme outcomes with field teams, model locally relevant options, select indicators for validation, and retain a reviewable assumptions trail.",
+    "faq": ["Can local teams update scenarios?", "Yes, subject to training, data access and the agreed project workflow."]
   },
   {
     "order": 4,
@@ -29,15 +41,23 @@
     "title": "NbS & Carbon Project Developers",
     "excerpt": "Test agroforestry design choices and connect project assumptions to carbon, production and financial scenarios.",
     "need": "Nature-based solution developers need coherent project assumptions that can be examined before monitoring and verification workflows begin.",
-    "use": "FarmTree can support early scenario design and planning evidence; independent standards, validation and verification remain separate."
+    "use": "FarmTree can support early scenario design and planning evidence; independent standards, validation and verification remain separate.",
+    "challenges": ["Testing design feasibility before validation", "Connecting carbon assumptions to farmer and project value", "Maintaining clear boundaries between projection and verification"],
+    "capabilities": ["Carbon and biomass scenarios", "Farm economics and sensitivity comparison", "Traceable design assumptions"],
+    "workflow": "Use FarmTree during design to compare systems and sensitivities, then pass clearly labelled inputs and projections into the project's independent standards and verification process.",
+    "faq": ["Does FarmTree certify carbon credits?", "No. Certification, validation and verification are independent processes."]
   },
   {
     "order": 5,
-    "slug": "mrv-esg",
+    "slug": "mrv-esg-platforms",
     "title": "MRV & ESG Platforms",
     "excerpt": "Add forward-looking agroforestry scenario context to monitoring, reporting and sustainability workflows.",
     "need": "Reporting platforms need traceable assumptions and meaningful context around the field and project data they organise.",
-    "use": "FarmTree can provide modelling outputs and scenario logic for integration planning, subject to an agreed technical scope and data contract."
+    "use": "FarmTree can provide modelling outputs and scenario logic for integration planning, subject to an agreed technical scope and data contract.",
+    "challenges": ["Adding forward-looking context to observed datasets", "Keeping provenance clear across systems", "Representing agroforestry-specific assumptions"],
+    "capabilities": ["Structured modelling outputs", "Scenario metadata and provenance", "Integration scoping for approved data exchanges"],
+    "workflow": "Map the reporting question and data contract, validate a limited integration use case, document modelled and measured fields, then review governance before scaling.",
+    "faq": ["Is a public API available?", "Integration options are scoped with FarmTree; no public integration should be assumed without an agreement."]
   },
   {
     "order": 6,
@@ -45,7 +65,11 @@
     "title": "Government & Parastatal Institutions",
     "excerpt": "Compare agroforestry programme options using consistent site, species, management and impact assumptions.",
     "need": "Public institutions need transparent planning methods that can support programme design across regions and stakeholder groups.",
-    "use": "FarmTree can help technical teams explore scenarios and communicate trade-offs while policy and procurement decisions remain with the institution."
+    "use": "FarmTree can help technical teams explore scenarios and communicate trade-offs while policy and procurement decisions remain with the institution.",
+    "challenges": ["Comparing regional programme options consistently", "Communicating assumptions across technical and policy teams", "Working within procurement and data-governance requirements"],
+    "capabilities": ["Regional scenario comparison", "Transparent planning assumptions", "Long-term programme indicators"],
+    "workflow": "Select representative locations, agree policy-relevant questions, compare scenarios with technical teams, and use the evidence within established governance and procurement processes.",
+    "faq": ["Does FarmTree make policy decisions?", "No. It supports technical analysis; accountable institutions retain policy and procurement decisions."]
   },
   {
     "order": 7,
@@ -53,7 +77,11 @@
     "title": "Industry Associations & Multi-Stakeholder Platforms",
     "excerpt": "Create a shared scenario language for agroforestry discussions across members, value chains and landscapes.",
     "need": "Multi-stakeholder initiatives need a consistent way to compare assumptions without obscuring differences between locations or participants.",
-    "use": "FarmTree can support structured workshops and scenario conversations with a common evidence base for planning."
+    "use": "FarmTree can support structured workshops and scenario conversations with a common evidence base for planning.",
+    "challenges": ["Creating shared definitions across members", "Comparing options without erasing local differences", "Turning discussion into reviewable next steps"],
+    "capabilities": ["Workshop-ready scenarios", "Comparable multi-KPI outputs", "Documented assumptions and trade-offs"],
+    "workflow": "Agree a shared question, prepare representative scenarios, review trade-offs in a facilitated session, and record where local validation or member-specific analysis is needed.",
+    "faq": ["Can one scenario represent every member?", "Usually not. Representative scenarios support discussion but should not replace local analysis."]
   },
   {
     "order": 8,
@@ -61,7 +89,11 @@
     "title": "Large Agri-Corporate",
     "excerpt": "Explore agroforestry options across sourcing landscapes with clearer business, production and environmental assumptions.",
     "need": "Agricultural companies need to understand how design choices may affect farmer value, production, resilience and programme planning over time.",
-    "use": "FarmTree can compare representative scenarios and help teams define questions for field validation and investment review."
+    "use": "FarmTree can compare representative scenarios and help teams define questions for field validation and investment review.",
+    "challenges": ["Connecting landscape goals to farmer value", "Comparing programme designs across sourcing regions", "Avoiding unsupported claims in sustainability reporting"],
+    "capabilities": ["Representative farm and landscape scenarios", "Production, resilience and financial projections", "Assumption-led reporting support"],
+    "workflow": "Start with a named programme and decision, model representative systems, validate assumptions with local teams, and use results alongside supply-chain and field evidence.",
+    "faq": ["Are modelled results corporate reporting evidence?", "They must be clearly labelled as projections and combined with appropriate measured evidence."]
   },
   {
     "order": 9,
@@ -69,7 +101,11 @@
     "title": "Social Enterprise",
     "excerpt": "Connect an agroforestry mission to practical operating assumptions, farmer value and an investable planning narrative.",
     "need": "Social enterprises need to test how ecological aims, operating choices and financial expectations fit together as they grow.",
-    "use": "FarmTree can help teams compare models, clarify assumptions and prepare a stronger basis for partner or investor conversations."
+    "use": "FarmTree can help teams compare models, clarify assumptions and prepare a stronger basis for partner or investor conversations.",
+    "challenges": ["Testing mission and operating assumptions together", "Working with limited technical capacity", "Explaining value and uncertainty to partners"],
+    "capabilities": ["Lean scenario comparison", "Farmer and enterprise value modelling", "Clear planning narratives"],
+    "workflow": "Define the operating model, test a focused set of scenarios, identify the assumptions that matter most, and use the results to plan validation and partner conversations.",
+    "faq": ["Is FarmTree suitable for an early-stage organisation?", "It can be when there is a clear decision, sufficient input data and an appropriately scoped engagement."]
   },
   {
     "order": 10,
@@ -77,6 +113,10 @@
     "title": "Investors",
     "excerpt": "Review agroforestry opportunities through transparent scenarios, assumptions and long-term value drivers.",
     "need": "Investors need a clear view of the biological, operational and financial assumptions behind an agroforestry proposition.",
-    "use": "FarmTree can support scenario review and sensitivity discussions; it does not provide investment advice, assurance or a guarantee of outcomes."
+    "use": "FarmTree can support scenario review and sensitivity discussions; it does not provide investment advice, assurance or a guarantee of outcomes.",
+    "challenges": ["Understanding biological and financial assumptions together", "Testing sensitivity across long time horizons", "Distinguishing projections from verified performance"],
+    "capabilities": ["Long-term value scenarios", "Sensitivity and trade-off review", "Traceable production, carbon and financial assumptions"],
+    "workflow": "Review the project's source data and model assumptions, compare downside and alternative scenarios, identify diligence questions, and combine the evidence with independent technical and financial review.",
+    "faq": ["Does FarmTree provide investment advice?", "No. FarmTree provides modelling and decision-support information, not regulated investment advice or a guarantee."]
   }
 ]

@@ -25,6 +25,7 @@ class FT_AI_Provider_Factory
             'openai' => 'FT_AI_Provider_OpenAI',
             // OpenAI-compatible endpoints (Azure/OpenRouter/local gateway) can reuse the OpenAI adapter
             'openai-compatible' => 'FT_AI_Provider_OpenAI',
+            'anthropic' => 'FT_AI_Provider_Anthropic',
         ]);
         if (isset($map[$name]) && class_exists($map[$name])) {
             return new $map[$name]();
@@ -37,6 +38,6 @@ class FT_AI_Provider_Factory
      */
     public static function known(): array
     {
-        return array_keys(apply_filters('farmtree_ai_providers', ['openai' => 1, 'openai-compatible' => 1]));
+        return array_keys(apply_filters('farmtree_ai_providers', ['openai' => 1, 'openai-compatible' => 1, 'anthropic' => 1]));
     }
 }

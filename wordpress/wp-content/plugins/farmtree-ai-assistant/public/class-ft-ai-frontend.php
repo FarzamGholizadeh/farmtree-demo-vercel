@@ -52,8 +52,9 @@ class FT_AI_Frontend
             /** Selector(s) that indicate the theme's mobile (Bento) menu is open. */
             'menuOpenSelector' => apply_filters('farmtree_ai_menu_open_selector', 'body.menu-open, body.ft-menu-open, body.mobile-nav-open, html.menu-open'),
             'i18n' => [
-                'title'       => __('FarmTree Assistant', 'farmtree-ai-assistant'),
-                'launch'      => __('Open the FarmTree assistant', 'farmtree-ai-assistant'),
+                'title'       => __('FT Bot', 'farmtree-ai-assistant'),
+                'subtitle'    => __('Powered by AI', 'farmtree-ai-assistant'),
+                'launch'      => __('Open FT Bot', 'farmtree-ai-assistant'),
                 'close'       => __('Close', 'farmtree-ai-assistant'),
                 'placeholder' => __('Ask about FarmTree…', 'farmtree-ai-assistant'),
                 'send'        => __('Send', 'farmtree-ai-assistant'),
@@ -77,7 +78,7 @@ class FT_AI_Frontend
         <div id="ft-ai-root" class="ft-ai-chat" hidden>
             <button type="button" id="ft-ai-launcher" class="ft-ai-launcher" aria-haspopup="dialog" aria-expanded="false" aria-controls="ft-ai-panel">
                 <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3C6.5 3 2 6.9 2 11.7c0 2.4 1.1 4.6 3 6.2v3.4l3.4-1.9c1.1.3 2.3.5 3.6.5 5.5 0 10-3.9 10-8.7S17.5 3 12 3Z"/></svg>
-                <span class="ft-ai-launcher__label"><?php esc_html_e('Ask FarmTree', 'farmtree-ai-assistant'); ?></span>
+                <span class="ft-ai-launcher__label"><?php esc_html_e('FT Bot', 'farmtree-ai-assistant'); ?></span>
             </button>
 
             <section id="ft-ai-panel" class="ft-ai-panel" role="dialog" aria-modal="false" aria-labelledby="ft-ai-title" hidden>
@@ -85,7 +86,7 @@ class FT_AI_Frontend
                     <span class="ft-ai-head__brand" aria-hidden="true">
                         <svg width="20" height="20" viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M12 3C6.5 3 2 6.9 2 11.7c0 2.4 1.1 4.6 3 6.2v3.4l3.4-1.9c1.1.3 2.3.5 3.6.5 5.5 0 10-3.9 10-8.7S17.5 3 12 3Z"/></svg>
                     </span>
-                    <h2 id="ft-ai-title" class="ft-ai-head__title"></h2>
+                    <div><h2 id="ft-ai-title" class="ft-ai-head__title"></h2><p class="ft-ai-head__subtitle"><?php esc_html_e('Powered by AI', 'farmtree-ai-assistant'); ?></p></div>
                     <button type="button" id="ft-ai-close" class="ft-ai-close" aria-label="<?php esc_attr_e('Close', 'farmtree-ai-assistant'); ?>">
                         <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                     </button>

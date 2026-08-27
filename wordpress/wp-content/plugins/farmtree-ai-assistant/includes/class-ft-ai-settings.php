@@ -26,7 +26,9 @@ class FT_AI_Settings
             'temperature'         => 0.2,
             'max_message_length'  => 1000,
             'max_history'         => 8,
+            'max_output_tokens'   => 600,
             'rate_limit_per_min'  => 12,
+            'daily_limit'         => 120,
             'conversation_logging' => 0,
             'remove_data_on_uninstall' => 0,
         ];
@@ -61,7 +63,9 @@ class FT_AI_Settings
             'temperature'              => isset($input['temperature']) ? max(0, min(1, (float) $input['temperature'])) : $d['temperature'],
             'max_message_length'       => isset($input['max_message_length']) ? max(200, min(4000, (int) $input['max_message_length'])) : $d['max_message_length'],
             'max_history'              => isset($input['max_history']) ? max(0, min(30, (int) $input['max_history'])) : $d['max_history'],
+            'max_output_tokens'        => isset($input['max_output_tokens']) ? max(100, min(2000, (int) $input['max_output_tokens'])) : $d['max_output_tokens'],
             'rate_limit_per_min'       => isset($input['rate_limit_per_min']) ? max(1, min(120, (int) $input['rate_limit_per_min'])) : $d['rate_limit_per_min'],
+            'daily_limit'              => isset($input['daily_limit']) ? max(1, min(5000, (int) $input['daily_limit'])) : $d['daily_limit'],
             'conversation_logging'     => empty($input['conversation_logging']) ? 0 : 1,
             'remove_data_on_uninstall' => empty($input['remove_data_on_uninstall']) ? 0 : 1,
         ];

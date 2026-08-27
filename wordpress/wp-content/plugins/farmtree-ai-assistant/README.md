@@ -1,4 +1,4 @@
-# FarmTree AI Assistant
+# FT Bot / FarmTree AI Assistant
 
 A production-safe, manageable AI assistant for the FarmTree WordPress site.
 It provides an admin area to curate **Knowledge**, shape **Behavior**, and define
@@ -35,6 +35,10 @@ define('FARMTREE_AI_MODEL',    'gpt-4o-mini');   // optional
 // define('FARMTREE_AI_ENDPOINT', 'https://your-gateway/v1/chat/completions');
 ```
 
+Use `anthropic` as the provider slug for the Anthropic Messages API. The API
+key is still read only from `FARMTREE_AI_API_KEY`; it is sent server-side in the
+provider-required `x-api-key` header and never exposed to the browser.
+
 Then in **FarmTree AI → Settings**, use **Test connection**, and switch
 **Enable on website** on.
 
@@ -50,7 +54,7 @@ Top-level menu **FarmTree AI** with five pages:
 | **Knowledge** | Add sources by **scanning a public URL** (server-side, SSRF-safe, review-before-save) or by **pasting text**. Enable/disable/delete. |
 | **Behavior** | Role, brand voice, guardrails, language handling, answer length, handoff. The safe-fallback rule is shown read-only and always enforced. |
 | **Skills** | CRUD + reorder. Ships **five disabled example skills**; the Platform skill uses the login URL and the Demo skill uses the register URL. |
-| **Settings** | Provider status (read-only), enable switch, model override, limits, rate limit, logging preference, uninstall data policy. |
+| **Settings** | Provider status (read-only), enable switch, model override, history/output limits, minute/daily rate limits, logging preference, uninstall data policy. |
 
 All admin writes are capability-checked (`manage_options`), nonce-verified and
 sanitized.
@@ -71,8 +75,8 @@ sanitized.
 
 `POST /wp-json/farmtree-ai/v1/chat`
 
-- Nonce-verified (`X-WP-Nonce` / `X-FT-AI-Nonce`), per-IP + per-session rate
-  limited.
+- Nonce-verified (`X-WP-Nonce` / `X-FT-AI-Nonce`), per-IP + per-session minute
+  and daily rate limited.
 - Validates and length-caps the message; trims history to the configured window.
 - Retrieves approved context via lightweight **keyword** scoring (not vector
   search), caps it, and calls the provider server-side.

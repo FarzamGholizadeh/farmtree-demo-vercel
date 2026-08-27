@@ -77,10 +77,11 @@ approval-gated or deferred as recorded in the sprint evidence.
 Status: Local private-first implementation and validation complete; stopped at
 pre-release.
 
-The controlled `customer_segment` model, ten source-ordered private segment
-entries, three editorial drafts, native segment template, restrained motion,
-discovery metadata, English-primary locale contract and enforced noindex gate
-are complete locally. Evidence is recorded in
+The controlled `customer_segment` and `proof_story` models, ten source-ordered
+private segment entries, four private Proof Stories, 15 private English support
+pages, nine editorial drafts, native templates, restrained motion, discovery
+metadata, English-primary locale contract and enforced noindex gate are
+complete locally. Evidence is recorded in
 `docs/FT-NATIVE-003-ENHANCEMENT-READINESS.md`.
 
 ## Parallel Runtime Gate
@@ -102,9 +103,13 @@ dispatch.
 - FT-NATIVE-003B - Expand the admin experience and publish locale-aware routing
   only after translated content is approved; `/` is English and `/nl/` plus
   `/de/` are currently reserved and unpublished.
-- FT-NATIVE-004 - Build real pages, navigation and clean WordPress routes.
-- FT-NATIVE-005 - Migrate content, validate runtime and prepare cutover.
-- FT-SEO-001 - Define SEO metadata, canonical, hreflang, sitemap, and robots ownership across WordPress core, theme, and SEO plugin.
+- FT-NATIVE-004 - Human-review and publish the completed private English pages,
+  navigation and clean routes only after the publication gates pass.
+- FT-NATIVE-005 - Prepare an explicitly approved cutover after content,
+  permission, legal, assistive-technology and runtime gates pass.
+- FT-SEO-001 - Reconfirm production SEO-plugin ownership and sitemap behavior
+  before activation; native descriptions, canonicals, Open Graph, schema and
+  noindex controls are complete locally.
 - FT-WEB-004 - Add and verify a privacy-reviewed production delivery backend
   only if online quotation submission is required. The current modal safely
   collects no data and offers the approved email fallback.

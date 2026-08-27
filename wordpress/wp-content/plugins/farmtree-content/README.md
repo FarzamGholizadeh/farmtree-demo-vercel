@@ -5,11 +5,13 @@ layer for the isolated FarmTree native rebuild.
 
 ## Publication-readiness status
 
-The plugin registers the REST-enabled `customer_segment` post type with core
-editor, excerpt, featured image, revisions and ordering support. Its clean
-single route is `/customer-segments/{slug}/`; no public archive is created.
-Bootstrap source entries remain private until individual editorial approval.
-Three professional insight foundations are likewise created as drafts only.
+The plugin registers REST-enabled `customer_segment` and `proof_story` post
+types with core editor, excerpt, featured image, revisions and ordering support.
+Their clean single routes are `/customer-segments/{slug}/` and
+`/proof-stories/{slug}/`; no public archives are created. Bootstrap source
+entries remain private until individual editorial approval. Fifteen English
+support pages remain private and nine professional insight articles are created
+as drafts only.
 
 The architecture manifest reserves the locale contract without publishing
 translations: English owns `/`; Dutch reserves `/nl/`; German reserves `/de/`.
@@ -32,7 +34,7 @@ Future registrations move into this plugin one model at a time, with:
 
 Do not implement the same model in both plugins.
 
-The AI Assistant remains owned by `farmtree-ai-assistant`, inactive until a
-real provider is configured. Provider credentials and capability checks stay
-server-side; Knowledge, Behavior and Skills remain separately governed. No
-simulated answer path is allowed.
+FT Bot remains owned by `farmtree-ai-assistant`, invisible until a real provider
+is configured. Provider credentials and capability checks stay server-side;
+Knowledge, Behavior and Skills remain separately governed. No simulated answer
+path is allowed.

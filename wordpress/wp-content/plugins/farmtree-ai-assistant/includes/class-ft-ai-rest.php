@@ -102,7 +102,7 @@ class FT_AI_REST
 
         // 7) Call the provider server-side.
         $result = $provider->chat($messages, [
-            'max_tokens' => 700,
+            'max_tokens' => (int) FT_AI_Settings::get('max_output_tokens'),
         ]);
 
         if (empty($result['ok'])) {
@@ -219,6 +219,13 @@ class FT_AI_REST
             return true;
         }
         set_transient($key, $count + 1, MINUTE_IN_SECONDS);
+        $daily_limit = (int) FT_AI_Settings::get('daily_limit');
+        $daily_key = 'ft_ai_day_' . gmdate('Ymd') . '_' . $ip_hash;
+        $daily_count = (int) get_transient($daily_key);
+        if ($daily_count >= $daily_limit) {
+            return true;
+        }
+        set_transient($daily_key, $daily_count + 1, DAY_IN_SECONDS);
         return false;
     }
 

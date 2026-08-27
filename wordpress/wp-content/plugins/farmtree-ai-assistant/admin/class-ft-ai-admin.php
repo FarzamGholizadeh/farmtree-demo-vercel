@@ -134,7 +134,9 @@ class FT_AI_Admin
             'temperature'          => isset($_POST['temperature']) ? (float) $_POST['temperature'] : 0.2,
             'max_message_length'   => isset($_POST['max_message_length']) ? (int) $_POST['max_message_length'] : 1000,
             'max_history'          => isset($_POST['max_history']) ? (int) $_POST['max_history'] : 8,
+            'max_output_tokens'    => isset($_POST['max_output_tokens']) ? (int) $_POST['max_output_tokens'] : 600,
             'rate_limit_per_min'   => isset($_POST['rate_limit_per_min']) ? (int) $_POST['rate_limit_per_min'] : 12,
+            'daily_limit'          => isset($_POST['daily_limit']) ? (int) $_POST['daily_limit'] : 120,
             'conversation_logging' => isset($_POST['conversation_logging']) ? 1 : 0,
             'remove_data_on_uninstall' => isset($_POST['remove_data_on_uninstall']) ? 1 : 0,
         ]);

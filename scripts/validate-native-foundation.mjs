@@ -18,6 +18,7 @@ const required = [
   'templates/content-only-page.html',
   'templates/single.html',
   'templates/single-customer_segment.html',
+  'templates/single-proof_story.html',
   'templates/archive.html',
   'templates/404.html',
   'patterns/homepage-foundation.php',
@@ -43,8 +44,9 @@ const required = [
   'assets/images/partners/fao.png',
   'assets/images/partners/catie.png',
   'assets/images/partners/helvetas.png',
-  'assets/media/power-project-staff-landscape-poster.webp',
-  'assets/media/power-project-staff-landscape.mp4',
+  'assets/media/farmtree-platform-final-tools-review-poster.jpg',
+  'assets/media/farmtree-platform-final-tools-review.mp4',
+  'assets/media/farmtree-platform-final-tools-review.webm',
   'assets/media/power-project-staff-plot-definition.png'
 ];
 
@@ -104,6 +106,8 @@ for (const file of [
   'includes/architecture.php',
   'data/customer-segments.json',
   'data/editorial-drafts.json',
+  'data/proof-stories.json',
+  'data/english-pages.json',
   'README.md'
 ]) {
   if (!existsSync(resolve(plugin, file))) {
@@ -236,14 +240,14 @@ if (header.includes('wp:site-title') || header.includes('wp:site-logo')) {
 
 const footer = readFileSync(resolve(theme, 'parts/footer.html'), 'utf8');
 for (const contract of [
-  'ft-native-footer-logo-shell',
+  'ft-native-footer-location',
   'ft-native-footer-top',
   'Take action',
   'Join us in growing better agroforestry decisions',
   'Request a FarmTree demo ↗',
   'About Us',
   'Platform',
-  'FarmTree B.V.',
+  'FarmTree in the field',
   'Plus Ultra Building',
   'Bronland 12C-1',
   'info@farmtree.earth',
@@ -397,10 +401,10 @@ for (const contract of [
   'ft-platform-layout',
   'ft-platform-copy',
   'ft-platform-media',
-  'power-project-staff-landscape-poster.webp',
-  'power-project-staff-landscape.mp4',
+  'farmtree-platform-final-tools-review-poster.jpg',
+  'farmtree-platform-final-tools-review.mp4',
   'data-ft-platform-video-toggle',
-  'Approved FarmTree agroforestry landscape animation',
+  'The approved FarmTree Platform sequence',
   'Site information',
   'Climate, soil and terrain',
   'Species database',
@@ -573,15 +577,15 @@ for (const contract of [
   'video.play()',
   'video.pause()',
   'userPausedVideo',
-  'Pause landscape video'
+  'Pause FarmTree Platform animation'
 ]) {
   if (!interactions.includes(contract)) {
     throw new Error(`Manual Platform interactions are missing accessibility contract: ${contract}`);
   }
 }
 
-if (/\bsetInterval\s*\(|\bsetTimeout\s*\(/.test(interactions)) {
-  throw new Error('Homepage Hero must remain manual-only and must not schedule autoplay.');
+if (!interactions.includes('}, 6000)') || !interactions.includes('interactionPaused')) {
+  throw new Error('Homepage Hero must schedule the approved six-second loop and pause for direct interaction.');
 }
 
 if (
@@ -637,7 +641,11 @@ if (
   throw new Error('All four quotation triggers must use the real email fallback when JavaScript is unavailable.');
 }
 
-if (/\b(?:fetch|XMLHttpRequest|sendBeacon|FormData|localStorage|sessionStorage|console)\b/.test(interactions)) {
+const quotationInteractions = interactions.slice(
+  interactions.indexOf('function initialiseQuotationDialog'),
+  interactions.indexOf('function initialise()', interactions.indexOf('function initialiseQuotationDialog'))
+);
+if (/\b(?:fetch|XMLHttpRequest|sendBeacon|FormData|localStorage|sessionStorage|console)\b/.test(quotationInteractions)) {
   throw new Error('Native quotation interactions must not transport, persist or log personal information.');
 }
 
@@ -751,7 +759,7 @@ for (const contract of [
   'alt="Four people discussing crops in a field"',
   'alt="Dark clouds over a tree-covered agricultural landscape"',
   'alt="Group portrait in a tree-filled landscape"',
-  'Approved FarmTree agroforestry landscape animation'
+  'The approved FarmTree Platform sequence'
 ]) {
   if (!homepage.includes(contract)) {
     throw new Error(`Homepage is missing approved publication copy or literal media text: ${contract}`);

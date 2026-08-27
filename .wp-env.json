@@ -6,7 +6,8 @@
   "autoPort": false,
   "testsEnvironment": false,
   "plugins": [
-    "./wordpress/wp-content/plugins/farmtree-content"
+    "./wordpress/wp-content/plugins/farmtree-content",
+    "./wordpress/wp-content/plugins/farmtree-ai-assistant"
   ],
   "themes": [
     "./wordpress/wp-content/themes/farmtree-native"

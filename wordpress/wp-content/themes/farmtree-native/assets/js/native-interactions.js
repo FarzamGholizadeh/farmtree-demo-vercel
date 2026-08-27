@@ -1,9 +1,9 @@
 /**
  * Accessible interactions and progressive motion for the FarmTree native theme.
  *
- * The Homepage hero never advances on a timer. Visitors remain in control of
- * every image change. Decorative motion never controls content state and is
- * removed when reduced motion is requested.
+ * Motion never controls access to content and is removed when reduced motion
+ * is requested. The Homepage hero advances calmly while pausing for direct
+ * pointer or keyboard interaction.
  */
 (function () {
     'use strict';
@@ -86,6 +86,24 @@
             slides.findIndex((slide) => slide.classList.contains('is-active'))
         );
         let animationFrame = null;
+        let autoAdvanceTimer = null;
+        let interactionPaused = false;
+
+        function stopAutoAdvance() {
+            window.clearTimeout(autoAdvanceTimer);
+            autoAdvanceTimer = null;
+        }
+
+        function scheduleAutoAdvance() {
+            stopAutoAdvance();
+            if (reducedMotionQuery.matches || interactionPaused || document.hidden) {
+                return;
+            }
+            autoAdvanceTimer = window.setTimeout(() => {
+                selectSlide(currentIndex + 1, { automatic: true });
+                scheduleAutoAdvance();
+            }, 6000);
+        }
 
         function labelFor(index) {
             const image = slides[index].querySelector('img');
@@ -145,6 +163,10 @@
             if (options.focus) {
                 dots[currentIndex].focus();
             }
+
+            if (!options.automatic) {
+                scheduleAutoAdvance();
+            }
         }
 
         dots.forEach((dot, index) => {
@@ -170,7 +192,29 @@
             selectSlide(keyTargets[event.key], { focus: true });
         });
 
+        hero.addEventListener('pointerenter', () => {
+            interactionPaused = true;
+            stopAutoAdvance();
+        });
+        hero.addEventListener('pointerleave', () => {
+            interactionPaused = false;
+            scheduleAutoAdvance();
+        });
+        hero.addEventListener('focusin', () => {
+            interactionPaused = true;
+            stopAutoAdvance();
+        });
+        hero.addEventListener('focusout', () => {
+            window.requestAnimationFrame(() => {
+                interactionPaused = hero.contains(document.activeElement);
+                scheduleAutoAdvance();
+            });
+        });
+        document.addEventListener('visibilitychange', scheduleAutoAdvance);
+        reducedMotionQuery.addEventListener?.('change', scheduleAutoAdvance);
+
         selectSlide(currentIndex);
+        scheduleAutoAdvance();
     }
 
     function initialisePlatform(carousel) {
@@ -201,10 +245,10 @@
 
             const isPlaying = !video.paused;
 
-            videoToggle.textContent = isPlaying ? 'Pause video' : 'Play video';
+            videoToggle.textContent = isPlaying ? 'Pause animation' : 'Play animation';
             videoToggle.setAttribute(
                 'aria-label',
-                isPlaying ? 'Pause landscape video' : 'Play landscape video'
+                isPlaying ? 'Pause FarmTree Platform animation' : 'Play FarmTree Platform animation'
             );
         }
 
@@ -271,6 +315,112 @@
         document.addEventListener('visibilitychange', updateVideoPlayback);
         reducedMotionQuery.addEventListener?.('change', updateVideoPlayback);
         updateVideoPlayback();
+    }
+
+    function initialiseTechnologyFlow() {
+        document.querySelectorAll('[data-ft-technology-flow]').forEach((flow) => {
+            const story = flow.closest('.ft-technology-story');
+            if (!story) {
+                return;
+            }
+
+            if (reducedMotionQuery.matches || !('IntersectionObserver' in window)) {
+                story.classList.add('is-flow-static');
+                flow.pauseAnimations?.();
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    story.classList.toggle('is-flow-active', entry.isIntersecting);
+                    if (entry.isIntersecting) {
+                        flow.unpauseAnimations?.();
+                    } else {
+                        flow.pauseAnimations?.();
+                    }
+                });
+            }, { threshold: 0.2 });
+            observer.observe(story);
+        });
+    }
+
+    function initialiseCounters() {
+        const values = Array.from(document.querySelectorAll('.ft-metric-value'));
+        const section = document.querySelector('.ft-home-metrics');
+        if (!section || values.length === 0) {
+            return;
+        }
+
+        const finalValues = values.map((value) => value.textContent.trim());
+        const alreadyAnimated = window.sessionStorage?.getItem('ft-metrics-animated') === 'true';
+        if (reducedMotionQuery.matches || alreadyAnimated || !('IntersectionObserver' in window)) {
+            values.forEach((value, index) => { value.textContent = finalValues[index]; });
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            if (!entries.some((entry) => entry.isIntersecting)) {
+                return;
+            }
+            observer.disconnect();
+            window.sessionStorage?.setItem('ft-metrics-animated', 'true');
+            values.forEach((value, index) => {
+                const original = finalValues[index];
+                const target = Number(original.replace(/[^0-9]/g, ''));
+                const prefix = original.startsWith('+') ? '+' : '';
+                const start = performance.now() + (index * 90);
+                const duration = 1100;
+                function frame(now) {
+                    const progress = Math.max(0, Math.min(1, (now - start) / duration));
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    value.textContent = `${prefix}${Math.round(target * eased).toLocaleString('en-GB')}`;
+                    if (progress < 1) {
+                        window.requestAnimationFrame(frame);
+                    } else {
+                        value.textContent = original;
+                    }
+                }
+                window.requestAnimationFrame(frame);
+            });
+        }, { threshold: 0.35 });
+        observer.observe(section);
+    }
+
+    function initialiseHeaderState() {
+        const header = document.querySelector('.ft-native-site-header');
+        if (!header) {
+            return;
+        }
+        let previousY = window.scrollY;
+        let scheduled = false;
+        function update() {
+            const currentY = window.scrollY;
+            header.classList.toggle('is-scrolled', currentY > 80);
+            document.documentElement.classList.toggle('ft-scroll-up', currentY < previousY && currentY > 120);
+            previousY = currentY;
+            scheduled = false;
+        }
+        window.addEventListener('scroll', () => {
+            if (!scheduled) {
+                scheduled = true;
+                window.requestAnimationFrame(update);
+            }
+        }, { passive: true });
+        update();
+    }
+
+    function initialiseFooterQuotes() {
+        const shell = document.querySelector('[data-ft-footer-quotes]');
+        const quotes = Array.from(shell?.querySelectorAll('p') || []);
+        if (!shell || quotes.length < 2 || reducedMotionQuery.matches) {
+            return;
+        }
+        let index = 0;
+        window.setInterval(() => {
+            quotes[index].hidden = true;
+            index = (index + 1) % quotes.length;
+            quotes[index].hidden = false;
+        }, 7000);
     }
 
     function initialiseMotion() {
@@ -484,6 +634,10 @@
         initialiseQuotationDialog();
         initialiseMotion();
         initialiseMovingRails();
+        initialiseTechnologyFlow();
+        initialiseCounters();
+        initialiseHeaderState();
+        initialiseFooterQuotes();
     }
 
     if (document.readyState === 'loading') {

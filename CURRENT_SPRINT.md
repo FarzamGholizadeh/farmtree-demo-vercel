@@ -2,7 +2,7 @@
 
 ## FT-NATIVE-002 - Native Homepage
 
-Status: Rendered local WordPress/browser validation complete; stopped at
+Status: Final English experience implemented and locally validated; stopped at
 pre-release
 
 ### Objective
@@ -11,6 +11,23 @@ Build the Frank-approved Homepage locally in the inactive `farmtree-native`
 Block Theme using WordPress core blocks and locked patterns. Keep normal content
 editable while preserving FarmTree's approved visual identity and structural
 design controls.
+
+### Final English Master Delivery
+
+The final English experience now includes six-second Hero autoplay with
+interaction pause; the exact user-supplied 57-second Platform sequence through
+optimized MP4/poster delivery; an animated, visibility-aware technology-flow
+overlay; approved-theme counters; opposing logo/testimonial rails; four private
+Proof Stories; ten private PDF-directed customer-segment pages; 15 private
+English support pages; nine source-attributed editorial drafts; a safe disabled
+Contact form with email fallback; and an expanded source-first FT Bot plugin
+with OpenAI-compatible and Anthropic provider adapters.
+
+No native content was published. The canonical sample post is draft-only, the
+Homepage and every new page/custom entry are private, and all News posts are
+drafts. English owns `/`; `/nl/` and `/de/` remain unpublished 404s without
+hreflang. Coming Soon, noindex/nofollow, production `farmtree` theme ownership
+and the rollback path remain unchanged.
 
 ### Runtime Dependency
 
@@ -79,9 +96,9 @@ collects no personal data and offers only the approved
 `info@farmtree.earth` email fallback. It contains no fake success path,
 placeholder endpoint or client-side logging.
 
-The publication-readiness enhancement evidence, private customer-segment
-model, draft editorial foundation, optimized Platform delivery, discovery
-metadata and nine-width rendered QA are recorded in
+The publication-readiness enhancement evidence, private customer-segment and
+Proof Story models, English page architecture, nine-draft editorial foundation,
+optimized Platform delivery, discovery metadata and nine-width rendered QA are recorded in
 `docs/FT-NATIVE-003-ENHANCEMENT-READINESS.md`.
 
 ### WordPress Ownership
@@ -149,6 +166,15 @@ metadata and nine-width rendered QA are recorded in
   fingerprint (`Hello world!` / `hello-world` / canonical sample body), never
   deletes it, and leaves every unrelated post untouched. Verification rejects a
   published canonical sample and confirms `/nl/` and `/de/` remain 404.
+- The final route audit checked 30 intended English URLs with HTTP 200, one H1,
+  noindex and no placeholder `#` destinations in the authenticated local
+  runtime. Every generated page/custom entry remained private and all nine
+  articles remained draft.
+- Final browser evidence is in `qa/final-english-master/2026-08-27/`: nine
+  full-page widths, 24 focused section/contact captures, machine-readable
+  interaction, route, focused-motion, performance and accessibility results.
+  The 1440 performance detail recorded FCP 1,092 ms, LCP 1,160 ms, CLS 0.00284,
+  1,186,225 transferred bytes across 21 resources and zero long tasks.
 - A fresh preview process returned HTTP 200 with the expected
   `X-Robots-Tag: noindex, nofollow` header.
 - GitHub run `32956292922` validated pushed commit `897a991` successfully.

@@ -3,7 +3,7 @@
  * Plugin Name:       FarmTree AI Assistant
  * Plugin URI:        https://farmtree.eu
  * Description:        Manageable AI assistant for FarmTree with Knowledge, Behavior and Skills management, a provider-adapter architecture, and a secure REST chat endpoint. The AI API key is never stored in the database or exposed to the browser. Inactive until activated.
- * Version:           0.1.0
+ * Version:           0.2.0
  * Requires at least: 6.6
  * Requires PHP:      8.1
  * Author:            FarmTree
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('FARMTREE_AI_VERSION', '0.1.0');
+define('FARMTREE_AI_VERSION', '0.2.0');
 define('FARMTREE_AI_DB_VERSION', '1');
 define('FARMTREE_AI_FILE', __FILE__);
 define('FARMTREE_AI_DIR', plugin_dir_path(__FILE__));
@@ -35,6 +35,7 @@ require_once FARMTREE_AI_DIR . 'includes/class-ft-ai-scanner.php';
 require_once FARMTREE_AI_DIR . 'includes/class-ft-ai-retrieval.php';
 require_once FARMTREE_AI_DIR . 'includes/providers/interface-ft-ai-provider.php';
 require_once FARMTREE_AI_DIR . 'includes/providers/class-ft-ai-provider-openai.php';
+require_once FARMTREE_AI_DIR . 'includes/providers/class-ft-ai-provider-anthropic.php';
 require_once FARMTREE_AI_DIR . 'includes/providers/class-ft-ai-provider-factory.php';
 require_once FARMTREE_AI_DIR . 'includes/class-ft-ai-rest.php';
 require_once FARMTREE_AI_DIR . 'includes/class-ft-ai-plugin.php';

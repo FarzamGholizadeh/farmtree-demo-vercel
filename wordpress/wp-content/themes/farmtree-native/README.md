@@ -33,6 +33,13 @@ themes, FAQs and CTA content. Posts shown in News & Insights are managed as
 normal WordPress posts. Administrators retain ownership of templates, pattern
 structure and `theme.json` design controls.
 
-Customer segments use controlled clean URLs and the dedicated native single
-template. Their source-backed bootstrap entries remain private; editorial
-insights remain drafts until human review.
+Customer segments and Proof Stories use controlled clean URLs and dedicated
+native single templates. Their source-backed bootstrap entries remain private;
+15 supporting English pages remain private and nine editorial insights remain
+drafts until human review. Dutch and German routes are reserved but unpublished.
+
+The Platform media block delivers the optimized MP4/poster derivative of the
+preserved user-supplied GIF; its Media Library-compatible block remains
+replaceable. Theme-owned progressive motion covers Hero timing, diagram flow,
+counters, rails, reveal, Header and Footer behavior, with reduced-motion and
+off-screen pause safeguards.

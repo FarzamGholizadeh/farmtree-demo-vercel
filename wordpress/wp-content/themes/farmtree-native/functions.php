@@ -27,6 +27,13 @@ function farmtree_native_setup(): void
 }
 add_action('after_setup_theme', 'farmtree_native_setup');
 
+/** Excerpts provide editor-owned meta descriptions for private English pages. */
+function farmtree_native_enable_page_excerpts(): void
+{
+    add_post_type_support('page', 'excerpt');
+}
+add_action('init', 'farmtree_native_enable_page_excerpts');
+
 /**
  * Load the approved typefaces in both the frontend and Block Editor.
  */
@@ -117,7 +124,7 @@ function farmtree_native_image_loading_attributes(string $block_content, array $
         'assets/images/home/proof-cocoa.webp'                          => [1287, 965],
         'assets/images/home/proof-water.webp'                          => [1800, 1198],
         'assets/images/home/technology-model.webp'                     => [1672, 941],
-        'assets/media/power-project-staff-landscape-poster.webp'       => [1280, 720],
+        'assets/media/farmtree-platform-final-tools-review-poster.jpg' => [960, 540],
         'assets/media/power-project-staff-plot-definition.png'         => [690, 343],
         'assets/images/partners/giz.png'                               => [491, 117],
         'assets/images/partners/rabobank.png'                          => [492, 117],
@@ -184,7 +191,7 @@ function farmtree_native_platform_video_attributes(string $block_content, array 
     }
 
     $source = (string) $processor->get_attribute('src');
-    $bundled_source = get_theme_file_uri('assets/media/power-project-staff-landscape.mp4');
+    $bundled_source = get_theme_file_uri('assets/media/farmtree-platform-final-tools-review.mp4');
     if ($source !== $bundled_source) {
         return $block_content;
     }
@@ -282,7 +289,7 @@ function farmtree_native_meta_description(): string
         return 'FarmTree helps organisations plan, compare, monitor and report agroforestry investments with science-based project intelligence.';
     }
 
-    if (is_singular('customer_segment')) {
+    if (is_singular(['customer_segment', 'proof_story', 'post', 'page'])) {
         $excerpt = get_the_excerpt();
 
         return $excerpt !== '' ? wp_strip_all_tags($excerpt) : '';
@@ -306,10 +313,6 @@ function farmtree_native_render_discovery_metadata(): void
         printf("\n<meta name=\"description\" content=\"%s\" />\n", esc_attr($description));
     }
 
-    if (!is_front_page()) {
-        return;
-    }
-
     $schema = [
         '@context' => 'https://schema.org',
         '@graph' => [
@@ -330,7 +333,11 @@ function farmtree_native_render_discovery_metadata(): void
                 'inLanguage' => 'en-GB',
                 'publisher' => ['@id' => home_url('/#organization')],
             ],
-            [
+        ],
+    ];
+
+    if (is_front_page()) {
+        $schema['@graph'][] = [
                 '@type' => 'FAQPage',
                 '@id' => home_url('/#faq'),
                 'mainEntity' => [
@@ -351,9 +358,29 @@ function farmtree_native_render_discovery_metadata(): void
                         ],
                     ],
                 ],
+            ];
+    } elseif (is_singular()) {
+        $post_type = get_post_type();
+        $canonical = get_permalink();
+        $schema['@graph'][] = [
+            '@type' => $post_type === 'post' ? 'BlogPosting' : 'WebPage',
+            '@id' => $canonical . '#content',
+            'url' => $canonical,
+            'name' => single_post_title('', false),
+            'description' => $description,
+            'inLanguage' => 'en-GB',
+            'isPartOf' => ['@id' => home_url('/#website')],
+            'publisher' => ['@id' => home_url('/#organization')],
+        ];
+        $schema['@graph'][] = [
+            '@type' => 'BreadcrumbList',
+            '@id' => $canonical . '#breadcrumbs',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => home_url('/')],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => single_post_title('', false), 'item' => $canonical],
             ],
-        ],
-    ];
+        ];
+    }
 
     printf(
         "<script type=\"application/ld+json\">%s</script>\n",
@@ -361,6 +388,21 @@ function farmtree_native_render_discovery_metadata(): void
     );
 }
 add_action('wp_head', 'farmtree_native_render_discovery_metadata', 5);
+
+/** Add canonical and restrained Open Graph metadata for the private English build. */
+function farmtree_native_render_social_metadata(): void
+{
+    if (!is_singular() && !is_front_page()) return;
+    $url = is_front_page() ? home_url('/') : get_permalink();
+    $title = is_front_page() ? get_bloginfo('name') : single_post_title('', false);
+    $description = farmtree_native_meta_description();
+    printf("\n<link rel=\"canonical\" href=\"%s\" />\n", esc_url($url));
+    printf("<meta property=\"og:type\" content=\"%s\" />\n", is_singular('post') ? 'article' : 'website');
+    printf("<meta property=\"og:title\" content=\"%s\" />\n", esc_attr($title));
+    printf("<meta property=\"og:url\" content=\"%s\" />\n", esc_url($url));
+    if ($description !== '') printf("<meta property=\"og:description\" content=\"%s\" />\n", esc_attr($description));
+}
+add_action('wp_head', 'farmtree_native_render_social_metadata', 6);
 
 /**
  * Keep the inactive native build out of search until release approval.
