@@ -2,9 +2,8 @@
 /**
  * Canonical content architecture manifest.
  *
- * FT-NATIVE-001 intentionally registers no post types, taxonomies or settings.
- * Each model becomes runtime behavior only with its matching editor, template,
- * migration, permission and SEO implementation in FT-NATIVE-003.
+ * Models become runtime behavior only with a matching editor, template,
+ * migration, permission and SEO implementation.
  *
  * @package FarmTree_Content
  */
@@ -21,7 +20,7 @@ if (!defined('ABSPATH')) {
 function farmtree_content_architecture(): array
 {
     $architecture = [
-        'status' => 'foundation_only',
+        'status' => 'segment_model_active',
         'owner' => 'farmtree-content',
         'legacy_compatibility' => [
             'plugin' => 'farmtree-core',
@@ -58,6 +57,22 @@ function farmtree_content_architecture(): array
             'fallback' => 'mailto:info@farmtree.earth?subject=FarmTree%20quotation%20request',
             'privacy_policy' => 'The inactive frontend state must collect, store, transmit and log no personal information.',
         ],
+        'ai_assistant' => [
+            'owner' => 'farmtree-ai-assistant',
+            'status' => 'inactive_until_configured',
+            'policy' => 'No simulated responses. Provider credentials and capability gating remain server-side; Knowledge, Behavior and Skills remain separately governed.',
+        ],
+        'content_sources' => [
+            'customer_segments' => [
+                'file' => 'data/customer-segments.json',
+                'publication_status' => 'private_until_editor_approval',
+                'claims_policy' => 'Do not migrate named prospects, confidential sales material, unverified metrics or implied customer relationships.',
+            ],
+            'editorial_drafts' => [
+                'file' => 'data/editorial-drafts.json',
+                'publication_status' => 'draft',
+            ],
+        ],
         'post_types' => [
             'case_study' => [
                 'public' => true,
@@ -68,8 +83,10 @@ function farmtree_content_architecture(): array
             'customer_segment' => [
                 'public' => true,
                 'rest' => true,
-                'archive' => '/customer-segments/',
-                'taxonomies' => ['farmtree_capability'],
+                'archive' => false,
+                'single' => '/customer-segments/{slug}/',
+                'runtime_status' => 'registered',
+                'taxonomies' => [],
             ],
             'team_member' => [
                 'public' => false,

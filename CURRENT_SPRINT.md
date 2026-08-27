@@ -63,13 +63,12 @@ persistent, editable primary H1 and its supporting copy remain in the rendered
 Hero; three alternate editor-visible core-block message sources supply the
 other manually selected states without introducing additional H1 elements.
 
-The Platform module uses the byte-identical approved MP4 and poster plus the
-approved plot-definition screenshot in an editor-visible two-slide media
-carousel. Arrow, dot and keyboard controls select the slides manually, and a
-visible Play/Pause control lets the visitor stop or restart the footage. The
-muted video pauses whenever its slide or document is not visible. With reduced
-motion requested, it stays on the approved poster unless the visitor explicitly
-presses Play.
+The Platform module now uses the approved source GIF through its byte-stable,
+far smaller MP4/poster delivery pair in one editor-owned media composition.
+The original GIF remains in `assets/media/source/`. A visible Play/Pause
+control lets visitors stop or restart the footage. The muted video pauses when
+the section or document is not visible; reduced-motion users see the poster
+unless they explicitly press Play.
 
 The current selector is intentionally English-only: English owns `/`, while
 Nederlands `/nl/` and Deutsch `/de/` are reserved but unpublished, unlinked and
@@ -79,6 +78,11 @@ quotation dialog now states up front that online delivery is unavailable,
 collects no personal data and offers only the approved
 `info@farmtree.earth` email fallback. It contains no fake success path,
 placeholder endpoint or client-side logging.
+
+The publication-readiness enhancement evidence, private customer-segment
+model, draft editorial foundation, optimized Platform delivery, discovery
+metadata and nine-width rendered QA are recorded in
+`docs/FT-NATIVE-003-ENHANCEMENT-READINESS.md`.
 
 ### WordPress Ownership
 

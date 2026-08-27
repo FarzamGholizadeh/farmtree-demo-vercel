@@ -343,48 +343,18 @@ assertCssRuleInAtRule(
   ['transition: background 280ms ease, border-color 280ms ease, transform 280ms ease']
 );
 
-assertCssRuleInAtRule(
-  nativeStyles,
-  '@media (prefers-reduced-motion: no-preference)',
-  '.ft-platform-nav',
-  ['transition: background 200ms ease, transform 200ms ease']
-);
-
-assertCssRuleInAtRule(
-  nativeStyles,
-  '@media (prefers-reduced-motion: no-preference)',
-  '.ft-platform-nav:hover',
-  ['transform: translateY(-50%) scale(1.06)']
-);
-
-assertCssRuleInAtRule(
-  nativeStyles,
-  '@media (width <= 560px)',
-  '.ft-platform-nav',
-  ['width: 36px', 'height: 36px']
-);
-
-assertCssRuleInAtRule(
-  nativeStyles,
-  '@media (width <= 560px)',
-  '.ft-platform-nav svg',
-  ['width: 18px', 'height: 18px']
-);
-
-if (!nativeHomepage.includes(
-  '</div>\n<div class="ft-platform-dots" role="group" aria-label="Choose Platform media item">'
-)) {
-  throw new Error('Platform dots must remain in the approved normal-flow strip outside the media overlay controls.');
-}
-
-for (const platformArrowContract of [
-  '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">',
-  'd="M15 5l-7 7 7 7"',
-  'd="M9 5l7 7-7 7"'
+for (const platformContract of [
+  'power-project-staff-landscape-poster.webp',
+  'power-project-staff-landscape.mp4',
+  'data-ft-platform-video-toggle',
+  'Approved FarmTree agroforestry landscape animation'
 ]) {
-  if (!nativeHomepage.includes(platformArrowContract)) {
-    throw new Error(`Platform carousel control drifted from the approved SVG geometry: ${platformArrowContract}`);
+  if (!nativeHomepage.includes(platformContract)) {
+    throw new Error(`Approved single-media Platform contract is missing: ${platformContract}`);
   }
+}
+if (/data-ft-platform-(?:dot|prev|next)/.test(nativeHomepage)) {
+  throw new Error('Platform must not retain obsolete screenshot carousel controls.');
 }
 
 const semanticPairs = [

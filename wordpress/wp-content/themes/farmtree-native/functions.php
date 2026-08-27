@@ -65,10 +65,10 @@ function farmtree_native_enqueue_styles(): void
 add_action('wp_enqueue_scripts', 'farmtree_native_enqueue_styles');
 
 /**
- * Load manual-only native interactions on the frontend.
+ * Load native interactions and progressive motion on the frontend.
  *
  * The script is deliberately excluded from the Block Editor so every
- * editor-owned carousel state remains visible and directly editable.
+ * editor-owned interactive state remains visible and directly editable.
  */
 function farmtree_native_enqueue_interactions(): void
 {
@@ -200,10 +200,9 @@ add_filter('render_block', 'farmtree_native_platform_video_attributes', 10, 2);
 /**
  * Give the horizontally scrollable partner rail a stable accessible name.
  *
- * Chromium includes scroll containers in the keyboard sequence even without an
- * explicit tabindex. Adding the name at render time preserves strict core
- * Gallery serialization in the editor while keeping the frontend focus stop
- * understandable to assistive-technology and keyboard users.
+ * Adding a name and explicit focus stop at render time preserves strict core
+ * Gallery serialization while satisfying keyboard and scroll-container
+ * accessibility across engines.
  *
  * @param string               $block_content Rendered block HTML.
  * @param array<string, mixed> $block         Parsed block data.
@@ -229,6 +228,7 @@ function farmtree_native_partner_gallery_attributes(string $block_content, array
         'aria-label',
         __('Partner and reference logos', 'farmtree-native')
     );
+    $processor->set_attribute('tabindex', '0');
 
     return $processor->get_updated_html();
 }
@@ -272,3 +272,110 @@ function farmtree_native_editor_settings(array $settings, WP_Block_Editor_Contex
     return $settings;
 }
 add_filter('block_editor_settings_all', 'farmtree_native_editor_settings', 10, 2);
+
+/**
+ * Return the visible page summary used by the native metadata layer.
+ */
+function farmtree_native_meta_description(): string
+{
+    if (is_front_page()) {
+        return 'FarmTree helps organisations plan, compare, monitor and report agroforestry investments with science-based project intelligence.';
+    }
+
+    if (is_singular('customer_segment')) {
+        $excerpt = get_the_excerpt();
+
+        return $excerpt !== '' ? wp_strip_all_tags($excerpt) : '';
+    }
+
+    return '';
+}
+
+/**
+ * Add a restrained, source-backed metadata layer when no SEO plugin owns it.
+ * Reserved locales stay absent: no hreflang is emitted for unpublished pages.
+ */
+function farmtree_native_render_discovery_metadata(): void
+{
+    if (defined('WPSEO_VERSION') || defined('RANK_MATH_VERSION')) {
+        return;
+    }
+
+    $description = farmtree_native_meta_description();
+    if ($description !== '') {
+        printf("\n<meta name=\"description\" content=\"%s\" />\n", esc_attr($description));
+    }
+
+    if (!is_front_page()) {
+        return;
+    }
+
+    $schema = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'Organization',
+                '@id' => home_url('/#organization'),
+                'name' => 'FarmTree',
+                'url' => home_url('/'),
+                'logo' => get_theme_file_uri('assets/images/brand/farmtree-logo.webp'),
+                'email' => 'info@farmtree.earth',
+                'description' => $description,
+            ],
+            [
+                '@type' => 'WebSite',
+                '@id' => home_url('/#website'),
+                'url' => home_url('/'),
+                'name' => 'FarmTree',
+                'inLanguage' => 'en-GB',
+                'publisher' => ['@id' => home_url('/#organization')],
+            ],
+            [
+                '@type' => 'FAQPage',
+                '@id' => home_url('/#faq'),
+                'mainEntity' => [
+                    [
+                        '@type' => 'Question',
+                        'name' => 'What does FarmTree model?',
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => 'FarmTree connects production, carbon, hydrology, soil fertility, labour and economics in one science-based model.',
+                        ],
+                    ],
+                    [
+                        '@type' => 'Question',
+                        'name' => 'Can FarmTree support investment planning?',
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => 'Yes. Project teams can turn site data and species assumptions into comparable scenarios and structured investment plans.',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ];
+
+    printf(
+        "<script type=\"application/ld+json\">%s</script>\n",
+        wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+    );
+}
+add_action('wp_head', 'farmtree_native_render_discovery_metadata', 5);
+
+/**
+ * Keep the inactive native build out of search until release approval.
+ *
+ * Removal of this filter is a production action and must be reviewed alongside
+ * theme activation, translated-route publication and Coming Soon removal.
+ *
+ * @param array<string, bool|string> $robots Current robots directives.
+ * @return array<string, bool|string>
+ */
+function farmtree_native_pre_release_robots(array $robots): array
+{
+    $robots['noindex'] = true;
+    $robots['nofollow'] = true;
+
+    return $robots;
+}
+add_filter('wp_robots', 'farmtree_native_pre_release_robots', 99);

@@ -1,6 +1,6 @@
 # FarmTree Tasks
 
-_Last updated: 2026-08-26_
+_Last updated: 2026-08-27_
 
 ## Completed Governance Task
 
@@ -56,7 +56,7 @@ The Frank-approved Homepage has been built in `farmtree-native` with core
 blocks, content-only locked patterns and a read-only local preview sourced from
 the real native Header/Footer and `theme.json`. The production visual language
 is restored without changing the `farmtree` rollback theme. The current source
-includes a one-H1/four-image Hero, approved Platform MP4/poster and screenshot
+includes a one-H1/four-image Hero, approved GIF-equivalent Platform MP4/poster
 with explicit playback control, asset-backed brand-logo pattern, five-card Bento
 menu, English `/` plus reserved unpublished `/nl/` and `/de/` locale contracts,
 and a no-PII email-only quotation unavailable state.
@@ -71,6 +71,17 @@ Chrome accessibility-tree smoke testing, semantic accessibility, contrast,
 interactions and overflow were reviewed at all nine
 target widths. Release, production and final-content work remains explicitly
 approval-gated or deferred as recorded in the sprint evidence.
+
+### FT-NATIVE-003 - Publication-readiness enhancement
+
+Status: Local private-first implementation and validation complete; stopped at
+pre-release.
+
+The controlled `customer_segment` model, ten source-ordered private segment
+entries, three editorial drafts, native segment template, restrained motion,
+discovery metadata, English-primary locale contract and enforced noindex gate
+are complete locally. Evidence is recorded in
+`docs/FT-NATIVE-003-ENHANCEMENT-READINESS.md`.
 
 ## Parallel Runtime Gate
 
@@ -88,9 +99,9 @@ dispatch.
 
 ## Deferred Implementation Backlog
 
-- FT-NATIVE-003 - Register content models, build the admin experience and
-  publish locale-aware routing only after translated content is approved; `/`
-  is English and `/nl/` plus `/de/` are currently reserved and unpublished.
+- FT-NATIVE-003B - Expand the admin experience and publish locale-aware routing
+  only after translated content is approved; `/` is English and `/nl/` plus
+  `/de/` are currently reserved and unpublished.
 - FT-NATIVE-004 - Build real pages, navigation and clean WordPress routes.
 - FT-NATIVE-005 - Migrate content, validate runtime and prepare cutover.
 - FT-SEO-001 - Define SEO metadata, canonical, hreflang, sitemap, and robots ownership across WordPress core, theme, and SEO plugin.

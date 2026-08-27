@@ -17,7 +17,8 @@ Inactive WordPress Block Theme for the FarmTree website rebuild.
 - `parts/` provides content-only locked global header and footer structures.
 - `patterns/` provides approved core-block page sections with content-only
   locking.
-- `farmtree-content` will own future models and global settings.
+- `farmtree-content` owns the private-first customer-segment model and future
+  global settings.
 
 ## Homepage
 
@@ -32,4 +33,6 @@ themes, FAQs and CTA content. Posts shown in News & Insights are managed as
 normal WordPress posts. Administrators retain ownership of templates, pattern
 structure and `theme.json` design controls.
 
-Content models, clean URLs and content migration remain later roadmap sprints.
+Customer segments use controlled clean URLs and the dedicated native single
+template. Their source-backed bootstrap entries remain private; editorial
+insights remain drafts until human review.

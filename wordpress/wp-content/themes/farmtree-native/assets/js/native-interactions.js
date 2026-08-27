@@ -1,8 +1,9 @@
 /**
- * Manual-only interactions for the FarmTree native theme.
+ * Accessible interactions and progressive motion for the FarmTree native theme.
  *
  * The Homepage hero never advances on a timer. Visitors remain in control of
- * every image change, including when reduced motion is requested.
+ * every image change. Decorative motion never controls content state and is
+ * removed when reduced motion is requested.
  */
 (function () {
     'use strict';
@@ -11,7 +12,6 @@
     const heroSlideSelector = '.ft-home-hero-slide';
     const heroDotSelector = '[data-ft-hero-dot]';
     const platformSelector = '.ft-platform-visual';
-    const platformSlideSelector = '.ft-platform-slide';
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     function initialiseHero(hero, heroIndex) {
@@ -173,36 +173,23 @@
         selectSlide(currentIndex);
     }
 
-    function initialisePlatform(carousel, carouselIndex) {
-        const slides = Array.from(carousel.querySelectorAll(platformSlideSelector));
-        const dots = Array.from(carousel.querySelectorAll('[data-ft-platform-dot]'));
-        const previousButton = carousel.querySelector('[data-ft-platform-prev]');
-        const nextButton = carousel.querySelector('[data-ft-platform-next]');
-        const status = carousel.querySelector('[data-ft-platform-status]');
+    function initialisePlatform(carousel) {
         const video = carousel.querySelector('.ft-platform-video-slide video');
         const videoDescription = carousel.querySelector('.ft-platform-video-description');
         const videoToggle = carousel.querySelector('[data-ft-platform-video-toggle]');
 
-        if (slides.length < 2 || dots.length !== slides.length || carousel.dataset.ftPlatformReady === 'true') {
+        if (!video || !videoToggle || carousel.dataset.ftPlatformReady === 'true') {
             return;
         }
 
         carousel.dataset.ftPlatformReady = 'true';
         carousel.setAttribute('role', 'region');
-        carousel.setAttribute('aria-roledescription', 'carousel');
-        carousel.setAttribute('aria-label', 'FarmTree Platform media');
-        carousel.setAttribute('tabindex', '0');
-
-        if (status) {
-            status.setAttribute('role', 'status');
-            status.setAttribute('aria-live', 'polite');
-            status.setAttribute('aria-atomic', 'true');
+        carousel.setAttribute('aria-label', 'FarmTree Platform landscape animation');
+        if (videoDescription) {
+            videoDescription.id = videoDescription.id || 'ft-platform-video-description';
+            carousel.setAttribute('aria-describedby', videoDescription.id);
         }
 
-        let currentIndex = Math.max(
-            0,
-            slides.findIndex((slide) => slide.classList.contains('is-active'))
-        );
         let sectionVisible = false;
         let userPausedVideo = false;
         let userRequestedVideo = false;
@@ -214,7 +201,6 @@
 
             const isPlaying = !video.paused;
 
-            videoToggle.hidden = currentIndex !== 0;
             videoToggle.textContent = isPlaying ? 'Pause video' : 'Play video';
             videoToggle.setAttribute(
                 'aria-label',
@@ -228,7 +214,6 @@
             }
 
             const shouldPlay = (
-                currentIndex === 0 &&
                 sectionVisible &&
                 !document.hidden &&
                 !userPausedVideo &&
@@ -250,58 +235,7 @@
             updateVideoToggle();
         }
 
-        function labelFor(index) {
-            return dots[index].getAttribute('aria-label') || `Platform media item ${index + 1}`;
-        }
-
-        function selectSlide(nextIndex, options = {}) {
-            const normalisedIndex = (nextIndex + slides.length) % slides.length;
-
-            slides.forEach((slide, index) => {
-                const isCurrent = index === normalisedIndex;
-                const slideId = slide.id || `ft-platform-slide-${carouselIndex + 1}-${index + 1}`;
-
-                slide.id = slideId;
-                slide.classList.toggle('is-active', isCurrent);
-                slide.hidden = !isCurrent;
-                slide.setAttribute('role', 'group');
-                slide.setAttribute('aria-roledescription', 'slide');
-                slide.setAttribute('aria-label', `${index + 1} of ${slides.length}: ${labelFor(index)}`);
-                slide.setAttribute('aria-hidden', String(!isCurrent));
-                if (index === 0 && videoDescription) {
-                    videoDescription.id = videoDescription.id || `ft-platform-video-description-${carouselIndex + 1}`;
-                    slide.setAttribute('aria-describedby', videoDescription.id);
-                }
-
-                dots[index].classList.toggle('is-active', isCurrent);
-                dots[index].setAttribute('aria-pressed', String(isCurrent));
-                dots[index].setAttribute('aria-controls', slideId);
-                dots[index].setAttribute('tabindex', isCurrent ? '0' : '-1');
-            });
-
-            currentIndex = normalisedIndex;
-            updateVideoPlayback();
-
-            if (status) {
-                status.textContent = `${labelFor(currentIndex)}, media item ${currentIndex + 1} of ${slides.length}`;
-            }
-
-            if (options.focus) {
-                dots[currentIndex].focus();
-            }
-        }
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => selectSlide(index));
-        });
-
-        previousButton?.addEventListener('click', () => selectSlide(currentIndex - 1));
-        nextButton?.addEventListener('click', () => selectSlide(currentIndex + 1));
         videoToggle?.addEventListener('click', () => {
-            if (!video) {
-                return;
-            }
-
             if (video.paused) {
                 userPausedVideo = false;
                 userRequestedVideo = true;
@@ -313,49 +247,97 @@
             }
         });
 
-        carousel.addEventListener('keydown', (event) => {
-            const keyTargets = {
-                ArrowLeft: currentIndex - 1,
-                ArrowRight: currentIndex + 1,
-                Home: 0,
-                End: slides.length - 1
-            };
+        video.muted = true;
+        video.setAttribute('aria-hidden', 'true');
+        video.setAttribute('tabindex', '-1');
+        video.addEventListener('play', updateVideoToggle);
+        video.addEventListener('pause', updateVideoToggle);
 
-            if (!(event.key in keyTargets)) {
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                const entry = entries.at(-1);
+
+                sectionVisible = Boolean(
+                    entry?.isIntersecting && entry.intersectionRatio >= 0.25
+                );
+                updateVideoPlayback();
+            }, { threshold: [0, 0.25, 0.6] });
+
+            observer.observe(carousel);
+        } else {
+            sectionVisible = true;
+        }
+
+        document.addEventListener('visibilitychange', updateVideoPlayback);
+        reducedMotionQuery.addEventListener?.('change', updateVideoPlayback);
+        updateVideoPlayback();
+    }
+
+    function initialiseMotion() {
+        const targets = document.querySelectorAll([
+            '.ft-home-section-heading',
+            '.ft-platform-copy',
+            '.ft-platform-visual',
+            '.ft-technology-model',
+            '.ft-home-inputs > .wp-block-column',
+            '.ft-trust-quote',
+            '.ft-proof-card',
+            '.ft-faq-list > details',
+            '.ft-news-item',
+            '.ft-final-cta > *',
+            '.ft-native-footer-top',
+            '.ft-native-footer-grid'
+        ].join(','));
+
+        targets.forEach((target, index) => {
+            target.classList.add('ft-motion-target');
+            target.style.setProperty('--ft-motion-order', String(index % 4));
+        });
+
+        if (reducedMotionQuery.matches || !('IntersectionObserver' in window)) {
+            targets.forEach((target) => target.classList.add('is-visible'));
+            return;
+        }
+
+        document.documentElement.classList.add('ft-motion-ready');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+        targets.forEach((target) => observer.observe(target));
+    }
+
+    function initialiseMovingRails() {
+        document.querySelectorAll('.ft-partner-logos, .ft-trust-quotes').forEach((rail) => {
+            if (rail.dataset.ftRailReady === 'true' || reducedMotionQuery.matches) {
                 return;
             }
 
-            event.preventDefault();
-            selectSlide(keyTargets[event.key], { focus: true });
+            rail.dataset.ftRailReady = 'true';
+            rail.classList.add('ft-moving-rail');
+            const track = document.createElement('div');
+            const items = Array.from(rail.children);
+
+            track.className = 'ft-moving-rail-track';
+            items.forEach((item) => track.append(item));
+            items.forEach((item) => {
+                const clone = item.cloneNode(true);
+
+                clone.setAttribute('aria-hidden', 'true');
+                clone.querySelectorAll('a, button, input, summary, [tabindex]').forEach((control) => {
+                    control.setAttribute('tabindex', '-1');
+                });
+                track.append(clone);
+            });
+            rail.append(track);
         });
-
-        if (video) {
-            video.muted = true;
-            video.setAttribute('aria-hidden', 'true');
-            video.setAttribute('tabindex', '-1');
-            video.addEventListener('play', updateVideoToggle);
-            video.addEventListener('pause', updateVideoToggle);
-
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    const entry = entries.at(-1);
-
-                    sectionVisible = Boolean(
-                        entry?.isIntersecting && entry.intersectionRatio >= 0.25
-                    );
-                    updateVideoPlayback();
-                }, { threshold: [0, 0.25, 0.6] });
-
-                observer.observe(carousel);
-            } else {
-                sectionVisible = true;
-            }
-
-            document.addEventListener('visibilitychange', updateVideoPlayback);
-            reducedMotionQuery.addEventListener?.('change', updateVideoPlayback);
-        }
-
-        selectSlide(currentIndex);
     }
 
     function initialiseLanguageSelector() {
@@ -500,6 +482,8 @@
         initialiseBentoGroups();
         initialiseFaqDetails();
         initialiseQuotationDialog();
+        initialiseMotion();
+        initialiseMovingRails();
     }
 
     if (document.readyState === 'loading') {

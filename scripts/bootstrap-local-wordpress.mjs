@@ -1,3 +1,5 @@
+import { readFile } from 'node:fs/promises';
+
 const baseUrl = new URL(process.env.FARMTREE_LOCAL_WP_URL ?? 'http://localhost:8888');
 const verifyOnly = process.argv.includes('--verify-only');
 
@@ -134,6 +136,106 @@ if (exactSamplePosts.some(({ status }) => status === 'publish')) {
   throw new Error('The exact default WordPress sample post remains published in the local runtime.');
 }
 const samplePostState = exactSamplePosts.length > 0 ? 'draft-or-nonpublic' : 'absent';
+
+const segmentDefinitions = JSON.parse(await readFile(
+  new URL('../wordpress/wp-content/plugins/farmtree-content/data/customer-segments.json', import.meta.url),
+  'utf8'
+));
+const editorialDefinitions = JSON.parse(await readFile(
+  new URL('../wordpress/wp-content/plugins/farmtree-content/data/editorial-drafts.json', import.meta.url),
+  'utf8'
+));
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+function segmentContent(segment) {
+  return [
+    '<!-- wp:heading --><h2 class="wp-block-heading">The planning need</h2><!-- /wp:heading -->',
+    `<!-- wp:paragraph --><p>${escapeHtml(segment.need)}</p><!-- /wp:paragraph -->`,
+    '<!-- wp:heading --><h2 class="wp-block-heading">How FarmTree can support the work</h2><!-- /wp:heading -->',
+    `<!-- wp:paragraph --><p>${escapeHtml(segment.use)}</p><!-- /wp:paragraph -->`,
+    '<!-- wp:heading --><h2 class="wp-block-heading">A practical next step</h2><!-- /wp:heading -->',
+    '<!-- wp:paragraph --><p>Start with the project decision, available site information and the scenarios your team needs to compare. FarmTree can then help clarify an appropriate modelling scope.</p><!-- /wp:paragraph -->'
+  ].join('\n\n');
+}
+
+function editorialContent(article) {
+  return article.sections.map(([heading, paragraph]) => [
+    `<!-- wp:heading --><h2 class="wp-block-heading">${escapeHtml(heading)}</h2><!-- /wp:heading -->`,
+    `<!-- wp:paragraph --><p>${escapeHtml(paragraph)}</p><!-- /wp:paragraph -->`
+  ].join('\n\n')).join('\n\n');
+}
+
+const segmentPosts = [];
+for (const segment of segmentDefinitions) {
+  const existing = await api(
+    `/wp/v2/customer-segments?slug=${encodeURIComponent(segment.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`
+  );
+  let post = existing[0];
+
+  if (!post) {
+    if (verifyOnly) {
+      throw new Error(`Private customer segment is missing: ${segment.slug}`);
+    }
+
+    post = await api('/wp/v2/customer-segments', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: segment.title,
+        slug: segment.slug,
+        status: 'private',
+        excerpt: segment.excerpt,
+        content: segmentContent(segment),
+        menu_order: segment.order
+      })
+    });
+  }
+
+  if (post.status !== 'private') {
+    throw new Error(`Customer segment must remain private before approval: ${segment.slug}`);
+  }
+  if (normaliseSampleText(post.title?.raw ?? post.title?.rendered) !== segment.title) {
+    throw new Error(`Customer segment title differs from the approved order: ${segment.slug}`);
+  }
+
+  segmentPosts.push(post);
+}
+
+const editorialDrafts = [];
+for (const article of editorialDefinitions) {
+  const existing = await api(
+    `/wp/v2/posts?slug=${encodeURIComponent(article.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`
+  );
+  let post = existing[0];
+
+  if (!post) {
+    if (verifyOnly) {
+      throw new Error(`Editorial draft is missing: ${article.slug}`);
+    }
+
+    post = await api('/wp/v2/posts', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: article.title,
+        slug: article.slug,
+        status: 'draft',
+        excerpt: article.excerpt,
+        content: editorialContent(article)
+      })
+    });
+  }
+
+  if (post.status !== 'draft') {
+    throw new Error(`Editorial foundation content must remain draft: ${article.slug}`);
+  }
+  editorialDrafts.push(post);
+}
 
 const patterns = await api('/wp/v2/block-patterns/patterns');
 const homepagePattern = patterns.find(({ name }) => name === 'farmtree-native/homepage-foundation');
@@ -272,7 +374,7 @@ if (dutchRouteResponse.status !== 404 || germanRouteResponse.status !== 404) {
   throw new Error('Reserved /nl/ and /de/ locale paths must remain unpublished 404 routes.');
 }
 
-const requiredTemplates = ['404', 'archive', 'content-only-page', 'front-page', 'index', 'page', 'single'];
+const requiredTemplates = ['404', 'archive', 'content-only-page', 'front-page', 'index', 'page', 'single', 'single-customer_segment'];
 const registeredTemplates = new Set(templates.map(({ slug }) => slug));
 for (const template of requiredTemplates) {
   if (!registeredTemplates.has(template)) {
@@ -313,6 +415,9 @@ if (!frontendHtml.includes('wp-block-query') || (frontendHtml.match(/<h1\b/g) ??
 if (settings.show_on_front !== 'page' || settings.page_on_front !== homepage.id) {
   throw new Error('Local WordPress is not configured to render the private native Homepage on the front.');
 }
+if (!/<meta name=['"]robots['"][^>]*content=['"][^'"]*noindex/i.test(frontendHtml)) {
+  throw new Error('The native frontend must remain noindex before release approval.');
+}
 
 const themeAssets = new Set(
   Array.from(
@@ -347,6 +452,15 @@ console.log(JSON.stringify({
   pageEditor: pageEditorResponse.status,
   frontend: frontendResponse.status,
   defaultSamplePost: samplePostState,
+  customerSegments: {
+    count: segmentPosts.length,
+    status: 'private',
+    order: segmentDefinitions.map(({ title }) => title)
+  },
+  editorialDrafts: {
+    count: editorialDrafts.length,
+    status: 'draft'
+  },
   locales: {
     en: frontendResponse.status,
     nl: dutchRouteResponse.status,

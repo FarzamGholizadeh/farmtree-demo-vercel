@@ -1,0 +1,35 @@
+[
+  {
+    "slug": "compare-agroforestry-scenarios-before-implementation",
+    "title": "How to compare agroforestry scenarios before implementation",
+    "excerpt": "A practical framework for comparing site conditions, species choices, management assumptions and long-term project scenarios.",
+    "sections": [
+      ["Start with the decision", "Define the choice the team needs to make. A useful comparison is specific about location, project boundary, time horizon and the alternatives under review."],
+      ["Keep assumptions visible", "Record the climate, soil, species, management, labour and price assumptions used in each scenario. Visible assumptions make differences easier to discuss and revise."],
+      ["Compare more than one outcome", "Review production, carbon, water, soil, labour and economics together where relevant. A scenario that improves one indicator may introduce a trade-off elsewhere."],
+      ["Use projections as decision support", "Modelled results are not guarantees. Treat them as structured evidence for field validation, specialist review and better-informed planning."]
+    ]
+  },
+  {
+    "slug": "what-an-agroforestry-investment-plan-should-make-clear",
+    "title": "What an agroforestry investment plan should make clear",
+    "excerpt": "The essential questions an agroforestry investment plan should answer for project teams, funders and delivery partners.",
+    "sections": [
+      ["What is being implemented?", "Describe the site, intended land-use system, species mix, management approach and delivery responsibilities in terms that each stakeholder can understand."],
+      ["Which assumptions drive the plan?", "Make biological, operational and financial assumptions explicit. This helps reviewers distinguish known inputs from projections and uncertainties."],
+      ["How will progress be reviewed?", "Connect the plan to practical monitoring questions, data ownership and review points. Keep modelling, measurement and independent verification clearly separated."],
+      ["Where are the trade-offs?", "Explain how alternative designs affect farmer value, programme cost, environmental outcomes and timing. A useful plan supports a decision rather than hiding uncertainty."]
+    ]
+  },
+  {
+    "slug": "from-site-data-to-agroforestry-monitoring-reporting",
+    "title": "From site data to agroforestry monitoring and reporting",
+    "excerpt": "How project teams can connect baseline information and scenario assumptions to a coherent monitoring and reporting approach.",
+    "sections": [
+      ["Build a usable baseline", "Start with the location, current land use, inventory, management context and data quality. Document gaps instead of filling them with unsupported precision."],
+      ["Connect design and monitoring", "Choose indicators that relate to the project decisions and assumptions. Monitoring becomes more useful when teams know which question each data point helps answer."],
+      ["Separate measured and modelled information", "Label observed data, calculated values and forward-looking projections clearly. This distinction helps readers interpret results and limits overclaiming."],
+      ["Keep the reporting trail reviewable", "Retain source notes, model versions, scenario definitions and decision records so results can be revisited as field information improves."]
+    ]
+  }
+]

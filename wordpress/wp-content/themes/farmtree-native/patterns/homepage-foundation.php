@@ -154,8 +154,8 @@
 
 <!-- wp:column {"verticalAlignment":"center","width":"58%","className":"ft-platform-media"} -->
 <div class="wp-block-column is-vertically-aligned-center ft-platform-media" style="flex-basis:58%"><!-- wp:group {"metadata":{"name":"Editable FarmTree Platform media"},"className":"ft-platform-visual","layout":{"type":"default"}} -->
-<div class="wp-block-group ft-platform-visual"><!-- wp:group {"className":"ft-platform-screen ft-platform-slide ft-platform-video-slide is-active","layout":{"type":"default"}} -->
-<div class="wp-block-group ft-platform-screen ft-platform-slide ft-platform-video-slide is-active"><!-- wp:video {"controls":false,"loop":true,"muted":true,"playsInline":true,"poster":"<?php echo esc_url( get_theme_file_uri( 'assets/media/power-project-staff-landscape-poster.webp' ) ); ?>","src":"<?php echo esc_url( get_theme_file_uri( 'assets/media/power-project-staff-landscape.mp4' ) ); ?>","className":"ft-platform-video"} -->
+<div class="wp-block-group ft-platform-visual"><!-- wp:group {"className":"ft-platform-screen ft-platform-video-slide","layout":{"type":"default"}} -->
+<div class="wp-block-group ft-platform-screen ft-platform-video-slide"><!-- wp:video {"controls":false,"loop":true,"muted":true,"playsInline":true,"poster":"<?php echo esc_url( get_theme_file_uri( 'assets/media/power-project-staff-landscape-poster.webp' ) ); ?>","src":"<?php echo esc_url( get_theme_file_uri( 'assets/media/power-project-staff-landscape.mp4' ) ); ?>","className":"ft-platform-video"} -->
 <figure class="wp-block-video ft-platform-video"><video loop muted playsinline poster="<?php echo esc_url( get_theme_file_uri( 'assets/media/power-project-staff-landscape-poster.webp' ) ); ?>" src="<?php echo esc_url( get_theme_file_uri( 'assets/media/power-project-staff-landscape.mp4' ) ); ?>"></video></figure>
 <!-- /wp:video -->
 
@@ -164,25 +164,14 @@
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-platform-screen ft-platform-slide"} -->
-<figure class="wp-block-image size-full ft-platform-screen ft-platform-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/media/power-project-staff-plot-definition.png' ) ); ?>" alt="FarmTree Platform plot-definition screen showing project and financial settings, farm management, plot settings and a map"/></figure>
-<!-- /wp:image -->
-
 <!-- wp:html -->
 <div class="ft-platform-controls">
-<button class="ft-platform-nav ft-platform-prev" type="button" aria-label="Previous Platform media item" data-ft-platform-prev><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <button class="ft-platform-video-toggle" type="button" aria-label="Play landscape video" data-ft-platform-video-toggle>Play video</button>
-<button class="ft-platform-nav ft-platform-next" type="button" aria-label="Next Platform media item" data-ft-platform-next><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-<p class="screen-reader-text" aria-live="polite" data-ft-platform-status>Agroforestry landscape selected</p>
-</div>
-<div class="ft-platform-dots" role="group" aria-label="Choose Platform media item">
-<button class="ft-platform-dot is-active" type="button" aria-label="Agroforestry landscape" aria-pressed="true" data-ft-platform-dot></button>
-<button class="ft-platform-dot" type="button" aria-label="FarmTree plot definition" aria-pressed="false" data-ft-platform-dot></button>
 </div>
 <!-- /wp:html -->
 
 <!-- wp:paragraph {"className":"ft-home-media-caption","fontSize":"caption"} -->
-<p class="ft-home-media-caption has-caption-font-size">FarmTree Platform landscape and plot-definition views</p>
+<p class="ft-home-media-caption has-caption-font-size">Approved FarmTree agroforestry landscape animation</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>

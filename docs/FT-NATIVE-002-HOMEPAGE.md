@@ -43,11 +43,11 @@ display headlines where punctuation is not narratively required.
   persistent editable primary H1 and its supporting copy are rendered; three
   alternate editor-visible core-block message sources feed the same H1 when a
   visitor manually selects another state.
-- The Platform module uses the approved MP4/poster and plot-definition
-  screenshot. Arrow, dot and keyboard controls navigate the two media slides,
-  and a visible Play/Pause control lets the visitor stop or restart the footage.
-  The muted video pauses whenever its slide or document is not visible. With
-  reduced motion requested, it stays on the approved poster unless the visitor
+- The Platform module uses the approved GIF source through its optimized
+  MP4/poster delivery pair in one editor-owned media composition. A visible
+  Play/Pause control lets the visitor stop or restart the footage. The muted
+  video pauses when the section or document is not visible. With reduced
+  motion requested, it stays on the approved poster unless the visitor
   explicitly presses Play.
 - The Header uses the shared asset-backed `farmtree-native/brand-logo` pattern,
   rather than depending on configured Site Logo or Site Title blocks, and the

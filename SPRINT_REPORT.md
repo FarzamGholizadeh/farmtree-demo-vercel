@@ -26,13 +26,12 @@ block. Its manually selected states reuse one persistent editable primary H1;
 three alternate editor-visible core-block sources provide the other approved
 messages without adding frontend H1 elements.
 
-The Platform module uses the byte-identical approved MP4 and poster plus the
-approved plot-definition screenshot in an editor-visible two-slide carousel.
-Arrows, dots and keyboard navigation select slides manually, and a visible
-Play/Pause control lets the visitor stop or restart the footage. Playback is
-muted and visibility-aware: it pauses whenever the video slide or document is
-not visible. With reduced motion requested, it stays on the poster unless the
-visitor explicitly presses Play.
+The Platform module uses the approved source GIF through its optimized
+MP4/poster delivery pair in one editor-owned composition; the original source
+remains preserved under `assets/media/source/`. A visible Play/Pause control
+lets visitors stop or restart the footage. Playback is muted and
+visibility-aware. With reduced motion requested, the approved poster remains
+until the visitor explicitly presses Play.
 
 The selector is explicitly English-only: English owns `/`, while Nederlands
 `/nl/` and Deutsch `/de/` are reserved but unpublished, unlinked and disabled.
@@ -41,6 +40,11 @@ translations exist. The quotation dialog matches the approved shell, states
 that online delivery is unavailable, collects no personal data and exposes
 only the approved email fallback. There is no submit-success simulation,
 placeholder endpoint, storage or logging path.
+
+The subsequent pre-release enhancement adds the private-first customer-segment
+model, three editorial drafts, the approved single-media Platform delivery,
+restrained motion/density tuning and source-backed discovery metadata. Full
+evidence is in `docs/FT-NATIVE-003-ENHANCEMENT-READINESS.md`.
 
 The correction stays in the Block Theme architecture. It does not modify the
 current production `farmtree` theme or restore the legacy SPA as the runtime.

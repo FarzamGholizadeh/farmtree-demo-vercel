@@ -17,6 +17,7 @@ const required = [
   'templates/page.html',
   'templates/content-only-page.html',
   'templates/single.html',
+  'templates/single-customer_segment.html',
   'templates/archive.html',
   'templates/404.html',
   'patterns/homepage-foundation.php',
@@ -98,7 +99,13 @@ for (const directory of ['parts', 'templates', 'patterns']) {
   }
 }
 
-for (const file of ['farmtree-content.php', 'includes/architecture.php', 'README.md']) {
+for (const file of [
+  'farmtree-content.php',
+  'includes/architecture.php',
+  'data/customer-segments.json',
+  'data/editorial-drafts.json',
+  'README.md'
+]) {
   if (!existsSync(resolve(plugin, file))) {
     throw new Error(`Missing content plugin file: ${file}`);
   }
@@ -392,11 +399,8 @@ for (const contract of [
   'ft-platform-media',
   'power-project-staff-landscape-poster.webp',
   'power-project-staff-landscape.mp4',
-  'power-project-staff-plot-definition.png',
-  'data-ft-platform-prev',
-  'data-ft-platform-next',
   'data-ft-platform-video-toggle',
-  'data-ft-platform-status',
+  'Approved FarmTree agroforestry landscape animation',
   'Site information',
   'Climate, soil and terrain',
   'Species database',
@@ -416,7 +420,6 @@ for (const contract of [
   '.editor-styles-wrapper .ft-home-hero-slide:not(.is-active)',
   '.editor-styles-wrapper .ft-home-hero-copy-sources',
   '.editor-styles-wrapper .ft-home-hero-copy-source',
-  '.editor-styles-wrapper .ft-platform-slide:not(.is-active)',
   'display: block !important'
 ]) {
   if (!editorStyles.includes(contract)) {
@@ -437,12 +440,11 @@ if (
 }
 
 if (
-  (homepage.match(/class="wp-block-group ft-platform-screen ft-platform-slide ft-platform-video-slide is-active"/g) ?? []).length !== 1 ||
+  (homepage.match(/class="wp-block-group ft-platform-screen ft-platform-video-slide"/g) ?? []).length !== 1 ||
   (homepage.match(/class="wp-block-video ft-platform-video"/g) ?? []).length !== 1 ||
-  (homepage.match(/class="wp-block-image size-full ft-platform-screen ft-platform-slide"/g) ?? []).length !== 1 ||
-  (homepage.match(/data-ft-platform-dot/g) ?? []).length !== 2
+  /data-ft-platform-(?:dot|prev|next)/.test(homepage)
 ) {
-  throw new Error('Platform media must expose approved editable video/image media and two manual choices.');
+  throw new Error('Platform media must expose one approved editable animation with no obsolete carousel controls.');
 }
 
 if (
@@ -564,12 +566,7 @@ for (const contract of [
 }
 
 for (const contract of [
-  'ft-platform-slide',
-  'data-ft-platform-dot',
-  'data-ft-platform-prev',
-  'data-ft-platform-next',
-  'aria-roledescription',
-  'FarmTree Platform media',
+  'FarmTree Platform landscape animation',
   'IntersectionObserver',
   'document.hidden',
   'reducedMotionQuery.matches',
@@ -754,7 +751,7 @@ for (const contract of [
   'alt="Four people discussing crops in a field"',
   'alt="Dark clouds over a tree-covered agricultural landscape"',
   'alt="Group portrait in a tree-filled landscape"',
-  'FarmTree Platform landscape and plot-definition views'
+  'Approved FarmTree agroforestry landscape animation'
 ]) {
   if (!homepage.includes(contract)) {
     throw new Error(`Homepage is missing approved publication copy or literal media text: ${contract}`);
@@ -791,10 +788,12 @@ for (const match of homepage.matchAll(/<h[12][^>]*>(.*?)<\/h[12]>/g)) {
 
 const pluginBootstrap = readFileSync(resolve(plugin, 'farmtree-content.php'), 'utf8');
 const pluginArchitecture = readFileSync(resolve(plugin, 'includes/architecture.php'), 'utf8');
-const runtimeRegistration = /register_(post_type|taxonomy|setting)\s*\(/;
-
-if (runtimeRegistration.test(pluginBootstrap) || runtimeRegistration.test(pluginArchitecture)) {
-  throw new Error('FT-NATIVE-001 must not register runtime content models.');
+if (
+  !pluginBootstrap.includes("register_post_type('customer_segment'") ||
+  !pluginBootstrap.includes("'show_in_rest'       => true") ||
+  !pluginBootstrap.includes("'template_lock'      => 'contentOnly'")
+) {
+  throw new Error('farmtree-content must register the controlled REST-enabled customer segment model.');
 }
 
 for (const contract of [
@@ -816,6 +815,40 @@ for (const contract of [
     throw new Error(`Content architecture is missing publication-readiness contract: ${contract}`);
   }
 }
+for (const contract of [
+  "'ai_assistant'",
+  "'inactive_until_configured'",
+  'No simulated responses',
+  "'private_until_editor_approval'",
+  "'publication_status' => 'draft'"
+]) {
+  if (!pluginArchitecture.includes(contract)) {
+    throw new Error(`Content architecture is missing safe enhancement contract: ${contract}`);
+  }
+}
+
+const segments = JSON.parse(readFileSync(resolve(plugin, 'data/customer-segments.json'), 'utf8'));
+const approvedSegmentOrder = [
+  'Consultancy & Agroforestry Advisors',
+  'Development Banks & Donor Organisations',
+  'NGOs & Conservation Organisations',
+  'NbS & Carbon Project Developers',
+  'MRV & ESG Platforms',
+  'Government & Parastatal Institutions',
+  'Industry Associations & Multi-Stakeholder Platforms',
+  'Large Agri-Corporate',
+  'Social Enterprise',
+  'Investors'
+];
+if (segments.map(({ title }) => title).join('|') !== approvedSegmentOrder.join('|')) {
+  throw new Error('Customer segment data must preserve the approved PDF order exactly.');
+}
+if (segments.some(({ order }, index) => order !== index + 1)) {
+  throw new Error('Customer segment menu_order values must be sequential and source-aligned.');
+}
+if (/exemplary clients|guarantee(?:d)? returns?|€|\bROI\b/i.test(JSON.stringify(segments))) {
+  throw new Error('Customer segment drafts contain an unsupported sales or performance claim.');
+}
 if (/\b(?:add_rewrite_rule|add_rewrite_tag|flush_rewrite_rules)\s*\(/.test(pluginArchitecture)) {
   throw new Error('Reserved locale metadata must not register or publish routes.');
 }
@@ -825,6 +858,7 @@ for (const contract of [
   "title: 'Hello world!'",
   'Welcome to WordPress. This is your first post. Edit or delete it, then start writing!',
   "body: JSON.stringify({ status: 'draft' })",
+  'must remain noindex before release approval',
   "new URL('/nl/', baseUrl)",
   "new URL('/de/', baseUrl)",
   "dutchRouteResponse.status !== 404",
@@ -833,6 +867,13 @@ for (const contract of [
   if (!bootstrap.includes(contract)) {
     throw new Error(`Local bootstrap is missing publication-readiness contract: ${contract}`);
   }
+}
+if (
+  !functions.includes('farmtree_native_pre_release_robots') ||
+  !functions.includes("$robots['noindex'] = true") ||
+  !functions.includes("$robots['nofollow'] = true")
+) {
+  throw new Error('Native theme must enforce the pre-release noindex/nofollow gate.');
 }
 if (/method:\s*['"]DELETE['"]|\/wp\/v2\/posts\/\$\{post\.id\}[^\n]*delete/i.test(bootstrap)) {
   throw new Error('Local sample-post neutralization must never delete WordPress content.');

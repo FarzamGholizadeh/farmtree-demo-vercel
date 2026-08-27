@@ -98,10 +98,9 @@ remaining audience segmentation is reduced to the three approved groups.
 
 The current Hero keeps one persistent editable primary H1 and three alternate
 editor-visible message sources beside four editable core Image slides; it does
-not use a Cover block. The Platform module uses the approved MP4/poster and
-plot-definition screenshot as core Video/Image media, with manual slide
-navigation, an explicit Play/Pause control and visibility-, document- and
-reduced-motion-aware playback.
+not use a Cover block. The Platform module uses the approved GIF source through
+an optimized core Video/poster presentation, with explicit Play/Pause and
+visibility-, document- and reduced-motion-aware playback.
 
 Editors own approved headings, text, media, proof stories, testimonials, theme
 cards, calls to action, FAQs and partner/reference content. The theme continues
