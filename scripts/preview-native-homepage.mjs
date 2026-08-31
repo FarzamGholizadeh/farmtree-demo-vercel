@@ -321,8 +321,8 @@ function validateComposedPreview() {
     'How agroforestry projects are planned, monitored and reported',
     'Trust and references',
     'Proof Stories',
+    'Last News',
     'FAQ',
-    'News &amp; Insights',
     'Ready to build a stronger agroforestry investment case?',
     'No insights have been published yet',
     'data-ft-hero-prev',
@@ -357,8 +357,8 @@ function validateComposedPreview() {
     'ft-home-globe',
     'ft-home-trust',
     'ft-home-proof',
-    'ft-home-faq',
     'ft-home-news',
+    'ft-home-faq',
     'ft-final-cta'
   ];
   let previousIndex = -1;

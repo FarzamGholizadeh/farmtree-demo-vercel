@@ -132,6 +132,11 @@ function farmtree_native_image_loading_attributes(string $block_content, array $
         'assets/images/partners/fao.png'                               => [491, 117],
         'assets/images/partners/catie.png'                             => [492, 117],
         'assets/images/partners/helvetas.png'                          => [492, 117],
+        'assets/images/testimonials/generated-placeholders/portrait-01.jpg' => [720, 900],
+        'assets/images/testimonials/generated-placeholders/portrait-02.jpg' => [720, 900],
+        'assets/images/testimonials/generated-placeholders/portrait-03.jpg' => [720, 900],
+        'assets/images/testimonials/generated-placeholders/portrait-04.jpg' => [720, 900],
+        'assets/images/testimonials/generated-placeholders/portrait-05.jpg' => [720, 900],
         'assets/images/brand/farmtree-logo.webp'                       => [320, 117],
     ];
     $classes = (string) ($block['attrs']['className'] ?? '');

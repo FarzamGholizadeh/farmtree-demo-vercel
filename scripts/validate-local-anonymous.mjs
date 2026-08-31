@@ -62,7 +62,7 @@ for (const article of newestHomepageArticles) {
 }
 if ((homepage.match(/class="[^"\n]*ft-news-item/g) ?? []).length !== 3) throw new Error('Homepage News does not render the three-item editorial feature.');
 if ((homepage.match(/class="[^"\n]*wp-block-post-featured-image/g) ?? []).length < 3) throw new Error('Homepage News cards are missing featured images.');
-if ((homepage.match(/>Read article<span class="screen-reader-text">/g) ?? []).length !== 3) throw new Error('Homepage News cards do not each expose the Read article CTA.');
+if ((homepage.match(/>Read article ↗<span class="screen-reader-text">/g) ?? []).length !== 3) throw new Error('Homepage News cards do not each expose the Read article CTA.');
 if ((homepage.match(/class="[^"\n]*wp-block-post-terms/g) ?? []).length < 3) throw new Error('Homepage News cards are missing topics.');
 if ((homepage.match(/<time\b/g) ?? []).length < 3) throw new Error('Homepage News cards are missing publication dates.');
 if ((homepage.match(/class="[^"\n]*wp-block-post-excerpt/g) ?? []).length < 3) throw new Error('Homepage News cards are missing excerpts.');

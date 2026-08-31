@@ -1,18 +1,18 @@
 # FT-NATIVE-002 Sprint Report
 
-Status: Homepage finalization implemented and locally validated; stopped at
+Status: Homepage V2 polish implemented and locally validated; stopped at
 pre-release for visual and publication approval
 
 ## Homepage Structure
 
 The native Homepage now follows Hero, Platform, Technology, Track Record,
-Global Perspective, Trust, Proof Stories, FAQ, News & Insights and Final CTA. It is implemented in
+Global Perspective, Trust, Proof Stories, Last News, FAQ and Final CTA. It is implemented in
 `farmtree-native` as core block markup and a content-only locked pattern.
 
 ## Homepage Finalization
 
 The finalization pass moves Hero controls to the true viewport-safe edge on
-desktop/tablet while preserving the six-second loop and mobile swipe contract;
+desktop/tablet while using a five-second loop and unified mobile swipe contract;
 centres the four Technology connectors; makes all metrics equal-height and
 overflow-safe; adds a lazy canvas globe framed explicitly as landscape context;
 expands both trust rails to the full rendered viewport with seamless opposing
@@ -27,6 +27,23 @@ final matrix has no horizontal overflow or visible broken images. Browser logs
 remain empty; the globe lazy-load, keyboard focus and pointer drag, FAQ, Hero,
 trust-rail hover pause, footer rotation, menu and 404 recovery interactions
 passed. Evidence is in `qa/screenshots/homepage-finalization/`.
+
+The V2 polish adds staggered Hero copy/media motion, a bidirectional
+scroll-driven Technology connector signal, a recognizable dotted-continent
+Earth rendered by an isolated native canvas, a mid-stream logo rail, an
+editor-owned six-item testimonial/portrait reel, four-up desktop Proof cards
+with a restrained pointer spotlight, Last News before FAQ, liquid-glass article
+buttons and paired Footer quote marks. The Globe uses 2,370 deterministic
+landmask points and neutral landscape-context connections at a 0.0009
+radians-per-frame default; COBE and external geography imagery are not used.
+
+The full-screen Bento menu now captures scroll at the open intent, applies a
+fixed-body lock, isolates the background with `inert`, traps focus, restores
+the exact coordinate and trigger focus, and uses one shared top row for the
+101px-wide logo artwork and close control. The 45-case matrix (five widths by
+nine page positions) passed, including an exact isolated retest of the sole
+smooth-scroll timing sample. Final evidence is in
+`qa/screenshots/homepage-v2/`.
 
 ## Visual Parity Correction
 
@@ -221,6 +238,16 @@ smoke test found one banner, one main, one contentinfo, four navigation regions,
 unique stops and every stop exposed a visible focus indicator. The detailed
 performance sample recorded 1,186,225 transferred bytes across 21 resources,
 FCP 1,092 ms, LCP 1,160 ms, CLS 0.00284 and zero long tasks.
+
+The Homepage V2 rendered rerun again covers 320, 375, 390, 430, 768, 1024,
+1280, 1440 and 1920 without horizontal overflow, broken images or duplicate
+IDs. It found one H1, eight FAQs, three Homepage News cards and one visible
+testimonial quote at every width. Ordered keyboard-target checks covered 60
+mobile and 64 desktop stops: every target was named, visible, outside hidden or
+inert content and had the approved focus treatment. Hero autoplay/pause/manual
+controls and mobile swipe, connector direction, Globe drag/keyboard/off-screen
+pause, testimonial autoplay/pause/synchronization, Proof spotlight, FAQ toggle,
+menu trap/Escape/scroll restoration and Footer quote structure passed.
 
 The bootstrap now drafts only the exact canonical WordPress `Hello world!`
 sample fingerprint and never deletes or changes unrelated posts. The visitor

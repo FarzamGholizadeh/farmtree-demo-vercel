@@ -290,8 +290,8 @@
 <!-- wp:column {"verticalAlignment":"center","width":"60%","className":"ft-globe-media"} -->
 <div class="wp-block-column is-vertically-aligned-center ft-globe-media" style="flex-basis:60%"><!-- wp:html -->
 <div class="ft-globe-stage" data-ft-globe-shell>
-<canvas class="ft-globe-canvas" width="720" height="720" tabindex="0" role="img" aria-label="Interactive globe illustrating neutral agroforestry landscape contexts" aria-describedby="ft-globe-description" data-ft-globe></canvas>
-<p id="ft-globe-description" class="screen-reader-text">Decorative markers represent tropical, temperate, dryland and highland landscape contexts. They do not identify FarmTree project locations.</p>
+<canvas class="ft-globe-canvas" width="720" height="720" tabindex="0" role="img" aria-label="Interactive dotted Earth with continent silhouettes and illustrative landscape-context connections" aria-describedby="ft-globe-description" data-ft-globe></canvas>
+<p id="ft-globe-description" class="screen-reader-text">Dense green dots form recognisable world continents. Gold markers and arcs illustrate tropical, temperate, dryland and highland landscape contexts; they do not identify FarmTree project locations.</p>
 <noscript><p>The interactive landscape-context globe requires JavaScript. The section text remains available without it.</p></noscript>
 </div>
 <!-- /wp:html --></div>
@@ -340,49 +340,85 @@
 <!-- /wp:image --></figure>
 <!-- /wp:gallery -->
 
-<!-- wp:columns {"align":"wide","className":"ft-trust-quotes","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|60"}}}} -->
-<div class="wp-block-columns alignwide ft-trust-quotes">
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><span class="ft-testimonial-avatar" aria-hidden="true">MM</span><!-- wp:paragraph {"fontSize":"lead"} -->
+<!-- wp:columns {"align":"wide","verticalAlignment":"stretch","className":"ft-testimonial-experience","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|60"}}}} -->
+<div class="wp-block-columns alignwide are-vertically-aligned-stretch ft-testimonial-experience"><!-- wp:column {"verticalAlignment":"stretch","width":"43%","className":"ft-testimonial-reel"} -->
+<div class="wp-block-column is-vertically-aligned-stretch ft-testimonial-reel" style="flex-basis:43%"><!-- wp:paragraph {"className":"ft-testimonial-portrait-status","fontSize":"caption"} -->
+<p class="ft-testimonial-portrait-status has-caption-font-size"><strong>Generated visual placeholders</strong> — these are not portraits of the quoted people and require replacement or explicit approval before publication.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"metadata":{"name":"Editable testimonial placeholder portraits"},"className":"ft-testimonial-portraits","layout":{"type":"default"}} -->
+<div class="wp-block-group ft-testimonial-portraits"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-testimonial-portrait ft-generated-portrait"} -->
+<figure class="wp-block-image size-full ft-testimonial-portrait ft-generated-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-01.jpg' ) ); ?>" alt="Generated visual placeholder, not a portrait of the quoted person"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-testimonial-portrait ft-generated-portrait"} -->
+<figure class="wp-block-image size-full ft-testimonial-portrait ft-generated-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-02.jpg' ) ); ?>" alt="Generated visual placeholder, not a portrait of the quoted person"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-testimonial-portrait ft-generated-portrait"} -->
+<figure class="wp-block-image size-full ft-testimonial-portrait ft-generated-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-03.jpg' ) ); ?>" alt="Generated visual placeholder, not a portrait of the quoted person"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-testimonial-portrait ft-generated-portrait"} -->
+<figure class="wp-block-image size-full ft-testimonial-portrait ft-generated-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-04.jpg' ) ); ?>" alt="Generated visual placeholder, not a portrait of the quoted person"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-testimonial-portrait ft-generated-portrait"} -->
+<figure class="wp-block-image size-full ft-testimonial-portrait ft-generated-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-05.jpg' ) ); ?>" alt="Generated visual placeholder, not a portrait of the quoted person"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:group {"className":"ft-testimonial-portrait ft-testimonial-portrait-pending","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center","verticalAlignment":"center"}} -->
+<div class="wp-block-group ft-testimonial-portrait ft-testimonial-portrait-pending"><span>Portrait pending approval</span></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"verticalAlignment":"stretch","width":"57%","className":"ft-testimonial-copy"} -->
+<div class="wp-block-column is-vertically-aligned-stretch ft-testimonial-copy" style="flex-basis:57%"><!-- wp:group {"metadata":{"name":"Editable testimonial quotes"},"className":"ft-testimonial-quotes","layout":{"type":"default"}} -->
+<div class="wp-block-group ft-testimonial-quotes"><!-- wp:quote {"className":"ft-trust-quote"} -->
+<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.</p>
 <!-- /wp:paragraph --><cite>Mona McCord, SAN</cite></blockquote>
-<!-- /wp:quote --></div>
-<!-- /wp:column -->
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><span class="ft-testimonial-avatar" aria-hidden="true">MB</span><!-- wp:paragraph {"fontSize":"lead"} -->
+<!-- /wp:quote -->
+
+<!-- wp:quote {"className":"ft-trust-quote"} -->
+<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue — they do everything!</p>
 <!-- /wp:paragraph --><cite>Mathijs de Bruin, TreeScape</cite></blockquote>
-<!-- /wp:quote --></div>
-<!-- /wp:column -->
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><span class="ft-testimonial-avatar" aria-hidden="true">KL</span><!-- wp:paragraph {"fontSize":"lead"} -->
+<!-- /wp:quote -->
+
+<!-- wp:quote {"className":"ft-trust-quote"} -->
+<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do.</p>
 <!-- /wp:paragraph --><cite>Katharina Lima de Miranda, HRNS</cite></blockquote>
-<!-- /wp:quote --></div>
-<!-- /wp:column -->
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><span class="ft-testimonial-avatar" aria-hidden="true">RK</span><!-- wp:paragraph {"fontSize":"lead"} -->
+<!-- /wp:quote -->
+
+<!-- wp:quote {"className":"ft-trust-quote is-active"} -->
+<blockquote class="wp-block-quote ft-trust-quote is-active"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios!</p>
 <!-- /wp:paragraph --><cite>Rob Kelly, World Vision Australia</cite></blockquote>
-<!-- /wp:quote --></div>
-<!-- /wp:column -->
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><span class="ft-testimonial-avatar" aria-hidden="true">LM</span><!-- wp:paragraph {"fontSize":"lead"} -->
+<!-- /wp:quote -->
+
+<!-- wp:quote {"className":"ft-trust-quote"} -->
+<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">We found the FarmTree Tool essential for predicting outcomes of highly complex farm scenarios, among many, also agroforestry systems.</p>
 <!-- /wp:paragraph --><cite>Lorenzo Mento, Nectaerra</cite></blockquote>
-<!-- /wp:quote --></div>
-<!-- /wp:column -->
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:quote {"className":"ft-trust-quote ft-testimonial-placeholder"} -->
-<blockquote class="wp-block-quote ft-trust-quote ft-testimonial-placeholder"><span class="ft-testimonial-avatar" aria-hidden="true">—</span><!-- wp:paragraph {"fontSize":"lead"} -->
+<!-- /wp:quote -->
+
+<!-- wp:quote {"className":"ft-trust-quote ft-testimonial-placeholder"} -->
+<blockquote class="wp-block-quote ft-trust-quote ft-testimonial-placeholder"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">Approved testimonial and portrait pending. Editors must replace this labelled CMS placeholder before publication.</p>
-<!-- /wp:paragraph --><cite>Placeholder — not approved for publication</cite></blockquote>
+<!-- /wp:paragraph --><cite>Sixth testimonial — not approved for publication</cite></blockquote>
 <!-- /wp:quote --></div>
+<!-- /wp:group -->
+
+<!-- wp:html -->
+<div class="ft-testimonial-controls" aria-label="Testimonial controls">
+<button type="button" aria-label="Previous testimonial" data-ft-testimonial-prev>←</button>
+<p aria-live="polite" aria-atomic="true" data-ft-testimonial-status>Testimonial 4 of 6</p>
+<button type="button" aria-label="Next testimonial" data-ft-testimonial-next>→</button>
+</div>
+<!-- /wp:html --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
 <!-- /wp:group -->
@@ -493,6 +529,54 @@
 <!-- /wp:columns --></section>
 <!-- /wp:group -->
 
+<!-- wp:group {"tagName":"section","metadata":{"name":"News and Insights"},"align":"full","className":"ft-home-section ft-home-news","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"backgroundColor":"farmtree-cream","layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull ft-home-section ft-home-news has-farmtree-cream-background-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)"><!-- wp:group {"align":"wide","className":"ft-home-news-header","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"bottom"}} -->
+<div class="wp-block-group alignwide ft-home-news-header"><!-- wp:group {"layout":{"type":"constrained"}} -->
+<div class="wp-block-group"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
+<p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">Last News</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":2,"fontSize":"heading-small"} -->
+<h2 class="wp-block-heading has-heading-small-font-size">Latest from FarmTree</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"ft-home-news-tagline","fontSize":"lead"} -->
+<p class="ft-home-news-tagline has-lead-font-size">Updates on the science, policy and practice shaping better agroforestry decisions.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":2,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"align":"wide","className":"ft-home-news-query"} -->
+<div class="wp-block-query alignwide ft-home-news-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:group {"className":"ft-news-item","layout":{"type":"constrained"}} -->
+<div class="wp-block-group ft-news-item"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
+
+<!-- wp:post-terms {"term":"category","fontSize":"caption"} /-->
+
+<!-- wp:post-date {"fontSize":"caption"} /-->
+
+<!-- wp:post-title {"level":3,"isLink":true,"fontSize":"lead"} /-->
+
+<!-- wp:post-excerpt {"moreText":"","excerptLength":18,"fontSize":"small"} /-->
+
+<!-- wp:read-more {"content":"Read article ↗","className":"ft-news-read-more"} /--></div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph -->
+<p>No insights have been published yet</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results --></div>
+<!-- /wp:query -->
+
+<!-- wp:buttons {"align":"wide","className":"ft-home-news-more","layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons alignwide ft-home-news-more"><!-- wp:button {"backgroundColor":"farmtree-green","textColor":"white"} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-white-color has-farmtree-green-background-color has-text-color has-background wp-element-button" href="/blog/">Read more</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></section>
+<!-- /wp:group -->
+
 <!-- wp:group {"tagName":"section","anchor":"faq","metadata":{"name":"Frequently asked questions"},"align":"full","className":"ft-home-section ft-home-faq","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-cream","layout":{"type":"constrained"}} -->
 <section id="faq" class="wp-block-group alignfull ft-home-section ft-home-faq has-farmtree-cream-background-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"align":"wide","className":"ft-faq-layout","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|70"}}}} -->
 <div class="wp-block-columns alignwide ft-faq-layout"><!-- wp:column {"width":"34%"} -->
@@ -559,50 +643,6 @@
 <!-- /wp:details --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
-<!-- /wp:group -->
-
-<!-- wp:group {"tagName":"section","metadata":{"name":"News and Insights"},"align":"full","className":"ft-home-section ft-home-news","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"backgroundColor":"farmtree-cream","layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull ft-home-section ft-home-news has-farmtree-cream-background-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)"><!-- wp:group {"align":"wide","className":"ft-home-news-header","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"bottom"}} -->
-<div class="wp-block-group alignwide ft-home-news-header"><!-- wp:group {"layout":{"type":"constrained"}} -->
-<div class="wp-block-group"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
-<p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">News &amp; Insights</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":2,"fontSize":"heading-small"} -->
-<h2 class="wp-block-heading has-heading-small-font-size">Latest from FarmTree</h2>
-<!-- /wp:heading --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group -->
-
-<!-- wp:query {"queryId":2,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"align":"wide","className":"ft-home-news-query"} -->
-<div class="wp-block-query alignwide ft-home-news-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
-<!-- wp:group {"className":"ft-news-item","layout":{"type":"constrained"}} -->
-<div class="wp-block-group ft-news-item"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
-
-<!-- wp:post-terms {"term":"category","fontSize":"caption"} /-->
-
-<!-- wp:post-date {"fontSize":"caption"} /-->
-
-<!-- wp:post-title {"level":3,"isLink":true,"fontSize":"lead"} /-->
-
-<!-- wp:post-excerpt {"moreText":"","excerptLength":18,"fontSize":"small"} /-->
-
-<!-- wp:read-more {"content":"Read article","className":"ft-news-read-more"} /--></div>
-<!-- /wp:group -->
-<!-- /wp:post-template -->
-
-<!-- wp:query-no-results -->
-<!-- wp:paragraph -->
-<p>No insights have been published yet</p>
-<!-- /wp:paragraph -->
-<!-- /wp:query-no-results --></div>
-<!-- /wp:query -->
-
-<!-- wp:buttons {"align":"wide","className":"ft-home-news-more","layout":{"type":"flex","justifyContent":"center"}} -->
-<div class="wp-block-buttons alignwide ft-home-news-more"><!-- wp:button {"backgroundColor":"farmtree-green","textColor":"white"} -->
-<div class="wp-block-button"><a class="wp-block-button__link has-white-color has-farmtree-green-background-color has-text-color has-background wp-element-button" href="/blog/">View all insights</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons --></section>
 <!-- /wp:group -->
 
 <!-- wp:pattern {"slug":"farmtree-native/call-to-action"} /--></div>

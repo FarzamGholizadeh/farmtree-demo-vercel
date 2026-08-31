@@ -688,7 +688,7 @@ const requiredFrontendContent = [
   'Agroforestry decisions across diverse landscapes',
   'Trust and references',
   'Proof Stories',
-  'News &amp; Insights',
+  'Last News',
   'ft-final-cta',
   'ft-native-site-footer'
 ];

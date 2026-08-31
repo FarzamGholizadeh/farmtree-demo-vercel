@@ -383,7 +383,7 @@ const requiredHomepageContent = [
   'Cocoa scenario planning and monitoring',
   'Water and landscape resilience monitoring',
   'FAQ',
-  'News &amp; Insights',
+  'Last News',
   'farmtree-native/call-to-action'
 ];
 
@@ -433,9 +433,13 @@ for (const contract of [
 for (const contract of [
   'data-ft-globe-shell',
   'data-ft-globe',
-  'Interactive globe illustrating neutral agroforestry landscape contexts',
+  'Interactive dotted Earth with continent silhouettes and illustrative landscape-context connections',
   'perPage":3',
-  'ft-home-news-more'
+  'ft-home-news-more',
+  'Read article ↗',
+  'ft-testimonial-experience',
+  'Generated visual placeholders',
+  'Sixth testimonial — not approved for publication'
 ]) {
   if (!homepage.includes(contract)) {
     throw new Error(`Homepage is missing finalization contract: ${contract}`);
@@ -606,17 +610,35 @@ for (const contract of [
   'End',
   'aria-pressed',
   'aria-controls',
-  'prefers-reduced-motion: reduce'
-  ,'touchstart'
-  ,'touchend'
+  'prefers-reduced-motion: reduce',
+  'pointerdown',
+  'pointerup',
+  'pointercancel'
 ]) {
   if (!interactions.includes(contract)) {
     throw new Error(`Manual Hero interactions are missing accessibility contract: ${contract}`);
   }
 }
 
-if (!interactions.includes('}, 6000)') || !interactions.includes('interactionPaused')) {
-  throw new Error('Homepage Hero must schedule the approved six-second loop and pause for direct interaction.');
+if (!interactions.includes('const heroAutoplayDelay = 5000') || !interactions.includes('interactionPaused')) {
+  throw new Error('Homepage Hero must schedule the approved five-second loop and pause for direct interaction.');
+}
+
+for (const contract of [
+  'const rotationPerFrame = 0.0009',
+  'native-canvas-landmask',
+  'pointInPolygon',
+  'arcBetween',
+  'initialiseTechnologySignal',
+  'initialiseTestimonials',
+  'initialiseProofSpotlights',
+  'initialiseMenuOverlay',
+  "document.body.style.position = 'fixed'",
+  'window.scrollTo(0, savedScrollY)'
+]) {
+  if (!interactions.includes(contract)) {
+    throw new Error(`Homepage V2 interaction contract is missing: ${contract}`);
+  }
 }
 
 if (
@@ -745,8 +767,8 @@ const sectionOrder = [
   'ft-home-globe',
   'ft-home-trust',
   'ft-home-proof',
-  'ft-home-faq',
   'ft-home-news',
+  'ft-home-faq',
   'farmtree-native/call-to-action'
 ];
 

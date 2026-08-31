@@ -2,7 +2,7 @@
 
 ## FT-NATIVE-002 - Native Homepage
 
-Status: Homepage finalization implemented and locally validated; stopped at
+Status: Homepage V2 polish implemented and locally validated; stopped at
 pre-release for visual and publication approval
 
 ### Objective
@@ -14,12 +14,14 @@ design controls.
 
 ### Final English Master Delivery
 
-The final English experience now includes six-second Hero autoplay with true
-viewport-edge desktop/tablet controls and a mobile swipe handler; centered
-technology connectors; equal responsive glass metrics; a lazy, draggable
-landscape-context globe; full-width opposing trust rails; premium 2x2 Proof
-Stories; a three-item editorial News feature; and a branded real-404 recovery
-page. It also retains interaction pause; the exact user-supplied 14.5-second
+The final English experience now includes five-second Hero autoplay with calm
+staggered copy/media transitions, true viewport-edge desktop/tablet controls
+and a unified mobile pointer-swipe handler; a scroll-driven connector signal;
+equal responsive glass metrics; a lazy, draggable dotted-Earth landmask with
+neutral context arcs; a mid-sequence logo rail; a synchronized testimonial
+portrait reel; responsive 4-up/2-up/1-up Proof Stories; a three-item editorial
+Last News feature before FAQ; and a branded real-404 recovery page. It also
+retains interaction pause; the exact user-supplied 14.5-second
 Platform GIF with a reduced-motion poster; ten distinct image-backed
 customer-segment pages; 16 English support pages; a factual 13-person Team page;
 a featured-story Blog with all nine source-attributed articles; a premium
@@ -65,8 +67,8 @@ explicit user approval before dispatch.
 5. Global landscape-context globe
 6. Trust / references / testimonials
 7. Proof Stories / Themes
-8. FAQ
-9. News & Insights
+8. Last News
+9. FAQ
 10. Final CTA
 
 The large audience section and Homepage Use Cases are omitted. News is lower,
@@ -145,8 +147,8 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   the quotation fail-safe and both noindex signals.
 - The preview at `http://127.0.0.1:4173/` returns HTTP 200 and source-level
   assertions confirm the approved Hero, one H1, real Header/Footer, exact core
-  palette, section order, absence of timer-based slide autoplay and the explicit
-  Platform video Play/Pause control.
+  palette, final section order, five-second autoplay and the explicit
+  reduced-motion behavior.
 - The real local WordPress frontend was rendered and captured at 320, 375, 390,
   430, 768, 1024, 1280, 1440 and 1920 pixels. Every width reported
   `scrollWidth === innerWidth`; the only off-screen children belong to the
@@ -157,6 +159,14 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   widths now have zero horizontal overflow, full-viewport trust rails and
   far-edge arrows at 768px and above. Final evidence is in
   `qa/screenshots/homepage-finalization/`, including the menu, globe and 404.
+- The Homepage V2 rerun covers all nine target widths in
+  `qa/screenshots/homepage-v2/`. It verifies a recognizable 2,370-point native
+  canvas Earth at 0.0009 radians per frame, equal metric typography including
+  `+1,000,000`, a six-item testimonial reel starting at item four, four-up
+  desktop Proof Stories, three Last News cards, FAQ below News and paired
+  Footer quotation marks. Menu geometry, scroll lock and restoration passed 45
+  viewport/scroll-position combinations, with representative Hero, mid-page
+  and Footer captures at mobile and desktop widths.
 - Browser error/warning logs were empty after the interaction walkthrough.
   Rendered semantic audits at 390 and 1440 found one H1, complete
   Header/Main/Footer landmarks, no heading-level jumps, duplicate IDs, missing

@@ -153,6 +153,68 @@
   mask-image: none;
 }
 
+.editor-styles-wrapper .ft-testimonial-experience {
+  display: grid !important;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+}
+
+.editor-styles-wrapper .ft-testimonial-reel,
+.editor-styles-wrapper .ft-testimonial-copy {
+  min-height: 0;
+}
+
+.editor-styles-wrapper .ft-testimonial-reel {
+  padding: 1rem;
+}
+
+.editor-styles-wrapper .ft-testimonial-portrait-status,
+.editor-styles-wrapper .ft-testimonial-portraits,
+.editor-styles-wrapper .ft-testimonial-portrait {
+  position: relative;
+  inset: auto;
+  width: auto;
+  transform: none;
+}
+
+.editor-styles-wrapper .ft-testimonial-portraits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+}
+
+.editor-styles-wrapper .ft-testimonial-portrait {
+  aspect-ratio: 4 / 5;
+  opacity: 1;
+}
+
+.editor-styles-wrapper .ft-generated-portrait::after {
+  position: absolute;
+  right: .5rem;
+  bottom: .5rem;
+  left: .5rem;
+  padding: .45rem;
+  border-radius: .5rem;
+  background: rgb(255 254 248 / 92%);
+  color: #163126;
+  content: "Generated placeholder — not author portrait";
+  font-size: .7rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.editor-styles-wrapper .ft-testimonial-copy {
+  display: block;
+}
+
+.editor-styles-wrapper .ft-testimonial-copy .ft-trust-quote,
+.editor-styles-wrapper .ft-testimonial-copy .ft-trust-quote[hidden] {
+  display: block !important;
+  min-height: 0;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px dashed rgb(0 97 63 / 25%);
+}
+
 @media (width <= 600px) {
   .editor-styles-wrapper .ft-home-hero-media {
     grid-template-columns: 1fr;

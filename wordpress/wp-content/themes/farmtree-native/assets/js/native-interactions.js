@@ -11,6 +11,7 @@
     const heroSelector = '.ft-home-hero';
     const heroSlideSelector = '.ft-home-hero-slide';
     const heroDotSelector = '[data-ft-hero-dot]';
+    const heroAutoplayDelay = 5000;
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     function initialiseHero(hero, heroIndex) {
@@ -101,7 +102,7 @@
             autoAdvanceTimer = window.setTimeout(() => {
                 selectSlide(currentIndex + 1, { automatic: true });
                 scheduleAutoAdvance();
-            }, 6000);
+            }, heroAutoplayDelay);
         }
 
         function labelFor(index) {
@@ -175,24 +176,34 @@
         previousButton?.addEventListener('click', () => selectSlide(currentIndex - 1));
         nextButton?.addEventListener('click', () => selectSlide(currentIndex + 1));
 
-        let touchStartX = 0;
-        let touchStartY = 0;
-        hero.addEventListener('touchstart', (event) => {
-            const touch = event.changedTouches[0];
-            touchStartX = touch.clientX;
-            touchStartY = touch.clientY;
-        }, { passive: true });
-        hero.addEventListener('touchend', (event) => {
+        let swipePointerId = null;
+        let swipeStartX = 0;
+        let swipeStartY = 0;
+        hero.addEventListener('pointerdown', (event) => {
+            if (!event.isPrimary || !window.matchMedia('(max-width: 768px)').matches) {
+                return;
+            }
+            swipePointerId = event.pointerId;
+            swipeStartX = event.clientX;
+            swipeStartY = event.clientY;
+        });
+        hero.addEventListener('pointerup', (event) => {
             if (!window.matchMedia('(max-width: 768px)').matches) {
                 return;
             }
-            const touch = event.changedTouches[0];
-            const deltaX = touch.clientX - touchStartX;
-            const deltaY = touch.clientY - touchStartY;
+            if (swipePointerId === null || event.pointerId !== swipePointerId) {
+                return;
+            }
+            const deltaX = event.clientX - swipeStartX;
+            const deltaY = event.clientY - swipeStartY;
+            swipePointerId = null;
             if (Math.abs(deltaX) >= 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
                 selectSlide(currentIndex + (deltaX < 0 ? 1 : -1));
             }
-        }, { passive: true });
+        });
+        hero.addEventListener('pointercancel', () => {
+            swipePointerId = null;
+        });
 
         hero.querySelector('.ft-home-hero-dots')?.addEventListener('keydown', (event) => {
             const keyTargets = {
@@ -358,7 +369,7 @@
     }
 
     function initialiseMovingRails() {
-        document.querySelectorAll('.ft-partner-logos, .ft-trust-quotes').forEach((rail) => {
+        document.querySelectorAll('.ft-partner-logos').forEach((rail) => {
             if (rail.dataset.ftRailReady === 'true' || reducedMotionQuery.matches) {
                 return;
             }
@@ -368,10 +379,13 @@
             const track = document.createElement('div');
             const sequence = document.createElement('div');
             const items = Array.from(rail.children);
+            const startIndex = Math.min(4, Math.max(0, items.length - 1));
+            const rotatedItems = items.slice(startIndex).concat(items.slice(0, startIndex));
 
             track.className = 'ft-moving-rail-track';
             sequence.className = 'ft-moving-rail-sequence';
-            items.forEach((item) => sequence.append(item));
+            rail.dataset.ftRailStart = String(startIndex + 1);
+            rotatedItems.forEach((item) => sequence.append(item));
             const clone = sequence.cloneNode(true);
             clone.setAttribute('aria-hidden', 'true');
             clone.querySelectorAll('a, button, input, summary, [tabindex]').forEach((control) => {
@@ -390,7 +404,276 @@
         });
     }
 
+    function initialiseTestimonials() {
+        document.querySelectorAll('.ft-testimonial-experience').forEach((shell) => {
+            const portraits = Array.from(shell.querySelectorAll('.ft-testimonial-portrait'));
+            const quotes = Array.from(shell.querySelectorAll('.ft-testimonial-quotes > .ft-trust-quote'));
+            const previousButton = shell.querySelector('[data-ft-testimonial-prev]');
+            const nextButton = shell.querySelector('[data-ft-testimonial-next]');
+            const status = shell.querySelector('[data-ft-testimonial-status]');
+
+            if (
+                portraits.length !== quotes.length ||
+                portraits.length < 2 ||
+                shell.dataset.ftTestimonialReady === 'true'
+            ) {
+                return;
+            }
+
+            shell.dataset.ftTestimonialReady = 'true';
+            shell.classList.add('is-testimonial-enhanced');
+            let currentIndex = Math.min(
+                portraits.length - 1,
+                Math.max(0, 3)
+            );
+            let autoAdvanceTimer = null;
+            let interactionPaused = false;
+
+            function stopAutoAdvance() {
+                window.clearTimeout(autoAdvanceTimer);
+                autoAdvanceTimer = null;
+            }
+
+            function scheduleAutoAdvance() {
+                stopAutoAdvance();
+                if (reducedMotionQuery.matches || interactionPaused || document.hidden) {
+                    return;
+                }
+                autoAdvanceTimer = window.setTimeout(() => {
+                    selectTestimonial(currentIndex + 1, { automatic: true });
+                    scheduleAutoAdvance();
+                }, 8000);
+            }
+
+            function selectTestimonial(nextIndex, options = {}) {
+                currentIndex = (nextIndex + quotes.length) % quotes.length;
+                shell.style.setProperty('--ft-testimonial-index', String(currentIndex));
+
+                portraits.forEach((portrait, index) => {
+                    const isCurrent = index === currentIndex;
+                    portrait.classList.toggle('is-active', isCurrent);
+                    portrait.style.setProperty('--ft-portrait-offset', String(index - currentIndex));
+                    portrait.setAttribute('role', 'button');
+                    portrait.setAttribute('tabindex', isCurrent ? '0' : '-1');
+                    portrait.setAttribute('aria-pressed', String(isCurrent));
+                    portrait.setAttribute(
+                        'aria-label',
+                        `Show testimonial ${index + 1} of ${quotes.length}; visual is a placeholder, not the quoted person's portrait`
+                    );
+                });
+
+                quotes.forEach((quote, index) => {
+                    const isCurrent = index === currentIndex;
+                    quote.classList.toggle('is-active', isCurrent);
+                    quote.hidden = !isCurrent;
+                    quote.setAttribute('aria-hidden', String(!isCurrent));
+                });
+
+                if (status) {
+                    status.textContent = `Testimonial ${currentIndex + 1} of ${quotes.length}`;
+                }
+                if (options.focus) {
+                    portraits[currentIndex].focus();
+                }
+                if (!options.automatic) {
+                    scheduleAutoAdvance();
+                }
+            }
+
+            portraits.forEach((portrait, index) => {
+                portrait.addEventListener('click', () => selectTestimonial(index));
+                portrait.addEventListener('keydown', (event) => {
+                    const targets = {
+                        ArrowUp: currentIndex - 1,
+                        ArrowLeft: currentIndex - 1,
+                        ArrowDown: currentIndex + 1,
+                        ArrowRight: currentIndex + 1,
+                        Home: 0,
+                        End: portraits.length - 1
+                    };
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        selectTestimonial(index);
+                    } else if (event.key in targets) {
+                        event.preventDefault();
+                        selectTestimonial(targets[event.key], { focus: true });
+                    }
+                });
+            });
+            previousButton?.addEventListener('click', () => selectTestimonial(currentIndex - 1));
+            nextButton?.addEventListener('click', () => selectTestimonial(currentIndex + 1));
+            shell.addEventListener('pointerenter', () => {
+                interactionPaused = true;
+                stopAutoAdvance();
+            });
+            shell.addEventListener('pointerleave', () => {
+                interactionPaused = false;
+                scheduleAutoAdvance();
+            });
+            shell.addEventListener('focusin', () => {
+                interactionPaused = true;
+                stopAutoAdvance();
+            });
+            shell.addEventListener('focusout', () => {
+                window.requestAnimationFrame(() => {
+                    interactionPaused = shell.contains(document.activeElement);
+                    scheduleAutoAdvance();
+                });
+            });
+            document.addEventListener('visibilitychange', scheduleAutoAdvance);
+            reducedMotionQuery.addEventListener?.('change', scheduleAutoAdvance);
+
+            selectTestimonial(currentIndex);
+            scheduleAutoAdvance();
+        });
+    }
+
+    function initialiseTechnologySignal() {
+        const section = document.querySelector('.ft-home-technology');
+        const cards = Array.from(section?.querySelectorAll('.ft-home-inputs > .wp-block-column') || []);
+        const grid = section?.querySelector('.ft-home-inputs');
+        if (!section || !grid || cards.length < 2 || grid.dataset.ftSignalReady === 'true') {
+            return;
+        }
+
+        grid.dataset.ftSignalReady = 'true';
+        const signal = document.createElement('span');
+        signal.className = 'ft-technology-signal';
+        signal.setAttribute('aria-hidden', 'true');
+        grid.append(signal);
+        let frame = null;
+
+        function updateSignal() {
+            frame = null;
+            if (reducedMotionQuery.matches || window.matchMedia('(max-width: 1000px)').matches) {
+                signal.hidden = true;
+                return;
+            }
+
+            const sectionRect = section.getBoundingClientRect();
+            const gridRect = grid.getBoundingClientRect();
+            const viewportAnchor = window.innerHeight * 0.62;
+            const progress = Math.max(0, Math.min(0.999, (viewportAnchor - sectionRect.top) / sectionRect.height));
+            const scaled = progress * (cards.length - 1);
+            const segmentIndex = Math.min(cards.length - 2, Math.floor(scaled));
+            const localProgress = scaled - segmentIndex;
+            const currentRect = cards[segmentIndex].getBoundingClientRect();
+            const nextRect = cards[segmentIndex + 1].getBoundingClientRect();
+            const startX = currentRect.right - gridRect.left + 3;
+            const endX = nextRect.left - gridRect.left - 3;
+            const x = startX + ((endX - startX) * localProgress);
+            const y = ((currentRect.top + currentRect.bottom) / 2) - gridRect.top;
+
+            signal.hidden = sectionRect.bottom < 0 || sectionRect.top > window.innerHeight;
+            signal.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        }
+
+        function scheduleUpdate() {
+            if (frame === null) {
+                frame = window.requestAnimationFrame(updateSignal);
+            }
+        }
+
+        window.addEventListener('scroll', scheduleUpdate, { passive: true });
+        window.addEventListener('resize', scheduleUpdate, { passive: true });
+        reducedMotionQuery.addEventListener?.('change', scheduleUpdate);
+        scheduleUpdate();
+    }
+
+    function initialiseProofSpotlights() {
+        if (reducedMotionQuery.matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            return;
+        }
+        document.querySelectorAll('.ft-proof-card').forEach((card) => {
+            card.addEventListener('pointermove', (event) => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--ft-spot-x', `${event.clientX - rect.left}px`);
+                card.style.setProperty('--ft-spot-y', `${event.clientY - rect.top}px`);
+            });
+            card.addEventListener('pointerleave', () => {
+                card.style.removeProperty('--ft-spot-x');
+                card.style.removeProperty('--ft-spot-y');
+            });
+        });
+    }
+
     function initialiseGlobes() {
+        const degrees = Math.PI / 180;
+        const rotationPerFrame = 0.0009;
+        const landPolygons = [
+            [[-168, 70], [-145, 72], [-128, 60], [-124, 49], [-117, 33], [-105, 22], [-97, 17], [-84, 9], [-78, 18], [-81, 27], [-74, 40], [-61, 48], [-53, 59], [-62, 72], [-98, 81], [-135, 76]],
+            [[-81, 12], [-70, 10], [-61, 5], [-50, -2], [-35, -8], [-43, -23], [-54, -34], [-66, -55], [-74, -48], [-78, -20]],
+            [[-17, 36], [5, 37], [28, 33], [42, 20], [51, 10], [43, -13], [31, -35], [18, -35], [5, -25], [-8, 5]],
+            [[-10, 36], [-11, 57], [5, 71], [33, 72], [65, 78], [100, 72], [128, 61], [163, 61], [178, 50], [153, 41], [135, 34], [124, 20], [109, 5], [104, -7], [94, 5], [80, 8], [71, 23], [57, 26], [45, 39], [31, 42], [19, 35], [8, 43]],
+            [[112, -11], [131, -10], [153, -27], [146, -39], [124, -36], [113, -24]],
+            [[-52, 60], [-44, 60], [-20, 70], [-28, 82], [-50, 83], [-62, 72]],
+            [[43, -12], [50, -16], [49, -26], [44, -25]],
+            [[128, 31], [143, 44], [146, 35], [137, 30]]
+        ];
+        const markerCoordinates = [[5, 52], [-59, -15], [29, 1], [77, 19], [135, -25]];
+        const arcPairs = [[0, 2], [0, 3], [2, 1], [3, 4]];
+
+        function pointInPolygon(longitude, latitude, polygon) {
+            let inside = false;
+            for (let index = 0, previous = polygon.length - 1; index < polygon.length; previous = index++) {
+                const [x1, y1] = polygon[index];
+                const [x2, y2] = polygon[previous];
+                const intersects = ((y1 > latitude) !== (y2 > latitude)) &&
+                    (longitude < ((x2 - x1) * (latitude - y1)) / ((y2 - y1) || 0.00001) + x1);
+                if (intersects) {
+                    inside = !inside;
+                }
+            }
+            return inside;
+        }
+
+        function vectorFor(longitude, latitude) {
+            const lon = longitude * degrees;
+            const lat = latitude * degrees;
+            return {
+                x: Math.cos(lat) * Math.sin(lon),
+                y: Math.sin(lat),
+                z: Math.cos(lat) * Math.cos(lon)
+            };
+        }
+
+        function rotateVector(vector, rotation, altitude = 1) {
+            const sine = Math.sin(rotation);
+            const cosine = Math.cos(rotation);
+            return {
+                x: ((vector.x * cosine) + (vector.z * sine)) * altitude,
+                y: vector.y * altitude,
+                z: ((vector.z * cosine) - (vector.x * sine)) * altitude
+            };
+        }
+
+        function arcBetween(start, end) {
+            const startVector = vectorFor(...start);
+            const endVector = vectorFor(...end);
+            const dot = Math.max(-1, Math.min(1,
+                (startVector.x * endVector.x) +
+                (startVector.y * endVector.y) +
+                (startVector.z * endVector.z)
+            ));
+            const angle = Math.acos(dot);
+            const sine = Math.sin(angle) || 1;
+            return Array.from({ length: 42 }, (_, index) => {
+                const progress = index / 41;
+                const a = Math.sin((1 - progress) * angle) / sine;
+                const b = Math.sin(progress * angle) / sine;
+                const vector = {
+                    x: (startVector.x * a) + (endVector.x * b),
+                    y: (startVector.y * a) + (endVector.y * b),
+                    z: (startVector.z * a) + (endVector.z * b)
+                };
+                const length = Math.hypot(vector.x, vector.y, vector.z) || 1;
+                return {
+                    vector: { x: vector.x / length, y: vector.y / length, z: vector.z / length },
+                    altitude: 1 + (Math.sin(progress * Math.PI) * 0.11)
+                };
+            });
+        }
+
         document.querySelectorAll('[data-ft-globe-shell]').forEach((shell) => {
             const canvas = shell.querySelector('[data-ft-globe]');
             if (!canvas || canvas.dataset.ftGlobeReady === 'true') {
@@ -398,127 +681,143 @@
             }
 
             canvas.dataset.ftGlobeReady = 'true';
+            canvas.dataset.ftGlobeRenderer = 'native-canvas-landmask';
+            canvas.dataset.ftGlobeSpeed = String(rotationPerFrame);
             let context = null;
-            let points = [];
+            let landPoints = [];
             let markers = [];
-            let rotation = -0.35;
+            let arcs = [];
+            let rotation = -0.42;
             let frame = null;
             let lastFrameTime = 0;
             let isVisible = false;
             let isDragging = false;
             let previousPointerX = 0;
+            let resumeStrength = 1;
             let activated = false;
 
             function resizeCanvas() {
-                const size = Math.max(240, Math.round(canvas.getBoundingClientRect().width));
+                const displaySize = Math.max(240, Math.round(canvas.getBoundingClientRect().width));
                 const ratio = Math.min(window.devicePixelRatio || 1, 2);
-                const width = Math.round(size * ratio);
-
-                if (canvas.width !== width || canvas.height !== width) {
-                    canvas.width = width;
-                    canvas.height = width;
+                const size = Math.round(displaySize * ratio);
+                if (canvas.width !== size || canvas.height !== size) {
+                    canvas.width = size;
+                    canvas.height = size;
                 }
-
-                return { size: width, ratio };
+                return { size, ratio };
             }
 
-            function draw(time = 0) {
+            function drawArc(arc, centre, radius, ratio) {
+                context.beginPath();
+                let drawing = false;
+                arc.forEach(({ vector, altitude }) => {
+                    const point = rotateVector(vector, rotation, altitude);
+                    if (point.z <= 0.015) {
+                        drawing = false;
+                        return;
+                    }
+                    const x = centre + (point.x * radius);
+                    const y = centre - (point.y * radius);
+                    if (!drawing) {
+                        context.moveTo(x, y);
+                        drawing = true;
+                    } else {
+                        context.lineTo(x, y);
+                    }
+                });
+                context.strokeStyle = 'rgba(211, 176, 107, 0.58)';
+                context.lineWidth = Math.max(1.15 * ratio, 1);
+                context.stroke();
+            }
+
+            function draw() {
                 if (!context) {
                     return;
                 }
-
+                canvas.dataset.ftGlobeRotation = rotation.toFixed(4);
                 const { size, ratio } = resizeCanvas();
                 const centre = size / 2;
-                const radius = size * 0.385;
-                const green = [0, 97, 63];
-                const gold = [211, 176, 107];
-
+                const radius = size * 0.4;
                 context.clearRect(0, 0, size, size);
-                const atmosphere = context.createRadialGradient(
-                    centre - radius * 0.28,
-                    centre - radius * 0.34,
-                    radius * 0.06,
-                    centre,
-                    centre,
-                    radius * 1.12
+
+                const glow = context.createRadialGradient(
+                    centre - (radius * 0.28), centre - (radius * 0.32), radius * 0.08,
+                    centre, centre, radius * 1.08
                 );
-                atmosphere.addColorStop(0, 'rgba(255, 255, 255, 0.96)');
-                atmosphere.addColorStop(0.55, 'rgba(220, 231, 210, 0.72)');
-                atmosphere.addColorStop(0.88, 'rgba(0, 97, 63, 0.13)');
-                atmosphere.addColorStop(1, 'rgba(0, 97, 63, 0)');
-                context.fillStyle = atmosphere;
+                glow.addColorStop(0, 'rgba(255, 255, 255, 0.98)');
+                glow.addColorStop(0.68, 'rgba(247, 246, 232, 0.82)');
+                glow.addColorStop(0.92, 'rgba(0, 97, 63, 0.08)');
+                glow.addColorStop(1, 'rgba(0, 97, 63, 0)');
+                context.fillStyle = glow;
                 context.beginPath();
-                context.arc(centre, centre, radius * 1.1, 0, Math.PI * 2);
+                context.arc(centre, centre, radius * 1.08, 0, Math.PI * 2);
                 context.fill();
 
-                context.strokeStyle = 'rgba(0, 97, 63, 0.22)';
-                context.lineWidth = Math.max(1, ratio);
+                context.fillStyle = 'rgba(255, 254, 248, 0.86)';
                 context.beginPath();
                 context.arc(centre, centre, radius, 0, Math.PI * 2);
+                context.fill();
+                context.strokeStyle = 'rgba(0, 97, 63, 0.24)';
+                context.lineWidth = Math.max(1.1 * ratio, 1);
                 context.stroke();
 
-                points.forEach((point) => {
-                    const longitude = point.longitude + rotation;
-                    const x = point.cosLatitude * Math.sin(longitude);
-                    const z = point.cosLatitude * Math.cos(longitude);
-                    if (z < -0.08) {
+                landPoints.forEach((vector) => {
+                    const point = rotateVector(vector, rotation);
+                    if (point.z <= 0) {
                         return;
                     }
-                    const y = point.sinLatitude;
-                    const depth = Math.max(0, (z + 0.08) / 1.08);
-                    const dotRadius = (0.75 + (depth * 1.05)) * ratio;
-                    context.fillStyle = `rgba(${green.join(', ')}, ${0.12 + (depth * 0.58)})`;
+                    const depth = Math.min(1, point.z);
+                    context.fillStyle = `rgba(0, 97, 63, ${0.38 + (depth * 0.5)})`;
                     context.beginPath();
-                    context.arc(centre + (x * radius), centre - (y * radius), dotRadius, 0, Math.PI * 2);
+                    context.arc(
+                        centre + (point.x * radius),
+                        centre - (point.y * radius),
+                        (0.72 + (depth * 0.58)) * ratio,
+                        0,
+                        Math.PI * 2
+                    );
                     context.fill();
                 });
 
-                markers.forEach((marker, index) => {
-                    const longitude = marker.longitude + rotation;
-                    const x = marker.cosLatitude * Math.sin(longitude);
-                    const z = marker.cosLatitude * Math.cos(longitude);
-                    if (z < 0.02) {
+                arcs.forEach((arc) => drawArc(arc, centre, radius, ratio));
+                markers.forEach((vector) => {
+                    const point = rotateVector(vector, rotation, 1.015);
+                    if (point.z <= 0.02) {
                         return;
                     }
-                    const y = marker.sinLatitude;
-                    const depth = Math.max(0, z);
-                    const markerX = centre + (x * radius);
-                    const markerY = centre - (y * radius);
-                    const pulse = reducedMotionQuery.matches
-                        ? 0
-                        : Math.max(0, Math.sin((time / 650) + index)) * 2.4 * ratio;
-
-                    context.strokeStyle = `rgba(${gold.join(', ')}, ${0.2 + (depth * 0.42)})`;
-                    context.lineWidth = Math.max(1, ratio);
+                    const x = centre + (point.x * radius);
+                    const y = centre - (point.y * radius);
+                    context.fillStyle = 'rgba(211, 176, 107, 0.96)';
                     context.beginPath();
-                    context.arc(markerX, markerY, (6 * ratio) + pulse, 0, Math.PI * 2);
-                    context.stroke();
-                    context.fillStyle = `rgba(${gold.join(', ')}, ${0.7 + (depth * 0.3)})`;
-                    context.beginPath();
-                    context.arc(markerX, markerY, 3.2 * ratio, 0, Math.PI * 2);
+                    context.arc(x, y, 3.2 * ratio, 0, Math.PI * 2);
                     context.fill();
+                    context.strokeStyle = 'rgba(0, 97, 63, 0.5)';
+                    context.lineWidth = Math.max(ratio, 1);
+                    context.beginPath();
+                    context.arc(x, y, 6.2 * ratio, 0, Math.PI * 2);
+                    context.stroke();
                 });
             }
 
             function render(time) {
                 frame = null;
-                if (!isVisible || !context) {
+                if (!isVisible || document.hidden || !context) {
                     return;
                 }
-
-                const elapsed = lastFrameTime ? Math.min(40, time - lastFrameTime) : 16;
+                const elapsed = lastFrameTime ? Math.min(40, time - lastFrameTime) : (1000 / 60);
                 lastFrameTime = time;
                 if (!reducedMotionQuery.matches && !isDragging) {
-                    rotation += elapsed * 0.000055;
+                    resumeStrength = Math.min(1, resumeStrength + (elapsed / 1800));
+                    rotation += rotationPerFrame * (elapsed / (1000 / 60)) * resumeStrength;
                 }
-                draw(time);
+                draw();
                 if (!reducedMotionQuery.matches) {
                     frame = window.requestAnimationFrame(render);
                 }
             }
 
             function requestRender() {
-                if (frame === null && isVisible) {
+                if (frame === null && isVisible && !document.hidden) {
                     frame = window.requestAnimationFrame(render);
                 }
             }
@@ -528,44 +827,28 @@
                     requestRender();
                     return;
                 }
-
                 context = canvas.getContext('2d', { alpha: true });
                 if (!context) {
                     shell.dataset.ftGlobeState = 'unavailable';
                     return;
                 }
 
-                points = [];
-                for (let latitude = -80; latitude <= 80; latitude += 10) {
-                    const latitudeRadians = latitude * (Math.PI / 180);
-                    for (let longitude = 0; longitude < 360; longitude += 12) {
-                        points.push({
-                            longitude: longitude * (Math.PI / 180),
-                            cosLatitude: Math.cos(latitudeRadians),
-                            sinLatitude: Math.sin(latitudeRadians)
-                        });
+                for (let latitude = -57; latitude <= 82; latitude += 2.7) {
+                    for (let longitude = -178; longitude <= 178; longitude += 2.7) {
+                        if (landPolygons.some((polygon) => pointInPolygon(longitude, latitude, polygon))) {
+                            landPoints.push(vectorFor(longitude, latitude));
+                        }
                     }
                 }
-                markers = [
-                    [7, 18],
-                    [44, -4],
-                    [-18, 27],
-                    [24, -31],
-                    [-40, -16],
-                    [61, 22]
-                ].map(([longitude, latitude]) => {
-                    const latitudeRadians = latitude * (Math.PI / 180);
-                    return {
-                        longitude: longitude * (Math.PI / 180),
-                        cosLatitude: Math.cos(latitudeRadians),
-                        sinLatitude: Math.sin(latitudeRadians)
-                    };
-                });
+                markers = markerCoordinates.map((coordinates) => vectorFor(...coordinates));
+                arcs = arcPairs.map(([from, to]) => arcBetween(markerCoordinates[from], markerCoordinates[to]));
                 activated = true;
                 shell.dataset.ftGlobeState = reducedMotionQuery.matches ? 'reduced' : 'ready';
+                shell.dataset.ftGlobePoints = String(landPoints.length);
 
                 canvas.addEventListener('pointerdown', (event) => {
                     isDragging = true;
+                    resumeStrength = 0;
                     previousPointerX = event.clientX;
                     canvas.setPointerCapture?.(event.pointerId);
                 });
@@ -573,15 +856,16 @@
                     if (!isDragging) {
                         return;
                     }
-                    rotation += (event.clientX - previousPointerX) * 0.008;
+                    rotation += (event.clientX - previousPointerX) * 0.006;
                     previousPointerX = event.clientX;
-                    draw(performance.now());
+                    draw();
                 });
                 const stopDragging = (event) => {
                     if (!isDragging) {
                         return;
                     }
                     isDragging = false;
+                    resumeStrength = 0;
                     canvas.releasePointerCapture?.(event.pointerId);
                     requestRender();
                 };
@@ -592,12 +876,14 @@
                         return;
                     }
                     event.preventDefault();
-                    rotation += event.key === 'ArrowLeft' ? -0.12 : 0.12;
-                    draw(performance.now());
+                    rotation += event.key === 'ArrowLeft' ? -0.1 : 0.1;
+                    resumeStrength = 0;
+                    draw();
                 });
                 if ('ResizeObserver' in window) {
-                    new ResizeObserver(() => draw(performance.now())).observe(shell);
+                    new ResizeObserver(() => draw()).observe(shell);
                 }
+                draw();
                 requestRender();
             }
 
@@ -611,20 +897,29 @@
                         frame = null;
                         lastFrameTime = 0;
                     }
-                }, { rootMargin: '240px 0px', threshold: 0.01 });
+                }, { rootMargin: '180px 0px', threshold: 0.01 });
                 observer.observe(shell);
             } else {
                 isVisible = true;
                 activate();
             }
 
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden && frame !== null) {
+                    window.cancelAnimationFrame(frame);
+                    frame = null;
+                    lastFrameTime = 0;
+                } else {
+                    requestRender();
+                }
+            });
             reducedMotionQuery.addEventListener?.('change', () => {
                 shell.dataset.ftGlobeState = reducedMotionQuery.matches ? 'reduced' : 'ready';
                 if (reducedMotionQuery.matches && frame !== null) {
                     window.cancelAnimationFrame(frame);
                     frame = null;
                 }
-                draw(performance.now());
+                draw();
                 requestRender();
             });
         });
@@ -679,6 +974,175 @@
             heading.setAttribute('aria-hidden', 'true');
             heading.setAttribute('tabindex', '-1');
         });
+    }
+
+    function initialiseMenuOverlay() {
+        const navigation = document.querySelector('.ft-native-menu-trigger');
+        const overlay = navigation?.querySelector('.wp-block-navigation__responsive-container');
+        const openButton = navigation?.querySelector('.wp-block-navigation__responsive-container-open');
+        const closeButton = overlay?.querySelector('.wp-block-navigation__responsive-container-close');
+        const content = overlay?.querySelector('.wp-block-navigation__responsive-container-content');
+        if (!navigation || !overlay || !openButton || !closeButton || !content) {
+            return;
+        }
+
+        const topbar = document.createElement('div');
+        const brand = document.createElement('span');
+        topbar.className = 'ft-native-menu-topbar';
+        brand.className = 'ft-native-menu-brand';
+        brand.setAttribute('role', 'img');
+        brand.setAttribute('aria-label', 'FarmTree');
+        topbar.append(brand, closeButton);
+        overlay.prepend(topbar);
+
+        const backgroundTargets = Array.from(document.querySelectorAll([
+            'main',
+            '.ft-native-site-footer',
+            '.ft-native-logo-shell',
+            '.ft-native-primary-nav',
+            '.ft-native-header-actions > .wp-block-buttons',
+            '.ft-native-language'
+        ].join(',')));
+        const previousBodyStyles = {};
+        const previousAriaHidden = new Map();
+        let savedScrollY = 0;
+        let pendingScrollY = null;
+        let returnFocus = null;
+        let pendingReturnFocus = null;
+        let locked = false;
+
+        function captureOpenIntent() {
+            if (locked || pendingScrollY !== null) {
+                return;
+            }
+            pendingScrollY = window.scrollY;
+            pendingReturnFocus = openButton;
+        }
+
+        openButton.addEventListener('pointerdown', captureOpenIntent, true);
+        openButton.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                captureOpenIntent();
+            }
+        }, true);
+        openButton.addEventListener('click', captureOpenIntent, true);
+
+        function focusableElements() {
+            return Array.from(overlay.querySelectorAll(
+                'a[href], button:not([disabled]), summary, [tabindex]:not([tabindex="-1"])'
+            )).filter((element) => !element.hidden && element.getClientRects().length > 0);
+        }
+
+        function isolateBackground(active) {
+            backgroundTargets.forEach((target) => {
+                if (active) {
+                    previousAriaHidden.set(target, target.getAttribute('aria-hidden'));
+                    target.setAttribute('aria-hidden', 'true');
+                    target.inert = true;
+                    return;
+                }
+                target.inert = false;
+                const previous = previousAriaHidden.get(target);
+                if (previous === null || previous === undefined) {
+                    target.removeAttribute('aria-hidden');
+                } else {
+                    target.setAttribute('aria-hidden', previous);
+                }
+            });
+            if (!active) {
+                previousAriaHidden.clear();
+            }
+        }
+
+        function lockPage() {
+            if (locked) {
+                return;
+            }
+            locked = true;
+            savedScrollY = pendingScrollY ?? window.scrollY;
+            returnFocus = pendingReturnFocus ?? (
+                document.activeElement === openButton ? openButton : document.activeElement
+            );
+            pendingScrollY = null;
+            pendingReturnFocus = null;
+            ['position', 'top', 'left', 'right', 'width', 'overflow'].forEach((property) => {
+                previousBodyStyles[property] = document.body.style[property];
+            });
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${savedScrollY}px`;
+            document.body.style.left = '0';
+            document.body.style.right = '0';
+            document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
+            document.body.classList.add('ft-menu-open');
+            document.documentElement.classList.add('ft-menu-open');
+            isolateBackground(true);
+            window.requestAnimationFrame(() => closeButton.focus());
+        }
+
+        function unlockPage() {
+            if (!locked) {
+                return;
+            }
+            locked = false;
+            const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+            Object.entries(previousBodyStyles).forEach(([property, value]) => {
+                document.body.style[property] = value;
+            });
+            document.body.classList.remove('ft-menu-open');
+            document.documentElement.classList.remove('ft-menu-open');
+            isolateBackground(false);
+            document.documentElement.style.scrollBehavior = 'auto';
+            window.scrollTo(0, savedScrollY);
+            window.requestAnimationFrame(() => {
+                document.documentElement.style.scrollBehavior = previousScrollBehavior;
+                if (returnFocus?.isConnected) {
+                    returnFocus.focus();
+                } else {
+                    openButton.focus();
+                }
+                returnFocus = null;
+            });
+        }
+
+        function synchroniseState() {
+            if (overlay.classList.contains('is-menu-open')) {
+                lockPage();
+            } else {
+                unlockPage();
+            }
+        }
+
+        overlay.addEventListener('keydown', (event) => {
+            if (!overlay.classList.contains('is-menu-open')) {
+                return;
+            }
+            if (event.key === 'Escape' && !event.repeat) {
+                event.preventDefault();
+                closeButton.click();
+                return;
+            }
+            if (event.key !== 'Tab') {
+                return;
+            }
+            const focusable = focusableElements();
+            const first = focusable[0];
+            const last = focusable.at(-1);
+            if (event.shiftKey && (document.activeElement === first || !overlay.contains(document.activeElement))) {
+                event.preventDefault();
+                last?.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first?.focus();
+            }
+        });
+
+        new MutationObserver(synchroniseState).observe(overlay, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+        window.addEventListener('pagehide', unlockPage);
+        synchroniseState();
     }
 
     function initialiseFaqDetails() {
@@ -769,10 +1233,14 @@
         document.querySelectorAll(heroSelector).forEach(initialiseHero);
         initialiseLanguageSelector();
         initialiseBentoGroups();
+        initialiseMenuOverlay();
         initialiseFaqDetails();
         initialiseQuotationDialog();
         initialiseMotion();
         initialiseMovingRails();
+        initialiseTestimonials();
+        initialiseTechnologySignal();
+        initialiseProofSpotlights();
         initialiseGlobes();
         initialiseCounters();
         initialiseHeaderState();

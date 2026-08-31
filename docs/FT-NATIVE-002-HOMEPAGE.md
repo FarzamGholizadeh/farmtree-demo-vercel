@@ -72,8 +72,8 @@ Use this hierarchy as the default:
 4. Trust / references / testimonials
 5. Proof Stories / Themes
 6. Supporting audience segmentation, only if it remains useful
-7. FAQ
-8. News & Insights
+7. Last News
+8. FAQ
 9. Final CTA
 
 Professional UX judgement may refine the exact order when an approved existing
@@ -190,7 +190,7 @@ Prepare the architecture, but do not block FT-NATIVE-002 on:
 - Trust includes testimonials and is positioned above Proof Stories / Themes.
 - Proof Stories / Themes are prominent and Use Cases are absent.
 - Audience segmentation, when retained, contains only the three approved groups.
-- FAQ and final CTA remain, while News & Insights appears lower on the page.
+- Last News appears immediately after Proof Stories; FAQ and final CTA follow.
 - Required content is editable by normal WordPress Editors and structural design
   remains locked.
 - Exact theme labels, imagery, footage, testimonials and partner references are
