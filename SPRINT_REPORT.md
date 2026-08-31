@@ -100,6 +100,13 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   Playground runtime at `http://localhost:8888` without Docker. The runtime is
   WordPress 7.1 on PHP 8.2 with SQLite; it mounts the native theme/plugin and the
   unchanged production theme as an inactive visual reference.
+- The local startup chain is restart-safe: it reuses a reachable loopback
+  runtime instead of aborting on `EADDRINUSE`, always runs the fixture bootstrap,
+  waits for the Playground session, and explicitly restores mounted plugin
+  activation before the native theme and content fixtures. The reconstructed
+  fresh database and a second occupied-port run both passed `wp:verify`; the
+  anonymous audit again found 40 HTTP-200 English routes and 103 valid internal
+  links.
 - The safety-scoped bootstrap refuses non-loopback hosts, activates
   `farmtree-native` only locally, creates a private Homepage from the registered
   native pattern and configures that private page as the local front page.

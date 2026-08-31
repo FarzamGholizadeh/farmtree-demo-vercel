@@ -165,6 +165,13 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   fingerprint (`Hello world!` / `hello-world` / canonical sample body), never
   deletes it, and leaves every unrelated post untouched. Verification rejects a
   published canonical sample and confirms `/nl/` and `/de/` remain 404.
+- The local launcher now treats an already-running loopback Playground as a
+  valid restart state instead of failing on port 8888 and skipping bootstrap.
+  The bootstrap waits for auto-login readiness and explicitly restores the
+  mounted `farmtree-content` and safe-disabled AI plugins before activating the
+  native theme, so an ephemeral database reset reconstructs the complete QA
+  state. A second `npm run wp:start` against the occupied port completed with
+  unchanged fixture counts.
 - The final anonymous route audit checked 40 intended English URLs with HTTP
   200, one H1 and noindex, plus 103 internal links with zero broken results.
   The loopback runtime locally publishes its QA fixtures only; production

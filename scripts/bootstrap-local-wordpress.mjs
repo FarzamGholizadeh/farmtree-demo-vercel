@@ -14,12 +14,88 @@ function cookieHeader(response) {
   return setCookies.map((cookie) => cookie.split(';', 1)[0]).join('; ');
 }
 
-async function startSession() {
-  const response = await fetch(baseUrl, { redirect: 'manual' });
-  const cookie = cookieHeader(response);
+const pause = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
-  if (!cookie.includes('wordpress_logged_in_')) {
-    throw new Error('The local Playground auto-login session was not available.');
+async function waitForAutoLoginSession() {
+  const deadline = Date.now() + 60_000;
+  let lastProblem = 'the runtime did not respond';
+
+  do {
+    try {
+      const response = await fetch(baseUrl, {
+        redirect: 'manual',
+        signal: AbortSignal.timeout(5_000)
+      });
+      const cookie = cookieHeader(response);
+
+      if (cookie.includes('wordpress_logged_in_')) return cookie;
+      lastProblem = `HTTP ${response.status} did not provide the Playground auto-login cookie`;
+    } catch (error) {
+      lastProblem = error instanceof Error ? error.message : String(error);
+    }
+
+    await pause(500);
+  } while (Date.now() < deadline);
+
+  throw new Error(`The local Playground auto-login session was not available: ${lastProblem}.`);
+}
+
+async function authenticatedJson(path, { cookie, nonce }, options = {}) {
+  const response = await fetch(new URL(`/wp-json${path}`, baseUrl), {
+    ...options,
+    headers: {
+      Accept: 'application/json',
+      Cookie: cookie,
+      'Content-Type': 'application/json',
+      'X-WP-Nonce': nonce,
+      ...options.headers
+    }
+  });
+  const body = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(`Local WordPress API ${path} failed (${response.status}): ${JSON.stringify(body)}`);
+  }
+
+  return body;
+}
+
+async function startSession() {
+  const cookie = await waitForAutoLoginSession();
+
+  const initialEditorResponse = await fetch(
+    new URL('/wp-admin/post-new.php?post_type=page', baseUrl),
+    { headers: { Cookie: cookie } }
+  );
+  const initialEditorHtml = await initialEditorResponse.text();
+  const initialSettingsMatch = initialEditorHtml.match(/wpApiSettings\s*=\s*(\{[^;]+\});/);
+
+  if (!initialEditorResponse.ok || !initialSettingsMatch) {
+    throw new Error('Could not establish an authenticated local WordPress editor session.');
+  }
+
+  const session = { cookie, nonce: JSON.parse(initialSettingsMatch[1]).nonce };
+  const requiredPlugins = [
+    'farmtree-content/farmtree-content',
+    'farmtree-ai-assistant/farmtree-ai-assistant'
+  ];
+  const installedPlugins = await authenticatedJson('/wp/v2/plugins?context=edit&per_page=100', session);
+
+  for (const pluginId of requiredPlugins) {
+    const installedPlugin = installedPlugins.find(({ plugin }) => plugin === pluginId);
+
+    if (!installedPlugin) {
+      throw new Error(`WordPress did not recognize the mounted local plugin: ${pluginId}.`);
+    }
+    if (installedPlugin.status === 'active') continue;
+    if (verifyOnly) {
+      throw new Error(`${pluginId} is not active in the local WordPress runtime.`);
+    }
+
+    await authenticatedJson(`/wp/v2/plugins/${pluginId}`, session, {
+      method: 'POST',
+      body: JSON.stringify({ status: 'active' })
+    });
   }
 
   const themesResponse = await fetch(new URL('/wp-admin/themes.php', baseUrl), {
@@ -74,23 +150,7 @@ async function startSession() {
 const session = await startSession();
 
 async function api(path, options = {}) {
-  const response = await fetch(new URL(`/wp-json${path}`, baseUrl), {
-    ...options,
-    headers: {
-      Accept: 'application/json',
-      Cookie: session.cookie,
-      'Content-Type': 'application/json',
-      'X-WP-Nonce': session.nonce,
-      ...options.headers
-    }
-  });
-  const body = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    throw new Error(`Local WordPress API ${path} failed (${response.status}): ${JSON.stringify(body)}`);
-  }
-
-  return body;
+  return authenticatedJson(path, session, options);
 }
 
 const canonicalSamplePost = {

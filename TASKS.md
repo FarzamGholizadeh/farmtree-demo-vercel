@@ -1,6 +1,6 @@
 # FarmTree Tasks
 
-_Last updated: 2026-08-27_
+_Last updated: 2026-08-31_
 
 ## Completed Governance Task
 
@@ -66,6 +66,8 @@ Scope, evidence and remaining production/publication gates are defined in
 The isolated loopback-only WordPress Playground runtime recognizes the Block
 Theme and plugin, persists the locally published QA Homepage and revision history, registers the
 required templates/parts/patterns and renders its Query Loop and assets. The
+restart path now reuses an already-running Playground and always reconstructs
+the repository fixtures, including after an ephemeral database reset. The
 local gate is complete: screenshots, console, sequential keyboard/focus,
 Chrome accessibility-tree smoke testing, semantic accessibility, contrast,
 interactions and overflow were reviewed at all nine

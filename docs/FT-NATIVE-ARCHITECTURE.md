@@ -121,10 +121,12 @@ change approved UI/UX.
 Local runtime validation uses `@wordpress/env`'s Playground runtime at
 `http://localhost:8888`. It mounts `farmtree-native`, `farmtree-content` and the
 unchanged `farmtree` reference theme into an isolated SQLite-backed WordPress
-instance. The bootstrap refuses non-loopback hosts, activates only the local
-native theme and creates a private Homepage for editor, save/reload, revision,
-Query Loop and frontend checks. This local runtime never substitutes for the
-production approval gates.
+instance. `npm run wp:start` reuses an already-running loopback Playground or
+starts it when absent, then always runs the repository bootstrap. The bootstrap
+refuses non-loopback hosts, restores the required local plugins and native
+theme, and recreates the QA Homepage and fixtures for editor, save/reload,
+revision, Query Loop and frontend checks. This local runtime never substitutes
+for the production approval gates.
 
 ## Editor Policy
 

@@ -322,6 +322,8 @@ const interactions = readFileSync(resolve(theme, 'assets/js/native-interactions.
 const functions = readFileSync(resolve(theme, 'functions.php'), 'utf8');
 const preview = readFileSync(resolve(root, 'scripts/preview-native-homepage.mjs'), 'utf8');
 const bootstrap = readFileSync(resolve(root, 'scripts/bootstrap-local-wordpress.mjs'), 'utf8');
+const localStart = readFileSync(resolve(root, 'scripts/start-local-wordpress.mjs'), 'utf8');
+const packageJson = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8'));
 
 for (const part of [header, footer, readFileSync(resolve(theme, 'parts/quotation-modal.html'), 'utf8')]) {
   if (part.includes('<?php')) {
@@ -422,6 +424,29 @@ for (const contract of [
 ]) {
   if (!homepage.includes(contract)) {
     throw new Error(`Homepage is missing native parity contract: ${contract}`);
+  }
+}
+if (packageJson.scripts?.['wp:start'] !== 'node scripts/start-local-wordpress.mjs') {
+  throw new Error('wp:start must always pass through the idempotent local runtime launcher.');
+}
+for (const contract of [
+  "['start', '--runtime=playground']",
+  'if (!(await runtimeIsReachable()))',
+  "new URL('./bootstrap-local-wordpress.mjs', import.meta.url)",
+  'Local WordPress startup refuses to inspect or modify a non-loopback host.'
+]) {
+  if (!localStart.includes(contract)) {
+    throw new Error(`Local runtime launcher is missing its restart-safety contract: ${contract}`);
+  }
+}
+for (const contract of [
+  "'farmtree-content/farmtree-content'",
+  "'farmtree-ai-assistant/farmtree-ai-assistant'",
+  "JSON.stringify({ status: 'active' })",
+  'waitForAutoLoginSession'
+]) {
+  if (!bootstrap.includes(contract)) {
+    throw new Error(`Local bootstrap is missing its reconstruction contract: ${contract}`);
   }
 }
 
