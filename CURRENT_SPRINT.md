@@ -2,8 +2,8 @@
 
 ## FT-NATIVE-002 - Native Homepage
 
-Status: Final English experience implemented and locally validated; stopped at
-pre-release
+Status: Homepage finalization implemented and locally validated; stopped at
+pre-release for visual and publication approval
 
 ### Objective
 
@@ -14,14 +14,17 @@ design controls.
 
 ### Final English Master Delivery
 
-The final English experience now includes six-second Hero autoplay with edge
-controls, interaction pause and a mobile swipe handler; the exact user-supplied
-14.5-second Platform GIF with a reduced-motion poster; a clean static technology
-diagram; glass metrics; seamless opposing logo/testimonial rails; four
-image-backed Proof Stories; ten distinct image-backed customer-segment pages;
-16 English support pages; a factual 13-person Team page; a featured-story Blog
-with all nine source-attributed articles; a premium Vacancies empty state; and
-the existing privacy-safe Contact/quotation fallbacks.
+The final English experience now includes six-second Hero autoplay with true
+viewport-edge desktop/tablet controls and a mobile swipe handler; centered
+technology connectors; equal responsive glass metrics; a lazy, draggable
+landscape-context globe; full-width opposing trust rails; premium 2x2 Proof
+Stories; a three-item editorial News feature; and a branded real-404 recovery
+page. It also retains interaction pause; the exact user-supplied 14.5-second
+Platform GIF with a reduced-motion poster; ten distinct image-backed
+customer-segment pages; 16 English support pages; a factual 13-person Team page;
+a featured-story Blog with all nine source-attributed articles; a premium
+Vacancies empty state; and the existing privacy-safe Contact/quotation
+fallbacks.
 
 For anonymous loopback QA only, the native Homepage, English pages, custom
 entries and News posts are locally published. Nothing was published or
@@ -58,11 +61,13 @@ explicit user approval before dispatch.
 1. Hero / positioning
 2. Platform / planning value
 3. Technology / how FarmTree works
-4. Trust / references / testimonials
-5. Proof Stories / Themes
-6. FAQ
-7. News & Insights
-8. Final CTA
+4. Track Record metrics
+5. Global landscape-context globe
+6. Trust / references / testimonials
+7. Proof Stories / Themes
+8. FAQ
+9. News & Insights
+10. Final CTA
 
 The large audience section and Homepage Use Cases are omitted. News is lower,
 trust appears before proof stories, and the page is materially shorter than the
@@ -147,6 +152,11 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   `scrollWidth === innerWidth`; the only off-screen children belong to the
   intentionally contained horizontal partner-logo rail. Final screenshots are
   in `qa/screenshots/final-english-experience/`.
+- The Homepage-finalization rerun corrected a 41px trust-rail overflow and the
+  constrained Hero-control geometry found by rendered QA. All nine required
+  widths now have zero horizontal overflow, full-viewport trust rails and
+  far-edge arrows at 768px and above. Final evidence is in
+  `qa/screenshots/homepage-finalization/`, including the menu, globe and 404.
 - Browser error/warning logs were empty after the interaction walkthrough.
   Rendered semantic audits at 390 and 1440 found one H1, complete
   Header/Main/Footer landmarks, no heading-level jumps, duplicate IDs, missing

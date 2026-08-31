@@ -315,6 +315,7 @@ for (const pattern of [
 
 const homepage = readFileSync(resolve(theme, 'patterns/homepage-foundation.php'), 'utf8');
 const frontPage = readFileSync(resolve(theme, 'templates/front-page.html'), 'utf8');
+const errorPage = readFileSync(resolve(theme, 'templates/404.html'), 'utf8');
 const themeStyles = readFileSync(resolve(theme, 'style.css'), 'utf8');
 const editorStyles = readFileSync(resolve(theme, 'assets/css/editor.css'), 'utf8');
 const callToAction = readFileSync(resolve(theme, 'patterns/call-to-action.php'), 'utf8');
@@ -372,6 +373,9 @@ const requiredHomepageContent = [
   'Understand future scenarios',
   'How agroforestry projects are planned, monitored and reported',
   'science-based, multi-KPI business plan',
+  'Global perspective',
+  'Agroforestry decisions across diverse landscapes',
+  'not claimed project locations',
   'Trust and references',
   'Proof Stories',
   'Carbon planning',
@@ -424,6 +428,28 @@ for (const contract of [
 ]) {
   if (!homepage.includes(contract)) {
     throw new Error(`Homepage is missing native parity contract: ${contract}`);
+  }
+}
+for (const contract of [
+  'data-ft-globe-shell',
+  'data-ft-globe',
+  'Interactive globe illustrating neutral agroforestry landscape contexts',
+  'perPage":3',
+  'ft-home-news-more'
+]) {
+  if (!homepage.includes(contract)) {
+    throw new Error(`Homepage is missing finalization contract: ${contract}`);
+  }
+}
+for (const contract of [
+  'ft-error-code',
+  'Page not found',
+  "The page you're looking for might have been moved or doesn't exist.",
+  'href="/">Go Home</a>',
+  'href="/platform/">Explore</a>'
+]) {
+  if (!errorPage.includes(contract)) {
+    throw new Error(`404 template is missing finalization contract: ${contract}`);
   }
 }
 if (packageJson.scripts?.['wp:start'] !== 'node scripts/start-local-wordpress.mjs') {
@@ -715,6 +741,8 @@ const sectionOrder = [
   'ft-home-hero',
   'ft-home-platform',
   'ft-home-technology',
+  'ft-home-metrics',
+  'ft-home-globe',
   'ft-home-trust',
   'ft-home-proof',
   'ft-home-faq',

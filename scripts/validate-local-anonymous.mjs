@@ -56,18 +56,18 @@ if (failures.length > 0) {
 const homepage = routeResults.find(({ path }) => path === '/')?.body ?? '';
 const newestHomepageArticles = [...articles]
   .sort((left, right) => right.sourceDate.localeCompare(left.sourceDate))
-  .slice(0, 4);
+  .slice(0, 3);
 for (const article of newestHomepageArticles) {
   if (!homepage.includes(`/${article.slug}/`)) throw new Error(`Homepage News omits: ${article.slug}`);
 }
-if ((homepage.match(/class="[^"\n]*ft-news-item/g) ?? []).length !== 4) throw new Error('Homepage News does not render exactly four latest cards.');
-if ((homepage.match(/class="[^"\n]*wp-block-post-featured-image/g) ?? []).length < 4) throw new Error('Homepage News cards are missing featured images.');
-if ((homepage.match(/>Read article<span class="screen-reader-text">/g) ?? []).length !== 4) throw new Error('Homepage News cards do not each expose the Read article CTA.');
-if ((homepage.match(/class="[^"\n]*wp-block-post-terms/g) ?? []).length < 4) throw new Error('Homepage News cards are missing topics.');
-if ((homepage.match(/<time\b/g) ?? []).length < 4) throw new Error('Homepage News cards are missing publication dates.');
-if ((homepage.match(/class="[^"\n]*wp-block-post-excerpt/g) ?? []).length < 4) throw new Error('Homepage News cards are missing excerpts.');
-if ((homepage.match(/\bsrcset=/g) ?? []).length < 4) throw new Error('Homepage News images are missing responsive srcset attributes.');
-if ((homepage.match(/<img\b[^>]*\bwidth=/g) ?? []).length < 4 || (homepage.match(/<img\b[^>]*\bheight=/g) ?? []).length < 4) {
+if ((homepage.match(/class="[^"\n]*ft-news-item/g) ?? []).length !== 3) throw new Error('Homepage News does not render the three-item editorial feature.');
+if ((homepage.match(/class="[^"\n]*wp-block-post-featured-image/g) ?? []).length < 3) throw new Error('Homepage News cards are missing featured images.');
+if ((homepage.match(/>Read article<span class="screen-reader-text">/g) ?? []).length !== 3) throw new Error('Homepage News cards do not each expose the Read article CTA.');
+if ((homepage.match(/class="[^"\n]*wp-block-post-terms/g) ?? []).length < 3) throw new Error('Homepage News cards are missing topics.');
+if ((homepage.match(/<time\b/g) ?? []).length < 3) throw new Error('Homepage News cards are missing publication dates.');
+if ((homepage.match(/class="[^"\n]*wp-block-post-excerpt/g) ?? []).length < 3) throw new Error('Homepage News cards are missing excerpts.');
+if ((homepage.match(/\bsrcset=/g) ?? []).length < 3) throw new Error('Homepage News images are missing responsive srcset attributes.');
+if ((homepage.match(/<img\b[^>]*\bwidth=/g) ?? []).length < 3 || (homepage.match(/<img\b[^>]*\bheight=/g) ?? []).length < 3) {
   throw new Error('Homepage News images are missing intrinsic dimensions.');
 }
 
@@ -115,6 +115,17 @@ for (const reserved of ['/nl/', '/de/']) {
   if (response.status !== 404) throw new Error(`Reserved locale must remain unpublished: ${reserved} returned ${response.status}`);
 }
 
+const { response: notFoundResponse, body: notFoundBody } = await fetchLocal('/homepage-finalization-missing-page/');
+if (notFoundResponse.status !== 404) throw new Error(`Missing-page route returned ${notFoundResponse.status} instead of 404.`);
+if (!/<h1\b[^>]*>[^<]*This page is outside the current landscape/i.test(notFoundBody) || !notFoundBody.includes('Page not found')) {
+  throw new Error('404 page is missing its accessible heading treatment.');
+}
+if (!/The page you(?:'|’|&#8217;)re looking for might have been moved or doesn(?:'|’|&#8217;)t exist\./i.test(notFoundBody)) {
+  throw new Error('404 page is missing the approved message.');
+}
+if (!/href=["']\/["']/.test(notFoundBody) || !/href=["']\/platform\/["']/.test(notFoundBody)) throw new Error('404 recovery actions are missing their real destinations.');
+if (!/<meta name=['"]robots['"][^>]*content=['"][^'"]*noindex/i.test(notFoundBody)) throw new Error('404 page is missing noindex.');
+
 const internalPaths = new Set();
 for (const { body } of routeResults) {
   for (const match of body.matchAll(/href=["']([^"']+)["']/g)) {
@@ -136,7 +147,7 @@ console.log(JSON.stringify({
   targetRoutes: targetRoutes.length,
   routeStatus: Object.fromEntries(routeResults.map(({ path, status }) => [path, status])),
   published: { pages: pages.length + 2, proofStories: proofs.length, customerSegments: segments.length, news: articles.length },
-  homepageNews: { cards: 4, featuredImages: 4, topics: 4, excerpts: 4, dates: 4, ctas: 4, responsiveImages: true },
+  homepageNews: { cards: 3, featuredImages: 3, topics: 3, excerpts: 3, dates: 3, ctas: 3, responsiveImages: true },
   blog: { featured: 1, cards: 8, total: 9 },
   team: { members: 13, portraits: 13 },
   segmentHeroes: segments.length,
@@ -144,5 +155,6 @@ console.log(JSON.stringify({
   brokenInternalLinks: brokenLinks.length,
   noindex: { meta: true, xRobotsTag: 'noindex, nofollow', searchVisibility: 'disabled' },
   reservedLocales: { nl: 404, de: 404 },
+  notFound: { status: 404, approvedMessage: true, recoveryLinks: ['/', '/platform/'], noindex: true },
   defaultSamplePost: 'not public'
 }, null, 2));

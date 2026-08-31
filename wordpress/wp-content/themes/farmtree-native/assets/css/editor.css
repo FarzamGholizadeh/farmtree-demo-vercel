@@ -98,6 +98,61 @@
   object-fit: cover;
 }
 
+.editor-styles-wrapper .ft-globe-stage {
+  display: grid;
+  min-height: 22rem;
+  place-items: center;
+  border: 1px dashed rgb(0 97 63 / 28%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(195 213 86 / 18%), rgb(0 97 63 / 8%) 58%, transparent 59%);
+}
+
+.editor-styles-wrapper .ft-globe-stage::before {
+  color: rgb(0 97 63 / 72%);
+  content: "Interactive landscape-context globe preview";
+  font-weight: 700;
+}
+
+.editor-styles-wrapper .ft-globe-canvas {
+  display: none;
+}
+
+.editor-styles-wrapper .ft-proof-card {
+  display: block;
+  min-height: 0;
+  background: #fff !important;
+}
+
+.editor-styles-wrapper .ft-proof-card::after {
+  display: none;
+}
+
+.editor-styles-wrapper .ft-proof-card > figure {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  height: auto;
+  aspect-ratio: 16 / 10;
+}
+
+.editor-styles-wrapper .ft-proof-card-copy {
+  position: relative;
+  inset: auto;
+  min-height: 0;
+  color: rgb(22 49 38);
+}
+
+.editor-styles-wrapper .ft-proof-card-copy :where(.ft-native-eyebrow, h3, p, a) {
+  color: inherit !important;
+}
+
+.editor-styles-wrapper :where(.ft-partner-logos, .ft-trust-quotes) {
+  width: auto !important;
+  max-width: var(--wp--style--global--wide-size) !important;
+  margin-inline: auto !important;
+  mask-image: none;
+}
+
 @media (width <= 600px) {
   .editor-styles-wrapper .ft-home-hero-media {
     grid-template-columns: 1fr;

@@ -1,23 +1,31 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","anchor":"main-content","className":"ft-native-page-main","style":{"dimensions":{"minHeight":"65vh"},"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
-<main id="main-content" class="wp-block-group ft-native-page-main" style="min-height:65vh;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:paragraph {"className":"ft-native-eyebrow","fontSize":"small"} -->
-<p class="ft-native-eyebrow has-small-font-size">404</p>
+<!-- wp:group {"tagName":"main","anchor":"main-content","className":"ft-native-page-main ft-error-page","style":{"dimensions":{"minHeight":"78vh"},"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-ivory","layout":{"type":"constrained"}} -->
+<main id="main-content" class="wp-block-group ft-native-page-main ft-error-page has-farmtree-ivory-background-color has-background" style="min-height:78vh;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"className":"ft-error-shell","layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group ft-error-shell"><!-- wp:html --><p class="ft-error-code" aria-hidden="true">404</p><!-- /wp:html -->
+
+<!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
+<p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">Page not found</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":1,"fontSize":"heading"} -->
-<h1 class="wp-block-heading has-heading-font-size">This page could not be found.</h1>
+<h1 class="wp-block-heading has-heading-font-size">This page is outside the current landscape</h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">Return to FarmTree or use the navigation to continue.</p>
+<p class="has-lead-font-size">The page you're looking for might have been moved or doesn't exist.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/">Return home</a></div>
+<!-- wp:buttons {"className":"ft-error-actions","layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons ft-error-actions"><!-- wp:button {"backgroundColor":"farmtree-green","textColor":"white"} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-white-color has-farmtree-green-background-color has-text-color has-background wp-element-button" href="/">Go Home</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline"} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/platform/">Explore</a></div>
 <!-- /wp:button --></div>
-<!-- /wp:buttons --></main>
+<!-- /wp:buttons --></div>
+<!-- /wp:group --></main>
 <!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer"} /-->

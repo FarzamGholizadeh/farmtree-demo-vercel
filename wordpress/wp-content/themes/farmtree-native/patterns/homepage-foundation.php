@@ -267,6 +267,38 @@
 <!-- /wp:columns --></section>
 <!-- /wp:group -->
 
+<!-- wp:group {"tagName":"section","metadata":{"name":"Global FarmTree perspective"},"align":"full","className":"ft-home-section ft-home-globe","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-ivory","layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull ft-home-section ft-home-globe has-farmtree-ivory-background-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"align":"wide","verticalAlignment":"center","className":"ft-globe-layout"} -->
+<div class="wp-block-columns alignwide are-vertically-aligned-center ft-globe-layout"><!-- wp:column {"verticalAlignment":"center","width":"40%","className":"ft-globe-copy"} -->
+<div class="wp-block-column is-vertically-aligned-center ft-globe-copy" style="flex-basis:40%"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
+<p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">Global perspective</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":2,"fontSize":"heading-small"} -->
+<h2 class="wp-block-heading has-heading-small-font-size">Agroforestry decisions across diverse landscapes</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"fontSize":"lead"} -->
+<p class="has-lead-font-size">FarmTree supports scenario thinking across tropical, temperate, dryland and highland contexts. The markers illustrate landscape contexts, not claimed project locations.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ft-globe-instruction","fontSize":"small"} -->
+<p class="ft-globe-instruction has-small-font-size">Drag the globe or use the left and right arrow keys to explore.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"verticalAlignment":"center","width":"60%","className":"ft-globe-media"} -->
+<div class="wp-block-column is-vertically-aligned-center ft-globe-media" style="flex-basis:60%"><!-- wp:html -->
+<div class="ft-globe-stage" data-ft-globe-shell>
+<canvas class="ft-globe-canvas" width="720" height="720" tabindex="0" role="img" aria-label="Interactive globe illustrating neutral agroforestry landscape contexts" aria-describedby="ft-globe-description" data-ft-globe></canvas>
+<p id="ft-globe-description" class="screen-reader-text">Decorative markers represent tropical, temperate, dryland and highland landscape contexts. They do not identify FarmTree project locations.</p>
+<noscript><p>The interactive landscape-context globe requires JavaScript. The section text remains available without it.</p></noscript>
+</div>
+<!-- /wp:html --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></section>
+<!-- /wp:group -->
+
 <!-- wp:group {"tagName":"section","metadata":{"name":"Trust / references / testimonials"},"align":"full","className":"ft-home-section ft-home-trust","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-mist","textColor":"farmtree-ink","layout":{"type":"constrained"}} -->
 <section class="wp-block-group alignfull ft-home-section ft-home-trust has-farmtree-ink-color has-farmtree-mist-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"align":"wide","className":"ft-home-section-heading","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignwide ft-home-section-heading"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
@@ -283,28 +315,28 @@
 <!-- /wp:group -->
 
 <!-- wp:gallery {"columns":6,"imageCrop":false,"linkTo":"none","align":"wide","className":"ft-partner-logos"} -->
-<figure class="wp-block-gallery alignwide has-nested-images columns-6 ft-partner-logos"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/giz.png' ) ); ?>" alt="GIZ"/></figure>
+<figure class="wp-block-gallery alignwide has-nested-images columns-6 ft-partner-logos"><!-- wp:image {"sizeSlug":"full","linkDestination":"custom","href":"/acknowledgements/"} -->
+<figure class="wp-block-image size-full"><a href="/acknowledgements/" aria-label="GIZ reference context"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/giz.png' ) ); ?>" alt="GIZ"/></a></figure>
 <!-- /wp:image -->
 
-<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/rabobank.png' ) ); ?>" alt="Rabobank"/></figure>
+<!-- wp:image {"sizeSlug":"full","linkDestination":"custom","href":"/acknowledgements/"} -->
+<figure class="wp-block-image size-full"><a href="/acknowledgements/" aria-label="Rabobank reference context"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/rabobank.png' ) ); ?>" alt="Rabobank"/></a></figure>
 <!-- /wp:image -->
 
-<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/cgiar.png' ) ); ?>" alt="CGIAR"/></figure>
+<!-- wp:image {"sizeSlug":"full","linkDestination":"custom","href":"/acknowledgements/"} -->
+<figure class="wp-block-image size-full"><a href="/acknowledgements/" aria-label="CGIAR reference context"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/cgiar.png' ) ); ?>" alt="CGIAR"/></a></figure>
 <!-- /wp:image -->
 
-<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/fao.png' ) ); ?>" alt="FAO"/></figure>
+<!-- wp:image {"sizeSlug":"full","linkDestination":"custom","href":"/acknowledgements/"} -->
+<figure class="wp-block-image size-full"><a href="/acknowledgements/" aria-label="FAO reference context"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/fao.png' ) ); ?>" alt="FAO"/></a></figure>
 <!-- /wp:image -->
 
-<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/catie.png' ) ); ?>" alt="CATIE"/></figure>
+<!-- wp:image {"sizeSlug":"full","linkDestination":"custom","href":"/acknowledgements/"} -->
+<figure class="wp-block-image size-full"><a href="/acknowledgements/" aria-label="CATIE reference context"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/catie.png' ) ); ?>" alt="CATIE"/></a></figure>
 <!-- /wp:image -->
 
-<!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/helvetas.png' ) ); ?>" alt="Helvetas"/></figure>
+<!-- wp:image {"sizeSlug":"full","linkDestination":"custom","href":"/acknowledgements/"} -->
+<figure class="wp-block-image size-full"><a href="/acknowledgements/" aria-label="Helvetas reference context"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partners/helvetas.png' ) ); ?>" alt="Helvetas"/></a></figure>
 <!-- /wp:image --></figure>
 <!-- /wp:gallery -->
 
@@ -388,7 +420,7 @@
 
 <!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size">Turn field assumptions into consistent carbon projections across project scenarios</p>
-<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/carbon-planning/">Explore story</a></p><!-- /wp:paragraph --></div>
+<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/carbon-planning/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
@@ -410,7 +442,7 @@
 
 <!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size">Compare costs, benefits and projected returns across different farm and project options</p>
-<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/farm-value-modelling/">Explore story</a></p><!-- /wp:paragraph --></div>
+<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/farm-value-modelling/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
@@ -432,7 +464,7 @@
 
 <!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size">Compare shade-tree systems, species mixes and long-term landscape scenarios</p>
-<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/cocoa-scenario-planning/">Explore story</a></p><!-- /wp:paragraph --></div>
+<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/cocoa-scenario-planning/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
@@ -454,7 +486,7 @@
 
 <!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size">Connect water balance and ecosystem indicators to long-term monitoring and investment decisions</p>
-<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/water-landscape-resilience/">Explore story</a></p><!-- /wp:paragraph --></div>
+<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/water-landscape-resilience/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
@@ -539,14 +571,10 @@
 <!-- wp:heading {"level":2,"fontSize":"heading-small"} -->
 <h2 class="wp-block-heading has-heading-small-font-size">Latest from FarmTree</h2>
 <!-- /wp:heading --></div>
+<!-- /wp:group --></div>
 <!-- /wp:group -->
 
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size"><a href="/blog/">View all insights</a></p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<!-- wp:query {"queryId":2,"query":{"perPage":4,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"align":"wide","className":"ft-home-news-query"} -->
+<!-- wp:query {"queryId":2,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"align":"wide","className":"ft-home-news-query"} -->
 <div class="wp-block-query alignwide ft-home-news-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
 <!-- wp:group {"className":"ft-news-item","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-news-item"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
@@ -568,7 +596,13 @@
 <p>No insights have been published yet</p>
 <!-- /wp:paragraph -->
 <!-- /wp:query-no-results --></div>
-<!-- /wp:query --></section>
+<!-- /wp:query -->
+
+<!-- wp:buttons {"align":"wide","className":"ft-home-news-more","layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons alignwide ft-home-news-more"><!-- wp:button {"backgroundColor":"farmtree-green","textColor":"white"} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-white-color has-farmtree-green-background-color has-text-color has-background wp-element-button" href="/blog/">View all insights</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></section>
 <!-- /wp:group -->
 
 <!-- wp:pattern {"slug":"farmtree-native/call-to-action"} /--></div>

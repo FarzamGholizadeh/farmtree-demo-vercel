@@ -685,6 +685,7 @@ const requiredFrontendContent = [
   'ft-native-site-header',
   'Make agroforestry measurable, investable and scalable',
   'The FarmTree Platform',
+  'Agroforestry decisions across diverse landscapes',
   'Trust and references',
   'Proof Stories',
   'News &amp; Insights',

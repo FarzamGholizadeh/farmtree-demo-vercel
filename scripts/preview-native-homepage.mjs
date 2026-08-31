@@ -353,6 +353,8 @@ function validateComposedPreview() {
     'ft-home-hero',
     'ft-home-platform',
     'ft-home-technology',
+    'ft-home-metrics',
+    'ft-home-globe',
     'ft-home-trust',
     'ft-home-proof',
     'ft-home-faq',

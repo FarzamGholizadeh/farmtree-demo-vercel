@@ -1,13 +1,32 @@
 # FT-NATIVE-002 Sprint Report
 
-Status: Final English experience implemented and locally validated; stopped at
-pre-release
+Status: Homepage finalization implemented and locally validated; stopped at
+pre-release for visual and publication approval
 
 ## Homepage Structure
 
-The native Homepage now follows Hero, Platform, Technology, Trust, Proof
-Stories, FAQ, News & Insights and Final CTA. It is implemented in
+The native Homepage now follows Hero, Platform, Technology, Track Record,
+Global Perspective, Trust, Proof Stories, FAQ, News & Insights and Final CTA. It is implemented in
 `farmtree-native` as core block markup and a content-only locked pattern.
+
+## Homepage Finalization
+
+The finalization pass moves Hero controls to the true viewport-safe edge on
+desktop/tablet while preserving the six-second loop and mobile swipe contract;
+centres the four Technology connectors; makes all metrics equal-height and
+overflow-safe; adds a lazy canvas globe framed explicitly as landscape context;
+expands both trust rails to the full rendered viewport with seamless opposing
+tracks; upgrades Proof Stories to linked image-overlay cards; renders the three
+newest WordPress posts as one primary and two secondary editorial features; and
+adds the premium real-404 recovery shell. Menu alignment, footer social optical
+centering and the Wageningen OpenStreetMap destination are also verified.
+
+Rendered QA at 320, 375, 390, 430, 768, 1024, 1280, 1440 and 1920 found and
+corrected the trust-rail overflow and constrained Hero-control container. The
+final matrix has no horizontal overflow or visible broken images. Browser logs
+remain empty; the globe lazy-load, keyboard focus and pointer drag, FAQ, Hero,
+trust-rail hover pause, footer rotation, menu and 404 recovery interactions
+passed. Evidence is in `qa/screenshots/homepage-finalization/`.
 
 ## Visual Parity Correction
 
