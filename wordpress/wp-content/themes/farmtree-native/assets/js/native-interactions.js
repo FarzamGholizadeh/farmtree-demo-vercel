@@ -343,7 +343,6 @@
             '.ft-faq-list > details',
             '.ft-news-item',
             '.ft-final-cta > *',
-            '.ft-native-footer-top',
             '.ft-native-footer-grid'
         ].join(','));
 
@@ -401,24 +400,33 @@
             const createClone = () => {
                 const clone = sequence.cloneNode(true);
                 clone.setAttribute('aria-hidden', 'true');
+                clone.setAttribute('inert', '');
                 clone.inert = true;
+                clone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
                 clone.querySelectorAll('a, button, input, summary, [tabindex]').forEach((control) => {
                     control.setAttribute('tabindex', '-1');
                 });
                 return clone;
             };
             const fillTrack = () => {
-                track.querySelectorAll('.ft-moving-rail-sequence[aria-hidden="true"]').forEach((clone) => clone.remove());
                 const sequenceWidth = sequence.getBoundingClientRect().width;
                 if (sequenceWidth <= 0) {
                     return;
                 }
-                const sequenceCount = Math.max(2, Math.ceil((rail.clientWidth + sequenceWidth) / sequenceWidth));
-                for (let index = 1; index < sequenceCount; index += 1) {
-                    track.append(createClone());
+                const sequenceCount = Math.max(3, Math.ceil((rail.clientWidth * 2) / sequenceWidth) + 1);
+                const existingClones = Array.from(track.querySelectorAll('.ft-moving-rail-sequence[aria-hidden="true"]'));
+                const fragment = document.createDocumentFragment();
+                for (let index = existingClones.length + 1; index < sequenceCount; index += 1) {
+                    fragment.append(createClone());
+                }
+                track.append(fragment);
+                existingClones.slice(sequenceCount - 1).forEach((clone) => clone.remove());
+                if (isTestimonialRail) {
+                    rail.dataset.ftRailSequenceCount = String(sequenceCount);
                 }
                 track.style.setProperty('--ft-rail-distance', `${sequenceWidth}px`);
             };
+            fillTrack();
             window.requestAnimationFrame(fillTrack);
             if ('ResizeObserver' in window) {
                 const observer = new ResizeObserver(fillTrack);

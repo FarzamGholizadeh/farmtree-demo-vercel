@@ -350,12 +350,14 @@ assertCssRuleInAtRule(
 for (const platformContract of [
   'final-tools-review-11s-to-40s-poster.png',
   'final-tools-review-11s-to-40s-2x.gif',
-  'prefers-reduced-motion: reduce',
   'The approved FarmTree Platform workflow'
 ]) {
   if (!nativeHomepage.includes(platformContract)) {
     throw new Error(`Approved single-media Platform contract is missing: ${platformContract}`);
   }
+}
+if (!nativeStyles.includes('@media (prefers-reduced-motion: reduce)') || !nativeStyles.includes('.ft-platform-media-frame .ft-platform-poster')) {
+  throw new Error('Approved Platform media must provide a CSS reduced-motion poster fallback.');
 }
 if (/data-ft-platform-(?:dot|prev|next)/.test(nativeHomepage)) {
   throw new Error('Platform must not retain obsolete screenshot carousel controls.');
@@ -365,7 +367,6 @@ const semanticPairs = [
   [productionHeader, 'header-actions', nativeHeader, 'ft-native-header-actions'],
   [productionHeader, 'mobile-grid ft-bento', nativeHeader, 'ft-native-menu-segments'],
   [productionHeader, 'lang-switcher', nativeHeader, 'ft-native-language'],
-  [productionFooter, 'footer-top', nativeFooter, 'ft-native-footer-top'],
   [productionFooter, 'footer-links', nativeFooter, 'ft-native-footer-grid'],
   [productionFooter, 'footer-bottom', nativeFooter, 'ft-native-footer-bottom'],
   [productionComponents, '.overlap-card', nativeStyles, '.ft-platform-copy'],

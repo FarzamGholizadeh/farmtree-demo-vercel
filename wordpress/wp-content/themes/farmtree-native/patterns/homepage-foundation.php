@@ -154,20 +154,15 @@
 
 <!-- wp:column {"verticalAlignment":"center","width":"58%","className":"ft-platform-media"} -->
 <div class="wp-block-column is-vertically-aligned-center ft-platform-media" style="flex-basis:58%"><!-- wp:group {"metadata":{"name":"Editable FarmTree Platform media"},"className":"ft-platform-visual","layout":{"type":"default"}} -->
-<div class="wp-block-group ft-platform-visual"><!-- wp:html -->
-<div class="ft-platform-device" role="group" aria-label="FarmTree Platform shown in a laptop">
-<div class="ft-platform-device-lid">
-<span class="ft-platform-device-camera" aria-hidden="true"></span>
-<div class="ft-platform-device-screen">
-<picture class="ft-platform-screen ft-platform-gif">
-<source media="(prefers-reduced-motion: reduce)" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/media/final-tools-review-11s-to-40s-poster.png' ) ); ?>">
-<img src="<?php echo esc_url( get_theme_file_uri( 'assets/media/final-tools-review-11s-to-40s-2x.gif' ) ); ?>" width="960" height="540" loading="lazy" decoding="async" alt="FarmTree Platform workflow moving from portfolio selection through plot configuration and modelling tools"/>
-</picture>
-</div>
-</div>
-<div class="ft-platform-device-base" aria-hidden="true"><span></span></div>
-</div>
-<!-- /wp:html -->
+<div class="wp-block-group ft-platform-visual"><!-- wp:group {"metadata":{"name":"FarmTree Platform media frame"},"className":"ft-platform-media-frame","layout":{"type":"default"}} -->
+<div class="wp-block-group ft-platform-media-frame"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-platform-screen ft-platform-gif"} -->
+<figure class="wp-block-image size-full ft-platform-screen ft-platform-gif"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/media/final-tools-review-11s-to-40s-2x.gif' ) ); ?>" width="960" height="540" loading="lazy" decoding="async" alt="FarmTree Platform workflow moving from portfolio selection through plot configuration and modelling tools"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-platform-screen ft-platform-poster"} -->
+<figure class="wp-block-image size-full ft-platform-screen ft-platform-poster" aria-hidden="true"><img class="ft-platform-poster-image" src="<?php echo esc_url( get_theme_file_uri( 'assets/media/final-tools-review-11s-to-40s-poster.png' ) ); ?>" width="960" height="540" loading="lazy" decoding="async" alt=""/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:group -->
 
 <!-- wp:paragraph {"className":"ft-home-media-caption","fontSize":"caption"} -->
 <p class="ft-home-media-caption has-caption-font-size">The approved FarmTree Platform workflow</p>

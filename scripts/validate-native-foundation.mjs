@@ -264,10 +264,6 @@ if (header.includes('wp:site-title') || header.includes('wp:site-logo')) {
 const footer = readFileSync(resolve(theme, 'parts/footer.html'), 'utf8');
 for (const contract of [
   'ft-native-footer-location',
-  'ft-native-footer-top',
-  'Take action',
-  'Join us in growing better agroforestry decisions',
-  'Request a FarmTree demo ↗',
   'About Us',
   'Platform',
   'FarmTree in the field',
@@ -278,6 +274,16 @@ for (const contract of [
 ]) {
   if (!footer.includes(contract)) {
     throw new Error(`Footer is missing approved visual contract: ${contract}`);
+  }
+}
+for (const removedFooterCtaContract of [
+  'ft-native-footer-top',
+  'Take action',
+  'Join us in growing better agroforestry decisions',
+  'Request a FarmTree demo ↗'
+]) {
+  if (footer.includes(removedFooterCtaContract)) {
+    throw new Error(`Shared Footer must not retain its removed CTA contract: ${removedFooterCtaContract}`);
   }
 }
 
@@ -459,7 +465,6 @@ for (const contract of [
   'ft-platform-media',
   'final-tools-review-11s-to-40s-poster.png',
   'final-tools-review-11s-to-40s-2x.gif',
-  'prefers-reduced-motion: reduce',
   'The approved FarmTree Platform workflow',
   'Site information',
   'Climate, soil and terrain',
@@ -549,20 +554,21 @@ if (
 }
 
 if (
-  (homepage.match(/class="ft-platform-screen ft-platform-gif"/g) ?? []).length !== 1 ||
-  !homepage.includes('ft-platform-device-lid') ||
-  !homepage.includes('ft-platform-device-screen') ||
-  !homepage.includes('ft-platform-device-base') ||
+  !homepage.includes('ft-platform-screen ft-platform-gif') ||
+  !homepage.includes('ft-platform-screen ft-platform-poster') ||
+  !homepage.includes('ft-platform-media-frame') ||
+  /ft-platform-device(?:-lid|-screen|-base|-camera)?/.test(homepage) ||
   /data-ft-platform-(?:dot|prev|next)|<video\b/i.test(homepage)
 ) {
-  throw new Error('Platform media must expose the single approved GIF with no obsolete video or carousel controls.');
+  throw new Error('Platform media must expose the approved GIF/poster directly with no obsolete device, video or carousel UI.');
 }
 
 for (const image of homepage.matchAll(/<img\b[\s\S]*?\/>/g)) {
-  if (!/\balt="[^"\s][^"]*"/.test(image[0])) {
+  const isDecorativeReducedMotionPoster = image[0].includes('class="ft-platform-poster-image"') && image[0].includes('alt=""');
+  if (!isDecorativeReducedMotionPoster && !/\balt="[^"\s][^"]*"/.test(image[0])) {
     throw new Error(`Homepage image must have meaningful alternative text: ${image[0]}`);
   }
-  if (!image[0].includes('assets/images/proof/') && !image[0].includes('assets/images/testimonials/') && !image[0].includes('assets/media/final-tools-review-11s-to-40s-2x.gif') && /\s(?:width|height|loading|decoding|fetchpriority)="/i.test(image[0])) {
+  if (!image[0].includes('assets/images/proof/') && !image[0].includes('assets/images/testimonials/') && !image[0].includes('assets/media/final-tools-review-11s-to-40s-2x.gif') && !image[0].includes('assets/media/final-tools-review-11s-to-40s-poster.png') && /\s(?:width|height|loading|decoding|fetchpriority)="/i.test(image[0])) {
     throw new Error(`Core Image saved markup must leave runtime-only image attributes to WordPress: ${image[0]}`);
   }
 }
@@ -910,7 +916,9 @@ for (const contract of [
 for (const contract of [
   "track.style.animationDelay = '-8s'",
   "rail.dataset.ftRailOffsetSeconds = '8'",
-  '.ft-platform-device-screen',
+  "clone.setAttribute('inert', '')",
+  'Math.ceil((rail.clientWidth * 2) / sequenceWidth) + 1',
+  '.ft-platform-media-frame',
   '.ft-testimonial-verified',
   '.ft-proof-card::before',
   'display: none !important',

@@ -17,9 +17,10 @@ design controls.
 The final English experience now includes five-second Hero autoplay with calm
 staggered copy/media transitions, true viewport-edge desktop/tablet controls,
 a new illustrative field-planning Hero, a documentary Impact Reporting slide
-and a unified mobile pointer-swipe handler; a CSS-built laptop containing the
-approved Platform GIF; connector-free Technology cards; equal responsive glass
-metrics; a lazy, two-axis draggable realistic Earth using a self-hosted NASA
+and a unified mobile pointer-swipe handler; the approved Platform GIF in a
+direct, rounded 16:9 core-Image frame; connector-free Technology cards; equal
+responsive glass metrics; a lazy, two-axis draggable realistic Earth using a
+self-hosted NASA
 Blue Marble texture with a Natural Earth fallback; seamless partner and
 five-card social testimonial marquees with an eight-second initial offset;
 responsive 4-up/2-up/1-up Proof Stories with four new theme-specific
@@ -179,12 +180,19 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   768, 1024, 1280, 1440 and 1920 pixels. Every width has one H1, four Proof
   cards, five original testimonial cards, three News cards, eight FAQs, no
   horizontal document overflow, no broken images, no duplicate IDs, no missing
-  image alt attributes and no unnamed buttons. The laptop screen remains a
+  image alt attributes and no unnamed buttons. The Platform media remains a
   clipped 16:9 surface at every width. Hero controls/live status, two-axis Globe
   drag plus arrow keys, the eight-second testimonial offset, gap-free moving
   rails, FAQ disclosure, focus treatment, restrained Proof hover and News-chip
   contrast passed with an empty browser warning/error log. Evidence is in
   `qa/screenshots/final-refinement/`.
+- The final fast patch removes the decorative Platform device shell, keeps the
+  approved GIF and reduced-motion poster in an editor-visible 16:9 frame,
+  guarantees three accessibility-neutral testimonial sequences with more than
+  twice the viewport coverage, and removes only the repeated shared-Footer CTA.
+  The Homepage final CTA remains. Footer legal/social content now follows the
+  information grid without a separator at a measured 24–25px gap. Evidence is
+  in `qa/screenshots/final-fast-patch/`.
 - Browser error/warning logs were empty after the interaction walkthrough.
   Rendered semantic audits at 390 and 1440 found one H1, complete
   Header/Main/Footer landmarks, no heading-level jumps, duplicate IDs, missing

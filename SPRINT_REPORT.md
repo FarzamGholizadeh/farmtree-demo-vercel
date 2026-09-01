@@ -67,7 +67,7 @@ rendered.
 The primary Hero retains its explicitly illustrative agroforestry-planning
 image and the Impact Reporting slide now uses a new documentary field-
 measurement illustration aligned to its message. The Platform GIF is precisely
-clipped into a responsive CSS-built laptop screen. All four Proof Story cards
+clipped into a direct responsive 16:9 media frame. All four Proof Story cards
 and detail entries use new theme-specific documentary illustrations, and the
 distracting pointer spotlight/image movement was removed while the restrained
 card-level interaction remains. News categories now use dark translucent chips
@@ -290,8 +290,8 @@ menu trap/Escape/scroll restoration and Footer quote structure passed.
 The final coordinated Homepage/Team refinement rerun covered the same nine
 widths with no horizontal overflow, broken images or duplicate IDs. At every
 width it found one H1, four Proof cards, five original testimonial cards, three
-News cards and eight FAQs; the Platform media remained clipped inside a 16:9
-laptop screen. Browser warning/error logs were empty. Homepage and Team
+News cards and eight FAQs; the Platform media remained clipped inside a direct
+16:9 media frame. Browser warning/error logs were empty. Homepage and Team
 semantic smoke checks found complete landmarks and named controls, no missing
 image alt attributes, no positive tabindex values and no broken ARIA ID
 references. Interaction checks confirmed Hero controls/live status, two-axis
@@ -301,6 +301,16 @@ the spotlight removed, FAQ disclosure, visible focus treatment and dark
 high-contrast News chips. Team rendered all nine real portraits with Max second
 and no fallback portrait. Evidence and its index are in
 `qa/screenshots/final-refinement/`.
+
+The final fast patch preserves the exact approved Platform media while removing
+the decorative device-shell markup and CSS. The testimonial rail now maintains
+three sequences, more than twice the viewport coverage, inert/aria-hidden
+clones and the existing eight-second offset; a 47.5-second rendered observation
+crossed a complete loop with five visible cards and only the intended 16px gap.
+The shared Footer CTA and its dead styles are removed on every template while
+the Homepage final CTA remains; the unruled legal/social row now shares the
+information-grid edges at a 24–25px rendered gap. Evidence is in
+`qa/screenshots/final-fast-patch/`.
 
 The bootstrap now drafts only the exact canonical WordPress `Hello world!`
 sample fingerprint and never deletes or changes unrelated posts. The visitor
