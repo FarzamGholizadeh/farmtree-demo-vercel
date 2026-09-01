@@ -1,6 +1,6 @@
 # FarmTree Tasks
 
-_Last updated: 2026-08-31_
+_Last updated: 2026-09-01_
 
 ## Completed Governance Task
 
@@ -48,9 +48,9 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 
 ### FT-NATIVE-002 - Native Homepage
 
-Status: Local implementation, approved visual-parity correction, automated
-regression, real local WordPress runtime validation and rendered browser QA
-complete; stopped at pre-release.
+Status: Local implementation, approved visual-parity correction, controlled
+Homepage/Team refinement, automated regression, real local WordPress runtime
+validation and rendered browser QA complete; stopped at pre-release.
 
 The Frank-approved Homepage has been built in `farmtree-native` with core
 blocks, content-only locked patterns and a read-only local preview sourced from
@@ -73,6 +73,13 @@ Chrome accessibility-tree smoke testing, semantic accessibility, contrast,
 interactions and overflow were reviewed at all nine
 target widths. Release, production and final-content work remains explicitly
 approval-gated or deferred as recorded in the sprint evidence.
+
+The current refinement adds a generated illustrative field-planning Hero,
+Natural Earth-derived two-axis Globe, gapless five-testimonial marquee,
+connector-free Technology cards, non-moving button hover, editorial News
+labels, balanced Footer copy and a nine-person 3/2/1-column Team page with a
+generated illustrative header. Human asset, claim and permission review remains
+the publication gate.
 
 ### FT-NATIVE-003 - Publication-readiness enhancement
 

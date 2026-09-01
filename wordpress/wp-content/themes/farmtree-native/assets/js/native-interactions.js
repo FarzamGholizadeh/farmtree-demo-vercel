@@ -13,6 +13,10 @@
     const heroDotSelector = '[data-ft-hero-dot]';
     const heroAutoplayDelay = 5000;
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const interactionScriptUrl = document.currentScript?.src || '';
+    const worldLandUrl = interactionScriptUrl
+        ? new URL('../data/world-land-110m.json', interactionScriptUrl)
+        : null;
 
     function initialiseHero(hero, heroIndex) {
         const slides = Array.from(hero.querySelectorAll(heroSlideSelector));
@@ -369,7 +373,7 @@
     }
 
     function initialiseMovingRails() {
-        document.querySelectorAll('.ft-partner-logos').forEach((rail) => {
+        document.querySelectorAll('.ft-partner-logos, .ft-testimonial-cards').forEach((rail) => {
             if (rail.dataset.ftRailReady === 'true' || reducedMotionQuery.matches) {
                 return;
             }
@@ -386,198 +390,37 @@
             sequence.className = 'ft-moving-rail-sequence';
             rail.dataset.ftRailStart = String(startIndex + 1);
             rotatedItems.forEach((item) => sequence.append(item));
-            const clone = sequence.cloneNode(true);
-            clone.setAttribute('aria-hidden', 'true');
-            clone.querySelectorAll('a, button, input, summary, [tabindex]').forEach((control) => {
-                control.setAttribute('tabindex', '-1');
-            });
-            track.append(sequence, clone);
+            track.append(sequence);
             rail.append(track);
 
-            const updateDistance = () => {
-                track.style.setProperty('--ft-rail-distance', `${sequence.getBoundingClientRect().width}px`);
+            const createClone = () => {
+                const clone = sequence.cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                clone.inert = true;
+                clone.querySelectorAll('a, button, input, summary, [tabindex]').forEach((control) => {
+                    control.setAttribute('tabindex', '-1');
+                });
+                return clone;
             };
-            window.requestAnimationFrame(updateDistance);
-            if ('ResizeObserver' in window) {
-                new ResizeObserver(updateDistance).observe(sequence);
-            }
-        });
-    }
-
-    function initialiseTestimonials() {
-        document.querySelectorAll('.ft-testimonial-experience').forEach((shell) => {
-            const portraits = Array.from(shell.querySelectorAll('.ft-testimonial-portrait'));
-            const quotes = Array.from(shell.querySelectorAll('.ft-testimonial-quotes > .ft-trust-quote'));
-            const previousButton = shell.querySelector('[data-ft-testimonial-prev]');
-            const nextButton = shell.querySelector('[data-ft-testimonial-next]');
-            const status = shell.querySelector('[data-ft-testimonial-status]');
-
-            if (
-                portraits.length !== quotes.length ||
-                portraits.length < 2 ||
-                shell.dataset.ftTestimonialReady === 'true'
-            ) {
-                return;
-            }
-
-            shell.dataset.ftTestimonialReady = 'true';
-            shell.classList.add('is-testimonial-enhanced');
-            let currentIndex = Math.min(
-                portraits.length - 1,
-                Math.max(0, 3)
-            );
-            let autoAdvanceTimer = null;
-            let interactionPaused = false;
-
-            function stopAutoAdvance() {
-                window.clearTimeout(autoAdvanceTimer);
-                autoAdvanceTimer = null;
-            }
-
-            function scheduleAutoAdvance() {
-                stopAutoAdvance();
-                if (reducedMotionQuery.matches || interactionPaused || document.hidden) {
+            const fillTrack = () => {
+                track.querySelectorAll('.ft-moving-rail-sequence[aria-hidden="true"]').forEach((clone) => clone.remove());
+                const sequenceWidth = sequence.getBoundingClientRect().width;
+                if (sequenceWidth <= 0) {
                     return;
                 }
-                autoAdvanceTimer = window.setTimeout(() => {
-                    selectTestimonial(currentIndex + 1, { automatic: true });
-                    scheduleAutoAdvance();
-                }, 8000);
+                const sequenceCount = Math.max(2, Math.ceil((rail.clientWidth + sequenceWidth) / sequenceWidth));
+                for (let index = 1; index < sequenceCount; index += 1) {
+                    track.append(createClone());
+                }
+                track.style.setProperty('--ft-rail-distance', `${sequenceWidth}px`);
+            };
+            window.requestAnimationFrame(fillTrack);
+            if ('ResizeObserver' in window) {
+                const observer = new ResizeObserver(fillTrack);
+                observer.observe(rail);
+                observer.observe(sequence);
             }
-
-            function selectTestimonial(nextIndex, options = {}) {
-                currentIndex = (nextIndex + quotes.length) % quotes.length;
-                shell.style.setProperty('--ft-testimonial-index', String(currentIndex));
-
-                portraits.forEach((portrait, index) => {
-                    const isCurrent = index === currentIndex;
-                    portrait.classList.toggle('is-active', isCurrent);
-                    portrait.style.setProperty('--ft-portrait-offset', String(index - currentIndex));
-                    portrait.setAttribute('role', 'button');
-                    portrait.setAttribute('tabindex', isCurrent ? '0' : '-1');
-                    portrait.setAttribute('aria-pressed', String(isCurrent));
-                    portrait.setAttribute(
-                        'aria-label',
-                        `Show testimonial ${index + 1} of ${quotes.length}; visual is a placeholder, not the quoted person's portrait`
-                    );
-                });
-
-                quotes.forEach((quote, index) => {
-                    const isCurrent = index === currentIndex;
-                    quote.classList.toggle('is-active', isCurrent);
-                    quote.hidden = !isCurrent;
-                    quote.setAttribute('aria-hidden', String(!isCurrent));
-                });
-
-                if (status) {
-                    status.textContent = `Testimonial ${currentIndex + 1} of ${quotes.length}`;
-                }
-                if (options.focus) {
-                    portraits[currentIndex].focus();
-                }
-                if (!options.automatic) {
-                    scheduleAutoAdvance();
-                }
-            }
-
-            portraits.forEach((portrait, index) => {
-                portrait.addEventListener('click', () => selectTestimonial(index));
-                portrait.addEventListener('keydown', (event) => {
-                    const targets = {
-                        ArrowUp: currentIndex - 1,
-                        ArrowLeft: currentIndex - 1,
-                        ArrowDown: currentIndex + 1,
-                        ArrowRight: currentIndex + 1,
-                        Home: 0,
-                        End: portraits.length - 1
-                    };
-                    if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault();
-                        selectTestimonial(index);
-                    } else if (event.key in targets) {
-                        event.preventDefault();
-                        selectTestimonial(targets[event.key], { focus: true });
-                    }
-                });
-            });
-            previousButton?.addEventListener('click', () => selectTestimonial(currentIndex - 1));
-            nextButton?.addEventListener('click', () => selectTestimonial(currentIndex + 1));
-            shell.addEventListener('pointerenter', () => {
-                interactionPaused = true;
-                stopAutoAdvance();
-            });
-            shell.addEventListener('pointerleave', () => {
-                interactionPaused = false;
-                scheduleAutoAdvance();
-            });
-            shell.addEventListener('focusin', () => {
-                interactionPaused = true;
-                stopAutoAdvance();
-            });
-            shell.addEventListener('focusout', () => {
-                window.requestAnimationFrame(() => {
-                    interactionPaused = shell.contains(document.activeElement);
-                    scheduleAutoAdvance();
-                });
-            });
-            document.addEventListener('visibilitychange', scheduleAutoAdvance);
-            reducedMotionQuery.addEventListener?.('change', scheduleAutoAdvance);
-
-            selectTestimonial(currentIndex);
-            scheduleAutoAdvance();
         });
-    }
-
-    function initialiseTechnologySignal() {
-        const section = document.querySelector('.ft-home-technology');
-        const cards = Array.from(section?.querySelectorAll('.ft-home-inputs > .wp-block-column') || []);
-        const grid = section?.querySelector('.ft-home-inputs');
-        if (!section || !grid || cards.length < 2 || grid.dataset.ftSignalReady === 'true') {
-            return;
-        }
-
-        grid.dataset.ftSignalReady = 'true';
-        const signal = document.createElement('span');
-        signal.className = 'ft-technology-signal';
-        signal.setAttribute('aria-hidden', 'true');
-        grid.append(signal);
-        let frame = null;
-
-        function updateSignal() {
-            frame = null;
-            if (reducedMotionQuery.matches || window.matchMedia('(max-width: 1000px)').matches) {
-                signal.hidden = true;
-                return;
-            }
-
-            const sectionRect = section.getBoundingClientRect();
-            const gridRect = grid.getBoundingClientRect();
-            const viewportAnchor = window.innerHeight * 0.62;
-            const progress = Math.max(0, Math.min(0.999, (viewportAnchor - sectionRect.top) / sectionRect.height));
-            const scaled = progress * (cards.length - 1);
-            const segmentIndex = Math.min(cards.length - 2, Math.floor(scaled));
-            const localProgress = scaled - segmentIndex;
-            const currentRect = cards[segmentIndex].getBoundingClientRect();
-            const nextRect = cards[segmentIndex + 1].getBoundingClientRect();
-            const startX = currentRect.right - gridRect.left + 3;
-            const endX = nextRect.left - gridRect.left - 3;
-            const x = startX + ((endX - startX) * localProgress);
-            const y = ((currentRect.top + currentRect.bottom) / 2) - gridRect.top;
-
-            signal.hidden = sectionRect.bottom < 0 || sectionRect.top > window.innerHeight;
-            signal.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-        }
-
-        function scheduleUpdate() {
-            if (frame === null) {
-                frame = window.requestAnimationFrame(updateSignal);
-            }
-        }
-
-        window.addEventListener('scroll', scheduleUpdate, { passive: true });
-        window.addEventListener('resize', scheduleUpdate, { passive: true });
-        reducedMotionQuery.addEventListener?.('change', scheduleUpdate);
-        scheduleUpdate();
     }
 
     function initialiseProofSpotlights() {
@@ -599,8 +442,8 @@
 
     function initialiseGlobes() {
         const degrees = Math.PI / 180;
-        const rotationPerFrame = 0.0009;
-        const landPolygons = [
+        const rotationPerFrame = 0.00135;
+        const fallbackLandPolygons = [
             [[-168, 70], [-145, 72], [-128, 60], [-124, 49], [-117, 33], [-105, 22], [-97, 17], [-84, 9], [-78, 18], [-81, 27], [-74, 40], [-61, 48], [-53, 59], [-62, 72], [-98, 81], [-135, 76]],
             [[-81, 12], [-70, 10], [-61, 5], [-50, -2], [-35, -8], [-43, -23], [-54, -34], [-66, -55], [-74, -48], [-78, -20]],
             [[-17, 36], [5, 37], [28, 33], [42, 20], [51, 10], [43, -13], [31, -35], [18, -35], [5, -25], [-8, 5]],
@@ -627,6 +470,80 @@
             return inside;
         }
 
+        function normalisePolygon(outer, holes = []) {
+            const longitudes = outer.map(([longitude]) => longitude);
+            const latitudes = outer.map(([, latitude]) => latitude);
+            return {
+                bounds: [Math.min(...longitudes), Math.min(...latitudes), Math.max(...longitudes), Math.max(...latitudes)],
+                holes,
+                outer
+            };
+        }
+
+        function decodeTopology(topology) {
+            const [scaleX, scaleY] = topology.transform.scale;
+            const [translateX, translateY] = topology.transform.translate;
+            const decodedArcs = topology.arcs.map((arc) => {
+                let x = 0;
+                let y = 0;
+                return arc.map(([deltaX, deltaY]) => {
+                    x += deltaX;
+                    y += deltaY;
+                    return [(x * scaleX) + translateX, (y * scaleY) + translateY];
+                });
+            });
+            const coordinatesForArc = (reference) => {
+                const coordinates = decodedArcs[reference < 0 ? ~reference : reference] || [];
+                return reference < 0 ? [...coordinates].reverse() : coordinates;
+            };
+            const coordinatesForRing = (references) => references.flatMap((reference, index) => {
+                const coordinates = coordinatesForArc(reference);
+                return index === 0 ? coordinates : coordinates.slice(1);
+            });
+            const polygons = [];
+
+            topology.objects.land.geometries.forEach((geometry) => {
+                const polygonGroups = geometry.type === 'MultiPolygon' ? geometry.arcs : [geometry.arcs];
+                polygonGroups.forEach((ringReferences) => {
+                    const rings = ringReferences.map(coordinatesForRing).filter((ring) => ring.length >= 3);
+                    if (rings[0]) {
+                        polygons.push(normalisePolygon(rings[0], rings.slice(1)));
+                    }
+                });
+            });
+            return polygons;
+        }
+
+        async function loadLandPolygons() {
+            if (!worldLandUrl) {
+                return { source: 'fallback', polygons: fallbackLandPolygons.map((polygon) => normalisePolygon(polygon)) };
+            }
+            try {
+                const response = await fetch(worldLandUrl, { credentials: 'same-origin' });
+                if (!response.ok) {
+                    throw new Error(`World land topology returned ${response.status}`);
+                }
+                const polygons = decodeTopology(await response.json());
+                if (polygons.length < 50) {
+                    throw new Error('World land topology is incomplete');
+                }
+                return { source: 'natural-earth-110m', polygons };
+            } catch (_error) {
+                return { source: 'fallback', polygons: fallbackLandPolygons.map((polygon) => normalisePolygon(polygon)) };
+            }
+        }
+
+        function pointInLand(longitude, latitude, polygons) {
+            return polygons.some(({ bounds, holes, outer }) => (
+                longitude >= bounds[0]
+                && latitude >= bounds[1]
+                && longitude <= bounds[2]
+                && latitude <= bounds[3]
+                && pointInPolygon(longitude, latitude, outer)
+                && !holes.some((hole) => pointInPolygon(longitude, latitude, hole))
+            ));
+        }
+
         function vectorFor(longitude, latitude) {
             const lon = longitude * degrees;
             const lat = latitude * degrees;
@@ -637,13 +554,17 @@
             };
         }
 
-        function rotateVector(vector, rotation, altitude = 1) {
+        function rotateVector(vector, rotation, pitch = 0, altitude = 1) {
             const sine = Math.sin(rotation);
             const cosine = Math.cos(rotation);
+            const pitchSine = Math.sin(pitch);
+            const pitchCosine = Math.cos(pitch);
+            const yawX = (vector.x * cosine) + (vector.z * sine);
+            const yawZ = (vector.z * cosine) - (vector.x * sine);
             return {
-                x: ((vector.x * cosine) + (vector.z * sine)) * altitude,
-                y: vector.y * altitude,
-                z: ((vector.z * cosine) - (vector.x * sine)) * altitude
+                x: yawX * altitude,
+                y: ((vector.y * pitchCosine) + (yawZ * pitchSine)) * altitude,
+                z: ((yawZ * pitchCosine) - (vector.y * pitchSine)) * altitude
             };
         }
 
@@ -674,6 +595,8 @@
             });
         }
 
+        const landPolygonPromise = loadLandPolygons();
+
         document.querySelectorAll('[data-ft-globe-shell]').forEach((shell) => {
             const canvas = shell.querySelector('[data-ft-globe]');
             if (!canvas || canvas.dataset.ftGlobeReady === 'true') {
@@ -681,20 +604,23 @@
             }
 
             canvas.dataset.ftGlobeReady = 'true';
-            canvas.dataset.ftGlobeRenderer = 'native-canvas-landmask';
+            canvas.dataset.ftGlobeRenderer = 'native-canvas-natural-earth-landmask';
             canvas.dataset.ftGlobeSpeed = String(rotationPerFrame);
             let context = null;
             let landPoints = [];
             let markers = [];
             let arcs = [];
             let rotation = -0.42;
+            let pitch = -0.08;
             let frame = null;
             let lastFrameTime = 0;
             let isVisible = false;
             let isDragging = false;
             let previousPointerX = 0;
+            let previousPointerY = 0;
             let resumeStrength = 1;
             let activated = false;
+            let isActivating = false;
 
             function resizeCanvas() {
                 const displaySize = Math.max(240, Math.round(canvas.getBoundingClientRect().width));
@@ -711,7 +637,7 @@
                 context.beginPath();
                 let drawing = false;
                 arc.forEach(({ vector, altitude }) => {
-                    const point = rotateVector(vector, rotation, altitude);
+                    const point = rotateVector(vector, rotation, pitch, altitude);
                     if (point.z <= 0.015) {
                         drawing = false;
                         return;
@@ -735,6 +661,7 @@
                     return;
                 }
                 canvas.dataset.ftGlobeRotation = rotation.toFixed(4);
+                canvas.dataset.ftGlobePitch = pitch.toFixed(4);
                 const { size, ratio } = resizeCanvas();
                 const centre = size / 2;
                 const radius = size * 0.4;
@@ -744,16 +671,16 @@
                     centre - (radius * 0.28), centre - (radius * 0.32), radius * 0.08,
                     centre, centre, radius * 1.08
                 );
-                glow.addColorStop(0, 'rgba(255, 255, 255, 0.98)');
-                glow.addColorStop(0.68, 'rgba(247, 246, 232, 0.82)');
-                glow.addColorStop(0.92, 'rgba(0, 97, 63, 0.08)');
+                glow.addColorStop(0, 'rgba(251, 253, 244, 0.86)');
+                glow.addColorStop(0.68, 'rgba(235, 242, 221, 0.62)');
+                glow.addColorStop(0.92, 'rgba(0, 97, 63, 0.11)');
                 glow.addColorStop(1, 'rgba(0, 97, 63, 0)');
                 context.fillStyle = glow;
                 context.beginPath();
                 context.arc(centre, centre, radius * 1.08, 0, Math.PI * 2);
                 context.fill();
 
-                context.fillStyle = 'rgba(255, 254, 248, 0.86)';
+                context.fillStyle = 'rgba(244, 248, 234, 0.68)';
                 context.beginPath();
                 context.arc(centre, centre, radius, 0, Math.PI * 2);
                 context.fill();
@@ -762,7 +689,7 @@
                 context.stroke();
 
                 landPoints.forEach((vector) => {
-                    const point = rotateVector(vector, rotation);
+                    const point = rotateVector(vector, rotation, pitch);
                     if (point.z <= 0) {
                         return;
                     }
@@ -781,7 +708,7 @@
 
                 arcs.forEach((arc) => drawArc(arc, centre, radius, ratio));
                 markers.forEach((vector) => {
-                    const point = rotateVector(vector, rotation, 1.015);
+                    const point = rotateVector(vector, rotation, pitch, 1.015);
                     if (point.z <= 0.02) {
                         return;
                     }
@@ -822,20 +749,24 @@
                 }
             }
 
-            function activate() {
-                if (activated) {
+            async function activate() {
+                if (activated || isActivating) {
                     requestRender();
                     return;
                 }
+                isActivating = true;
                 context = canvas.getContext('2d', { alpha: true });
                 if (!context) {
                     shell.dataset.ftGlobeState = 'unavailable';
+                    isActivating = false;
                     return;
                 }
 
-                for (let latitude = -57; latitude <= 82; latitude += 2.7) {
-                    for (let longitude = -178; longitude <= 178; longitude += 2.7) {
-                        if (landPolygons.some((polygon) => pointInPolygon(longitude, latitude, polygon))) {
+                shell.dataset.ftGlobeState = 'loading';
+                const land = await landPolygonPromise;
+                for (let latitude = -84; latitude <= 84; latitude += 2.25) {
+                    for (let longitude = -179; longitude <= 179; longitude += 2.25) {
+                        if (pointInLand(longitude, latitude, land.polygons)) {
                             landPoints.push(vectorFor(longitude, latitude));
                         }
                     }
@@ -843,13 +774,16 @@
                 markers = markerCoordinates.map((coordinates) => vectorFor(...coordinates));
                 arcs = arcPairs.map(([from, to]) => arcBetween(markerCoordinates[from], markerCoordinates[to]));
                 activated = true;
+                isActivating = false;
                 shell.dataset.ftGlobeState = reducedMotionQuery.matches ? 'reduced' : 'ready';
                 shell.dataset.ftGlobePoints = String(landPoints.length);
+                shell.dataset.ftGlobeMap = land.source;
 
                 canvas.addEventListener('pointerdown', (event) => {
                     isDragging = true;
                     resumeStrength = 0;
                     previousPointerX = event.clientX;
+                    previousPointerY = event.clientY;
                     canvas.setPointerCapture?.(event.pointerId);
                 });
                 canvas.addEventListener('pointermove', (event) => {
@@ -857,7 +791,9 @@
                         return;
                     }
                     rotation += (event.clientX - previousPointerX) * 0.006;
+                    pitch = Math.max(-1.15, Math.min(1.15, pitch - ((event.clientY - previousPointerY) * 0.006)));
                     previousPointerX = event.clientX;
+                    previousPointerY = event.clientY;
                     draw();
                 });
                 const stopDragging = (event) => {
@@ -872,11 +808,15 @@
                 canvas.addEventListener('pointerup', stopDragging);
                 canvas.addEventListener('pointercancel', stopDragging);
                 canvas.addEventListener('keydown', (event) => {
-                    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+                    if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
                         return;
                     }
                     event.preventDefault();
-                    rotation += event.key === 'ArrowLeft' ? -0.1 : 0.1;
+                    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                        rotation += event.key === 'ArrowLeft' ? -0.1 : 0.1;
+                    } else {
+                        pitch = Math.max(-1.15, Math.min(1.15, pitch + (event.key === 'ArrowUp' ? 0.1 : -0.1)));
+                    }
                     resumeStrength = 0;
                     draw();
                 });
@@ -1238,8 +1178,6 @@
         initialiseQuotationDialog();
         initialiseMotion();
         initialiseMovingRails();
-        initialiseTestimonials();
-        initialiseTechnologySignal();
         initialiseProofSpotlights();
         initialiseGlobes();
         initialiseCounters();

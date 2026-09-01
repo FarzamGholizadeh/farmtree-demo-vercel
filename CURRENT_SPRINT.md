@@ -2,8 +2,8 @@
 
 ## FT-NATIVE-002 - Native Homepage
 
-Status: Homepage V2 polish implemented and locally validated; stopped at
-pre-release for visual and publication approval
+Status: controlled Homepage and Team refinement implemented and locally
+validated; stopped at pre-release for visual and publication approval
 
 ### Objective
 
@@ -15,18 +15,19 @@ design controls.
 ### Final English Master Delivery
 
 The final English experience now includes five-second Hero autoplay with calm
-staggered copy/media transitions, true viewport-edge desktop/tablet controls
-and a unified mobile pointer-swipe handler; a scroll-driven connector signal;
-equal responsive glass metrics; a lazy, draggable dotted-Earth landmask with
-neutral context arcs; a mid-sequence logo rail; a synchronized testimonial
-portrait reel; responsive 4-up/2-up/1-up Proof Stories; a three-item editorial
-Last News feature before FAQ; and a branded real-404 recovery page. It also
-retains interaction pause; the exact user-supplied 14.5-second
-Platform GIF with a reduced-motion poster; ten distinct image-backed
-customer-segment pages; 16 English support pages; a factual 13-person Team page;
-a featured-story Blog with all nine source-attributed articles; a premium
-Vacancies empty state; and the existing privacy-safe Contact/quotation
-fallbacks.
+staggered copy/media transitions, true viewport-edge desktop/tablet controls,
+a new illustrative field-planning Hero and a unified mobile pointer-swipe
+handler; connector-free Technology cards; equal responsive glass metrics; a
+lazy, two-axis draggable dotted Earth built from a bundled Natural Earth-derived
+land topology; seamless partner and five-card testimonial marquees; responsive
+4-up/2-up/1-up Proof Stories; a three-item editorial Last News feature before
+FAQ; and a branded real-404 recovery page. It also retains interaction pause;
+the exact user-supplied 14.5-second Platform GIF with a reduced-motion poster;
+ten distinct image-backed customer-segment pages; 16 English support pages; a
+nine-person Team page with an illustrative field header and an honest portrait
+fallback for Maximilian Michael Möller; a featured-story Blog with all nine
+source-attributed articles; a premium Vacancies empty state; and the existing
+privacy-safe Contact/quotation fallbacks.
 
 For anonymous loopback QA only, the native Homepage, English pages, custom
 entries and News posts are locally published. Nothing was published or
@@ -159,14 +160,16 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   widths now have zero horizontal overflow, full-viewport trust rails and
   far-edge arrows at 768px and above. Final evidence is in
   `qa/screenshots/homepage-finalization/`, including the menu, globe and 404.
-- The Homepage V2 rerun covers all nine target widths in
-  `qa/screenshots/homepage-v2/`. It verifies a recognizable 2,370-point native
-  canvas Earth at 0.0009 radians per frame, equal metric typography including
-  `+1,000,000`, a six-item testimonial reel starting at item four, four-up
-  desktop Proof Stories, three Last News cards, FAQ below News and paired
-  Footer quotation marks. Menu geometry, scroll lock and restoration passed 45
-  viewport/scroll-position combinations, with representative Hero, mid-page
-  and Footer captures at mobile and desktop widths.
+- The controlled refinement rerun covers all nine target widths and verifies a
+  4,005-point Natural Earth-derived landmask at 0.00135 radians per frame,
+  two-axis pointer drag and four-arrow keyboard rotation; equal metric
+  typography including `+1,000,000`; five publishable testimonial cards in a
+  dynamically duplicated continuous rail; four-up desktop Proof Stories;
+  three Last News cards; FAQ below News; and balanced Footer quotation copy.
+  Representative Homepage, Team and scrolled-menu captures are in
+  `qa/screenshots/refinement-pass/`. Menu geometry, fixed-body scroll lock,
+  inert background, Escape/close behavior and exact scroll/focus restoration
+  passed at desktop and mobile sizes.
 - Browser error/warning logs were empty after the interaction walkthrough.
   Rendered semantic audits at 390 and 1440 found one H1, complete
   Header/Main/Footer landmarks, no heading-level jumps, duplicate IDs, missing
@@ -242,6 +245,12 @@ Local publication-readiness implementation and available-environment validation
 are complete. Stop at pre-release until the evidence/permission review and a
 real assistive-technology listening pass receive human sign-off, and the user
 explicitly approves a release step.
+
+The generated Homepage Hero and Team header are explicitly labelled
+illustrative and are not represented as evidence or photographs of named
+people. Human visual approval is required before they may be used publicly.
+Maximilian Michael Möller's supplied LinkedIn URL is present, but his role, bio
+and portrait remain deliberately blank pending approved source material.
 
 The consolidated decision-only review package is
 `PRE_RELEASE_HUMAN_SIGNOFF.md`.

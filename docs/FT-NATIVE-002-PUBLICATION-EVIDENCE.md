@@ -14,11 +14,11 @@ invented evidence.
 | --- | --- | --- |
 | Frank-approved Hero, Platform, Technology, Trust, Proof, FAQ, News and CTA order/copy | `docs/FT-NATIVE-002-HOMEPAGE.md` and the approved production Homepage | Source-verified |
 | Mona McCord / SAN testimonial | Exact sentence and attribution appear in the approved production `farmtree` theme | Exact source restored; publication permission/attribution sign-off remains human |
-| Mathijs de Bruin / TreeScape testimonial | Exact sentence and attribution appear in the approved production `farmtree` theme | Exact source restored; publication permission/attribution sign-off remains human |
+| Mathijs de Bruin / TreeScape testimonial | Approved production sentence and attribution; visible punctuation is normalised from an em dash to a period | Source wording retained without the prohibited visible em dash; publication permission/attribution sign-off remains human |
 | Katharina Lima de Miranda / HRNS testimonial | Exact sentence and attribution appear in the approved production `farmtree` theme | Exact source restored; publication permission/attribution sign-off remains human |
 | Rob Kelly / World Vision Australia testimonial | Exact sentence and attribution appear in the approved production `farmtree` theme | Exact source restored; publication permission/attribution sign-off remains human |
 | Lorenzo Mento / Nectaerra testimonial | Exact sentence and attribution appear in the approved production `farmtree` theme | Exact source restored; publication permission/attribution sign-off remains human |
-| Sixth testimonial card | Labelled CMS placeholder with no name, organisation, quotation or portrait | Must be replaced with approved evidence or removed before publication |
+| Sixth testimonial card | Labelled CMS placeholder with no name, organisation, quotation or portrait | Removed from the rendered Homepage; may return only with approved evidence |
 | GIZ reference logo | Approved production reference strip plus detailed GIZ/Madagascar case content | Repository-supported; external relationship/logo approval remains human |
 | Rabobank reference logo | Approved production reference strip plus detailed ACORN/Rabobank case content | Repository-supported; external relationship/logo approval remains human |
 | CGIAR reference logo | Approved production reference strip plus a CGIAR track-record entry | Repository-supported; external relationship/logo approval remains human |
@@ -31,7 +31,7 @@ invented evidence.
 | Ten customer-segment pages | Order and audience direction come from `FarmTree_Segmente_OnePager_alle.pdf`; only public capability language and bounded workflows were retained | Internal prospect lists, “Exemplary Client” labels, ROI/sales claims and implied relationships were excluded |
 | Nine News & Insights drafts | Each draft records a publication date, authoritative source URL, original FarmTree-oriented analysis, internal links and metadata | Draft only; source/date/editorial/image approval remains human |
 | FarmTree address | FarmTree B.V., Plus Ultra Building, Bronland 12C-1, 6708 WH Wageningen, The Netherlands | Matches the official FarmTree contact source; final legal/address sign-off remains human |
-| Homepage imagery | Approved production assets; alternatives describe visible content literally | Repository-verified |
+| Homepage imagery | Approved production assets plus a new generated field-planning Hero explicitly described as illustrative | Generated Hero requires human visual approval; it is not project evidence |
 
 ## Safeguards
 
@@ -40,8 +40,9 @@ invented evidence.
 - The native Homepage publishes no invented certificate, standard alignment,
   project result, numerical performance claim or star rating.
 - Testimonial wording is not shortened or silently paraphrased.
-- No generated portrait is attached to a real testimonial author. The sixth
-  testimonial is text-only and explicitly marked unapproved.
+- No generated portrait is attached to a real testimonial author. The five
+  approved-source testimonial cards are text-only; the sixth unapproved
+  placeholder is excluded from the rendered Homepage.
 - Metrics count from zero only as a presentation treatment; stored block values
   remain the exact approved-theme values and are not silently updated.
 - Proof labels remain explicitly recorded as working labels until a human

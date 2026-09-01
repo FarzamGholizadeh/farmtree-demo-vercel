@@ -28,7 +28,10 @@ const required = [
   'styles/scientific.json',
   'assets/css/editor.css',
   'assets/js/native-interactions.js',
+  'assets/data/world-land-110m.json',
+  'assets/data/README.md',
   'assets/images/brand/farmtree-logo.webp',
+  'assets/images/home/hero-field-planning-v1.jpg',
   'assets/images/home/hero-project-workshop.webp',
   'assets/images/home/hero-project-teams.webp',
   'assets/images/home/platform-slide-1.png',
@@ -48,6 +51,7 @@ const required = [
   'assets/images/partners/fao.png',
   'assets/images/partners/catie.png',
   'assets/images/partners/helvetas.png',
+  'assets/images/team/team-field-collaboration-v1.jpg',
   'assets/media/farmtree-platform-final-tools-review-poster.jpg',
   'assets/media/farmtree-platform-final-tools-review.mp4',
   'assets/media/farmtree-platform-final-tools-review.webm',
@@ -114,6 +118,7 @@ for (const file of [
   'data/editorial-drafts.json',
   'data/proof-stories.json',
   'data/english-pages.json',
+  'data/team-members.json',
   'README.md'
 ]) {
   if (!existsSync(resolve(plugin, file))) {
@@ -325,6 +330,27 @@ const preview = readFileSync(resolve(root, 'scripts/preview-native-homepage.mjs'
 const bootstrap = readFileSync(resolve(root, 'scripts/bootstrap-local-wordpress.mjs'), 'utf8');
 const localStart = readFileSync(resolve(root, 'scripts/start-local-wordpress.mjs'), 'utf8');
 const packageJson = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8'));
+const teamMembers = JSON.parse(readFileSync(resolve(plugin, 'data/team-members.json'), 'utf8'));
+const editorialDrafts = readFileSync(resolve(plugin, 'data/editorial-drafts.json'), 'utf8');
+
+if (teamMembers.length !== 9) {
+  throw new Error('Team data must contain the nine requested current entries.');
+}
+for (const removedName of ['Mia Beyens', 'Ruben van Voorst', 'Nikolaos Mantzaridis', 'Mary Theodorah Ajal', 'Crésus Odjo']) {
+  if (teamMembers.some(({ name }) => name === removedName)) {
+    throw new Error(`Removed Team member remains in current data: ${removedName}`);
+  }
+}
+const maximilian = teamMembers.find(({ name }) => name === 'Maximilian Michael Möller');
+if (maximilian?.linkedin !== 'https://www.linkedin.com/in/maximilian-michael-moeller/' || maximilian.image) {
+  throw new Error('Maximilian must use the supplied LinkedIn URL and an honest portrait fallback.');
+}
+
+for (const visibleSource of [homepage, footer, editorialDrafts]) {
+  if (visibleSource.includes('—')) {
+    throw new Error('Visible website copy must not contain em dash characters.');
+  }
+}
 
 for (const part of [header, footer, readFileSync(resolve(theme, 'parts/quotation-modal.html'), 'utf8')]) {
   if (part.includes('<?php')) {
@@ -437,9 +463,9 @@ for (const contract of [
   'perPage":3',
   'ft-home-news-more',
   'Read article ↗',
-  'ft-testimonial-experience',
-  'Generated visual placeholders',
-  'Sixth testimonial — not approved for publication'
+  'ft-testimonial-marquee',
+  'ft-testimonial-cards',
+  'ft-testimonial-card'
 ]) {
   if (!homepage.includes(contract)) {
     throw new Error(`Homepage is missing finalization contract: ${contract}`);
@@ -625,12 +651,13 @@ if (!interactions.includes('const heroAutoplayDelay = 5000') || !interactions.in
 }
 
 for (const contract of [
-  'const rotationPerFrame = 0.0009',
-  'native-canvas-landmask',
+  'const rotationPerFrame = 0.00135',
+  'native-canvas-natural-earth-landmask',
+  'world-land-110m.json',
+  'decodeTopology',
   'pointInPolygon',
+  'pointInLand',
   'arcBetween',
-  'initialiseTechnologySignal',
-  'initialiseTestimonials',
   'initialiseProofSpotlights',
   'initialiseMenuOverlay',
   "document.body.style.position = 'fixed'",
@@ -638,6 +665,12 @@ for (const contract of [
 ]) {
   if (!interactions.includes(contract)) {
     throw new Error(`Homepage V2 interaction contract is missing: ${contract}`);
+  }
+}
+
+for (const removedInteraction of ['initialiseTechnologySignal', 'initialiseTestimonials']) {
+  if (interactions.includes(removedInteraction)) {
+    throw new Error(`Removed interaction must not remain in the native runtime: ${removedInteraction}`);
   }
 }
 
@@ -802,12 +835,12 @@ if ((homepage.match(/assets\/images\/partners\//g) ?? []).length !== 6) {
 
 for (const contract of [
   'The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.',
-  'FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue — they do everything!',
+  'FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything!',
   '>Carbon</h3>',
   '>Farm value modelling</h3>',
   '>Cocoa scenario planning and monitoring</h3>',
   '>Water and landscape resilience monitoring</h3>',
-  'alt="People gathered for an agroforestry field visit"',
+  'alt="Illustrative field team reviewing an agroforestry plan and monitoring tools"',
   'alt="Three people reviewing information on a laptop"',
   'alt="Four people discussing crops in a field"',
   'alt="Ripe cocoa pods in a shaded agroforestry plot with a field technician in the distance"',
@@ -816,6 +849,21 @@ for (const contract of [
 ]) {
   if (!homepage.includes(contract)) {
     throw new Error(`Homepage is missing approved publication copy or literal media text: ${contract}`);
+  }
+}
+
+
+if ((homepage.match(/class="[^"]*\bft-testimonial-card\b/g) ?? []).length !== 5) {
+  throw new Error('Homepage must provide five core-block testimonial cards without a sixth placeholder.');
+}
+
+for (const excludedCopy of [
+  'Generated visual placeholders',
+  'Sixth testimonial',
+  'Approved testimonial and portrait pending'
+]) {
+  if (homepage.includes(excludedCopy)) {
+    throw new Error(`Homepage exposes non-publishable testimonial copy: ${excludedCopy}`);
   }
 }
 

@@ -15,7 +15,7 @@
 <div class="wp-block-group ft-native-home"><!-- wp:group {"tagName":"section","metadata":{"name":"FarmTree Hero"},"align":"full","className":"ft-home-hero","style":{"dimensions":{"minHeight":"780px"},"spacing":{"padding":{"top":"var:preset|spacing|80","right":"var:preset|spacing|50","bottom":"var:preset|spacing|80","left":"var:preset|spacing|50"}}},"backgroundColor":"farmtree-forest","layout":{"type":"constrained"}} -->
 <section class="wp-block-group alignfull ft-home-hero has-farmtree-forest-background-color has-background" style="min-height:780px;padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--50)"><!-- wp:group {"metadata":{"name":"Editable Hero images"},"className":"ft-home-hero-media","layout":{"type":"default"}} -->
 <div class="wp-block-group ft-home-hero-media"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide is-active"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide is-active"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/hero-project-workshop.webp' ) ); ?>" alt="People gathered for an agroforestry field visit"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide is-active"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/hero-field-planning-v1.jpg' ) ); ?>" alt="Illustrative field team reviewing an agroforestry plan and monitoring tools"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
@@ -283,7 +283,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"className":"ft-globe-instruction","fontSize":"small"} -->
-<p class="ft-globe-instruction has-small-font-size">Drag the globe or use the left and right arrow keys to explore.</p>
+<p class="ft-globe-instruction has-small-font-size">Drag in any direction or use the arrow keys to explore.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 
@@ -340,87 +340,39 @@
 <!-- /wp:image --></figure>
 <!-- /wp:gallery -->
 
-<!-- wp:columns {"align":"wide","verticalAlignment":"stretch","className":"ft-testimonial-experience","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|60"}}}} -->
-<div class="wp-block-columns alignwide are-vertically-aligned-stretch ft-testimonial-experience"><!-- wp:column {"verticalAlignment":"stretch","width":"43%","className":"ft-testimonial-reel"} -->
-<div class="wp-block-column is-vertically-aligned-stretch ft-testimonial-reel" style="flex-basis:43%"><!-- wp:paragraph {"className":"ft-testimonial-portrait-status","fontSize":"caption"} -->
-<p class="ft-testimonial-portrait-status has-caption-font-size"><strong>Generated visual placeholders</strong> — these are not portraits of the quoted people and require replacement or explicit approval before publication.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:group {"metadata":{"name":"Editable testimonial placeholder portraits"},"className":"ft-testimonial-portraits","layout":{"type":"default"}} -->
-<div class="wp-block-group ft-testimonial-portraits"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-testimonial-portrait ft-generated-portrait"} -->
-<figure class="wp-block-image size-full ft-testimonial-portrait ft-generated-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-01.jpg' ) ); ?>" alt="Generated visual placeholder, not a portrait of the quoted person"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-testimonial-portrait ft-generated-portrait"} -->
-<figure class="wp-block-image size-full ft-testimonial-portrait ft-generated-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-02.jpg' ) ); ?>" alt="Generated visual placeholder, not a portrait of the quoted person"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-testimonial-portrait ft-generated-portrait"} -->
-<figure class="wp-block-image size-full ft-testimonial-portrait ft-generated-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-03.jpg' ) ); ?>" alt="Generated visual placeholder, not a portrait of the quoted person"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-testimonial-portrait ft-generated-portrait"} -->
-<figure class="wp-block-image size-full ft-testimonial-portrait ft-generated-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-04.jpg' ) ); ?>" alt="Generated visual placeholder, not a portrait of the quoted person"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-testimonial-portrait ft-generated-portrait"} -->
-<figure class="wp-block-image size-full ft-testimonial-portrait ft-generated-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-05.jpg' ) ); ?>" alt="Generated visual placeholder, not a portrait of the quoted person"/></figure>
-<!-- /wp:image -->
-
-<!-- wp:group {"className":"ft-testimonial-portrait ft-testimonial-portrait-pending","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center","verticalAlignment":"center"}} -->
-<div class="wp-block-group ft-testimonial-portrait ft-testimonial-portrait-pending"><span>Portrait pending approval</span></div>
-<!-- /wp:group --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column -->
-
-<!-- wp:column {"verticalAlignment":"stretch","width":"57%","className":"ft-testimonial-copy"} -->
-<div class="wp-block-column is-vertically-aligned-stretch ft-testimonial-copy" style="flex-basis:57%"><!-- wp:group {"metadata":{"name":"Editable testimonial quotes"},"className":"ft-testimonial-quotes","layout":{"type":"default"}} -->
-<div class="wp-block-group ft-testimonial-quotes"><!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
+<!-- wp:group {"align":"full","className":"ft-testimonial-marquee","layout":{"type":"default"}} -->
+<div class="wp-block-group alignfull ft-testimonial-marquee"><!-- wp:group {"metadata":{"name":"Approved-theme testimonial quotes"},"className":"ft-testimonial-cards","layout":{"type":"default"}} -->
+<div class="wp-block-group ft-testimonial-cards"><!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
+<blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.</p>
 <!-- /wp:paragraph --><cite>Mona McCord, SAN</cite></blockquote>
 <!-- /wp:quote -->
 
-<!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue — they do everything!</p>
+<!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
+<blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
+<p class="has-lead-font-size">FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything!</p>
 <!-- /wp:paragraph --><cite>Mathijs de Bruin, TreeScape</cite></blockquote>
 <!-- /wp:quote -->
 
-<!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
+<!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
+<blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do.</p>
 <!-- /wp:paragraph --><cite>Katharina Lima de Miranda, HRNS</cite></blockquote>
 <!-- /wp:quote -->
 
-<!-- wp:quote {"className":"ft-trust-quote is-active"} -->
-<blockquote class="wp-block-quote ft-trust-quote is-active"><!-- wp:paragraph {"fontSize":"lead"} -->
+<!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
+<blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios!</p>
 <!-- /wp:paragraph --><cite>Rob Kelly, World Vision Australia</cite></blockquote>
 <!-- /wp:quote -->
 
-<!-- wp:quote {"className":"ft-trust-quote"} -->
-<blockquote class="wp-block-quote ft-trust-quote"><!-- wp:paragraph {"fontSize":"lead"} -->
+<!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
+<blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">We found the FarmTree Tool essential for predicting outcomes of highly complex farm scenarios, among many, also agroforestry systems.</p>
 <!-- /wp:paragraph --><cite>Lorenzo Mento, Nectaerra</cite></blockquote>
-<!-- /wp:quote -->
-
-<!-- wp:quote {"className":"ft-trust-quote ft-testimonial-placeholder"} -->
-<blockquote class="wp-block-quote ft-trust-quote ft-testimonial-placeholder"><!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">Approved testimonial and portrait pending. Editors must replace this labelled CMS placeholder before publication.</p>
-<!-- /wp:paragraph --><cite>Sixth testimonial — not approved for publication</cite></blockquote>
 <!-- /wp:quote --></div>
-<!-- /wp:group -->
-
-<!-- wp:html -->
-<div class="ft-testimonial-controls" aria-label="Testimonial controls">
-<button type="button" aria-label="Previous testimonial" data-ft-testimonial-prev>←</button>
-<p aria-live="polite" aria-atomic="true" data-ft-testimonial-status>Testimonial 4 of 6</p>
-<button type="button" aria-label="Next testimonial" data-ft-testimonial-next>→</button>
-</div>
-<!-- /wp:html --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></section>
+<!-- /wp:group --></div>
+<!-- /wp:group --></section>
 <!-- /wp:group -->
 
 <!-- wp:group {"tagName":"section","anchor":"proof","metadata":{"name":"Proof Stories / Themes"},"align":"full","className":"ft-home-section ft-home-proof","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-ivory","layout":{"type":"constrained"}} -->

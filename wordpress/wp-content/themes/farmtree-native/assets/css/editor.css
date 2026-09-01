@@ -196,7 +196,7 @@
   border-radius: .5rem;
   background: rgb(255 254 248 / 92%);
   color: #163126;
-  content: "Generated placeholder — not author portrait";
+  content: "Generated placeholder: not an author portrait";
   font-size: .7rem;
   font-weight: 800;
   line-height: 1.2;
@@ -213,6 +213,21 @@
   margin-bottom: 1rem;
   padding: 1rem;
   border: 1px dashed rgb(0 97 63 / 25%);
+}
+
+.editor-styles-wrapper .ft-testimonial-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.editor-styles-wrapper .ft-testimonial-card {
+  width: auto;
+  min-width: 0;
+}
+
+.editor-styles-wrapper .ft-team-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 @media (width <= 600px) {

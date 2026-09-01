@@ -117,6 +117,7 @@ function farmtree_native_image_loading_attributes(string $block_content, array $
     }
 
     $dimensions = [
+        'assets/images/home/hero-field-planning-v1.jpg'                => [1672, 941],
         'assets/images/home/hero-project-workshop.webp'                => [1800, 1350],
         'assets/images/home/hero-project-teams.webp'                   => [1672, 941],
         'assets/images/home/proof-carbon.webp'                         => [1800, 1350],
@@ -138,6 +139,7 @@ function farmtree_native_image_loading_attributes(string $block_content, array $
         'assets/images/testimonials/generated-placeholders/portrait-04.jpg' => [720, 900],
         'assets/images/testimonials/generated-placeholders/portrait-05.jpg' => [720, 900],
         'assets/images/brand/farmtree-logo.webp'                       => [320, 117],
+        'assets/images/team/team-field-collaboration-v1.jpg'           => [1915, 821],
     ];
     $classes = (string) ($block['attrs']['className'] ?? '');
     $source = (string) $processor->get_attribute('src');
@@ -173,6 +175,34 @@ function farmtree_native_image_loading_attributes(string $block_content, array $
     return $processor->get_updated_html();
 }
 add_filter('render_block', 'farmtree_native_image_loading_attributes', 10, 2);
+
+/**
+ * Add stable page-specific hooks without coupling CSS to ephemeral page IDs.
+ *
+ * @param array<int, string> $classes Existing body classes.
+ * @return array<int, string>
+ */
+function farmtree_native_body_classes(array $classes): array
+{
+    if (is_page('team')) {
+        $classes[] = 'ft-team-page';
+    }
+
+    return $classes;
+}
+add_filter('body_class', 'farmtree_native_body_classes');
+
+/**
+ * The Team content owns its overlaid H1, so omit the generic template title.
+ *
+ * @param string $block_content Rendered Post Title block.
+ * @return string
+ */
+function farmtree_native_team_template_title(string $block_content): string
+{
+    return is_page('team') ? '' : $block_content;
+}
+add_filter('render_block_core/post-title', 'farmtree_native_team_template_title');
 
 /**
  * Give the horizontally scrollable partner rail a stable accessible name.

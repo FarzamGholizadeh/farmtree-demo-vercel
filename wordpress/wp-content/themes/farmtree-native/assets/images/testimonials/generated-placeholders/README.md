@@ -4,7 +4,7 @@ These five images were generated locally with OpenAI image generation for the
 Homepage V2 layout review. They depict fictional people and are **not**
 portraits or likenesses of the people quoted on the page.
 
-Publication status: `generated-placeholder — replace or explicitly approve`
+Publication status: `generated-placeholder: replace or explicitly approve`
 
 The frontend and editor identify this status visibly. Keep that disclosure in
 place until each image is replaced by a permission-cleared portrait or the

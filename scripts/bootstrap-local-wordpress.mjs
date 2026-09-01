@@ -309,6 +309,16 @@ function escapeHtml(value) {
 
 async function ensureThemeMedia({ directory, filename, alt, title }) {
   const mediaSlug = filename.replace(/\.[^.]+$/, '');
+  const contentTypes = {
+    avif: 'image/avif',
+    jpeg: 'image/jpeg',
+    jpg: 'image/jpeg',
+    png: 'image/png',
+    webp: 'image/webp'
+  };
+  const extension = filename.split('.').at(-1)?.toLowerCase();
+  const contentType = contentTypes[extension];
+  if (!contentType) throw new Error(`Unsupported local media type: ${filename}`);
   let media = await api(`/wp/v2/media?slug=${encodeURIComponent(mediaSlug)}&context=edit&per_page=1`);
   if (!media[0] && verifyOnly) throw new Error(`Required media is missing: ${filename}`);
   if (!media[0]) {
@@ -317,7 +327,7 @@ async function ensureThemeMedia({ directory, filename, alt, title }) {
       method: 'POST',
       headers: {
         'Content-Disposition': `attachment; filename="${filename}"`,
-        'Content-Type': 'image/webp'
+        'Content-Type': contentType
       },
       body: imageBuffer
     })];
@@ -384,15 +394,24 @@ function newsHubContent() {
   ].join('\n');
 }
 
-function teamPageContent(mediaBySlug) {
+function teamPageContent(mediaBySlug, heroMedia) {
   const cards = teamMemberDefinitions.map((member) => {
     const media = mediaBySlug.get(member.slug);
-    const linkedin = member.linkedin
-      ? `<!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="${escapeHtml(member.linkedin)}" target="_blank" rel="noreferrer noopener">LinkedIn ↗</a></p><!-- /wp:paragraph -->`
+    const portrait = media
+      ? `<!-- wp:image {"id":${media.id},"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="${escapeHtml(media.source_url)}" alt="${escapeHtml(member.name)}, ${escapeHtml(member.role)}" class="wp-image-${media.id}"/></figure><!-- /wp:image -->`
+      : `<!-- wp:group {"className":"ft-team-portrait ft-team-portrait-fallback","layout":{"type":"flex","justifyContent":"center","verticalAlignment":"center"}} --><div class="wp-block-group ft-team-portrait ft-team-portrait-fallback" role="img" aria-label="No approved portrait is available for ${escapeHtml(member.name)}"><span aria-hidden="true">MM</span></div><!-- /wp:group -->`;
+    const role = member.role
+      ? `<!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">${escapeHtml(member.role)}</p><!-- /wp:paragraph -->`
       : '';
-    return `<!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":${media.id},"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="${escapeHtml(media.source_url)}" alt="${escapeHtml(member.name)}, ${escapeHtml(member.role)}" class="wp-image-${media.id}"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">${escapeHtml(member.name)}</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">${escapeHtml(member.role)}</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">${escapeHtml(member.bio)}</p><!-- /wp:paragraph -->${linkedin}</article><!-- /wp:group -->`;
+    const bio = member.bio
+      ? `<!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">${escapeHtml(member.bio)}</p><!-- /wp:paragraph -->`
+      : '';
+    const linkedin = member.linkedin
+      ? `<!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="${escapeHtml(member.linkedin)}" target="_blank" rel="noreferrer noopener"><span>View LinkedIn profile</span><span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph -->`
+      : '';
+    return `<!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card">${portrait}<!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">${escapeHtml(member.name)}</h2><!-- /wp:heading -->${role}${bio}${linkedin}</article><!-- /wp:group -->`;
   }).join('');
-  return `<!-- wp:paragraph {"className":"ft-team-intro","fontSize":"lead"} --><p class="ft-team-intro has-lead-font-size">FarmTree combines agroforestry science, modelling, technology and project experience. Meet the people building and supporting the Platform.</p><!-- /wp:paragraph --><!-- wp:group {"className":"ft-team-grid","layout":{"type":"grid","minimumColumnWidth":"18rem"}} --><div class="wp-block-group ft-team-grid">${cards}</div><!-- /wp:group -->`;
+  return `<!-- wp:cover {"url":"${escapeHtml(heroMedia.source_url)}","id":${heroMedia.id},"dimRatio":15,"overlayColor":"black","isUserOverlayColor":true,"minHeight":520,"contentPosition":"center center","align":"full","className":"ft-team-hero"} --><div class="wp-block-cover alignfull ft-team-hero" style="min-height:520px"><img class="wp-block-cover__image-background wp-image-${heroMedia.id}" alt="" src="${escapeHtml(heroMedia.source_url)}" data-object-fit="cover"/><span aria-hidden="true" class="wp-block-cover__background has-black-background-color has-background-dim-15 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-gold","fontSize":"small"} --><p class="ft-native-eyebrow has-farmtree-gold-color has-text-color has-small-font-size">People behind the platform</p><!-- /wp:paragraph --><!-- wp:heading {"level":1,"textColor":"white","fontSize":"heading"} --><h1 class="wp-block-heading has-white-color has-text-color has-heading-font-size">Meet the FarmTree team</h1><!-- /wp:heading --><!-- wp:paragraph {"textColor":"white","fontSize":"lead"} --><p class="has-white-color has-text-color has-lead-font-size">Agroforestry science, modelling, technology and project experience in one multidisciplinary team.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-hero-caption","textColor":"white","fontSize":"caption"} --><p class="ft-team-hero-caption has-white-color has-text-color has-caption-font-size">Illustrative field collaboration</p><!-- /wp:paragraph --></div></div><!-- /wp:cover --><!-- wp:paragraph {"className":"ft-team-intro","fontSize":"lead"} --><p class="ft-team-intro has-lead-font-size">Meet the people building and supporting the FarmTree Platform.</p><!-- /wp:paragraph --><!-- wp:group {"className":"ft-team-grid","layout":{"type":"grid","minimumColumnWidth":"18rem"}} --><div class="wp-block-group ft-team-grid">${cards}</div><!-- /wp:group -->`;
 }
 
 function vacanciesPageContent() {
@@ -419,14 +438,14 @@ function englishPageContent(page, teamMedia = new Map()) {
       '<!-- wp:paragraph --><p><a href="https://www.openstreetmap.org/search?query=Bronland%2012C-1%2C%206708%20WH%20Wageningen" target="_blank" rel="noreferrer noopener">View the location on OpenStreetMap ↗</a></p><!-- /wp:paragraph -->'
     ].join('\n\n');
   }
-  if (page.slug === 'team') return teamPageContent(teamMedia);
+  if (page.slug === 'team') return teamPageContent(teamMedia, teamHeroMedia);
   if (page.slug === 'vacancies') return vacanciesPageContent();
   if (page.slug === 'proof-stories') {
-    const links = proofStoryDefinitions.map((story) => `<li><a href="/proof-stories/${escapeHtml(story.slug)}/">${escapeHtml(story.title)}</a> — ${escapeHtml(story.excerpt)}</li>`).join('');
+    const links = proofStoryDefinitions.map((story) => `<li><a href="/proof-stories/${escapeHtml(story.slug)}/">${escapeHtml(story.title)}</a>: ${escapeHtml(story.excerpt)}</li>`).join('');
     return `<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">${escapeHtml(page.body)}</p><!-- /wp:paragraph --><!-- wp:list --><ul>${links}</ul><!-- /wp:list -->`;
   }
   if (page.slug === 'customer-segments') {
-    const links = segmentDefinitions.map((segment) => `<li><a href="/customer-segments/${escapeHtml(segment.slug)}/">${escapeHtml(segment.title)}</a> — ${escapeHtml(segment.excerpt)}</li>`).join('');
+    const links = segmentDefinitions.map((segment) => `<li><a href="/customer-segments/${escapeHtml(segment.slug)}/">${escapeHtml(segment.title)}</a>: ${escapeHtml(segment.excerpt)}</li>`).join('');
     return `<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">${escapeHtml(page.body)}</p><!-- /wp:paragraph --><!-- wp:list {"ordered":true} --><ol>${links}</ol><!-- /wp:list -->`;
   }
   return [
@@ -452,8 +471,15 @@ for (const story of proofStoryDefinitions) {
 
 const teamMedia = new Map();
 for (const member of teamMemberDefinitions) {
+  if (!member.image) continue;
   teamMedia.set(member.slug, await ensureThemeMedia({ directory: 'team', filename: member.image, alt: `${member.name}, ${member.role}`, title: member.name }));
 }
+const teamHeroMedia = await ensureThemeMedia({
+  directory: 'team',
+  filename: 'team-field-collaboration-v1.jpg',
+  alt: 'Illustrative group of agroforestry professionals walking through a diversified farm',
+  title: 'Illustrative FarmTree team field collaboration'
+});
 
 const segmentPosts = [];
 for (const segment of segmentDefinitions) {

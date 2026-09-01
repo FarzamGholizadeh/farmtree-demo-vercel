@@ -41,36 +41,6 @@
   },
   {
     "order": 5,
-    "slug": "mia-beyens",
-    "name": "Mia Beyens",
-    "role": "Science and Model Lead",
-    "bio": "Mia supports the scientific integrity and documentation of the FarmTree Model and collaborates with the Innovation and IT teams on model development, validation and Platform functionality.",
-    "linkedin": "https://www.linkedin.com/in/mia-beyens",
-    "image": "mia-beyens-690.webp",
-    "sourceImage": "https://www.farmtree.earth/web/image/9033-8db80806/image.png"
-  },
-  {
-    "order": 6,
-    "slug": "ruben-van-voorst",
-    "name": "Ruben van Voorst",
-    "role": "Intern — Agroforestry System Design",
-    "bio": "Ruben supports database management and data collection, including ground-truth and calibrated agroforestry-system data. He studies Forest and Nature Management with a focus on tropical forestry.",
-    "linkedin": "",
-    "image": "ruben-van-voorst-690.webp",
-    "sourceImage": "https://www.farmtree.earth/web/image/12510-2a426e3a/Ruben_.png"
-  },
-  {
-    "order": 7,
-    "slug": "nikolaos-mantzaridis",
-    "name": "Nikolaos Mantzaridis",
-    "role": "Database Management",
-    "bio": "Nikolaos supports the creation of a library of calibrated species for the FarmTree Platform. He holds an MSc in Forest and Nature Conservation from Wageningen University.",
-    "linkedin": "https://www.linkedin.com/in/nikolaos-mantzaridis-198566177",
-    "image": "nikolaos-mantzaridis-690.webp",
-    "sourceImage": "https://www.farmtree.earth/web/image/12514-07abcc0c/Nick_.png"
-  },
-  {
-    "order": 8,
     "slug": "betelehem-beyene",
     "name": "Betelehem Beyene",
     "role": "Portfolio Manager",
@@ -80,7 +50,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/15791-d2fcf931/Betelehem%20Beyene.png"
   },
   {
-    "order": 9,
+    "order": 6,
     "slug": "edi-yoga",
     "name": "Edi Yoga",
     "role": "FarmTree Representative, Indonesia",
@@ -90,7 +60,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/15808-1e575819/Yoga%20FarmTree%20Profile%20Picture.png"
   },
   {
-    "order": 10,
+    "order": 7,
     "slug": "hery-hanipan",
     "name": "Hery Hanipan",
     "role": "FarmTree Database Management, Indonesia",
@@ -100,7 +70,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/15793-6c8b30c3/Hery.png"
   },
   {
-    "order": 11,
+    "order": 8,
     "slug": "alvaro-micheletti",
     "name": "Álvaro Mitcheletti",
     "role": "Portfolio Manager, Latin America",
@@ -110,23 +80,13 @@
     "sourceImage": "https://www.farmtree.earth/web/image/15792-4644e67c/Alvaro.png"
   },
   {
-    "order": 12,
-    "slug": "mary-theodorah-ajal",
-    "name": "Mary Theodorah Ajal",
-    "role": "Intern — Communications",
-    "bio": "Theodorah contributes to FarmTree's communications strategy and website management while studying Sustainable Food Systems at the Swedish University of Agricultural Sciences.",
-    "linkedin": "",
-    "image": "mary-theodorah-ajal-690.webp",
-    "sourceImage": "https://www.farmtree.earth/web/image/12491-994c2461/Theodorah.jpg"
-  },
-  {
-    "order": 13,
-    "slug": "cresus-odjo",
-    "name": "Crésus Odjo",
-    "role": "FarmTree Representative, Bénin",
-    "bio": "Crésus is an agronomy expert and FarmTree's representative in Bénin. His work includes technical support for land-restoration activities, monitoring and evaluation, and large-scale data collection.",
-    "linkedin": "https://www.linkedin.com/in/cresus-odjo/",
-    "image": "cresus-odjo-690.webp",
-    "sourceImage": "https://www.farmtree.earth/web/image/16128-f5b669b0/Cresus_2026.jpeg"
+    "order": 9,
+    "slug": "maximilian-michael-moeller",
+    "name": "Maximilian Michael Möller",
+    "role": "",
+    "bio": "",
+    "linkedin": "https://www.linkedin.com/in/maximilian-michael-moeller/",
+    "image": "",
+    "sourceImage": ""
   }
 ]
