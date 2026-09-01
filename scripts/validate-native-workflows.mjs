@@ -32,6 +32,27 @@ if (validationSource.includes('.github/workflows/deploy-wordpress-staging.yml'))
   throw new Error('Validation workflow must not watch the retired staging workflow.');
 }
 
+for (const requiredValidationPath of [
+  'config/farmtree-native-release-files.json',
+  'scripts/build-native-release.mjs',
+  'scripts/generate-managed-content-manifest.mjs'
+]) {
+  const occurrences = validationSource.match(new RegExp(requiredValidationPath.replaceAll('.', '\\.'), 'g')) ?? [];
+  if (occurrences.length !== 2) {
+    throw new Error(`Validation workflow must watch ${requiredValidationPath} for push and pull request.`);
+  }
+}
+
+if (!validationSource.includes('-print0 | xargs -0 -r -n 1 php -l')) {
+  throw new Error('Validation workflow PHP lint must propagate every syntax failure.');
+}
+
+for (const requiredValidationCommand of ['npm run release:build', 'npm run release:audit']) {
+  if (!validationSource.includes(requiredValidationCommand)) {
+    throw new Error(`Validation workflow must exercise the built artifact with ${requiredValidationCommand}.`);
+  }
+}
+
 if (Object.keys(privateRuntime.on ?? {}).join(',') !== 'workflow_dispatch') {
   throw new Error('Private runtime deployment must remain workflow_dispatch-only.');
 }
@@ -99,6 +120,12 @@ for (const required of [
   'wp option get blog_public',
   'wp plugin is-active coming-soon',
   'wp plugin is-active farmtree-content',
+  'npm run release:build',
+  'npm run release:audit',
+  '.release/SHA256SUMS',
+  'sha256sum --check',
+  '.release/wordpress/wp-content/themes/farmtree-native/',
+  '.release/wordpress/wp-content/plugins/farmtree-content/',
   'wordpress/wp-content/themes/farmtree-native/',
   'wordpress/wp-content/plugins/farmtree-content/',
   'wp theme is-installed farmtree-native',
@@ -113,6 +140,42 @@ for (const required of [
 
 if ((privateRuntimeSource.match(/wp plugin is-active farmtree-content/g) ?? []).length < 2) {
   throw new Error('Private runtime deployment must prove farmtree-content stays inactive before and after sync.');
+}
+
+for (const [stepName, requiredSource] of [
+  ['Deploy inactive FarmTree Native theme', '.release/wordpress/wp-content/themes/farmtree-native/'],
+  ['Deploy inactive FarmTree Content plugin', '.release/wordpress/wp-content/plugins/farmtree-content/']
+]) {
+  const step = privateRuntimeJob?.steps?.find(({ name }) => name === stepName);
+  if (typeof step?.run !== 'string' || !step.run.includes(requiredSource)) {
+    throw new Error(`${stepName} must transfer only the audited release artifact.`);
+  }
+  if ((step.run.match(/\brsync\b/g) ?? []).length !== 1 || !step.run.includes('rsync -azc --delete')) {
+    throw new Error(`${stepName} must contain exactly one checksum-verifying scoped rsync.`);
+  }
+}
+
+const approvedTransferSteps = new Set([
+  'Deploy inactive FarmTree Native theme',
+  'Deploy inactive FarmTree Content plugin'
+]);
+for (const step of privateRuntimeJob?.steps ?? []) {
+  if (typeof step.run !== 'string') {
+    continue;
+  }
+  if (/\b(?:rsync|scp|sftp)\b/.test(step.run) && !approvedTransferSteps.has(step.name)) {
+    throw new Error(`Unexpected file-transfer command in private runtime step: ${step.name}`);
+  }
+}
+
+for (const rawSourceRoot of [
+  'wordpress/wp-content/themes/farmtree-native/',
+  'wordpress/wp-content/plugins/farmtree-content/'
+]) {
+  const unprefixedPattern = new RegExp(`(?<!\\.release/)${rawSourceRoot.replaceAll('/', '\\/')}`);
+  if (unprefixedPattern.test(privateRuntimeSource)) {
+    throw new Error(`Private runtime workflow must never transfer or inspect the raw deployable root: ${rawSourceRoot}`);
+  }
 }
 
 for (const step of privateRuntimeJob?.steps ?? []) {

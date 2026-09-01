@@ -12,6 +12,29 @@ Block Theme using WordPress core blocks and locked patterns. Keep normal content
 editable while preserving FarmTree's approved visual identity and structural
 design controls.
 
+### Audited Release Preparation
+
+The native release candidate now has a separate production-safety layer. The
+deployment workflow builds an exhaustive allowlisted `.release/wordpress`
+artifact: 81 intended runtime files are staged and 114 repository-only,
+development or obsolete files are excluded. Raw content JSON is compiled into
+an `ABSPATH`-guarded PHP manifest and never shipped as public data.
+
+The `farmtree-content` plugin exposes a WP-CLI-only reconciler that defaults to
+JSON dry-run. It manages 40 English content entities, six categories and 34
+media assets by stable key, type/taxonomy, slug and canonical fingerprints.
+Exact unowned matches may be adopted in place; ambiguity, foreign ownership,
+duplicate identity, manual drift and media-binary drift are conflicts. It has
+no delete, blanket-import, activation, Coming Soon, robots or infrastructure
+mutation path. `/nl/` and `/de/` remain reserved and unpublished.
+
+Local PHP 8.1 runtime evidence proves the first dry run was write-free and
+reported 90 creates, two unchanged reserved-locale checks and one skipped
+option. The local-only apply kept all 40 English entities private and converged
+to 92 unchanged managed operations on its next dry run. Foreign ownership and
+manual drift each stopped as a single conflict. Full design and evidence are in
+`docs/FT-NATIVE-RELEASE-PREPARATION.md`.
+
 ### Final English Master Delivery
 
 The final English experience now includes five-second Hero autoplay with calm
@@ -45,15 +68,14 @@ remain unchanged.
 
 ### Runtime Dependency
 
-The native-rebuild branch is synchronized through `2f810ef`, including the
-workflow-root correction and completed visual-parity source. GitHub native
-validation run `32956292922` passed the earlier `897a991` source. Local commit
-`416500a` then reconciled the runtime release-readiness evidence. PR #3 merged
+The approved native-rebuild baseline is pushed through `210ce51`, including
+the final Homepage/Team refinement. GitHub native validation and secret-scan
+runs `33525868829` and `33525869476` passed that exact baseline. PR #3 merged
 the workflow-only reconciliation to `main` at `3df2ae2`: GitHub registers
 `.github/workflows/deploy-wordpress-native.yml` as active and manual-only, the
 superseded separate-staging workflow is absent, and the native workflow has
-never run. The current visual-parity correction remains local pending a future
-push approval.
+never run. The audited release-preparation change remains a separate
+feature-branch release candidate until its own validation and approval.
 
 The matching recoverable files/database backups are verified locally, and the
 public Coming Soon response has an explicit `X-Robots-Tag: noindex, nofollow`.
@@ -239,7 +261,8 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   reduced-motion checks.
 - A fresh preview process returned HTTP 200 with the expected
   `X-Robots-Tag: noindex, nofollow` header.
-- GitHub run `32956292922` validated pushed commit `897a991` successfully.
+- GitHub native validation and secret-scan runs `33525868829` and
+  `33525869476` validated pushed baseline `210ce51` successfully.
 - PR #3 merged the manual-only native workflow to `main` at `3df2ae2`; GitHub
   registers it as active with zero runs, and the staging workflow is retired.
 

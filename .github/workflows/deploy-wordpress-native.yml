@@ -78,14 +78,16 @@ jobs:
           php-version: "8.1"
           coverage: none
 
-      - name: Validate native deployment source
+      - name: Build and validate native release artifact
         run: |
           npm ci
           npm test
-          find wordpress/wp-content/themes/farmtree-native \
-               wordpress/wp-content/plugins/farmtree-content \
+          npm run release:build
+          npm run release:audit
+          find .release/wordpress/wp-content/themes/farmtree-native \
+               .release/wordpress/wp-content/plugins/farmtree-content \
                -type f -name '*.php' \
-               -exec php -l {} \;
+               -print0 | xargs -0 -r -n 1 php -l
 
       - name: Validate production deployment configuration
         env:
@@ -204,9 +206,9 @@ jobs:
           WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
           # --delete is scoped to the farmtree-native destination only.
-          rsync -az --delete \
+          rsync -azc --delete \
             -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
-            wordpress/wp-content/themes/farmtree-native/ \
+            .release/wordpress/wp-content/themes/farmtree-native/ \
             "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/themes/farmtree-native/"
 
       - name: Deploy inactive FarmTree Content plugin
@@ -217,10 +219,29 @@ jobs:
           WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
         run: |
           # --delete is scoped to the farmtree-content destination only.
-          rsync -az --delete \
+          rsync -azc --delete \
             -e "ssh -i ~/.ssh/id_ed25519 -p $PORT" \
-            wordpress/wp-content/plugins/farmtree-content/ \
+            .release/wordpress/wp-content/plugins/farmtree-content/ \
             "$USERNAME@$HOST:$WORDPRESS_PATH/wp-content/plugins/farmtree-content/"
+
+      - name: Verify deployed native artifact checksums
+        env:
+          HOST: ${{ secrets.VIMEXX_HOST }}
+          PORT: ${{ secrets.VIMEXX_PORT }}
+          USERNAME: ${{ secrets.VIMEXX_USER }}
+          WORDPRESS_PATH: ${{ secrets.VIMEXX_WORDPRESS_PATH }}
+        run: |
+          remote_wordpress_path="$(printf '%q' "$WORDPRESS_PATH")"
+          sed 's#  wordpress/#  #' .release/SHA256SUMS | \
+            ssh \
+              -i ~/.ssh/id_ed25519 \
+              -p "$PORT" \
+              "$USERNAME@$HOST" \
+              "set -eu
+              command -v sha256sum >/dev/null
+              cd $remote_wordpress_path
+              sha256sum --check --quiet -
+              echo FARMTREE_NATIVE_ARTIFACT_CHECKSUMS_OK"
 
       - name: Verify inactive native code on WordPress
         env:

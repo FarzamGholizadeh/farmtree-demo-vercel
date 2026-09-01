@@ -9,6 +9,9 @@ on:
       - ".github/workflows/validate-wordpress-native.yml"
       - "wordpress/wp-content/themes/farmtree-native/**"
       - "wordpress/wp-content/plugins/farmtree-content/**"
+      - "config/farmtree-native-release-files.json"
+      - "scripts/build-native-release.mjs"
+      - "scripts/generate-managed-content-manifest.mjs"
       - "scripts/validate-native-*.mjs"
       - "package.json"
       - "package-lock.json"
@@ -19,6 +22,9 @@ on:
       - ".github/workflows/validate-wordpress-native.yml"
       - "wordpress/wp-content/themes/farmtree-native/**"
       - "wordpress/wp-content/plugins/farmtree-content/**"
+      - "config/farmtree-native-release-files.json"
+      - "scripts/build-native-release.mjs"
+      - "scripts/generate-managed-content-manifest.mjs"
       - "scripts/validate-native-*.mjs"
       - "package.json"
       - "package-lock.json"
@@ -56,10 +62,13 @@ jobs:
           find wordpress/wp-content/themes/farmtree-native \
                wordpress/wp-content/plugins/farmtree-content \
                -type f -name '*.php' \
-               -exec php -l {} \;
+               -print0 | xargs -0 -r -n 1 php -l
 
       - name: Validate native theme, plugin, workflows, JavaScript and CSS
-        run: npm test
+        run: |
+          npm test
+          npm run release:build
+          npm run release:audit
 
   secret-scan:
     runs-on: ubuntu-latest

@@ -46,6 +46,24 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 
 ## Active Sprint
 
+### FT-NATIVE-004A - Audited release preparation
+
+Status: production-safety implementation and local runtime/audit validation
+complete; stopped before production deployment or WordPress mutation.
+
+The release path now stages an exhaustive allowlisted artifact instead of the
+raw theme/plugin trees. A WP-CLI-only, dry-run-first content reconciler manages
+40 English entities, six categories and 34 media assets by stable identity and
+fingerprint, preserves matching IDs, stops on ambiguous/unowned/manual drift,
+and never imports or deletes unrelated content. Raw content JSON, repository
+documentation, QA data and unused derivatives are excluded from the artifact.
+Architecture, commands, ownership rules and local evidence are recorded in
+`docs/FT-NATIVE-RELEASE-PREPARATION.md`.
+
+The approved baseline `210ce51f7c4b573b51cf96bba1b575918757e9d1` was pushed
+only to `origin/feat/wordpress-native-rebuild`. The audited preparation commit
+is a separate feature-branch release candidate; production remains untouched.
+
 ### FT-NATIVE-002 - Native Homepage
 
 Status: Local implementation, approved visual-parity correction, controlled

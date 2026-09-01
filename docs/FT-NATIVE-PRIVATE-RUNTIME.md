@@ -88,11 +88,18 @@ after configuration. `robots.txt` alone does not satisfy this gate.
 
 ## Private Runtime Deployment Boundary
 
-`.github/workflows/deploy-wordpress-native.yml` is manual-only and deploys
-exactly:
+`.github/workflows/deploy-wordpress-native.yml` is manual-only. It first builds
+an exhaustive allowlisted artifact and deploys exactly:
 
-- `wordpress/wp-content/themes/farmtree-native/`
-- `wordpress/wp-content/plugins/farmtree-content/`
+- `.release/wordpress/wp-content/themes/farmtree-native/`
+- `.release/wordpress/wp-content/plugins/farmtree-content/`
+
+The raw repository theme/plugin trees are not rsynced. The release manifest
+classifies every source-root file as runtime or excluded, and the workflow
+fails on unknown files, symlinks, dirty release inputs, PHP syntax errors or
+checksum mismatch. It verifies the staged SHA-256 list again after transfer.
+The current exact classification and its audit command are documented in
+`docs/FT-NATIVE-RELEASE-PREPARATION.md`.
 
 Each run requires the full immutable `source_commit` SHA approved from
 `feat/wordpress-native-rebuild`. Checkout is pinned to that SHA, and the
@@ -100,12 +107,13 @@ workflow fails unless the commit is contained in the remote native-rebuild
 branch. This prevents an accidental dispatch on `main`, which intentionally
 does not contain the native implementation source.
 
-The last pushed/CI-validated baseline is
-`897a991fbdd9f301d0409d1a015282baac8fce61`; GitHub validation run
-`32956292922` passed it. That SHA predates the local visual-parity correction
-and must not be selected for the next parity release. After an explicitly
-approved push and passing CI, record and reconfirm the new parity commit's full
-SHA before any run. Recorded CI evidence is never dispatch approval.
+The last pushed/CI-validated approved baseline is
+`210ce51f7c4b573b51cf96bba1b575918757e9d1`; GitHub native validation and
+secret-scan runs `33525868829` and `33525869476` passed it. The audited
+release-preparation commit remains a separate feature-branch release candidate.
+After its explicitly approved push and passing CI, record and reconfirm that
+commit's full SHA before any run. Recorded CI evidence is never dispatch
+approval.
 
 The workflow targets the existing `Production` environment and existing
 `VIMEXX_*` server credentials. A read-only GitHub API check on 2026-08-26 found
@@ -133,6 +141,30 @@ that `farmtree-content` is inactive.
 After rsync, the workflow verifies that WordPress recognizes the inactive native
 theme and content plugin, that both remain inactive, and that `farmtree-native`
 is a valid Block Theme.
+
+## Managed Content Materialization Boundary
+
+File deployment and WordPress content reconciliation are separate operations.
+The deployment workflow does not run the reconciler, activate its plugin,
+publish content or change front-page options.
+
+The release artifact contains a WP-CLI-only `farmtree content reconcile`
+command and a protected generated manifest. The command defaults to a
+write-free JSON plan and classifies every operation as create, update,
+unchanged, conflict or skipped. Stable managed keys and last-applied
+fingerprints preserve matching IDs and prevent an unowned/manual/ambiguous
+match from being overwritten. All managed English entities materialize as
+`private`; attachments remain `inherit`. Non-loopback apply requires
+transactional tables and a locked `SERIALIZABLE` fresh plan, then verifies a
+fully idempotent final no-write plan before commit. It has no delete or
+database-import path.
+
+Any future production dry run requires explicit runtime approval. Any future
+`--apply` is a Gate 6 content/database/publication action and additionally
+requires the reviewed plan digest, exact site/theme identity, backup-evidence
+digest, Coming Soon, `blog_public=0` and all typed confirmations. A conflict
+stops apply. `/nl/` and `/de/` are never materialized and must remain
+unpublished.
 
 ## Runtime Validation Checklist
 

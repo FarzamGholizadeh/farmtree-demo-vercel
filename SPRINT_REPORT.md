@@ -3,6 +3,29 @@
 Status: controlled Homepage and Team refinement implemented and locally
 validated; stopped at pre-release for visual and publication approval
 
+## Audited Release Preparation
+
+The feature branch now produces a clean, checksummed native artifact from an
+exhaustive allowlist instead of exposing the raw theme/plugin source trees.
+Current classification is 81 runtime files and 114 exclusions, including all
+raw content JSON, documentation, local QA/bootstrap data and unused media
+derivatives. The manual-only workflow validates and transfers only that staged
+artifact; it remains undispatched.
+
+The protected runtime manifest and WP-CLI-only reconciler cover 40 English
+private entities, six categories, 34 verified media assets and ten embedded
+Team identities. Dry-run is the default;
+apply is digest-, backup-, site-, theme-, protection- and confirmation-gated.
+Stable ownership plus last-applied fingerprints preserve matching IDs and stop
+on duplicates, foreign ownership, unowned near-matches, manual drift or changed
+media. Non-loopback apply uses a locked `SERIALIZABLE` transaction and requires
+a matching fresh plan plus a final idempotence postcondition. The command never
+deletes unrelated content and never imports a local database. Disposable PHP
+8.1 runtime tests proved a write-free `90/0/2/0/1` dry run, private-only apply,
+`92` unchanged managed operations after apply, and blocking foreign-owner and
+manual-drift probes. See
+`docs/FT-NATIVE-RELEASE-PREPARATION.md`.
+
 ## Homepage Structure
 
 The native Homepage now follows Hero, Platform, Technology, Track Record,
@@ -205,9 +228,9 @@ section order, layout, typography, spacing, brand tokens and responsive rules.
   project validator and the Codex skill schema validator.
 - Subsequent release-preparation checks verified the public Coming Soon response
   with explicit `X-Robots-Tag: noindex, nofollow`; Coming Soon remains active.
-- The approved baseline commits were pushed to the native-rebuild branch through
-  `2f810ef`; GitHub native validation run `32956292922` passed the earlier
-  `897a991` source.
+- The approved baseline was pushed to the native-rebuild branch through
+  `210ce51`; GitHub native validation and secret-scan runs `33525868829` and
+  `33525869476` passed that exact source.
 - PR #3 merged the workflow-only reconciliation to `main` at `3df2ae2`.
   GitHub registers `deploy-wordpress-native.yml` as active and manual-only with
   zero runs, and `deploy-wordpress-staging.yml` is absent from `main`.

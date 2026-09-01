@@ -109,7 +109,7 @@ for (const segment of segments) {
 }
 
 const restChecks = [
-  ['/wp-json/wp/v2/pages?per_page=100', [...pages.map(({ slug }) => slug), 'news-insights', 'farmtree-native-local-home']],
+  ['/wp-json/wp/v2/pages?per_page=100', [...pages.map(({ slug }) => slug), 'news-insights', 'home']],
   ['/wp-json/wp/v2/proof-stories?per_page=100', proofs.map(({ slug }) => slug)],
   ['/wp-json/wp/v2/customer-segments?per_page=100', segments.map(({ slug }) => slug)],
   ['/wp-json/wp/v2/posts?per_page=100', articles.map(({ slug }) => slug)]

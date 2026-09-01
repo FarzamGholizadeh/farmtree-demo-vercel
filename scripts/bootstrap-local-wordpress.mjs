@@ -637,9 +637,15 @@ if (!homepagePattern?.content) {
   throw new Error('WordPress did not register the FarmTree Homepage pattern.');
 }
 
-const existingPages = await api(
-  '/wp/v2/pages?slug=farmtree-native-local-home&status=publish,draft,pending,private,future&context=edit'
+const homepageCandidates = await Promise.all(
+  ['home', 'farmtree-native-local-home'].map((slug) => api(
+    `/wp/v2/pages?slug=${slug}&status=publish,draft,pending,private,future&context=edit&per_page=100`
+  ))
 );
+const existingPages = [...new Map(homepageCandidates.flat().map((page) => [page.id, page])).values()];
+if (existingPages.length > 1) {
+  throw new Error('The loopback runtime has ambiguous canonical/legacy Homepage slugs.');
+}
 let homepage = existingPages[0];
 
 if (!homepage) {
@@ -650,8 +656,8 @@ if (!homepage) {
   homepage = await api('/wp/v2/pages', {
     method: 'POST',
     body: JSON.stringify({
-      title: 'FarmTree Native Local Homepage',
-      slug: 'farmtree-native-local-home',
+      title: 'FarmTree Native Homepage',
+      slug: 'home',
       status: localQaStatus,
       content: '<!-- wp:paragraph --><p>Local runtime bootstrap</p><!-- /wp:paragraph -->'
     })
@@ -662,8 +668,8 @@ if (!verifyOnly) {
   homepage = await api(`/wp/v2/pages/${homepage.id}`, {
     method: 'POST',
     body: JSON.stringify({
-      title: 'FarmTree Native Local Homepage',
-      slug: 'farmtree-native-local-home',
+      title: 'FarmTree Native Homepage',
+      slug: 'home',
       status: localQaStatus,
       content: homepagePattern.content
     })

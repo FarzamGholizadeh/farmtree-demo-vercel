@@ -160,6 +160,34 @@ Coming Soon remains active. If future content migration requires destructive or
 irreversible database changes, create a separate approval gate and backup-backed
 migration plan before proceeding.
 
+### Managed Release Reconciliation
+
+The production-safe migration source is the generated, direct-access-guarded
+manifest in `farmtree-content`; repository-only raw JSON is not a deployable
+runtime input. The manifest assigns stable keys to every managed term, media
+object and content entity. Team members remain stable keyed records embedded in
+the single managed Team page until the separately planned `team_member` model
+is implemented, so the reconciler cannot create duplicate Team pages or
+duplicate managed cards.
+
+Reconciliation is WP-CLI-only and defaults to a no-write plan. Ownership
+metadata records the stable key, manifest version, source hash, last-applied
+canonical hash and release commit. An exact unowned match may be adopted
+without changing its ID. Foreign/multiple ownership, ambiguous key/slug
+matches, unowned near-matches, manual drift and media-binary drift stop as
+conflicts. All managed English entities remain private. Non-loopback apply
+requires InnoDB, takes current-read locks inside a `SERIALIZABLE` transaction,
+rebuilds the reviewed plan after cache refresh and proves final idempotence
+before commit. Managed post updates create a verified revision; failures report
+rollback and media-cleanup status. There is no delete, trash or full-database
+import path.
+
+The optional front-page setting is excluded by default. Reserved Dutch and
+German roots are guard checks only: they are not created, published or linked.
+Runtime application remains a separate approval-gated operation from the
+allowlisted inactive-code deployment. See
+`docs/FT-NATIVE-RELEASE-PREPARATION.md`.
+
 ## Cutover And Rollback
 
 1. Complete native English templates and models.

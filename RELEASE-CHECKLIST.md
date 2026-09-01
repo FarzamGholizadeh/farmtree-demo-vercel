@@ -1,6 +1,6 @@
 # FarmTree WordPress Release Checklist
 
-_Last updated: 2026-08-27_
+_Last updated: 2026-09-01_
 
 ## Release Context
 
@@ -42,6 +42,13 @@ _Last updated: 2026-08-27_
 - [ ] Run `git status --short`.
 - [ ] Run `git diff --stat`.
 - [ ] Run `git diff --check`.
+- [ ] Run `npm test`, `npm run wp:verify` and
+      `npm run wp:verify:anonymous`.
+- [ ] Run `npm run release:check`; require exhaustive classification with no
+      unknown, missing, duplicate, symlinked or unclassified deployable paths.
+- [ ] From the exact clean approved commit, run `npm run release:build` and
+      `npm run release:audit`; require an exact source-equivalent artifact and
+      verify every entry in `.release/SHA256SUMS`.
 - [ ] Run available read-only syntax checks or tests that do not install dependencies, write output, or trigger remote actions.
 - [ ] Review GitHub Actions YAML indentation and trigger logic.
 
@@ -68,11 +75,11 @@ _Last updated: 2026-08-27_
       the workflow as active and it has zero runs.
 - [ ] Record the full approved commit SHA from `feat/wordpress-native-rebuild`;
       use that immutable SHA as `source_commit` rather than deploying `main` or
-      an unpinned branch tip. The last pushed/CI-validated baseline is
-      `897a991fbdd9f301d0409d1a015282baac8fce61` (run `32956292922`), but it
-      predates the local visual-parity correction and must not be used for that
-      release. After an explicitly approved push and passing CI, record and
-      reconfirm the new parity commit's full SHA before dispatch.
+      an unpinned branch tip. The last pushed/CI-validated approved baseline is
+      `210ce51f7c4b573b51cf96bba1b575918757e9d1` (native validation and
+      secret-scan runs `33525868829` and `33525869476`). After the explicitly
+      approved audited release-preparation push and passing CI, record and
+      reconfirm that commit's full SHA before dispatch.
 - [x] Reconcile the default-branch workflow additions and retire the superseded
       `.github/workflows/deploy-wordpress-staging.yml` path. Verified absent
       from `main` at `3df2ae2`.
@@ -91,6 +98,39 @@ _Last updated: 2026-08-27_
       `robots.txt` alone as sufficient evidence.
 - [ ] Confirm the workflow deploys only inactive `farmtree-native` and
       `farmtree-content` files and performs no activation or database change.
+- [ ] Confirm the workflow stages and transfers only
+      `.release/wordpress/wp-content/themes/farmtree-native/` and
+      `.release/wordpress/wp-content/plugins/farmtree-content/`, never the raw
+      source roots.
+- [ ] Review all exact runtime/excluded paths in
+      `config/farmtree-native-release-files.json`; raw content JSON,
+      documentation and local QA/bootstrap artifacts must remain excluded.
+
+## Managed Content Reconciliation Gate
+
+These checks do not authorize a production command. Any production dry run
+needs explicit runtime approval; any apply remains a Gate 6 database and
+publication action.
+
+- [ ] Run the WP-CLI command without `--apply` first and retain its JSON plan,
+      five-state summary and `plan_digest`.
+- [ ] Require zero `conflict` operations. Do not use a force flag or manually
+      reinterpret an ownership collision.
+- [ ] Verify the plan contains only the reviewed 40 content entities, six
+      categories, 34 media assets and ten embedded Team identities from the
+      protected manifest; all 40 content entities must remain `private`.
+- [ ] Confirm `/nl/` and `/de/` remain unpublished; a published reserved root
+      page must stop the plan as a conflict.
+- [ ] Reconfirm exact site, active-theme, Coming Soon and `blog_public=0`
+      state; verify matching recoverable backup evidence separately.
+- [ ] If apply is later approved, use the exact recomputed digest, immutable
+      release SHA, backup-evidence digest and all typed confirmations. A changed
+      plan requires a new review.
+- [ ] Confirm the reconciler preserves matching WordPress IDs, adopts only an
+      exact unowned match, and stops on foreign/multiple ownership, duplicate
+      key/slug identity, manual drift or media-binary drift.
+- [ ] Keep `--set-front-page` absent unless changing the front-page options is
+      separately and explicitly approved.
 
 ## Native Publication Gate
 
