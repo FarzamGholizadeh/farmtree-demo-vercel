@@ -1,6 +1,6 @@
 # FarmTree Human Pre-release Sign-off
 
-Implementation reviewed: controlled local refinement following `b35283e`
+Implementation reviewed: current controlled local refinement pass
 
 Purpose: record only publication decisions that require an authorised human.
 Repository, WordPress, browser, responsive and automated accessibility QA are
@@ -31,17 +31,19 @@ Metric approval notes/source date: __________________________________________
 
 The five attributed quotations retain the approved production-theme wording;
 one em dash was normalised to a period to meet the visible-copy rule. The
-repository does not prove publication permission. No portrait is currently
-displayed for any named author; do not attach a generated portrait to a real
-person.
+repository does not prove publication permission. Each local card now uses a
+fictional generated portrait that is visibly labelled “Illustrative portrait”
+and whose alternative text says it is not the named author’s likeness. Human
+approval must either accept that explicit illustrative treatment or replace it
+with a permission-cleared real portrait before public release.
 
 | Exact quote | Author / organisation | Portrait | Evidence and permission | Decision | Recommended default |
 | --- | --- | --- | --- | --- | --- |
-| “The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.” | Mona McCord / SAN | None | Exact approved-theme source; permission not recorded | [ ] Approve [ ] Replace [ ] Remove | Approve only with attribution and publication-permission confirmation |
-| “FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything!” | Mathijs de Bruin / TreeScape | None | Approved-theme wording with punctuation normalised to satisfy the no-em-dash website-copy rule; permission not recorded; exclusivity wording is a strong claim | [ ] Approve [ ] Replace [ ] Remove | Obtain written approval for the exact public wording or replace with an approved bounded quotation |
-| “FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do.” | Katharina Lima de Miranda / HRNS | None | Exact approved-theme source; permission not recorded | [ ] Approve [ ] Replace [ ] Remove | Approve only with attribution and publication-permission confirmation |
-| “We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios!” | Rob Kelly / World Vision Australia | None | Exact approved-theme source; permission not recorded | [ ] Approve [ ] Replace [ ] Remove | Approve only with attribution and publication-permission confirmation |
-| “We found the FarmTree Tool essential for predicting outcomes of highly complex farm scenarios, among many, also agroforestry systems.” | Lorenzo Mento / Nectaerra | None | Exact approved-theme source; permission not recorded | [ ] Approve [ ] Replace [ ] Remove | Approve only with attribution and publication-permission confirmation |
+| “The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.” | Mona McCord / SAN | Fictional generated placeholder; visible disclosure; not a likeness | Exact approved-theme source; quote and portrait-treatment permission not recorded | [ ] Approve [ ] Replace [ ] Remove | Approve quote only with attribution permission; replace the portrait unless the explicit illustrative treatment is accepted |
+| “FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything!” | Mathijs de Bruin / TreeScape | Fictional generated placeholder; visible disclosure; not a likeness | Approved-theme wording with punctuation normalised to satisfy the no-em-dash website-copy rule; permission not recorded; exclusivity wording is a strong claim | [ ] Approve [ ] Replace [ ] Remove | Obtain written approval for the exact public wording or replace with an approved bounded quotation; replace the portrait unless explicitly accepted |
+| “FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do.” | Katharina Lima de Miranda / HRNS | Fictional generated placeholder; visible disclosure; not a likeness | Exact approved-theme source; quote and portrait-treatment permission not recorded | [ ] Approve [ ] Replace [ ] Remove | Approve quote only with attribution permission; replace the portrait unless the explicit illustrative treatment is accepted |
+| “We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios!” | Rob Kelly / World Vision Australia | Fictional generated placeholder; visible disclosure; not a likeness | Exact approved-theme source; quote and portrait-treatment permission not recorded | [ ] Approve [ ] Replace [ ] Remove | Approve quote only with attribution permission; replace the portrait unless the explicit illustrative treatment is accepted |
+| “We found the FarmTree Tool essential for predicting outcomes of highly complex farm scenarios, among many, also agroforestry systems.” | Lorenzo Mento / Nectaerra | Fictional generated placeholder; visible disclosure; not a likeness | Exact approved-theme source; quote and portrait-treatment permission not recorded | [ ] Approve [ ] Replace [ ] Remove | Approve quote only with attribution permission; replace the portrait unless the explicit illustrative treatment is accepted |
 | “Approved testimonial and portrait pending. Editors must replace this labelled CMS placeholder before publication.” | **No author / no organisation — sixth unapproved placeholder** | None | No evidence and not publishable; excluded from the current rendered Homepage | [ ] Replace [ ] Remove | **Keep removed for initial launch unless a fully approved sixth testimonial is supplied** |
 
 Permission record/owner: ____________________________________________________
@@ -67,24 +69,24 @@ Relationship/brand approver: ________________________________________________
 
 These are explanatory planning themes, not named project case studies. Their
 copy explicitly separates model projections from measurements, certification,
-verification, advice and guaranteed outcomes. Homepage card media uses existing
-approved production-theme assets; no dedicated featured images are assigned to
-the detail entries.
+verification, advice and guaranteed outcomes. Each card and local detail entry
+now uses a theme-specific generated documentary illustration. The images are
+not project evidence and do not depict named people, customers or locations.
 
 | Story | Core claims requiring editorial approval | Current imagery | Evidence status | Decision | Recommended default |
 | --- | --- | --- | --- | --- | --- |
-| Carbon planning | FarmTree connects site, species and management assumptions to carbon, production and economic projections | `proof-carbon.webp`: people reviewing a laptop; generic but plausible | Approved capability direction; no verified-credit or outcome claim | [ ] Approve [ ] Edit | Approve bounded copy; confirm image licence/relevance before publication |
-| Farm value modelling | FarmTree compares production, costs, revenue and labour assumptions over time | `proof-farm-value.webp`: agroforestry field visit | Approved capability direction; explicitly not financial advice or income assurance | [ ] Approve [ ] Edit | Approve bounded copy and image after owner review |
-| Cocoa scenario planning and monitoring | FarmTree compares cocoa/shade-tree arrangements and links representative farm designs to programme questions | `proof-cocoa.webp`: tree-covered agricultural landscape; not visibly cocoa-specific | Approved capability direction; no measured programme outcome | [ ] Approve [ ] Edit | Approve copy; replace image if the owner cannot confirm cocoa relevance |
-| Water and landscape resilience monitoring | FarmTree compares water-balance, erosion, production, carbon and economic indicators | `proof-water.webp`: group portrait in a landscape; not water-specific | Approved capability direction; hydrology uncertainty is explicit | [ ] Approve [ ] Edit | Approve copy; select a water/landscape-specific approved image before publication |
+| Carbon planning | FarmTree connects site, species and management assumptions to carbon, production and economic projections | Generated illustration: field team measuring a mature tree and recording observations | Approved capability direction; no verified-credit or outcome claim; image is illustrative only | [ ] Approve [ ] Edit | Approve bounded copy; approve or replace the clearly illustrative image |
+| Farm value modelling | FarmTree compares production, costs, revenue and labour assumptions over time | Generated illustration: farmer and adviser reviewing scenario materials in a farm office | Approved capability direction; explicitly not financial advice or income assurance; image is illustrative only | [ ] Approve [ ] Edit | Approve bounded copy; approve or replace the clearly illustrative image |
+| Cocoa scenario planning and monitoring | FarmTree compares cocoa/shade-tree arrangements and links representative farm designs to programme questions | Generated illustration: cocoa practitioners inspecting pods beneath shade trees | Approved capability direction; no measured programme outcome; image is illustrative only | [ ] Approve [ ] Edit | Approve bounded copy; approve or replace the clearly illustrative image |
+| Water and landscape resilience monitoring | FarmTree compares water-balance, erosion, production, carbon and economic indicators | Generated illustration: field team examining soil beside a stream | Approved capability direction; hydrology uncertainty is explicit; image is illustrative only | [ ] Approve [ ] Edit | Approve bounded copy; approve or replace the clearly illustrative image |
 
 ### Illustrative visual assets and Team completeness
 
 | Item | Current state | Decision | Recommended default |
 | --- | --- | --- | --- |
-| Homepage primary Hero | Locally generated editorial illustration of field planning; visibly described as illustrative and not project evidence | [ ] Approve [ ] Replace | Approve only if the brand owner accepts generated illustrative imagery for launch; otherwise replace with an approved licensed photograph |
+| Homepage Hero carousel | Locally generated field-planning primary image and new Impact Reporting measurement image; both are editorial illustrations, not project evidence | [ ] Approve [ ] Replace | Approve only if the brand owner accepts generated illustrative imagery for launch; otherwise replace with approved licensed photographs |
 | Team page header | Locally generated fictional field-collaboration scene with visible illustrative caption; not represented as actual employees | [ ] Approve [ ] Replace | Approve only if the brand owner accepts the explicit illustrative treatment; otherwise replace with an approved real team-wide photograph |
-| Maximilian Michael Möller card | Supplied name and LinkedIn URL only; initials fallback is shown and role, biography and portrait are intentionally absent | [ ] Approve minimal card [ ] Supply approved details/assets | Keep the honest minimal card until verified role, biography and portrait are supplied |
+| Maximilian Michael Möller card | User-supplied portrait, supplied LinkedIn URL, user-confirmed “Chief Growth Officer” role and conservative one-sentence FarmTree B.V. bio; ordered between Arnoud and Frank | [ ] Approve [ ] Edit [ ] Remove | Approve only after confirming public portrait permission and exact role wording; otherwise hold the card |
 
 ## 5. Customer Segment content
 

@@ -32,6 +32,8 @@ const required = [
   'assets/data/README.md',
   'assets/images/brand/farmtree-logo.webp',
   'assets/images/home/hero-field-planning-v1.jpg',
+  'assets/images/home/hero-impact-reporting-v2.jpg',
+  'assets/images/home/earth-blue-marble-nasa-2048.jpg',
   'assets/images/home/hero-project-workshop.webp',
   'assets/images/home/hero-project-teams.webp',
   'assets/images/home/platform-slide-1.png',
@@ -45,6 +47,10 @@ const required = [
   'assets/images/proof/proof-farm-value-modelling-1600.webp',
   'assets/images/proof/proof-cocoa-scenario-planning-1600.webp',
   'assets/images/proof/proof-water-landscape-resilience-1600.webp',
+  'assets/images/proof/proof-carbon-documentary-v2.jpg',
+  'assets/images/proof/proof-farm-value-documentary-v2.jpg',
+  'assets/images/proof/proof-cocoa-documentary-v2.jpg',
+  'assets/images/proof/proof-water-documentary-v2.jpg',
   'assets/images/partners/giz.png',
   'assets/images/partners/rabobank.png',
   'assets/images/partners/cgiar.png',
@@ -52,6 +58,12 @@ const required = [
   'assets/images/partners/catie.png',
   'assets/images/partners/helvetas.png',
   'assets/images/team/team-field-collaboration-v1.jpg',
+  'assets/images/team/maximilian-michael-moeller-800.jpg',
+  'assets/images/testimonials/generated-placeholders/portrait-01.jpg',
+  'assets/images/testimonials/generated-placeholders/portrait-02.jpg',
+  'assets/images/testimonials/generated-placeholders/portrait-03.jpg',
+  'assets/images/testimonials/generated-placeholders/portrait-04.jpg',
+  'assets/images/testimonials/generated-placeholders/portrait-05.jpg',
   'assets/media/farmtree-platform-final-tools-review-poster.jpg',
   'assets/media/farmtree-platform-final-tools-review.mp4',
   'assets/media/farmtree-platform-final-tools-review.webm',
@@ -342,8 +354,14 @@ for (const removedName of ['Mia Beyens', 'Ruben van Voorst', 'Nikolaos Mantzarid
   }
 }
 const maximilian = teamMembers.find(({ name }) => name === 'Maximilian Michael Möller');
-if (maximilian?.linkedin !== 'https://www.linkedin.com/in/maximilian-michael-moeller/' || maximilian.image) {
-  throw new Error('Maximilian must use the supplied LinkedIn URL and an honest portrait fallback.');
+if (
+  maximilian?.linkedin !== 'https://www.linkedin.com/in/maximilian-michael-moeller/' ||
+  maximilian.role !== 'Chief Growth Officer' ||
+  maximilian.image !== 'maximilian-michael-moeller-800.jpg' ||
+  maximilian.order !== 2 ||
+  teamMembers.findIndex(({ name }) => name === 'Maximilian Michael Möller') !== 1
+) {
+  throw new Error('Maximilian must use the supplied portrait, supported role and approved position between Arnoud and Frank.');
 }
 
 for (const visibleSource of [homepage, footer, editorialDrafts]) {
@@ -459,7 +477,7 @@ for (const contract of [
 for (const contract of [
   'data-ft-globe-shell',
   'data-ft-globe',
-  'Interactive dotted Earth with continent silhouettes and illustrative landscape-context connections',
+  'Interactive realistic Earth with illustrative landscape-context connections',
   'perPage":3',
   'ft-home-news-more',
   'Read article ↗',
@@ -530,7 +548,13 @@ if (
   throw new Error('Homepage Hero must pair one persistent H1 with four editable approved media/message states.');
 }
 
-if ((homepage.match(/class="ft-platform-screen ft-platform-gif"/g) ?? []).length !== 1 || /data-ft-platform-(?:dot|prev|next)|<video\b/i.test(homepage)) {
+if (
+  (homepage.match(/class="ft-platform-screen ft-platform-gif"/g) ?? []).length !== 1 ||
+  !homepage.includes('ft-platform-device-lid') ||
+  !homepage.includes('ft-platform-device-screen') ||
+  !homepage.includes('ft-platform-device-base') ||
+  /data-ft-platform-(?:dot|prev|next)|<video\b/i.test(homepage)
+) {
   throw new Error('Platform media must expose the single approved GIF with no obsolete video or carousel controls.');
 }
 
@@ -538,7 +562,7 @@ for (const image of homepage.matchAll(/<img\b[\s\S]*?\/>/g)) {
   if (!/\balt="[^"\s][^"]*"/.test(image[0])) {
     throw new Error(`Homepage image must have meaningful alternative text: ${image[0]}`);
   }
-  if (!image[0].includes('assets/images/proof/') && !image[0].includes('assets/media/final-tools-review-11s-to-40s-2x.gif') && /\s(?:width|height|loading|decoding|fetchpriority)="/i.test(image[0])) {
+  if (!image[0].includes('assets/images/proof/') && !image[0].includes('assets/images/testimonials/') && !image[0].includes('assets/media/final-tools-review-11s-to-40s-2x.gif') && /\s(?:width|height|loading|decoding|fetchpriority)="/i.test(image[0])) {
     throw new Error(`Core Image saved markup must leave runtime-only image attributes to WordPress: ${image[0]}`);
   }
 }
@@ -652,13 +676,14 @@ if (!interactions.includes('const heroAutoplayDelay = 5000') || !interactions.in
 
 for (const contract of [
   'const rotationPerFrame = 0.00135',
-  'native-canvas-natural-earth-landmask',
+  'native-canvas-blue-marble',
+  'loadEarthTexture',
+  'nasa-blue-marble-january',
   'world-land-110m.json',
   'decodeTopology',
   'pointInPolygon',
   'pointInLand',
   'arcBetween',
-  'initialiseProofSpotlights',
   'initialiseMenuOverlay',
   "document.body.style.position = 'fixed'",
   'window.scrollTo(0, savedScrollY)'
@@ -666,6 +691,10 @@ for (const contract of [
   if (!interactions.includes(contract)) {
     throw new Error(`Homepage V2 interaction contract is missing: ${contract}`);
   }
+}
+
+if (interactions.includes('initialiseProofSpotlights') || interactions.includes('--ft-spot-x')) {
+  throw new Error('The removed Proof Story pointer spotlight must not remain in the native runtime.');
 }
 
 for (const removedInteraction of ['initialiseTechnologySignal', 'initialiseTestimonials']) {
@@ -843,8 +872,11 @@ for (const contract of [
   'alt="Illustrative field team reviewing an agroforestry plan and monitoring tools"',
   'alt="Three people reviewing information on a laptop"',
   'alt="Four people discussing crops in a field"',
-  'alt="Ripe cocoa pods in a shaded agroforestry plot with a field technician in the distance"',
-  'alt="Water moving through a vegetated agroforestry landscape while a technician takes field measurements"',
+  'alt="Agroforestry field team measuring a tree and reviewing monitoring information"',
+  'alt="Field team measuring a mature tree and recording observations in an agroforestry landscape"',
+  'alt="Farmer and adviser reviewing scenario materials at a farm-office table"',
+  'alt="Cocoa field team inspecting pods and recording observations beneath shade trees"',
+  'alt="Field team examining soil and recording water observations beside a stream"',
   'The approved FarmTree Platform workflow'
 ]) {
   if (!homepage.includes(contract)) {
@@ -855,6 +887,39 @@ for (const contract of [
 
 if ((homepage.match(/class="[^"]*\bft-testimonial-card\b/g) ?? []).length !== 5) {
   throw new Error('Homepage must provide five core-block testimonial cards without a sixth placeholder.');
+}
+
+for (let portrait = 1; portrait <= 5; portrait += 1) {
+  if (!homepage.includes(`generated-placeholders/portrait-0${portrait}.jpg`)) {
+    throw new Error(`Homepage testimonial portrait ${portrait} is missing.`);
+  }
+}
+
+for (const contract of [
+  'ft-testimonial-verified',
+  'ft-testimonial-identity',
+  'data-ft-earth-texture',
+  'earth-blue-marble-nasa-2048.jpg',
+  'hero-impact-reporting-v2.jpg'
+]) {
+  if (!homepage.includes(contract)) {
+    throw new Error(`Homepage refinement contract is missing: ${contract}`);
+  }
+}
+
+for (const contract of [
+  "track.style.animationDelay = '-8s'",
+  "rail.dataset.ftRailOffsetSeconds = '8'",
+  '.ft-platform-device-screen',
+  '.ft-testimonial-verified',
+  '.ft-proof-card::before',
+  'display: none !important',
+  'background: rgb(6 35 26 / 82%)',
+  'opacity: .6'
+]) {
+  if (!`${interactions}\n${themeStyles}`.includes(contract)) {
+    throw new Error(`Homepage or Team final refinement contract is missing: ${contract}`);
+  }
 }
 
 for (const excludedCopy of [

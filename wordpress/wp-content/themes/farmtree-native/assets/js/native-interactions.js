@@ -383,12 +383,17 @@
             const track = document.createElement('div');
             const sequence = document.createElement('div');
             const items = Array.from(rail.children);
-            const startIndex = Math.min(4, Math.max(0, items.length - 1));
+            const isTestimonialRail = rail.classList.contains('ft-testimonial-cards');
+            const startIndex = isTestimonialRail ? 0 : Math.min(4, Math.max(0, items.length - 1));
             const rotatedItems = items.slice(startIndex).concat(items.slice(0, startIndex));
 
             track.className = 'ft-moving-rail-track';
             sequence.className = 'ft-moving-rail-sequence';
             rail.dataset.ftRailStart = String(startIndex + 1);
+            if (isTestimonialRail) {
+                rail.dataset.ftRailOffsetSeconds = '8';
+                track.style.animationDelay = '-8s';
+            }
             rotatedItems.forEach((item) => sequence.append(item));
             track.append(sequence);
             rail.append(track);
@@ -420,23 +425,6 @@
                 observer.observe(rail);
                 observer.observe(sequence);
             }
-        });
-    }
-
-    function initialiseProofSpotlights() {
-        if (reducedMotionQuery.matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-            return;
-        }
-        document.querySelectorAll('.ft-proof-card').forEach((card) => {
-            card.addEventListener('pointermove', (event) => {
-                const rect = card.getBoundingClientRect();
-                card.style.setProperty('--ft-spot-x', `${event.clientX - rect.left}px`);
-                card.style.setProperty('--ft-spot-y', `${event.clientY - rect.top}px`);
-            });
-            card.addEventListener('pointerleave', () => {
-                card.style.removeProperty('--ft-spot-x');
-                card.style.removeProperty('--ft-spot-y');
-            });
         });
     }
 
@@ -595,6 +583,40 @@
             });
         }
 
+        async function loadEarthTexture(url) {
+            if (!url) {
+                return null;
+            }
+            try {
+                const image = new Image();
+                image.decoding = 'async';
+                image.src = url;
+                if (typeof image.decode === 'function') {
+                    await image.decode();
+                } else {
+                    await new Promise((resolve, reject) => {
+                        image.addEventListener('load', resolve, { once: true });
+                        image.addEventListener('error', reject, { once: true });
+                    });
+                }
+                const textureCanvas = document.createElement('canvas');
+                textureCanvas.width = image.naturalWidth;
+                textureCanvas.height = image.naturalHeight;
+                const textureContext = textureCanvas.getContext('2d', { alpha: false, willReadFrequently: true });
+                if (!textureContext) {
+                    return null;
+                }
+                textureContext.drawImage(image, 0, 0);
+                return {
+                    data: textureContext.getImageData(0, 0, textureCanvas.width, textureCanvas.height).data,
+                    height: textureCanvas.height,
+                    width: textureCanvas.width
+                };
+            } catch (_error) {
+                return null;
+            }
+        }
+
         const landPolygonPromise = loadLandPolygons();
 
         document.querySelectorAll('[data-ft-globe-shell]').forEach((shell) => {
@@ -604,12 +626,17 @@
             }
 
             canvas.dataset.ftGlobeReady = 'true';
-            canvas.dataset.ftGlobeRenderer = 'native-canvas-natural-earth-landmask';
+            canvas.dataset.ftGlobeRenderer = 'native-canvas-blue-marble';
             canvas.dataset.ftGlobeSpeed = String(rotationPerFrame);
             let context = null;
+            let earthTexture = null;
             let landPoints = [];
             let markers = [];
             let arcs = [];
+            let sphereBuffer = null;
+            let sphereContext = null;
+            let sphereImage = null;
+            let sphereSamples = null;
             let rotation = -0.42;
             let pitch = -0.08;
             let frame = null;
@@ -633,7 +660,95 @@
                 return { size, ratio };
             }
 
-            function drawArc(arc, centre, radius, ratio) {
+            function prepareSphereBuffer(renderSize) {
+                if (sphereBuffer?.width === renderSize) {
+                    return;
+                }
+                sphereBuffer = document.createElement('canvas');
+                sphereBuffer.width = renderSize;
+                sphereBuffer.height = renderSize;
+                sphereContext = sphereBuffer.getContext('2d', { alpha: true });
+                sphereImage = sphereContext?.createImageData(renderSize, renderSize) || null;
+                const samples = [];
+                const half = renderSize / 2;
+                for (let y = 0; y < renderSize; y += 1) {
+                    const viewY = 1 - (((y + 0.5) / half));
+                    for (let x = 0; x < renderSize; x += 1) {
+                        const viewX = ((x + 0.5) / half) - 1;
+                        const radial = (viewX * viewX) + (viewY * viewY);
+                        if (radial > 1) {
+                            continue;
+                        }
+                        samples.push({
+                            alpha: Math.min(1, (1 - radial) * 42),
+                            offset: ((y * renderSize) + x) * 4,
+                            viewX,
+                            viewY,
+                            viewZ: Math.sqrt(1 - radial)
+                        });
+                    }
+                }
+                sphereSamples = samples;
+            }
+
+            function drawEarthTexture(centre, radius, ratio) {
+                if (!earthTexture || !sphereContext || !sphereImage || !sphereSamples) {
+                    return false;
+                }
+                const output = sphereImage.data;
+                const sine = Math.sin(rotation);
+                const cosine = Math.cos(rotation);
+                const pitchSine = Math.sin(pitch);
+                const pitchCosine = Math.cos(pitch);
+                sphereSamples.forEach(({ alpha, offset, viewX, viewY, viewZ }) => {
+                    const worldY = (viewY * pitchCosine) - (viewZ * pitchSine);
+                    const yawZ = (viewY * pitchSine) + (viewZ * pitchCosine);
+                    const worldX = (viewX * cosine) - (yawZ * sine);
+                    const worldZ = (viewX * sine) + (yawZ * cosine);
+                    const textureX = Math.min(
+                        earthTexture.width - 1,
+                        Math.max(0, Math.floor((((Math.atan2(worldX, worldZ) / (Math.PI * 2)) + 1.5) % 1) * earthTexture.width))
+                    );
+                    const textureY = Math.min(
+                        earthTexture.height - 1,
+                        Math.max(0, Math.floor((0.5 - (Math.asin(Math.max(-1, Math.min(1, worldY))) / Math.PI)) * earthTexture.height))
+                    );
+                    const textureOffset = ((textureY * earthTexture.width) + textureX) * 4;
+                    const light = Math.max(0, ((-viewX * 0.38) + (-viewY * 0.28) + (viewZ * 0.88)) / 1.02);
+                    const red = earthTexture.data[textureOffset];
+                    const green = earthTexture.data[textureOffset + 1];
+                    const blue = earthTexture.data[textureOffset + 2];
+                    const isDeepOcean = red < 32 && green < 42 && blue < 58;
+                    const brightness = 0.7 + (light * 0.4);
+                    const oceanBrightness = 0.72 + (light * 0.28);
+                    output[offset] = isDeepOcean ? (9 + (red * 0.55)) * oceanBrightness : red * brightness;
+                    output[offset + 1] = isDeepOcean ? (43 + (green * 0.58)) * oceanBrightness : green * brightness;
+                    output[offset + 2] = isDeepOcean ? (62 + (blue * 0.62)) * oceanBrightness : blue * brightness;
+                    output[offset + 3] = 255 * alpha;
+                });
+                sphereContext.putImageData(sphereImage, 0, 0);
+                context.drawImage(sphereBuffer, centre - radius, centre - radius, radius * 2, radius * 2);
+
+                const atmosphere = context.createRadialGradient(
+                    centre - (radius * 0.22), centre - (radius * 0.28), radius * 0.12,
+                    centre, centre, radius
+                );
+                atmosphere.addColorStop(0, 'rgba(255, 255, 255, 0.09)');
+                atmosphere.addColorStop(0.72, 'rgba(255, 255, 255, 0)');
+                atmosphere.addColorStop(0.93, 'rgba(133, 202, 220, 0.04)');
+                atmosphere.addColorStop(1, 'rgba(183, 223, 229, 0.42)');
+                context.fillStyle = atmosphere;
+                context.beginPath();
+                context.arc(centre, centre, radius, 0, Math.PI * 2);
+                context.fill();
+                context.strokeStyle = 'rgba(172, 220, 225, 0.52)';
+                context.lineWidth = Math.max(1.15 * ratio, 1);
+                context.stroke();
+                return true;
+            }
+
+            function drawArc(arc, centre, radius, ratio, time, arcIndex) {
+                context.save();
                 context.beginPath();
                 let drawing = false;
                 arc.forEach(({ vector, altitude }) => {
@@ -651,12 +766,17 @@
                         context.lineTo(x, y);
                     }
                 });
-                context.strokeStyle = 'rgba(211, 176, 107, 0.58)';
-                context.lineWidth = Math.max(1.15 * ratio, 1);
+                context.strokeStyle = 'rgba(226, 129, 48, 0.78)';
+                context.lineWidth = Math.max(1.35 * ratio, 1.15);
+                if (!reducedMotionQuery.matches) {
+                    context.setLineDash([7 * ratio, 5 * ratio]);
+                    context.lineDashOffset = -(((time * 0.018) + (arcIndex * 9)) % (24 * ratio));
+                }
                 context.stroke();
+                context.restore();
             }
 
-            function draw() {
+            function draw(time = performance.now()) {
                 if (!context) {
                     return;
                 }
@@ -665,6 +785,8 @@
                 const { size, ratio } = resizeCanvas();
                 const centre = size / 2;
                 const radius = size * 0.4;
+                const renderSize = Math.round(Math.min(520, Math.max(280, (radius * 2) / ratio)));
+                prepareSphereBuffer(renderSize);
                 context.clearRect(0, 0, size, size);
 
                 const glow = context.createRadialGradient(
@@ -680,49 +802,55 @@
                 context.arc(centre, centre, radius * 1.08, 0, Math.PI * 2);
                 context.fill();
 
-                context.fillStyle = 'rgba(244, 248, 234, 0.68)';
-                context.beginPath();
-                context.arc(centre, centre, radius, 0, Math.PI * 2);
-                context.fill();
-                context.strokeStyle = 'rgba(0, 97, 63, 0.24)';
-                context.lineWidth = Math.max(1.1 * ratio, 1);
-                context.stroke();
-
-                landPoints.forEach((vector) => {
-                    const point = rotateVector(vector, rotation, pitch);
-                    if (point.z <= 0) {
-                        return;
-                    }
-                    const depth = Math.min(1, point.z);
-                    context.fillStyle = `rgba(0, 97, 63, ${0.38 + (depth * 0.5)})`;
+                if (!drawEarthTexture(centre, radius, ratio)) {
+                    context.fillStyle = 'rgba(244, 248, 234, 0.78)';
                     context.beginPath();
-                    context.arc(
-                        centre + (point.x * radius),
-                        centre - (point.y * radius),
-                        (0.72 + (depth * 0.58)) * ratio,
-                        0,
-                        Math.PI * 2
-                    );
+                    context.arc(centre, centre, radius, 0, Math.PI * 2);
                     context.fill();
-                });
+                    landPoints.forEach((vector) => {
+                        const point = rotateVector(vector, rotation, pitch);
+                        if (point.z <= 0) {
+                            return;
+                        }
+                        const depth = Math.min(1, point.z);
+                        context.fillStyle = `rgba(0, 97, 63, ${0.38 + (depth * 0.5)})`;
+                        context.beginPath();
+                        context.arc(
+                            centre + (point.x * radius),
+                            centre - (point.y * radius),
+                            (0.72 + (depth * 0.58)) * ratio,
+                            0,
+                            Math.PI * 2
+                        );
+                        context.fill();
+                    });
+                }
 
-                arcs.forEach((arc) => drawArc(arc, centre, radius, ratio));
-                markers.forEach((vector) => {
+                arcs.forEach((arc, arcIndex) => drawArc(arc, centre, radius, ratio, time, arcIndex));
+                markers.forEach((vector, markerIndex) => {
                     const point = rotateVector(vector, rotation, pitch, 1.015);
                     if (point.z <= 0.02) {
                         return;
                     }
                     const x = centre + (point.x * radius);
                     const y = centre - (point.y * radius);
-                    context.fillStyle = 'rgba(211, 176, 107, 0.96)';
+                    context.fillStyle = 'rgba(236, 143, 61, 0.98)';
                     context.beginPath();
                     context.arc(x, y, 3.2 * ratio, 0, Math.PI * 2);
                     context.fill();
-                    context.strokeStyle = 'rgba(0, 97, 63, 0.5)';
+                    context.strokeStyle = 'rgba(255, 230, 188, 0.84)';
                     context.lineWidth = Math.max(ratio, 1);
                     context.beginPath();
                     context.arc(x, y, 6.2 * ratio, 0, Math.PI * 2);
                     context.stroke();
+
+                    if (!reducedMotionQuery.matches) {
+                        const pulse = 7.2 + ((Math.sin((time / 420) + markerIndex) + 1) * 1.8);
+                        context.strokeStyle = 'rgba(236, 143, 61, 0.28)';
+                        context.beginPath();
+                        context.arc(x, y, pulse * ratio, 0, Math.PI * 2);
+                        context.stroke();
+                    }
                 });
             }
 
@@ -737,7 +865,7 @@
                     resumeStrength = Math.min(1, resumeStrength + (elapsed / 1800));
                     rotation += rotationPerFrame * (elapsed / (1000 / 60)) * resumeStrength;
                 }
-                draw();
+                draw(time);
                 if (!reducedMotionQuery.matches) {
                     frame = window.requestAnimationFrame(render);
                 }
@@ -763,11 +891,17 @@
                 }
 
                 shell.dataset.ftGlobeState = 'loading';
-                const land = await landPolygonPromise;
-                for (let latitude = -84; latitude <= 84; latitude += 2.25) {
-                    for (let longitude = -179; longitude <= 179; longitude += 2.25) {
-                        if (pointInLand(longitude, latitude, land.polygons)) {
-                            landPoints.push(vectorFor(longitude, latitude));
+                const [land, texture] = await Promise.all([
+                    landPolygonPromise,
+                    loadEarthTexture(shell.dataset.ftEarthTexture)
+                ]);
+                earthTexture = texture;
+                if (!earthTexture) {
+                    for (let latitude = -84; latitude <= 84; latitude += 2.25) {
+                        for (let longitude = -179; longitude <= 179; longitude += 2.25) {
+                            if (pointInLand(longitude, latitude, land.polygons)) {
+                                landPoints.push(vectorFor(longitude, latitude));
+                            }
                         }
                     }
                 }
@@ -777,7 +911,8 @@
                 isActivating = false;
                 shell.dataset.ftGlobeState = reducedMotionQuery.matches ? 'reduced' : 'ready';
                 shell.dataset.ftGlobePoints = String(landPoints.length);
-                shell.dataset.ftGlobeMap = land.source;
+                shell.dataset.ftGlobeMap = earthTexture ? 'nasa-blue-marble-january' : land.source;
+                shell.dataset.ftGlobeTexture = earthTexture ? 'ready' : 'fallback';
 
                 canvas.addEventListener('pointerdown', (event) => {
                     isDragging = true;
@@ -1178,7 +1313,6 @@
         initialiseQuotationDialog();
         initialiseMotion();
         initialiseMovingRails();
-        initialiseProofSpotlights();
         initialiseGlobes();
         initialiseCounters();
         initialiseHeaderState();

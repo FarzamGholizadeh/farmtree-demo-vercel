@@ -16,16 +16,20 @@ design controls.
 
 The final English experience now includes five-second Hero autoplay with calm
 staggered copy/media transitions, true viewport-edge desktop/tablet controls,
-a new illustrative field-planning Hero and a unified mobile pointer-swipe
-handler; connector-free Technology cards; equal responsive glass metrics; a
-lazy, two-axis draggable dotted Earth built from a bundled Natural Earth-derived
-land topology; seamless partner and five-card testimonial marquees; responsive
-4-up/2-up/1-up Proof Stories; a three-item editorial Last News feature before
+a new illustrative field-planning Hero, a documentary Impact Reporting slide
+and a unified mobile pointer-swipe handler; a CSS-built laptop containing the
+approved Platform GIF; connector-free Technology cards; equal responsive glass
+metrics; a lazy, two-axis draggable realistic Earth using a self-hosted NASA
+Blue Marble texture with a Natural Earth fallback; seamless partner and
+five-card social testimonial marquees with an eight-second initial offset;
+responsive 4-up/2-up/1-up Proof Stories with four new theme-specific
+documentary illustrations; a three-item editorial Last News feature before
 FAQ; and a branded real-404 recovery page. It also retains interaction pause;
 the exact user-supplied 14.5-second Platform GIF with a reduced-motion poster;
 ten distinct image-backed customer-segment pages; 16 English support pages; a
-nine-person Team page with an illustrative field header and an honest portrait
-fallback for Maximilian Michael Möller; a featured-story Blog with all nine
+nine-person Team page with a 60% overlaid illustrative field header and the
+user-supplied Maximilian Michael Möller portrait/role card ordered between
+Arnoud and Frank; a featured-story Blog with all nine
 source-attributed articles; a premium Vacancies empty state; and the existing
 privacy-safe Contact/quotation fallbacks.
 
@@ -161,8 +165,9 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   far-edge arrows at 768px and above. Final evidence is in
   `qa/screenshots/homepage-finalization/`, including the menu, globe and 404.
 - The controlled refinement rerun covers all nine target widths and verifies a
-  4,005-point Natural Earth-derived landmask at 0.00135 radians per frame,
-  two-axis pointer drag and four-arrow keyboard rotation; equal metric
+  self-hosted NASA Blue Marble Earth with a Natural Earth fallback at 0.00135
+  radians per frame, two-axis pointer drag and four-arrow keyboard rotation;
+  equal metric
   typography including `+1,000,000`; five publishable testimonial cards in a
   dynamically duplicated continuous rail; four-up desktop Proof Stories;
   three Last News cards; FAQ below News; and balanced Footer quotation copy.
@@ -170,6 +175,16 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   `qa/screenshots/refinement-pass/`. Menu geometry, fixed-body scroll lock,
   inert background, Escape/close behavior and exact scroll/focus restoration
   passed at desktop and mobile sizes.
+- The final Homepage/Team refinement was rendered again at 320, 375, 390, 430,
+  768, 1024, 1280, 1440 and 1920 pixels. Every width has one H1, four Proof
+  cards, five original testimonial cards, three News cards, eight FAQs, no
+  horizontal document overflow, no broken images, no duplicate IDs, no missing
+  image alt attributes and no unnamed buttons. The laptop screen remains a
+  clipped 16:9 surface at every width. Hero controls/live status, two-axis Globe
+  drag plus arrow keys, the eight-second testimonial offset, gap-free moving
+  rails, FAQ disclosure, focus treatment, restrained Proof hover and News-chip
+  contrast passed with an empty browser warning/error log. Evidence is in
+  `qa/screenshots/final-refinement/`.
 - Browser error/warning logs were empty after the interaction walkthrough.
   Rendered semantic audits at 390 and 1440 found one H1, complete
   Header/Main/Footer landmarks, no heading-level jumps, duplicate IDs, missing
@@ -246,11 +261,15 @@ are complete. Stop at pre-release until the evidence/permission review and a
 real assistive-technology listening pass receive human sign-off, and the user
 explicitly approves a release step.
 
-The generated Homepage Hero and Team header are explicitly labelled
-illustrative and are not represented as evidence or photographs of named
-people. Human visual approval is required before they may be used publicly.
-Maximilian Michael Möller's supplied LinkedIn URL is present, but his role, bio
-and portrait remain deliberately blank pending approved source material.
+The generated Homepage Hero, Impact Reporting slide, four Proof Story images,
+five fictional testimonial portrait placeholders and Team header are documented
+as illustrative and are not represented as evidence or photographs of named
+people. Testimonial cards disclose the illustrative portraits visibly. Human
+visual/publication approval is required before those assets may be used
+publicly. Maximilian Michael Möller's supplied portrait, LinkedIn URL and
+user-confirmed Chief Growth Officer role are integrated with a conservative
+one-sentence bio; public portrait permission and exact role wording remain a
+human sign-off item.
 
 The consolidated decision-only review package is
 `PRE_RELEASE_HUMAN_SIGNOFF.md`.

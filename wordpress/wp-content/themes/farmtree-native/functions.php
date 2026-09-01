@@ -118,6 +118,7 @@ function farmtree_native_image_loading_attributes(string $block_content, array $
 
     $dimensions = [
         'assets/images/home/hero-field-planning-v1.jpg'                => [1672, 941],
+        'assets/images/home/hero-impact-reporting-v2.jpg'              => [1672, 941],
         'assets/images/home/hero-project-workshop.webp'                => [1800, 1350],
         'assets/images/home/hero-project-teams.webp'                   => [1672, 941],
         'assets/images/home/proof-carbon.webp'                         => [1800, 1350],
@@ -125,6 +126,10 @@ function farmtree_native_image_loading_attributes(string $block_content, array $
         'assets/images/home/proof-cocoa.webp'                          => [1287, 965],
         'assets/images/home/proof-water.webp'                          => [1800, 1198],
         'assets/images/home/technology-model.webp'                     => [1672, 941],
+        'assets/images/proof/proof-carbon-documentary-v2.jpg'          => [1122, 1402],
+        'assets/images/proof/proof-farm-value-documentary-v2.jpg'      => [1122, 1402],
+        'assets/images/proof/proof-cocoa-documentary-v2.jpg'           => [1122, 1402],
+        'assets/images/proof/proof-water-documentary-v2.jpg'           => [1122, 1402],
         'assets/media/farmtree-platform-final-tools-review-poster.jpg' => [960, 540],
         'assets/media/power-project-staff-plot-definition.png'         => [690, 343],
         'assets/images/partners/giz.png'                               => [491, 117],

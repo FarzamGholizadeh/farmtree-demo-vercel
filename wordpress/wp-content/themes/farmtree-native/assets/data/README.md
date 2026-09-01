@@ -7,3 +7,9 @@ Homepage globe remains accurate, private and independent of third-party
 runtime requests.
 
 Source: <https://github.com/topojson/world-atlas>
+
+The topology remains the no-network fallback for the globe renderer. The
+primary local renderer now uses the self-hosted NASA Blue Marble texture at
+`../images/home/earth-blue-marble-nasa-2048.jpg`; its source and credit are
+recorded in `../images/GENERATED-ASSETS.md`. No browser-time request is made to
+NASA or another third party.

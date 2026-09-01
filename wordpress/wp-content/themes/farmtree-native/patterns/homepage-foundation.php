@@ -27,7 +27,7 @@
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-water.webp' ) ); ?>" alt="Group portrait in a tree-filled landscape"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/hero-impact-reporting-v2.jpg' ) ); ?>" alt="Agroforestry field team measuring a tree and reviewing monitoring information"/></figure>
 <!-- /wp:image --></div>
 <!-- /wp:group -->
 
@@ -155,10 +155,18 @@
 <!-- wp:column {"verticalAlignment":"center","width":"58%","className":"ft-platform-media"} -->
 <div class="wp-block-column is-vertically-aligned-center ft-platform-media" style="flex-basis:58%"><!-- wp:group {"metadata":{"name":"Editable FarmTree Platform media"},"className":"ft-platform-visual","layout":{"type":"default"}} -->
 <div class="wp-block-group ft-platform-visual"><!-- wp:html -->
+<div class="ft-platform-device" role="group" aria-label="FarmTree Platform shown in a laptop">
+<div class="ft-platform-device-lid">
+<span class="ft-platform-device-camera" aria-hidden="true"></span>
+<div class="ft-platform-device-screen">
 <picture class="ft-platform-screen ft-platform-gif">
 <source media="(prefers-reduced-motion: reduce)" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/media/final-tools-review-11s-to-40s-poster.png' ) ); ?>">
 <img src="<?php echo esc_url( get_theme_file_uri( 'assets/media/final-tools-review-11s-to-40s-2x.gif' ) ); ?>" width="960" height="540" loading="lazy" decoding="async" alt="FarmTree Platform workflow moving from portfolio selection through plot configuration and modelling tools"/>
 </picture>
+</div>
+</div>
+<div class="ft-platform-device-base" aria-hidden="true"><span></span></div>
+</div>
 <!-- /wp:html -->
 
 <!-- wp:paragraph {"className":"ft-home-media-caption","fontSize":"caption"} -->
@@ -289,9 +297,9 @@
 
 <!-- wp:column {"verticalAlignment":"center","width":"60%","className":"ft-globe-media"} -->
 <div class="wp-block-column is-vertically-aligned-center ft-globe-media" style="flex-basis:60%"><!-- wp:html -->
-<div class="ft-globe-stage" data-ft-globe-shell>
-<canvas class="ft-globe-canvas" width="720" height="720" tabindex="0" role="img" aria-label="Interactive dotted Earth with continent silhouettes and illustrative landscape-context connections" aria-describedby="ft-globe-description" data-ft-globe></canvas>
-<p id="ft-globe-description" class="screen-reader-text">Dense green dots form recognisable world continents. Gold markers and arcs illustrate tropical, temperate, dryland and highland landscape contexts; they do not identify FarmTree project locations.</p>
+<div class="ft-globe-stage" data-ft-globe-shell data-ft-earth-texture="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/earth-blue-marble-nasa-2048.jpg' ) ); ?>">
+<canvas class="ft-globe-canvas" width="720" height="720" tabindex="0" role="img" aria-label="Interactive realistic Earth with illustrative landscape-context connections" aria-describedby="ft-globe-description" data-ft-globe></canvas>
+<p id="ft-globe-description" class="screen-reader-text">A realistic Earth rotates slowly. Orange markers and animated connection routes illustrate tropical, temperate, dryland and highland landscape contexts; they do not identify FarmTree project locations.</p>
 <noscript><p>The interactive landscape-context globe requires JavaScript. The section text remains available without it.</p></noscript>
 </div>
 <!-- /wp:html --></div>
@@ -345,31 +353,31 @@
 <div class="wp-block-group ft-testimonial-cards"><!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
 <blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.</p>
-<!-- /wp:paragraph --><cite>Mona McCord, SAN</cite></blockquote>
+<!-- /wp:paragraph --><cite><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-01.jpg' ) ); ?>" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Mona McCord"/><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Mona McCord <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · SAN</span></span></cite></blockquote>
 <!-- /wp:quote -->
 
 <!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
 <blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything!</p>
-<!-- /wp:paragraph --><cite>Mathijs de Bruin, TreeScape</cite></blockquote>
+<!-- /wp:paragraph --><cite><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-02.jpg' ) ); ?>" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Mathijs de Bruin"/><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Mathijs de Bruin <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · TreeScape</span></span></cite></blockquote>
 <!-- /wp:quote -->
 
 <!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
 <blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do.</p>
-<!-- /wp:paragraph --><cite>Katharina Lima de Miranda, HRNS</cite></blockquote>
+<!-- /wp:paragraph --><cite><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-03.jpg' ) ); ?>" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Katharina Lima de Miranda"/><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Katharina Lima de Miranda <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · HRNS</span></span></cite></blockquote>
 <!-- /wp:quote -->
 
 <!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
 <blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios!</p>
-<!-- /wp:paragraph --><cite>Rob Kelly, World Vision Australia</cite></blockquote>
+<!-- /wp:paragraph --><cite><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-04.jpg' ) ); ?>" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Rob Kelly"/><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Rob Kelly <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · World Vision Australia</span></span></cite></blockquote>
 <!-- /wp:quote -->
 
 <!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
 <blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">We found the FarmTree Tool essential for predicting outcomes of highly complex farm scenarios, among many, also agroforestry systems.</p>
-<!-- /wp:paragraph --><cite>Lorenzo Mento, Nectaerra</cite></blockquote>
+<!-- /wp:paragraph --><cite><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/testimonials/generated-placeholders/portrait-05.jpg' ) ); ?>" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Lorenzo Mento"/><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Lorenzo Mento <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · Nectaerra</span></span></cite></blockquote>
 <!-- /wp:quote --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></section>
@@ -394,7 +402,7 @@
 <div class="wp-block-columns alignwide ft-proof-grid"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-carbon-planning-1600.webp' ) ); ?>" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-carbon-planning-768.webp' ) ); ?> 768w, <?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-carbon-planning-1600.webp' ) ); ?> 1600w" sizes="(max-width: 780px) 88vw, 25vw" width="1600" height="900" loading="lazy" decoding="async" alt="Agroforestry planners comparing maps and a laptop in a field office"/></picture></figure>
+<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-carbon-documentary-v2.jpg' ) ); ?>" width="1122" height="1402" loading="lazy" decoding="async" alt="Field team measuring a mature tree and recording observations in an agroforestry landscape"/></picture></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -416,7 +424,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-farm-value-modelling-1600.webp' ) ); ?>" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-farm-value-modelling-768.webp' ) ); ?> 768w, <?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-farm-value-modelling-1600.webp' ) ); ?> 1600w" sizes="(max-width: 780px) 88vw, 25vw" width="1600" height="900" loading="lazy" decoding="async" alt="Farmer and adviser reviewing a farm plan and calculator in an agroforestry field"/></picture></figure>
+<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-farm-value-documentary-v2.jpg' ) ); ?>" width="1122" height="1402" loading="lazy" decoding="async" alt="Farmer and adviser reviewing scenario materials at a farm-office table"/></picture></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -438,7 +446,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-cocoa-scenario-planning-1600.webp' ) ); ?>" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-cocoa-scenario-planning-768.webp' ) ); ?> 768w, <?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-cocoa-scenario-planning-1600.webp' ) ); ?> 1600w" sizes="(max-width: 780px) 88vw, 25vw" width="1600" height="900" loading="lazy" decoding="async" alt="Ripe cocoa pods in a shaded agroforestry plot with a field technician in the distance"/></picture></figure>
+<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-cocoa-documentary-v2.jpg' ) ); ?>" width="1122" height="1402" loading="lazy" decoding="async" alt="Cocoa field team inspecting pods and recording observations beneath shade trees"/></picture></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -460,7 +468,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-water-landscape-resilience-1600.webp' ) ); ?>" srcset="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-water-landscape-resilience-768.webp' ) ); ?> 768w, <?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-water-landscape-resilience-1600.webp' ) ); ?> 1600w" sizes="(max-width: 780px) 88vw, 25vw" width="1600" height="900" loading="lazy" decoding="async" alt="Water moving through a vegetated agroforestry landscape while a technician takes field measurements"/></picture></figure>
+<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-water-documentary-v2.jpg' ) ); ?>" width="1122" height="1402" loading="lazy" decoding="async" alt="Field team examining soil and recording water observations beside a stream"/></picture></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->

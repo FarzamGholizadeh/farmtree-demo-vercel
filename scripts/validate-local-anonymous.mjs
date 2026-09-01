@@ -83,7 +83,10 @@ const team = routeResults.find(({ path }) => path === '/team/')?.body ?? '';
 if ((team.match(/class="[^"\n]*ft-team-card/g) ?? []).length !== 9 || (team.match(/class="[^"\n]*ft-team-portrait(?:\s|")/g) ?? []).length !== 9) {
   throw new Error('Team page must render the nine requested member cards and portrait areas.');
 }
-for (const contract of ['ft-team-hero', 'Illustrative field collaboration', 'Maximilian Michael Möller', 'https://www.linkedin.com/in/maximilian-michael-moeller/', 'ft-team-portrait-fallback']) {
+if (team.includes('ft-team-fallback')) {
+  throw new Error('Team page must not render a fallback portrait when all nine supplied portraits are available.');
+}
+for (const contract of ['ft-team-hero', 'Illustrative field collaboration', 'Maximilian Michael Möller', 'Chief Growth Officer', 'https://www.linkedin.com/in/maximilian-michael-moeller/', 'maximilian-michael-moeller-800.jpg']) {
   if (!team.includes(contract)) throw new Error(`Team page is missing: ${contract}`);
 }
 for (const removedName of ['Mia Beyens', 'Ruben van Voorst', 'Nikolaos Mantzaridis', 'Mary Theodorah Ajal', 'Crésus Odjo']) {
@@ -155,7 +158,7 @@ console.log(JSON.stringify({
   published: { pages: pages.length + 2, proofStories: proofs.length, customerSegments: segments.length, news: articles.length },
   homepageNews: { cards: 3, featuredImages: 3, topics: 3, excerpts: 3, dates: 3, ctas: 3, responsiveImages: true },
   blog: { featured: 1, cards: 8, total: 9 },
-  team: { members: 9, portraits: 9, fallbackPortraits: 1 },
+  team: { members: 9, portraits: 9, fallbackPortraits: 0 },
   segmentHeroes: segments.length,
   checkedInternalLinks: linkResults.length,
   brokenInternalLinks: brokenLinks.length,

@@ -11,6 +11,16 @@
   },
   {
     "order": 2,
+    "slug": "maximilian-michael-moeller",
+    "name": "Maximilian Michael Möller",
+    "role": "Chief Growth Officer",
+    "bio": "Maximilian Michael Möller serves as Chief Growth Officer at FarmTree B.V.",
+    "linkedin": "https://www.linkedin.com/in/maximilian-michael-moeller/",
+    "image": "maximilian-michael-moeller-800.jpg",
+    "sourceImage": "User-supplied portrait: 1762937665726.jpeg"
+  },
+  {
+    "order": 3,
     "slug": "frank-van-schoubroeck",
     "name": "Frank van Schoubroeck",
     "role": "Founder & CTO",
@@ -20,7 +30,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/931-e1c9b001/DIBcoop-Frank1.jpg"
   },
   {
-    "order": 3,
+    "order": 4,
     "slug": "irene-vinkenburg",
     "name": "Irene Vinkenburg",
     "role": "Modelling & IT Lead",
@@ -30,7 +40,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/13165-fe3b182e/DIBcoop-1.jpg"
   },
   {
-    "order": 4,
+    "order": 5,
     "slug": "roos-van-haeff",
     "name": "Roos van Haeff",
     "role": "Impact Quantification Lead",
@@ -40,7 +50,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/13166-50ba50e4/Roos.jpg"
   },
   {
-    "order": 5,
+    "order": 6,
     "slug": "betelehem-beyene",
     "name": "Betelehem Beyene",
     "role": "Portfolio Manager",
@@ -50,7 +60,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/15791-d2fcf931/Betelehem%20Beyene.png"
   },
   {
-    "order": 6,
+    "order": 7,
     "slug": "edi-yoga",
     "name": "Edi Yoga",
     "role": "FarmTree Representative, Indonesia",
@@ -60,7 +70,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/15808-1e575819/Yoga%20FarmTree%20Profile%20Picture.png"
   },
   {
-    "order": 7,
+    "order": 8,
     "slug": "hery-hanipan",
     "name": "Hery Hanipan",
     "role": "FarmTree Database Management, Indonesia",
@@ -70,7 +80,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/15793-6c8b30c3/Hery.png"
   },
   {
-    "order": 8,
+    "order": 9,
     "slug": "alvaro-micheletti",
     "name": "Álvaro Mitcheletti",
     "role": "Portfolio Manager, Latin America",
@@ -78,15 +88,5 @@
     "linkedin": "https://www.linkedin.com/in/%C3%A1lvaro-micheletti-583ab6129/",
     "image": "alvaro-micheletti-690.webp",
     "sourceImage": "https://www.farmtree.earth/web/image/15792-4644e67c/Alvaro.png"
-  },
-  {
-    "order": 9,
-    "slug": "maximilian-michael-moeller",
-    "name": "Maximilian Michael Möller",
-    "role": "",
-    "bio": "",
-    "linkedin": "https://www.linkedin.com/in/maximilian-michael-moeller/",
-    "image": "",
-    "sourceImage": ""
   }
 ]

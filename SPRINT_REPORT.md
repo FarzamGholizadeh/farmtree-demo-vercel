@@ -53,25 +53,34 @@ fixed-body scroll lock and exact scroll/focus restoration. Button hover states
 retain color and shadow feedback without translating position. Technology card
 connectors and their scripted signal were removed.
 
-The globe now uses a bundled ISC-licensed Natural Earth-derived 1:110m land
-topology, producing 4,005 recognizable continent points without a runtime
-third-party request. Its softer glass treatment, lower shadow, 0.00135-radian
-rotation rate, two-axis pointer/touch drag and four-arrow keyboard control all
-passed rendered checks. Partner logos and five approved-source testimonials are
-dynamically duplicated to cover the viewport with no empty loop gap; the
-unapproved sixth placeholder is not rendered.
+The globe now uses a self-hosted resized NASA Earth Observatory Blue Marble
+texture, with the bundled ISC-licensed Natural Earth-derived 1:110m topology as
+its no-network fallback. It keeps the lower shadow, 0.00135-radian rotation
+rate, two-axis pointer/touch drag, four-arrow keyboard control, off-screen pause
+and reduced-motion path while adding restrained animated orange routes. Partner
+logos and five approved-source testimonials are dynamically duplicated to
+cover the viewport with no empty loop gap; testimonials begin at an explicit
+eight-second loop offset and use social-style cards with visibly disclosed
+fictional portrait placeholders. The unapproved sixth placeholder is not
+rendered.
 
-The primary Hero uses a new explicitly illustrative agroforestry-planning
-image. Proof Story cards retain existing theme imagery with crop-specific
-positioning and aligned copy. News categories are editorial labels rather than
-pills, titles change color without underlining, and Footer quotations are
-balanced without hyphenation or visible em dash characters.
+The primary Hero retains its explicitly illustrative agroforestry-planning
+image and the Impact Reporting slide now uses a new documentary field-
+measurement illustration aligned to its message. The Platform GIF is precisely
+clipped into a responsive CSS-built laptop screen. All four Proof Story cards
+and detail entries use new theme-specific documentary illustrations, and the
+distracting pointer spotlight/image movement was removed while the restrained
+card-level interaction remains. News categories now use dark translucent chips
+for reliable contrast over bright imagery; titles still change color without
+underlining. Footer quotations remain balanced without hyphenation or visible
+em dash characters.
 
 The Team page now has an illustrative wide field-collaboration header with a
-15% dark overlay, a 3/2/1-column responsive grid, nine requested entries and a
+60% dark overlay, a 3/2/1-column responsive grid, nine requested entries and a
 refined bottom LinkedIn action. The five named removals are absent. Maximilian
-Michael Möller uses the supplied LinkedIn URL and an honest initials fallback;
-no role, biography or portrait was invented.
+Michael Möller uses the supplied portrait and LinkedIn URL, the user-supported
+Chief Growth Officer role and a conservative one-sentence FarmTree B.V. bio;
+his card is ordered between Arnoud Braun and Frank van Schoubroeck.
 
 ## Visual Parity Correction
 
@@ -278,13 +287,20 @@ controls and mobile swipe, connector direction, Globe drag/keyboard/off-screen
 pause, testimonial autoplay/pause/synchronization, Proof spotlight, FAQ toggle,
 menu trap/Escape/scroll restoration and Footer quote structure passed.
 
-The later controlled refinement rerun covered the same nine widths with no
-horizontal overflow, broken images or duplicate IDs. Browser logs were empty.
-Homepage and Team semantic smoke checks found one main H1, complete named
-controls and no missing image alt attributes. Pointer checks confirmed
-single-click Hero changes, mobile swipe, non-moving button hover, two-axis Globe
-drag and arrow-key Globe control. Representative captures are in
-`qa/screenshots/refinement-pass/`.
+The final coordinated Homepage/Team refinement rerun covered the same nine
+widths with no horizontal overflow, broken images or duplicate IDs. At every
+width it found one H1, four Proof cards, five original testimonial cards, three
+News cards and eight FAQs; the Platform media remained clipped inside a 16:9
+laptop screen. Browser warning/error logs were empty. Homepage and Team
+semantic smoke checks found complete landmarks and named controls, no missing
+image alt attributes, no positive tabindex values and no broken ARIA ID
+references. Interaction checks confirmed Hero controls/live status, two-axis
+Globe drag and arrow-key control, moving and hover-paused testimonial/logo
+rails with at most the intended 16px item gap, a non-moving Proof image with
+the spotlight removed, FAQ disclosure, visible focus treatment and dark
+high-contrast News chips. Team rendered all nine real portraits with Max second
+and no fallback portrait. Evidence and its index are in
+`qa/screenshots/final-refinement/`.
 
 The bootstrap now drafts only the exact canonical WordPress `Hello world!`
 sample fingerprint and never deletes or changes unrelated posts. The visitor
@@ -315,10 +331,10 @@ compensating release policy.
 - Human permission/relationship sign-off remains required for testimonial
   attribution, partner/reference logos and the working proof labels recorded in
   `docs/FT-NATIVE-002-PUBLICATION-EVIDENCE.md`.
-- Human visual approval remains required for the generated illustrative Hero
-  and Team header. Approved source material is also still required for
-  Maximilian Michael Möller's role, biography and portrait if those details are
-  to be published.
+- Human visual/publication approval remains required for the generated Hero,
+  Proof Story and testimonial placeholder imagery and the generated Team
+  header. Maximilian Michael Möller's supplied portrait permission and exact
+  Chief Growth Officer wording also require final public sign-off.
 
 ## Next Action
 
