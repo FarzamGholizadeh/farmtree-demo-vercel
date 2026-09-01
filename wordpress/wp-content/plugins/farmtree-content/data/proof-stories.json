@@ -8,8 +8,8 @@
   },
   {
     "order": 2,
-    "slug": "farm-value-modelling",
-    "title": "Farm value modelling",
+    "slug": "farm-value-projection",
+    "title": "Farm Value Projection",
     "excerpt": "Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.",
     "sections": [["The planning question", "Can a proposed agroforestry design create a credible path through establishment costs, changing labour needs and delayed tree-product revenues?"], ["How FarmTree supports the work", "FarmTree brings production, cost, revenue and labour assumptions into the same time-based scenario, helping teams see cash-flow timing and trade-offs."], ["Evidence boundaries", "Prices, yields and adoption conditions can change. Results are scenario evidence rather than financial advice, assurance or a guarantee of farmer income."], ["A practical workflow", "Agree representative farm types, document source assumptions, compare alternatives and sensitivities, then review the design with farmers and local specialists before implementation."]]
   },
@@ -22,8 +22,8 @@
   },
   {
     "order": 4,
-    "slug": "water-landscape-resilience",
-    "title": "Water and landscape resilience monitoring",
+    "slug": "landscape-hydrology",
+    "title": "Landscape Hydrology",
     "excerpt": "Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.",
     "sections": [["The planning question", "Where can tree-based interventions support water and landscape objectives without creating unsupported expectations about hydrological outcomes?"], ["How FarmTree supports the work", "FarmTree can compare water-balance, erosion, production, carbon and economic indicators across defined scenarios and locations."], ["Evidence boundaries", "Hydrological responses are context-dependent. Model results require appropriate source data, calibration, uncertainty communication and field evidence."], ["A practical workflow", "Define the catchment decision, select representative land-use systems, compare interventions, identify sensitive assumptions and connect the preferred plan to a proportionate monitoring design."]]
   }

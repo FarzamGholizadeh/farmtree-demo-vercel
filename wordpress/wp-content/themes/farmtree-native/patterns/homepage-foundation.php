@@ -183,7 +183,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">FarmTree connects site information such as climate, soil and species data into a <strong>science-based, multi-KPI business plan</strong></p>
+<p class="has-lead-font-size">FarmTree connects site information such as climate, soil and species data into a <strong>science-based, multi-KPI business plans</strong></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -220,7 +220,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Connect local conditions, opportunities and risk</p>
+<p>Connect local conditions, opportunities and risks</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 
@@ -248,7 +248,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Compare time-based business and impact projections</p>
+<p>Compare business and impact projections time &#45; based</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
@@ -282,19 +282,15 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">FarmTree supports scenario thinking across tropical, temperate, dryland and highland contexts. The markers illustrate landscape contexts, not claimed project locations.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"className":"ft-globe-instruction","fontSize":"small"} -->
-<p class="ft-globe-instruction has-small-font-size">Drag in any direction or use the arrow keys to explore.</p>
+<p class="has-lead-font-size">FarmTree supports scenario thinking across tropical, temperate, dryland and highland contexts.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","width":"60%","className":"ft-globe-media"} -->
 <div class="wp-block-column is-vertically-aligned-center ft-globe-media" style="flex-basis:60%"><!-- wp:html -->
 <div class="ft-globe-stage" data-ft-globe-shell data-ft-earth-texture="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/earth-blue-marble-nasa-2048.jpg' ) ); ?>">
-<canvas class="ft-globe-canvas" width="720" height="720" tabindex="0" role="img" aria-label="Interactive realistic Earth with illustrative landscape-context connections" aria-describedby="ft-globe-description" data-ft-globe></canvas>
-<p id="ft-globe-description" class="screen-reader-text">A realistic Earth rotates slowly. Orange markers and animated connection routes illustrate tropical, temperate, dryland and highland landscape contexts; they do not identify FarmTree project locations.</p>
+<canvas class="ft-globe-canvas" width="720" height="720" tabindex="0" role="img" aria-label="Interactive realistic Earth showing FarmTree locations and connections" aria-describedby="ft-globe-description" data-ft-globe></canvas>
+<p id="ft-globe-description" class="screen-reader-text">A realistic Earth rotates slowly. Location markers and animated routes connect Kenya, Tanzania, Uganda, Brazil, Benin, Ghana, Nigeria, Senegal, Indonesia, Ethiopia, Bhutan, Colombia, Peru, the Netherlands, the United Kingdom, Hungary, France, Bulgaria, Belgium, Denmark, Iran and Jordan. Use the arrow keys to rotate the globe.</p>
 <noscript><p>The interactive landscape-context globe requires JavaScript. The section text remains available without it.</p></noscript>
 </div>
 <!-- /wp:html --></div>
@@ -309,11 +305,11 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":2,"textColor":"farmtree-ink","fontSize":"heading-small"} -->
-<h2 class="wp-block-heading has-farmtree-ink-color has-text-color has-heading-small-font-size">Built with organisations working across agroforestry and climate</h2>
+<h2 class="wp-block-heading has-farmtree-ink-color has-text-color has-heading-small-font-size">FarmTree Client</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"textColor":"farmtree-green","fontSize":"lead"} -->
-<p class="has-farmtree-green-color has-text-color has-lead-font-size">Selected references and approved perspectives from teams using FarmTree in practice</p>
+<p class="has-farmtree-green-color has-text-color has-lead-font-size">Trusted by organisations, practitioners and partners working across agroforestry and climate.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -428,12 +424,12 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"lead"} -->
-<h3 class="wp-block-heading has-lead-font-size">Farm value modelling</h3>
+<h3 class="wp-block-heading has-lead-font-size">Farm Value Projection</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size">Compare costs, benefits and projected returns across different farm and project options</p>
-<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/farm-value-modelling/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
+<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/farm-value-projection/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
@@ -472,12 +468,12 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"lead"} -->
-<h3 class="wp-block-heading has-lead-font-size">Water and landscape resilience monitoring</h3>
+<h3 class="wp-block-heading has-lead-font-size">Landscape Hydrology</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size">Connect water balance and ecosystem indicators to long-term monitoring and investment decisions</p>
-<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/water-landscape-resilience/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
+<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/landscape-hydrology/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>

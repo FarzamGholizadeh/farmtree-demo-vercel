@@ -234,9 +234,14 @@ const segmentPresentation = {
 
 const proofPresentation = {
   'carbon-planning': ['proof-carbon-documentary-v2.jpg', 'Field team measuring a mature tree and recording observations in an agroforestry landscape'],
-  'farm-value-modelling': ['proof-farm-value-documentary-v2.jpg', 'Farmer and adviser reviewing scenario materials at a farm-office table'],
+  'farm-value-projection': ['proof-farm-value-documentary-v2.jpg', 'Farmer and adviser reviewing scenario materials at a farm-office table'],
   'cocoa-scenario-planning': ['proof-cocoa-documentary-v2.jpg', 'Cocoa field team inspecting pods and recording observations beneath shade trees'],
-  'water-landscape-resilience': ['proof-water-documentary-v2.jpg', 'Field team examining soil and recording water observations beside a stream']
+  'landscape-hydrology': ['proof-water-documentary-v2.jpg', 'Field team examining soil and recording water observations beside a stream']
+};
+
+const proofLegacySlugs = {
+  'farm-value-projection': ['farm-value-modelling'],
+  'landscape-hydrology': ['water-landscape-resilience']
 };
 
 // These publication settings are deliberately confined to the loopback-only QA
@@ -599,7 +604,13 @@ for (const article of editorialDefinitions) {
 const proofStories = [];
 for (const story of proofStoryDefinitions) {
   const featuredMedia = proofMedia.get(story.slug);
-  const existing = await api(`/wp/v2/proof-stories?slug=${encodeURIComponent(story.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`);
+  let existing = await api(`/wp/v2/proof-stories?slug=${encodeURIComponent(story.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`);
+  if (!verifyOnly && existing.length === 0) {
+    for (const legacySlug of proofLegacySlugs[story.slug] ?? []) {
+      existing = await api(`/wp/v2/proof-stories?slug=${encodeURIComponent(legacySlug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`);
+      if (existing.length > 0) break;
+    }
+  }
   let post = existing[0];
   if (!post && verifyOnly) throw new Error(`Private Proof Story is missing: ${story.slug}`);
   if (!post) post = await api('/wp/v2/proof-stories', { method: 'POST', body: JSON.stringify({ title: story.title, slug: story.slug, status: localQaStatus, excerpt: story.excerpt, content: proofStoryContent(story), menu_order: story.order, featured_media: featuredMedia.id }) });

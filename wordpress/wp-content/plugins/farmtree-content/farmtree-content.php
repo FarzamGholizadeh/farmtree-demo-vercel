@@ -95,6 +95,30 @@ function farmtree_content_register_proof_stories(): void
 add_action('init', 'farmtree_content_register_proof_stories');
 
 /**
+ * Preserve links to Proof Story slugs replaced during the final copy review.
+ */
+function farmtree_content_redirect_legacy_proof_story_paths(): void
+{
+    if (is_admin()) {
+        return;
+    }
+
+    $request_path = (string) wp_parse_url(wp_unslash($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
+    $redirects = [
+        (string) wp_parse_url(home_url('/proof-stories/farm-value-modelling/'), PHP_URL_PATH) => '/proof-stories/farm-value-projection/',
+        (string) wp_parse_url(home_url('/proof-stories/water-landscape-resilience/'), PHP_URL_PATH) => '/proof-stories/landscape-hydrology/',
+    ];
+
+    if (!isset($redirects[$request_path])) {
+        return;
+    }
+
+    wp_safe_redirect(home_url($redirects[$request_path]), 301, 'FarmTree Content');
+    exit;
+}
+add_action('template_redirect', 'farmtree_content_redirect_legacy_proof_story_paths', 1);
+
+/**
  * Keep activation side-effect free during the foundation sprint.
  */
 function farmtree_content_activate(): void

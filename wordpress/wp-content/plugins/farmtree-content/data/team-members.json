@@ -31,6 +31,16 @@
   },
   {
     "order": 4,
+    "slug": "germaine-van-teeffelen",
+    "name": "Germaine van Teeffelen",
+    "role": "Interim Project Manager",
+    "bio": "Germaine supports project coordination at FarmTree as Interim Project Manager.",
+    "linkedin": "https://www.linkedin.com/in/germaine-van-teeffelen/",
+    "image": "germaine-van-teeffelen-800.jpg",
+    "sourceImage": "User-supplied portrait: 1761046729258.jpeg"
+  },
+  {
+    "order": 5,
     "slug": "irene-vinkenburg",
     "name": "Irene Vinkenburg",
     "role": "Modelling & IT Lead",
@@ -38,16 +48,6 @@
     "linkedin": "https://www.linkedin.com/in/irene-vinkenburg-abb49033",
     "image": "irene-vinkenburg-690.webp",
     "sourceImage": "https://www.farmtree.earth/web/image/13165-fe3b182e/DIBcoop-1.jpg"
-  },
-  {
-    "order": 5,
-    "slug": "roos-van-haeff",
-    "name": "Roos van Haeff",
-    "role": "Impact Quantification Lead",
-    "bio": "Roos works on agroforestry quantification and has contributed to the FarmTree Model and Platform since their inception. Her current work in East Africa emphasises water management and livelihoods.",
-    "linkedin": "https://www.linkedin.com/in/roos-van-haeff-3b6032137",
-    "image": "roos-van-haeff-690.webp",
-    "sourceImage": "https://www.farmtree.earth/web/image/13166-50ba50e4/Roos.jpg"
   },
   {
     "order": 6,
@@ -61,6 +61,16 @@
   },
   {
     "order": 7,
+    "slug": "roos-van-haeff",
+    "name": "Roos van Haeff",
+    "role": "Impact Quantification Lead",
+    "bio": "Roos works on agroforestry quantification and has contributed to the FarmTree Model and Platform since their inception. Her current work in East Africa emphasises water management and livelihoods.",
+    "linkedin": "https://www.linkedin.com/in/roos-van-haeff-3b6032137",
+    "image": "roos-van-haeff-690.webp",
+    "sourceImage": "https://www.farmtree.earth/web/image/13166-50ba50e4/Roos.jpg"
+  },
+  {
+    "order": 8,
     "slug": "edi-yoga",
     "name": "Edi Yoga",
     "role": "FarmTree Representative, Indonesia",
@@ -70,7 +80,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/15808-1e575819/Yoga%20FarmTree%20Profile%20Picture.png"
   },
   {
-    "order": 8,
+    "order": 9,
     "slug": "hery-hanipan",
     "name": "Hery Hanipan",
     "role": "FarmTree Database Management, Indonesia",
@@ -80,7 +90,7 @@
     "sourceImage": "https://www.farmtree.earth/web/image/15793-6c8b30c3/Hery.png"
   },
   {
-    "order": 9,
+    "order": 10,
     "slug": "alvaro-micheletti",
     "name": "Álvaro Mitcheletti",
     "role": "Portfolio Manager, Latin America",

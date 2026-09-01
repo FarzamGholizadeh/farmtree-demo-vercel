@@ -383,7 +383,9 @@
             const sequence = document.createElement('div');
             const items = Array.from(rail.children);
             const isTestimonialRail = rail.classList.contains('ft-testimonial-cards');
-            const startIndex = isTestimonialRail ? 0 : Math.min(4, Math.max(0, items.length - 1));
+            const startIndex = isTestimonialRail
+                ? Math.min(2, Math.max(0, items.length - 1))
+                : Math.min(4, Math.max(0, items.length - 1));
             const rotatedItems = items.slice(startIndex).concat(items.slice(0, startIndex));
 
             track.className = 'ft-moving-rail-track';
@@ -449,8 +451,37 @@
             [[43, -12], [50, -16], [49, -26], [44, -25]],
             [[128, 31], [143, 44], [146, 35], [137, 30]]
         ];
-        const markerCoordinates = [[5, 52], [-59, -15], [29, 1], [77, 19], [135, -25]];
-        const arcPairs = [[0, 2], [0, 3], [2, 1], [3, 4]];
+        const globeLocations = [
+            { name: 'Kenya', coordinates: [37.91, 0.02] },
+            { name: 'Tanzania', coordinates: [34.89, -6.37] },
+            { name: 'Uganda', coordinates: [32.29, 1.37] },
+            { name: 'Brazil', coordinates: [-51.93, -14.24] },
+            { name: 'Benin', coordinates: [2.32, 9.31] },
+            { name: 'Ghana', coordinates: [-1.02, 7.95] },
+            { name: 'Nigeria', coordinates: [8.68, 9.08] },
+            { name: 'Senegal', coordinates: [-14.45, 14.5] },
+            { name: 'Indonesia', coordinates: [113.92, -0.79] },
+            { name: 'Ethiopia', coordinates: [40.49, 9.15] },
+            { name: 'Bhutan', coordinates: [90.43, 27.51] },
+            { name: 'Colombia', coordinates: [-74.3, 4.57] },
+            { name: 'Peru', coordinates: [-75.02, -9.19] },
+            { name: 'Netherlands', coordinates: [5.29, 52.13] },
+            { name: 'United Kingdom', coordinates: [-3.44, 55.38] },
+            { name: 'Hungary', coordinates: [19.5, 47.16] },
+            { name: 'France', coordinates: [2.21, 46.23] },
+            { name: 'Bulgaria', coordinates: [25.49, 42.73] },
+            { name: 'Belgium', coordinates: [4.47, 50.5] },
+            { name: 'Denmark', coordinates: [9.5, 56.26] },
+            { name: 'Iran', coordinates: [53.69, 32.43] },
+            { name: 'Jordan', coordinates: [36.24, 30.59] }
+        ];
+        const markerCoordinates = globeLocations.map(({ coordinates }) => coordinates);
+        const arcPairs = [
+            [13, 0], [13, 3], [13, 8], [13, 9], [13, 10],
+            [13, 11], [13, 12], [13, 14], [13, 15], [13, 16],
+            [13, 17], [13, 18], [13, 19], [13, 20], [13, 21],
+            [0, 1], [0, 2], [5, 4], [5, 6], [5, 7]
+        ];
 
         function pointInPolygon(longitude, latitude, polygon) {
             let inside = false;
@@ -774,8 +805,8 @@
                         context.lineTo(x, y);
                     }
                 });
-                context.strokeStyle = 'rgba(226, 129, 48, 0.78)';
-                context.lineWidth = Math.max(1.35 * ratio, 1.15);
+                context.strokeStyle = 'rgba(226, 129, 48, 0.64)';
+                context.lineWidth = Math.max(1.08 * ratio, 1);
                 if (!reducedMotionQuery.matches) {
                     context.setLineDash([7 * ratio, 5 * ratio]);
                     context.lineDashOffset = -(((time * 0.018) + (arcIndex * 9)) % (24 * ratio));
@@ -844,16 +875,16 @@
                     const y = centre - (point.y * radius);
                     context.fillStyle = 'rgba(236, 143, 61, 0.98)';
                     context.beginPath();
-                    context.arc(x, y, 3.2 * ratio, 0, Math.PI * 2);
+                    context.arc(x, y, 2.15 * ratio, 0, Math.PI * 2);
                     context.fill();
                     context.strokeStyle = 'rgba(255, 230, 188, 0.84)';
                     context.lineWidth = Math.max(ratio, 1);
                     context.beginPath();
-                    context.arc(x, y, 6.2 * ratio, 0, Math.PI * 2);
+                    context.arc(x, y, 4.15 * ratio, 0, Math.PI * 2);
                     context.stroke();
 
                     if (!reducedMotionQuery.matches) {
-                        const pulse = 7.2 + ((Math.sin((time / 420) + markerIndex) + 1) * 1.8);
+                        const pulse = 5.3 + ((Math.sin((time / 420) + markerIndex) + 1) * 1.05);
                         context.strokeStyle = 'rgba(236, 143, 61, 0.28)';
                         context.beginPath();
                         context.arc(x, y, pulse * ratio, 0, Math.PI * 2);
@@ -921,6 +952,8 @@
                 shell.dataset.ftGlobePoints = String(landPoints.length);
                 shell.dataset.ftGlobeMap = earthTexture ? 'nasa-blue-marble-january' : land.source;
                 shell.dataset.ftGlobeTexture = earthTexture ? 'ready' : 'fallback';
+                canvas.dataset.ftGlobeLocationCount = String(globeLocations.length);
+                canvas.dataset.ftGlobeLocations = globeLocations.map(({ name }) => name).join('|');
 
                 canvas.addEventListener('pointerdown', (event) => {
                     isDragging = true;

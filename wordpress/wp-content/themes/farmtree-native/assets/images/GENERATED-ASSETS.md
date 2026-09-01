@@ -50,9 +50,9 @@ project evidence and do not depict named customers, staff or locations.
 | Delivery asset | Theme and prompt direction | Original generation | Delivery |
 | --- | --- | --- | --- |
 | `proof/proof-carbon-documentary-v2.jpg` | Carbon field measurement: two fictional field practitioners measuring a mature tree and recording observations in a mixed-tree system | `/Users/farzam/.codex/generated_images/01a03fad-caa8-7120-9f1c-702ca6c29a96/exec-f7371666-538b-4c31-8551-5c1016ba8692.png` | JPEG quality 82, 1122 by 1402 |
-| `proof/proof-farm-value-documentary-v2.jpg` | Farm value modelling: fictional farmer and adviser comparing printed scenario materials and a tablet in a real farm-office setting | `/Users/farzam/.codex/generated_images/01a03fad-caa8-7120-9f1c-702ca6c29a96/exec-862d2b1f-2577-4da1-b077-8c9a809b247a.png` | JPEG quality 82, 1122 by 1402 |
+| `proof/proof-farm-value-documentary-v2.jpg` | Farm Value Projection: fictional farmer and adviser comparing printed scenario materials and a tablet in a real farm-office setting | `/Users/farzam/.codex/generated_images/01a03fad-caa8-7120-9f1c-702ca6c29a96/exec-862d2b1f-2577-4da1-b077-8c9a809b247a.png` | JPEG quality 82, 1122 by 1402 |
 | `proof/proof-cocoa-documentary-v2.jpg` | Cocoa scenario planning: two fictional field practitioners inspecting cocoa pods and recording observations beneath a shade-tree canopy | `/Users/farzam/.codex/generated_images/01a03fad-caa8-7120-9f1c-702ca6c29a96/exec-dcc5fac6-7a1d-4274-af50-8a2d9e148dc5.png` | JPEG quality 82, 1122 by 1402 |
-| `proof/proof-water-documentary-v2.jpg` | Water and landscape resilience: a fictional field team examining soil and recording observations beside a stream in a mixed landscape | `/Users/farzam/.codex/generated_images/01a03fad-caa8-7120-9f1c-702ca6c29a96/exec-ad600d29-9973-4361-8422-64a218c0b434.png` | JPEG quality 82, 1122 by 1402 |
+| `proof/proof-water-documentary-v2.jpg` | Landscape Hydrology: a fictional field team examining soil and recording observations beside a stream in a mixed landscape | `/Users/farzam/.codex/generated_images/01a03fad-caa8-7120-9f1c-702ca6c29a96/exec-ad600d29-9973-4361-8422-64a218c0b434.png` | JPEG quality 82, 1122 by 1402 |
 
 Generation constraints for the set: natural available light, documentary
 realism, believable human posture and field tools, natural imperfections, no
@@ -64,6 +64,11 @@ corporate gestures.
 - `team/maximilian-michael-moeller-800.jpg` is an optimized JPEG delivery copy
   of the user-supplied `/Users/farzam/Downloads/1762937665726.jpeg`. It was not
   generated. Its publication permission remains a human approval item.
+- `team/germaine-van-teeffelen-800.jpg` is the unmodified 800 by 800 JPEG
+  delivery copy of the user-supplied
+  `/Users/farzam/Downloads/1761046729258.jpeg` (SHA-256
+  `6fbf0ffb17a998d91ac65db5b4d38dc7a9984de4c5c4b1308523b4ee9da9acbe`). It
+  was not generated. Its publication permission remains a human approval item.
 - `home/earth-blue-marble-nasa-2048.jpg` is a resized self-hosted derivative of
   NASA Earth Observatory’s January 2004 Blue Marble: Next Generation 5400 by
   2700 base map. Source:

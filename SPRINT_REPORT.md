@@ -356,3 +356,32 @@ remains non-terminal; before any future approved dispatch, recheck that it is
 terminal or absent and has no jobs, deployments or pending approvals. Keep
 Coming Soon and public noindex active and `farmtree-native` inactive in
 production.
+
+## Final Pre-publish Refinement
+
+The current local source now contains the exact requested Technology copy,
+shortened Global Perspective copy, 22 normalized globe locations with curated
+animated routes, the “FarmTree Client” Trust heading, a seamless third-card
+testimonial start, centered Proof Story heading and renamed Farm Value
+Projection/Landscape Hydrology pages. The two former Proof Story paths redirect
+permanently to their replacements. Germaine van Teeffelen is the tenth Team
+member using the supplied 800 by 800 portrait, verified Interim Project Manager
+role and conservative bio; the second desktop row is Germaine, Irene and
+Betelehem. The approved GIF remains direct media and is clipped from the top
+without distortion or a bottom empty strip.
+
+Repository validation, the WordPress bootstrap verification and the 40-route
+anonymous/noindex/internal-link audit pass. Browser checks at 320, 390, 768,
+1440 and 1920 report zero horizontal overflow, broken images and duplicate IDs.
+The globe loads all 22 locations and responds to ArrowRight with the approved
+focus ring; the testimonial rail starts at card three, moves continuously,
+keeps three sequences and gives inert clones zero tab stops. The only proven
+runtime defect found during the pass was an eight-pixel Team-page full-bleed
+overflow; its gutter calculation was corrected and retested to zero at 320,
+390 and 1440. Evidence is in
+`qa/screenshots/final-pre-publish-refinement/`.
+
+Production remains untouched: no push, deployment, publication, activation,
+Coming Soon change or noindex removal occurred. Human publication approval is
+still required for claims/relationships, illustrative assets and both supplied
+Team portraits/role wording.

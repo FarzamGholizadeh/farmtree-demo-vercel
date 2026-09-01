@@ -77,7 +77,7 @@ approval-gated or deferred as recorded in the sprint evidence.
 The current refinement adds a generated illustrative field-planning Hero,
 Natural Earth-derived two-axis Globe, gapless five-testimonial marquee,
 connector-free Technology cards, non-moving button hover, editorial News
-labels, balanced Footer copy and a nine-person 3/2/1-column Team page with a
+labels, balanced Footer copy and a ten-person 3/2/1-column Team page with a
 generated illustrative header. Human asset, claim and permission review remains
 the publication gate.
 

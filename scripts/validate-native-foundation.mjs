@@ -59,6 +59,7 @@ const required = [
   'assets/images/partners/helvetas.png',
   'assets/images/team/team-field-collaboration-v1.jpg',
   'assets/images/team/maximilian-michael-moeller-800.jpg',
+  'assets/images/team/germaine-van-teeffelen-800.jpg',
   'assets/images/testimonials/generated-placeholders/portrait-01.jpg',
   'assets/images/testimonials/generated-placeholders/portrait-02.jpg',
   'assets/images/testimonials/generated-placeholders/portrait-03.jpg',
@@ -351,8 +352,8 @@ const packageJson = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8
 const teamMembers = JSON.parse(readFileSync(resolve(plugin, 'data/team-members.json'), 'utf8'));
 const editorialDrafts = readFileSync(resolve(plugin, 'data/editorial-drafts.json'), 'utf8');
 
-if (teamMembers.length !== 9) {
-  throw new Error('Team data must contain the nine requested current entries.');
+if (teamMembers.length !== 10) {
+  throw new Error('Team data must contain the ten requested current entries.');
 }
 for (const removedName of ['Mia Beyens', 'Ruben van Voorst', 'Nikolaos Mantzaridis', 'Mary Theodorah Ajal', 'Crésus Odjo']) {
   if (teamMembers.some(({ name }) => name === removedName)) {
@@ -368,6 +369,16 @@ if (
   teamMembers.findIndex(({ name }) => name === 'Maximilian Michael Möller') !== 1
 ) {
   throw new Error('Maximilian must use the supplied portrait, supported role and approved position between Arnoud and Frank.');
+}
+const germaine = teamMembers.find(({ name }) => name === 'Germaine van Teeffelen');
+if (
+  germaine?.linkedin !== 'https://www.linkedin.com/in/germaine-van-teeffelen/' ||
+  germaine.role !== 'Interim Project Manager' ||
+  germaine.image !== 'germaine-van-teeffelen-800.jpg' ||
+  germaine.order !== 4 ||
+  teamMembers.slice(3, 6).map(({ name }) => name).join('|') !== 'Germaine van Teeffelen|Irene Vinkenburg|Betelehem Beyene'
+) {
+  throw new Error('The second desktop Team row must begin Germaine, Irene and Betelehem with Germaine using the supplied portrait and verified role.');
 }
 
 for (const visibleSource of [homepage, footer, editorialDrafts]) {
@@ -422,16 +433,19 @@ const requiredHomepageContent = [
   'Compare farm and project options',
   'Understand future scenarios',
   'How agroforestry projects are planned, monitored and reported',
-  'science-based, multi-KPI business plan',
+  'science-based, multi-KPI business plans',
+  'Connect local conditions, opportunities and risks',
+  'Compare business and impact projections time &#45; based',
   'Global perspective',
   'Agroforestry decisions across diverse landscapes',
-  'not claimed project locations',
-  'Trust and references',
+  'FarmTree supports scenario thinking across tropical, temperate, dryland and highland contexts.',
+  'FarmTree Client',
+  'Trusted by organisations, practitioners and partners working across agroforestry and climate.',
   'Proof Stories',
   'Carbon planning',
-  'Farm value modelling',
+  'Farm Value Projection',
   'Cocoa scenario planning and monitoring',
-  'Water and landscape resilience monitoring',
+  'Landscape Hydrology',
   'FAQ',
   'Last News',
   'farmtree-native/call-to-action'
@@ -482,7 +496,7 @@ for (const contract of [
 for (const contract of [
   'data-ft-globe-shell',
   'data-ft-globe',
-  'Interactive realistic Earth with illustrative landscape-context connections',
+  'Interactive realistic Earth showing FarmTree locations and connections',
   'perPage":3',
   'ft-home-news-more',
   'Read article ↗',
@@ -872,9 +886,9 @@ for (const contract of [
   'The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.',
   'FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything!',
   '>Carbon</h3>',
-  '>Farm value modelling</h3>',
+  '>Farm Value Projection</h3>',
   '>Cocoa scenario planning and monitoring</h3>',
-  '>Water and landscape resilience monitoring</h3>',
+  '>Landscape Hydrology</h3>',
   'alt="Illustrative field team reviewing an agroforestry plan and monitoring tools"',
   'alt="Three people reviewing information on a laptop"',
   'alt="Four people discussing crops in a field"',
@@ -916,6 +930,7 @@ for (const contract of [
 for (const contract of [
   "track.style.animationDelay = '-8s'",
   "rail.dataset.ftRailOffsetSeconds = '8'",
+  "? Math.min(2, Math.max(0, items.length - 1))",
   "clone.setAttribute('inert', '')",
   'Math.ceil((rail.clientWidth * 2) / sequenceWidth) + 1',
   '.ft-platform-media-frame',
@@ -927,6 +942,25 @@ for (const contract of [
 ]) {
   if (!`${interactions}\n${themeStyles}`.includes(contract)) {
     throw new Error(`Homepage or Team final refinement contract is missing: ${contract}`);
+  }
+}
+
+for (const location of [
+  'Kenya', 'Tanzania', 'Uganda', 'Brazil', 'Benin', 'Ghana', 'Nigeria', 'Senegal',
+  'Indonesia', 'Ethiopia', 'Bhutan', 'Colombia', 'Peru', 'Netherlands',
+  'United Kingdom', 'Hungary', 'France', 'Bulgaria', 'Belgium', 'Denmark', 'Iran', 'Jordan'
+]) {
+  if (!interactions.includes(`name: '${location}'`)) {
+    throw new Error(`Homepage globe is missing location data: ${location}`);
+  }
+}
+
+for (const removedCopy of [
+  'Drag in any direction or use the arrow keys to explore.',
+  'The markers illustrate landscape contexts, not claimed project locations.'
+]) {
+  if (homepage.includes(removedCopy)) {
+    throw new Error(`Homepage retains removed Global Perspective copy: ${removedCopy}`);
   }
 }
 

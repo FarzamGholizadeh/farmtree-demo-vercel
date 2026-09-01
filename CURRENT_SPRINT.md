@@ -2,7 +2,7 @@
 
 ## FT-NATIVE-002 - Native Homepage
 
-Status: controlled Homepage and Team refinement implemented and locally
+Status: final pre-publish Homepage and Team refinement implemented and locally
 validated; stopped at pre-release for visual and publication approval
 
 ### Objective
@@ -28,9 +28,11 @@ documentary illustrations; a three-item editorial Last News feature before
 FAQ; and a branded real-404 recovery page. It also retains interaction pause;
 the exact user-supplied 14.5-second Platform GIF with a reduced-motion poster;
 ten distinct image-backed customer-segment pages; 16 English support pages; a
-nine-person Team page with a 60% overlaid illustrative field header and the
+ten-person Team page with a 60% overlaid illustrative field header, the
 user-supplied Maximilian Michael Möller portrait/role card ordered between
-Arnoud and Frank; a featured-story Blog with all nine
+Arnoud and Frank, and the user-supplied Germaine van Teeffelen portrait with
+the verified Interim Project Manager role at the start of the second desktop
+row; a featured-story Blog with all nine
 source-attributed articles; a premium Vacancies empty state; and the existing
 privacy-safe Contact/quotation fallbacks.
 
@@ -193,6 +195,14 @@ optimized Platform delivery, discovery metadata and nine-width rendered QA are r
   The Homepage final CTA remains. Footer legal/social content now follows the
   information grid without a separator at a measured 24–25px gap. Evidence is
   in `qa/screenshots/final-fast-patch/`.
+- The final pre-publish refinement applies the three requested Technology copy
+  changes, the shortened Global copy, 22 named Globe locations with lightweight
+  routes, the “FarmTree Client” Trust heading, a third-card testimonial start,
+  centered Proof heading, renamed Proof Story routes with 301 legacy mappings,
+  the ten-card Team order and the tightly cropped approved Platform GIF. The
+  requested 320, 390, 768, 1440 and 1920 browser widths have zero horizontal
+  overflow, broken images and duplicate IDs. Evidence is in
+  `qa/screenshots/final-pre-publish-refinement/`.
 - Browser error/warning logs were empty after the interaction walkthrough.
   Rendered semantic audits at 390 and 1440 found one H1, complete
   Header/Main/Footer landmarks, no heading-level jumps, duplicate IDs, missing
@@ -277,7 +287,10 @@ visual/publication approval is required before those assets may be used
 publicly. Maximilian Michael Möller's supplied portrait, LinkedIn URL and
 user-confirmed Chief Growth Officer role are integrated with a conservative
 one-sentence bio; public portrait permission and exact role wording remain a
-human sign-off item.
+human sign-off item. Germaine van Teeffelen's supplied portrait, LinkedIn URL
+and screenshot-confirmed Interim Project Manager role are likewise integrated
+with a conservative one-sentence bio; public portrait permission and exact
+role wording remain a human sign-off item.
 
 The consolidated decision-only review package is
 `PRE_RELEASE_HUMAN_SIGNOFF.md`.
