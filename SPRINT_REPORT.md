@@ -24,19 +24,21 @@ deletes unrelated content and never imports a local database. Earlier
 disposable PHP 8.1 runtime tests proved a write-free `90/0/2/0/1` dry run,
 private-only apply,
 `92` unchanged managed operations after apply, and blocking foreign-owner and
-manual-drift probes. That APPLY evidence predates the new rewrite operation;
-the correction validates its finalizer statically and stops at dry-run as
-required. See
+manual-drift probes. A new focused disposable-runtime regression persisted and
+replanned the exact 34-rule merge, proving unrelated rule/value/order and
+option identity/autoload preservation without a global flush. See
 `docs/FT-NATIVE-RELEASE-PREPARATION.md`.
 
-The 0.4.1 release-safety correction removes all FarmTree
-activation/deactivation hooks. A required CPT rewrite refresh is now an
-explicit dry-run operation and a single APPLY-only soft option refresh after
-all gates and managed writes; unrelated rewrite deltas block and hard
-`.htaccess`/`web.config` flushing is impossible. Disposable WordPress 7.1 / PHP
-8.1 snapshots proved load/CLI registration, model registration, construction,
-`build_plan`, dry-run, activation and deactivation add no FarmTree-authored DB
-or filesystem write. The corrected dry-run is `90/1/2/0/1`.
+The 0.4.2 release-safety correction removes all FarmTree
+activation/deactivation hooks, encloses dry-run planning in a scoped SQL
+read-only firewall, and replaces global CPT rewrite regeneration with an exact
+APPLY-only FarmTree 34-rule merge. Existing unrelated rules, values and order
+remain exact; runtime-only SeedProd and `sp-login` additions are neither owned
+nor persisted by FarmTree. Ambiguous anchors, namespace collisions and route
+shadowing stop. Disposable WordPress 7.1 / PHP 8.1 snapshots prove load/CLI
+registration, model registration, construction, `build_plan`, dry-run,
+activation and deactivation add no FarmTree-authored DB or filesystem write.
+The corrected dry-run is `90/1/2/0/1`.
 
 Automated static classification source-seals the complete four-file deployable
 plugin runtime and pins every persistence API to the APPLY graph. A separate

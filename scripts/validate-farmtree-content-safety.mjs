@@ -13,7 +13,7 @@ const cliPath = `${pluginPrefix}includes/class-farmtree-content-cli-command.php`
 const reconcilerPath = `${pluginPrefix}includes/class-farmtree-content-reconciler.php`;
 const managedManifestPath = `${pluginPrefix}includes/managed-content-manifest.php`;
 const exactPluginRuntime = [mainPath, cliPath, reconcilerPath, managedManifestPath].sort();
-const auditedRuntimeSourceSha256 = 'b2682381bac6fda4710692a730444ed233fc9601a998f7cc4e9824faa0b669d9';
+const auditedRuntimeSourceSha256 = '5026cdeebcfa4611cebe50401fc7f2ccf0826a8fa174c8791e51b09094c24008';
 
 function fail(message, details = []) {
   const suffix = details.length === 0
@@ -412,7 +412,7 @@ const reconcilerFile = filesByPath.get(reconcilerPath);
 const managedManifestFile = filesByPath.get(managedManifestPath);
 
 const requestedSpecifications = {
-  update_option: { count: 2, methods: ['apply_front_page'] },
+  update_option: { count: 3, methods: ['apply_front_page', 'finalize_rewrite_rules'] },
   add_option: { count: 0, methods: [] },
   delete_option: { count: 0, methods: [] },
   set_transient: { count: 0, methods: [] },
@@ -430,7 +430,7 @@ const requestedSpecifications = {
   wp_schedule_event: { count: 0, methods: [] },
   wp_schedule_single_event: { count: 0, methods: [] },
   wp_clear_scheduled_hook: { count: 0, methods: [] },
-  flush_rewrite_rules: { count: 1, methods: ['finalize_rewrite_rules'] },
+  flush_rewrite_rules: { count: 0, methods: [] },
   file_put_contents: { count: 0, methods: [] },
   fwrite: { count: 0, methods: [] },
   unlink: { count: 0, methods: [] },
@@ -523,7 +523,7 @@ const allWriteCallables = new Set([
 ]);
 
 // Instantiating or invoking WP_Rewrite directly bypasses the reviewed global
-// generator and the single reviewed soft-flush API.
+// generator used only to derive FarmTree-owned identities and anchors.
 for (const file of files) {
   if (/(?<!\$)\bWP_Rewrite\b/i.test(file.masked)) {
     fail(`Direct WP_Rewrite use is forbidden in ${file.path}.`);
@@ -924,7 +924,7 @@ if (dryRunWrites.length > 0) {
 const reconcileCommand = functionNamed(cliFile, 'reconcile');
 const reconcileSource = cliFile.source.slice(reconcileCommand.bodyStart, reconcileCommand.bodyEnd);
 const dryIfIndex = reconcileSource.indexOf('if (!$apply)');
-const firstBuildIndex = reconcileSource.indexOf('$reconciler->build_plan($options)', dryIfIndex);
+const firstBuildIndex = reconcileSource.indexOf('$this->build_dry_run_plan($reconciler, $options)', dryIfIndex);
 const dryReturnIndex = reconcileSource.indexOf('return;', firstBuildIndex);
 const applyGateIndex = reconcileSource.indexOf('$this->validate_apply_gates', dryReturnIndex);
 const secondBuildIndex = reconcileSource.indexOf('$reconciler->build_plan($options)', applyGateIndex);
@@ -968,11 +968,30 @@ const finalizeMasked = reconcilerFile.masked.slice(
   finalizeRewriteRules.bodyStart,
   finalizeRewriteRules.bodyEnd
 );
-if ((finalizeMasked.match(/\bflush_rewrite_rules\s*\(\s*false\s*\)/g) ?? []).length !== 1
-  || /\bflush_rewrite_rules\s*\(\s*(?:true\s*)?\)/.test(
-    files.map((file) => file.masked).join('\n')
-  )) {
-  fail('Rewrite finalization must contain exactly one literal soft flush and no hard/default flush.');
+if (/\bflush_rewrite_rules\s*\(/.test(files.map((file) => file.masked).join('\n'))
+  || !finalizeMasked.includes('update_option')) {
+  fail('Rewrite finalization must persist only its exact reviewed option target and never flush globally.');
+}
+
+const dryRunBuilder = functionNamed(cliFile, 'build_dry_run_plan');
+const dryRunBuilderSource = cliFile.source.slice(dryRunBuilder.bodyStart, dryRunBuilder.bodyEnd);
+if (dryRunBuilder.visibility !== 'private'
+  || !dryRunBuilderSource.includes("add_filter('query', $firewall, PHP_INT_MAX)")
+  || !dryRunBuilderSource.includes('$reconciler->build_plan($options)')
+  || !dryRunBuilderSource.includes("remove_filter('query', $firewall, PHP_INT_MAX)")) {
+  fail('The dry-run plan must remain inside the scoped final-query SQL firewall.');
+}
+const queryInspector = functionNamed(cliFile, 'inspect_dry_run_query');
+const queryInspectorSource = cliFile.source.slice(queryInspector.bodyStart, queryInspector.bodyEnd);
+for (const contract of [
+  "['SELECT', 'SHOW', 'DESCRIBE', 'DESC', 'EXPLAIN']",
+  'FarmTree_Content_Dry_Run_Write_Exception',
+  "hash('sha256', $query)",
+  'debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 40)'
+]) {
+  if (!queryInspectorSource.includes(contract)) {
+    fail('The dry-run SQL firewall contract drifted.', [contract]);
+  }
 }
 
 const protectionProbeCalls = findCallsAcross(files, 'wp_safe_remote_get');
@@ -994,7 +1013,8 @@ const summary = {
   apply_only_write_methods: [...writeBearingMethods].sort(),
   lifecycle_hooks: lifecycleHooks,
   dry_run_write_methods: 0,
-  rewrite_finalization: 'one_soft_apply_only_flush',
+  rewrite_finalization: 'exact_farmtree_only_apply_target',
+  dry_run_sql_firewall: 'scoped_read_allowlist_block_before_execution',
   raw_wpdb_transaction_queries: queryCalls.length
 };
 

@@ -61,10 +61,11 @@ documentation, QA data and unused derivatives are excluded from the artifact.
 Architecture, commands, ownership rules and local evidence are recorded in
 `docs/FT-NATIVE-RELEASE-PREPARATION.md`.
 
-The 0.4.1 correction removes all plugin lifecycle hooks, discloses the required
-CPT soft rewrite refresh as APPLY-only, statically classifies the complete
-runtime write surface and adds a fail-closed semantic volatility model plus a
-disposable activation/deactivation zero-side-effect probe.
+The 0.4.2 correction removes all plugin lifecycle hooks, encloses dry-run
+planning in a scoped read-only SQL firewall, persists only an exact FarmTree
+34-rule APPLY target without global rewrite flushing, statically classifies the
+complete runtime write surface and retains the fail-closed semantic volatility
+model plus disposable activation/deactivation zero-side-effect probe.
 
 The approved baseline `210ce51f7c4b573b51cf96bba1b575918757e9d1` was pushed
 only to `origin/feat/wordpress-native-rebuild`. The audited preparation commit

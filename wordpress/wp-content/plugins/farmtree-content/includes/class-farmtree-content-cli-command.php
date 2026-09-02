@@ -9,6 +9,25 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+final class FarmTree_Content_Dry_Run_Write_Exception extends RuntimeException
+{
+    /** @var array<string,mixed> */
+    private array $write_attempt;
+
+    /** @param array<string,mixed> $write_attempt */
+    public function __construct(array $write_attempt)
+    {
+        parent::__construct('FarmTree dry-run blocked a modifying database query before execution.');
+        $this->write_attempt = $write_attempt;
+    }
+
+    /** @return array<string,mixed> */
+    public function write_attempt(): array
+    {
+        return $this->write_attempt;
+    }
+}
+
 final class FarmTree_Content_CLI_Command
 {
     private const APPLY_CONFIRMATION = 'APPLY FARMTREE PRIVATE REVIEW CONTENT';
@@ -77,7 +96,7 @@ final class FarmTree_Content_CLI_Command
             $reconciler = new FarmTree_Content_Reconciler();
 
             if (!$apply) {
-                $plan = $reconciler->build_plan($options);
+                $plan = $this->build_dry_run_plan($reconciler, $options);
                 $this->emit($plan, empty($plan['summary']['conflict']) ? 0 : 2);
                 return;
             }
@@ -112,6 +131,13 @@ final class FarmTree_Content_CLI_Command
                 strtolower((string) $assoc_args['source-commit']),
                 strtolower((string) $assoc_args['backup-digest'])
             ), 0);
+        } catch (FarmTree_Content_Dry_Run_Write_Exception $error) {
+            $this->emit([
+                'mode' => 'dry-run',
+                'ok' => false,
+                'error' => 'dry_run_sql_write_blocked',
+                'write_attempt' => $error->write_attempt(),
+            ], 2);
         } catch (Throwable $error) {
             $payload = [
                 'mode' => isset($assoc_args['apply']) ? 'apply' : 'dry-run',
@@ -124,6 +150,204 @@ final class FarmTree_Content_CLI_Command
             }
             $this->emit($payload, 1);
         }
+    }
+
+    /**
+     * Run the dry plan inside a short-lived, fail-closed SQL read boundary.
+     *
+     * @param array<string,mixed> $options
+     * @return array<string,mixed>
+     */
+    private function build_dry_run_plan(FarmTree_Content_Reconciler $reconciler, array $options): array
+    {
+        $active_plugin_roots = $this->active_plugin_roots();
+        $firewall = function ($query) use ($active_plugin_roots) {
+            return $this->inspect_dry_run_query((string) $query, $active_plugin_roots);
+        };
+
+        add_filter('query', $firewall, PHP_INT_MAX);
+        try {
+            return $reconciler->build_plan($options);
+        } finally {
+            remove_filter('query', $firewall, PHP_INT_MAX);
+        }
+    }
+
+    /**
+     * Permit only database reads while the dry plan is being built.
+     *
+     * Throwing from WordPress's final query filter prevents wpdb from sending
+     * the modifying statement to the database driver.
+     *
+     * @param array<int,string> $active_plugin_roots
+     */
+    private function inspect_dry_run_query(string $query, array $active_plugin_roots): string
+    {
+        $without_leading_comments = preg_replace(
+            '/\A(?:\s+|\/\*.*?\*\/|--[^\r\n]*(?:\r?\n|\z)|#[^\r\n]*(?:\r?\n|\z))*/s',
+            '',
+            $query
+        );
+        $candidate = is_string($without_leading_comments) ? ltrim($without_leading_comments) : ltrim($query);
+        preg_match('/\A([A-Za-z]+)/', $candidate, $match);
+        $operation = strtoupper((string) ($match[1] ?? 'UNKNOWN'));
+        $read_only = in_array($operation, ['SELECT', 'SHOW', 'DESCRIBE', 'DESC', 'EXPLAIN'], true);
+        if ($read_only && !preg_match('/\bINTO\s+(?:OUTFILE|DUMPFILE)\b/i', $candidate)) {
+            return $query;
+        }
+
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 40);
+        $origin = $this->classify_stack_origin($trace, $active_plugin_roots);
+        throw new FarmTree_Content_Dry_Run_Write_Exception(array_merge([
+            'operation' => $operation,
+            'table' => $this->query_table($candidate, $operation),
+            'redacted_fingerprint' => $this->redacted_query_fingerprint($query),
+            'sha256' => hash('sha256', $query),
+        ], $this->safe_query_context($query), $origin));
+    }
+
+    /** @return array<int,string> */
+    private function active_plugin_roots(): array
+    {
+        $plugins = (array) get_option('active_plugins', []);
+        if (is_multisite()) {
+            $plugins = array_merge($plugins, array_keys((array) get_site_option('active_sitewide_plugins', [])));
+        }
+        $roots = [];
+        foreach (array_unique(array_map('strval', $plugins)) as $plugin) {
+            if (!preg_match('/\A[A-Za-z0-9._-]+(?:\/[A-Za-z0-9._\/-]+)?\z/', $plugin)) {
+                continue;
+            }
+            $path = wp_normalize_path(WP_PLUGIN_DIR . '/' . $plugin);
+            $roots[] = str_contains($plugin, '/') ? dirname($path) . '/' : $path;
+        }
+        return array_values(array_unique($roots));
+    }
+
+    /**
+     * @param array<int,array<string,mixed>> $trace
+     * @param array<int,string> $active_plugin_roots
+     * @return array<string,mixed>
+     */
+    private function classify_stack_origin(array $trace, array $active_plugin_roots): array
+    {
+        $application_candidates = [];
+        $core_candidates = [];
+        $stack = [];
+        foreach ($trace as $frame) {
+            $file = isset($frame['file']) ? wp_normalize_path((string) $frame['file']) : '';
+            if ('' === $file || wp_normalize_path(__FILE__) === $file) {
+                continue;
+            }
+            $function = (string) ($frame['function'] ?? 'unknown');
+            $class = (string) ($frame['class'] ?? '');
+            $relative = $this->redacted_stack_path($file);
+            $summary = $relative . ':' . max(0, (int) ($frame['line'] ?? 0)) . '::' . $class . $function;
+            if (count($stack) < 8) {
+                $stack[] = $summary;
+            }
+            if (str_starts_with($file, wp_normalize_path(WP_PLUGIN_DIR . '/farmtree-content/'))) {
+                $application_candidates[] = ['classification' => 'FarmTree', 'origin' => $summary];
+                continue;
+            }
+            $active = false;
+            foreach ($active_plugin_roots as $root) {
+                if ((str_ends_with($root, '/') && str_starts_with($file, $root)) || $file === $root) {
+                    $active = true;
+                    break;
+                }
+            }
+            if ($active) {
+                $application_candidates[] = ['classification' => 'active plugin', 'origin' => $summary];
+            } elseif (str_starts_with($file, wp_normalize_path(ABSPATH . 'wp-admin/'))
+                || str_starts_with($file, wp_normalize_path(ABSPATH . WPINC . '/'))) {
+                $core_candidates[] = $summary;
+            } else {
+                $application_candidates[] = ['classification' => 'unknown', 'origin' => $summary];
+            }
+        }
+
+        if ($application_candidates) {
+            return [
+                'caller_classification' => (string) $application_candidates[0]['classification'],
+                'stack_origin' => (string) $application_candidates[0]['origin'],
+                'stack' => $stack,
+            ];
+        }
+        if ($core_candidates) {
+            return [
+                'caller_classification' => 'WordPress core',
+                'stack_origin' => (string) $core_candidates[0],
+                'stack' => $stack,
+            ];
+        }
+        return ['caller_classification' => 'unknown', 'stack_origin' => 'unavailable', 'stack' => []];
+    }
+
+    private function redacted_stack_path(string $file): string
+    {
+        $content_root = wp_normalize_path(WP_CONTENT_DIR . '/');
+        $wordpress_root = wp_normalize_path(ABSPATH);
+        if (str_starts_with($file, $content_root)) {
+            return 'wp-content/' . ltrim(substr($file, strlen($content_root)), '/');
+        }
+        if (str_starts_with($file, $wordpress_root)) {
+            return 'wordpress/' . ltrim(substr($file, strlen($wordpress_root)), '/');
+        }
+        return basename($file);
+    }
+
+    private function query_table(string $query, string $operation): ?string
+    {
+        $patterns = [
+            'INSERT' => '/\AINSERT\s+(?:IGNORE\s+)?INTO\s+(`?[A-Za-z0-9_.-]+`?)/i',
+            'REPLACE' => '/\AREPLACE\s+(?:INTO\s+)?(`?[A-Za-z0-9_.-]+`?)/i',
+            'UPDATE' => '/\AUPDATE\s+(`?[A-Za-z0-9_.-]+`?)/i',
+            'DELETE' => '/\ADELETE\s+FROM\s+(`?[A-Za-z0-9_.-]+`?)/i',
+            'ALTER' => '/\AALTER\s+TABLE\s+(`?[A-Za-z0-9_.-]+`?)/i',
+            'CREATE' => '/\ACREATE\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?(`?[A-Za-z0-9_.-]+`?)/i',
+            'DROP' => '/\ADROP\s+TABLE\s+(?:IF\s+EXISTS\s+)?(`?[A-Za-z0-9_.-]+`?)/i',
+            'TRUNCATE' => '/\ATRUNCATE\s+(?:TABLE\s+)?(`?[A-Za-z0-9_.-]+`?)/i',
+        ];
+        if (!isset($patterns[$operation]) || !preg_match($patterns[$operation], $query, $match)) {
+            return null;
+        }
+        $identifier = trim((string) $match[1], '`');
+        $parts = explode('.', $identifier);
+        return (string) end($parts);
+    }
+
+    /** @return array<string,mixed> */
+    private function safe_query_context(string $query): array
+    {
+        $context = [];
+        foreach (['option_name', 'meta_key'] as $field) {
+            $pattern = '/\b`?' . preg_quote($field, '/') . "`?\\s*=\\s*'([A-Za-z0-9_.:-]{1,191})'/i";
+            if (preg_match($pattern, $query, $match)) {
+                $context[$field] = (string) $match[1];
+            }
+        }
+        if (!isset($context['option_name'])
+            && preg_match('/\(\s*`?option_name`?\s*,[^)]*\)\s*VALUES\s*\(\s*\'([A-Za-z0-9_.:-]{1,191})\'/is', $query, $match)) {
+            $context['option_name'] = (string) $match[1];
+        }
+        foreach (['post_id', 'term_id', 'user_id', 'comment_id'] as $field) {
+            if (preg_match('/\b`?' . preg_quote($field, '/') . '`?\s*=\s*([0-9]{1,20})/i', $query, $match)) {
+                $context['entity'] = $field . ':' . (string) $match[1];
+                break;
+            }
+        }
+        return $context;
+    }
+
+    private function redacted_query_fingerprint(string $query): string
+    {
+        $redacted = preg_replace('/\/\*.*?\*\/|--[^\r\n]*|#[^\r\n]*/s', ' ', $query);
+        $redacted = preg_replace('/\'(?:\\\\.|\'\'|[^\'])*\'/s', '?', (string) $redacted);
+        $redacted = preg_replace('/"(?:\\\\.|""|[^"])*"/s', '?', (string) $redacted);
+        $redacted = preg_replace('/\b(?:0x[0-9a-f]+|[0-9]+(?:\.[0-9]+)?)\b/i', '?', (string) $redacted);
+        $redacted = preg_replace('/\s+/', ' ', trim((string) $redacted));
+        return substr((string) $redacted, 0, 512);
     }
 
     /** @param array<int,string> $args @param array<string,mixed> $assoc_args */

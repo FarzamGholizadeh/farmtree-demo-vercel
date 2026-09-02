@@ -2730,11 +2730,11 @@ final class FarmTree_Content_Reconciler
     }
 
     /**
-     * Plan the one-time soft refresh required by the two public FarmTree CPTs.
+     * Plan the exact FarmTree-only merge required by the two public CPTs.
      *
-     * Generating rules in memory is write-free. Existing unrelated rules must
-     * remain byte-for-byte represented in the generated set; otherwise APPLY
-     * stops instead of using a global rewrite refresh to guess ownership.
+     * Global generation is used only to derive the 34 reviewed FarmTree rule
+     * identities and their placement anchors. The persisted target starts from
+     * the raw stored rules and never adopts unrelated runtime-generated state.
      *
      * @return array<string,mixed>
      */
@@ -2760,13 +2760,13 @@ final class FarmTree_Content_Reconciler
             ]);
         }
         $base_rules = $this->generate_rewrite_rules_read_only(['customer_segment', 'proof_story']);
-        $desired = $this->generate_rewrite_rules_read_only([]);
-        if (!is_array($base_rules) || !$base_rules || !is_array($desired) || !$desired) {
+        $generated_rules = $this->generate_rewrite_rules_read_only([]);
+        if (!is_array($base_rules) || !$base_rules || !is_array($generated_rules) || !$generated_rules) {
             return $this->op('option', 'rewrite-rules', 'conflict', 'generated_rewrite_rules_invalid');
         }
 
         $required = ['customer_segment' => [], 'proof_story' => []];
-        foreach ($this->rewrite_rule_changes($base_rules, $desired) as $regex => $change) {
+        foreach ($this->rewrite_rule_changes($base_rules, $generated_rules) as $regex => $change) {
             $desired_query = (string) ($change['desired'] ?? '');
             if ('global_rule_order' === (string) ($change['scope'] ?? '')
                 || !empty($change['before_exists'])
@@ -2809,7 +2809,7 @@ final class FarmTree_Content_Reconciler
                     ]);
                 }
                 $slug = 'customer_segment' === $post_type ? 'customer-segments' : 'proof-stories';
-                $first = $this->first_matching_rewrite_rule($desired, $slug . '/farmtree-route-probe/');
+                $first = $this->first_matching_rewrite_rule($generated_rules, $slug . '/farmtree-route-probe/');
                 if (empty($first['valid']) || ($first['regex'] ?? null) !== $regex
                     || ($first['query'] ?? null) !== $query) {
                     return $this->op('option', 'rewrite-rules', 'conflict', 'canonical_farmtree_rule_shadowed', [
@@ -2848,8 +2848,7 @@ final class FarmTree_Content_Reconciler
         }
         $current_rules = is_array($current) ? $current : [];
         $current_has_rules = (bool) $current_rules;
-        $changes = $this->rewrite_rule_changes($current_rules, $desired);
-        $allowed_additions = array_merge($required['customer_segment'], $required['proof_story']);
+        $managed_rules = array_merge($required['customer_segment'], $required['proof_story']);
         $state = [
             'option_name' => 'rewrite_rules',
             'option_exists' => $option_exists,
@@ -2858,48 +2857,191 @@ final class FarmTree_Content_Reconciler
             'rule_count' => count($current_rules),
             'sha256' => $this->rewrite_rules_hash($current_rules),
         ];
+        if (!$option_exists || !$current_has_rules) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'farmtree_rewrite_anchor_state_unavailable', [
+                'before' => $state,
+                'required_farmtree_rule_counts' => array_map('count', $required),
+            ]);
+        }
+
+        foreach ($current_rules as $regex => $query) {
+            $is_namespace = str_contains((string) $regex, 'customer-segments')
+                || str_contains((string) $regex, 'proof-stories');
+            if ($is_namespace && ($managed_rules[(string) $regex] ?? null) !== (string) $query) {
+                return $this->op('option', 'rewrite-rules', 'conflict', 'preexisting_farmtree_namespace_collision', [
+                    'before' => $state,
+                    'rule' => (string) $regex,
+                    'query_sha256' => hash('sha256', (string) $query),
+                ]);
+            }
+        }
+
+        $merge = $this->merge_farmtree_rewrite_rules($current_rules, $generated_rules, $managed_rules);
+        if (isset($merge['conflict'])) {
+            return $this->op('option', 'rewrite-rules', 'conflict', (string) $merge['conflict'], [
+                'before' => $state,
+                'anchor_context' => $merge['anchor_context'] ?? [],
+            ]);
+        }
+        $merged_rules = (array) ($merge['rules'] ?? []);
+        $current_unrelated = array_diff_key($current_rules, $managed_rules);
+        $merged_unrelated = array_diff_key($merged_rules, $managed_rules);
+        if ($current_unrelated !== $merged_unrelated) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'unrelated_rewrite_preservation_failed', [
+                'before' => $state,
+            ]);
+        }
+        foreach ($canonical as $post_type => $rules) {
+            $slug = 'customer_segment' === $post_type ? 'customer-segments' : 'proof-stories';
+            foreach ($rules as $regex => $query) {
+                $first = $this->first_matching_rewrite_rule($merged_rules, $slug . '/farmtree-route-probe/');
+                if (empty($first['valid']) || ($first['regex'] ?? null) !== $regex
+                    || ($first['query'] ?? null) !== $query) {
+                    return $this->op('option', 'rewrite-rules', 'conflict', 'canonical_farmtree_rule_shadowed', [
+                        'before' => $state,
+                        'post_type' => $post_type,
+                        'first_matching_regex' => $first['regex'] ?? null,
+                        'first_matching_query_sha256' => isset($first['query'])
+                            ? hash('sha256', (string) $first['query'])
+                            : null,
+                    ]);
+                }
+            }
+        }
+
+        $runtime_unrelated = array_diff_key($generated_rules, $managed_rules, $current_rules);
         $target = [
             'option_name' => 'rewrite_rules',
-            'rule_count' => count($desired),
-            'sha256' => $this->rewrite_rules_hash($desired),
+            'rule_count' => count($merged_rules),
+            'sha256' => $this->rewrite_rules_hash($merged_rules),
             'required_farmtree_rules' => $required,
             'required_canonical_rules' => $canonical,
+            'managed_rule_count' => count($managed_rules),
+            'preserved_unrelated_rule_count' => count($current_unrelated),
+            'runtime_unrelated_rules_not_adopted' => array_map(
+                static fn ($query) => hash('sha256', (string) $query),
+                $runtime_unrelated
+            ),
+            'anchors' => $merge['anchors'] ?? [],
+            'merged_rules' => $merged_rules,
         ];
-
-        if (!$changes && $current_rules === $desired) {
+        if ($current_rules === $merged_rules) {
             return $this->op('option', 'rewrite-rules', 'unchanged', 'exact', [
                 'before' => $state,
                 'desired' => $target,
             ]);
         }
-        if ($current_has_rules) {
-            foreach ($current_rules as $regex => $query) {
-                if ((str_contains((string) $regex, 'customer-segments')
-                        || str_contains((string) $regex, 'proof-stories'))
-                    && ($allowed_additions[(string) $regex] ?? null) !== (string) $query) {
-                    return $this->op('option', 'rewrite-rules', 'conflict', 'preexisting_farmtree_namespace_collision', [
-                        'before' => $state,
-                        'desired' => $target,
-                        'rule' => (string) $regex,
-                        'query_sha256' => hash('sha256', (string) $query),
-                    ]);
-                }
-            }
-        }
-        if ($current_has_rules && $this->rewrite_changes_touch_unrelated_rules($changes, $allowed_additions)) {
-            return $this->op('option', 'rewrite-rules', 'conflict', 'unrelated_rewrite_delta', [
+        $changes = $this->rewrite_rule_changes($current_rules, $merged_rules);
+        if ($this->rewrite_changes_touch_unrelated_rules($changes, $managed_rules)) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'unrelated_rewrite_preservation_failed', [
                 'before' => $state,
-                'desired' => $target,
                 'changes' => $changes,
             ]);
         }
 
-        return $this->op('option', 'rewrite-rules', $option_exists ? 'update' : 'create',
-            $option_exists ? ($current_has_rules ? 'farmtree_rules_missing' : 'rewrite_rules_empty') : 'rewrite_rules_absent', [
-                'before' => $state,
-                'desired' => $target,
-                'changes' => $changes,
-            ]);
+        return $this->op('option', 'rewrite-rules', 'update', 'farmtree_rules_missing', [
+            'before' => $state,
+            'desired' => $target,
+            'changes' => $changes,
+        ]);
+    }
+
+    /**
+     * Merge only FarmTree-owned rules into the stored ordered rule map.
+     *
+     * @param array<string,string> $current_rules
+     * @param array<string,string> $generated_rules
+     * @param array<string,string> $managed_rules
+     * @return array<string,mixed>
+     */
+    private function merge_farmtree_rewrite_rules(
+        array $current_rules,
+        array $generated_rules,
+        array $managed_rules
+    ): array {
+        $current_unrelated = array_diff_key($current_rules, $managed_rules);
+        $current_keys = array_keys($current_unrelated);
+        $generated_keys = array_keys($generated_rules);
+        $blocks = [];
+        for ($index = 0, $total = count($generated_keys); $index < $total;) {
+            $regex = (string) $generated_keys[$index];
+            if (!array_key_exists($regex, $managed_rules)) {
+                $index++;
+                continue;
+            }
+            $start = $index;
+            $rules = [];
+            while ($index < $total && array_key_exists((string) $generated_keys[$index], $managed_rules)) {
+                $managed_regex = (string) $generated_keys[$index];
+                if ((string) $generated_rules[$managed_regex] !== (string) $managed_rules[$managed_regex]) {
+                    return ['conflict' => 'generated_farmtree_rule_delta_invalid'];
+                }
+                $rules[$managed_regex] = (string) $managed_rules[$managed_regex];
+                $index++;
+            }
+            $previous = null;
+            for ($candidate = $start - 1; $candidate >= 0; $candidate--) {
+                $key = (string) $generated_keys[$candidate];
+                if (array_key_exists($key, $current_unrelated)
+                    && (string) $current_unrelated[$key] === (string) $generated_rules[$key]) {
+                    $previous = $key;
+                    break;
+                }
+            }
+            $next = null;
+            for ($candidate = $index; $candidate < $total; $candidate++) {
+                $key = (string) $generated_keys[$candidate];
+                if (array_key_exists($key, $current_unrelated)
+                    && (string) $current_unrelated[$key] === (string) $generated_rules[$key]) {
+                    $next = $key;
+                    break;
+                }
+            }
+            $previous_position = false === $previous ? false : array_search($previous, $current_keys, true);
+            $next_position = false === $next ? false : array_search($next, $current_keys, true);
+            if (null === $previous || null === $next || false === $previous_position
+                || false === $next_position || $previous_position >= $next_position) {
+                return [
+                    'conflict' => 'farmtree_rewrite_anchors_ambiguous',
+                    'anchor_context' => [
+                        'previous' => $previous,
+                        'next' => $next,
+                        'managed_rules' => array_keys($rules),
+                    ],
+                ];
+            }
+            $blocks[] = ['previous' => $previous, 'next' => $next, 'rules' => $rules];
+        }
+
+        if (!$blocks || count(array_merge(...array_map(
+            static fn ($block) => $block['rules'],
+            $blocks
+        ))) !== count($managed_rules)) {
+            return ['conflict' => 'generated_farmtree_rule_delta_invalid'];
+        }
+
+        $target = [];
+        $anchors = [];
+        foreach ($current_unrelated as $regex => $query) {
+            $target[(string) $regex] = (string) $query;
+            foreach ($blocks as $block) {
+                if ((string) $block['previous'] !== (string) $regex) {
+                    continue;
+                }
+                foreach ($block['rules'] as $managed_regex => $managed_query) {
+                    $target[(string) $managed_regex] = (string) $managed_query;
+                }
+                $anchors[] = [
+                    'previous' => (string) $block['previous'],
+                    'next' => (string) $block['next'],
+                    'managed_rule_count' => count($block['rules']),
+                ];
+            }
+        }
+        if (count(array_intersect_key($target, $managed_rules)) !== count($managed_rules)) {
+            return ['conflict' => 'farmtree_rewrite_anchors_ambiguous'];
+        }
+        return ['rules' => $target, 'anchors' => $anchors];
     }
 
     /**
@@ -2979,8 +3121,7 @@ final class FarmTree_Content_Reconciler
     }
 
     /**
-     * Persist the disclosed rules only after every gate and managed write.
-     * The literal false is mandatory: no .htaccess or web.config write.
+     * Persist the exact reviewed FarmTree-only merge after every APPLY gate.
      *
      * @param array<string,mixed> $operation
      * @return array<string,mixed>
@@ -2988,8 +3129,7 @@ final class FarmTree_Content_Reconciler
     private function finalize_rewrite_rules(array $operation): array
     {
         $this->assert_operation($operation, [
-            'create' => ['rewrite_rules_absent'],
-            'update' => ['farmtree_rules_missing', 'rewrite_rules_empty'],
+            'update' => ['farmtree_rules_missing'],
             'unchanged' => ['exact'],
         ], 'rewrite-rules');
 
@@ -3003,43 +3143,32 @@ final class FarmTree_Content_Reconciler
             return $this->result('option', 'rewrite-rules', 'unchanged');
         }
 
-        global $wp_rewrite;
-        $runtime_rewrite_state = [
-            'matches' => $wp_rewrite->matches,
-            'rules' => $wp_rewrite->rules,
-            'extra_rules_top' => $wp_rewrite->extra_rules_top,
-        ];
-        try {
-            flush_rewrite_rules(false);
-        } finally {
-            $wp_rewrite->matches = $runtime_rewrite_state['matches'];
-            $wp_rewrite->rules = $runtime_rewrite_state['rules'];
-            $wp_rewrite->extra_rules_top = $runtime_rewrite_state['extra_rules_top'];
+        $target_rules = $operation['desired']['merged_rules'] ?? null;
+        if (!is_array($target_rules)
+            || count($target_rules) !== (int) ($operation['desired']['rule_count'] ?? -1)
+            || $this->rewrite_rules_hash($target_rules) !== (string) ($operation['desired']['sha256'] ?? '')) {
+            throw new RuntimeException('The disclosed FarmTree-only rewrite target is invalid.');
+        }
+        if (!update_option('rewrite_rules', $target_rules)) {
+            throw new RuntimeException('Could not persist the disclosed FarmTree-only rewrite target.');
         }
         $after = $this->plan_rewrite_rules();
         if ('unchanged' !== (string) ($after['action'] ?? '')
             || ($after['desired']['sha256'] ?? '') !== ($operation['desired']['sha256'] ?? '')) {
-            throw new RuntimeException('Soft rewrite-rule finalization did not reach the disclosed state.');
+            throw new RuntimeException('FarmTree-only rewrite finalization did not reach the disclosed state.');
         }
         $after_state = $after['before'] ?? [];
         if (empty($after_state['option_exists']) || (int) ($after_state['option_id'] ?? 0) < 1
             || ($after_state['sha256'] ?? '') !== ($operation['desired']['sha256'] ?? '')
             || (int) ($after_state['rule_count'] ?? -1) !== (int) ($operation['desired']['rule_count'] ?? -2)) {
-            throw new RuntimeException('Soft rewrite-rule finalization did not persist the disclosed raw option state.');
+            throw new RuntimeException('FarmTree-only rewrite finalization did not persist the disclosed raw option state.');
         }
         if (!empty($operation['before']['option_exists'])
             && ((int) ($after_state['option_id'] ?? 0) !== (int) ($operation['before']['option_id'] ?? 0)
                 || (string) ($after_state['autoload'] ?? '') !== (string) ($operation['before']['autoload'] ?? ''))) {
-            throw new RuntimeException('Soft rewrite-rule finalization did not preserve the existing option identity/autoload.');
+            throw new RuntimeException('FarmTree-only rewrite finalization did not preserve the option identity/autoload.');
         }
-        if (empty($operation['before']['option_exists']) && '' === (string) ($after_state['autoload'] ?? '')) {
-            throw new RuntimeException('Soft rewrite-rule finalization created an option without disclosed autoload state.');
-        }
-        return $this->result(
-            'option',
-            'rewrite-rules',
-            'create' === (string) $operation['action'] ? 'created' : 'updated'
-        );
+        return $this->result('option', 'rewrite-rules', 'updated');
     }
 
     /** @param array<string,string> $before @param array<string,string> $desired @return array<string,array<string,mixed>> */
@@ -3082,7 +3211,7 @@ final class FarmTree_Content_Reconciler
     {
         foreach ($changes as $regex => $change) {
             if ('global_rule_order' === (string) ($change['scope'] ?? '')) {
-                return true;
+                continue;
             }
             if (!empty($change['before_exists'])) {
                 return true;
@@ -3220,6 +3349,8 @@ final class FarmTree_Content_Reconciler
         $this->assert_operation($rewrite, [
             'conflict' => [
                 'canonical_farmtree_rule_shadowed',
+                'farmtree_rewrite_anchor_state_unavailable',
+                'farmtree_rewrite_anchors_ambiguous',
                 'farmtree_post_types_not_registered',
                 'generated_canonical_farmtree_rules_ambiguous',
                 'generated_farmtree_rule_delta_invalid',
@@ -3229,12 +3360,11 @@ final class FarmTree_Content_Reconciler
                 'rewrite_generator_unavailable',
                 'stored_rewrite_rules_invalid',
                 'stored_rewrite_rules_unreadable',
-                'unrelated_rewrite_delta',
+                'unrelated_rewrite_preservation_failed',
                 'unsupported_rewrite_root',
                 'wordpress_not_fully_loaded',
             ],
-            'create' => ['rewrite_rules_absent'],
-            'update' => ['farmtree_rules_missing', 'rewrite_rules_empty'],
+            'update' => ['farmtree_rules_missing'],
             'unchanged' => ['exact'],
         ], 'rewrite-rules');
         $this->assert_operation_disclosure($rewrite, 'rewrite-rules');

@@ -281,6 +281,135 @@ function farmtree_probe_phase(string $name, callable $callback): array
     ];
 }
 
+function farmtree_run_cli_dry_run(string $source_commit): array
+{
+    WP_CLI::$lines = [];
+    WP_CLI::$halt_codes = [];
+    $command = new FarmTree_Content_CLI_Command();
+    $command->reconcile([], [
+        'dry-run' => true,
+        'source-commit' => $source_commit,
+        'expected-site' => home_url('/'),
+        'expected-theme' => get_stylesheet(),
+        'format' => 'json',
+    ]);
+    return [
+        'payload' => json_decode((string) end(WP_CLI::$lines), true),
+        'haltCodes' => WP_CLI::$halt_codes,
+    ];
+}
+
+function farmtree_firewall_probe(string $name, callable $attempt, string $source_commit): array
+{
+    $hook = static function ($rules) use ($attempt) {
+        $attempt();
+        return $rules;
+    };
+    $before = farmtree_probe_snapshot();
+    $GLOBALS['farmtree_probe_phase'] = 'firewall-' . $name;
+    $GLOBALS['farmtree_probe_queries']['firewall-' . $name] = [];
+    add_filter('customer_segment_rewrite_rules', $hook, 1);
+    try {
+        $result = farmtree_run_cli_dry_run($source_commit);
+    } finally {
+        remove_filter('customer_segment_rewrite_rules', $hook, 1);
+        $GLOBALS['farmtree_probe_phase'] = '';
+    }
+    return [
+        'name' => $name,
+        'before' => $before,
+        'after' => farmtree_probe_snapshot(),
+        'attemptedWriteQueries' => $GLOBALS['farmtree_probe_queries']['firewall-' . $name],
+        'result' => $result,
+    ];
+}
+
+function farmtree_rewrite_regression(FarmTree_Content_Reconciler $reconciler, array $options): array
+{
+    global $wpdb, $wp_rewrite;
+    $original_rules = get_option('rewrite_rules');
+    $original_extra_rules_top = $wp_rewrite->extra_rules_top;
+    $stored_row = $wpdb->get_row($wpdb->prepare(
+        "SELECT option_id, autoload FROM {$wpdb->options} WHERE option_name = %s LIMIT 1",
+        'rewrite_rules'
+    ), ARRAY_A);
+    if (!is_array($original_rules) || !$original_rules || !is_array($stored_row)) {
+        throw new RuntimeException('Rewrite regression requires a populated stored rewrite option.');
+    }
+    $runtime_only = ['^sp-login/?$' => 'index.php?seedprod=login'];
+    for ($index = 1; $index <= 17; $index++) {
+        $runtime_only['seedprod/review-rule-' . str_pad((string) $index, 2, '0', STR_PAD_LEFT) . '/?$']
+            = 'index.php?seedprod_rule=' . $index;
+    }
+    $stored_test_rules = ['farmtree-preserved-top/?$' => 'index.php?preserved=top']
+        + $original_rules
+        + ['farmtree-preserved-bottom/?$' => 'index.php?preserved=bottom'];
+    try {
+        update_option('rewrite_rules', $stored_test_rules);
+        $wp_rewrite->extra_rules_top = $runtime_only + $original_extra_rules_top;
+        $plan = $reconciler->build_plan($options);
+        $operation = $plan['operations']['options'][1] ?? [];
+        $target = (array) ($operation['desired']['merged_rules'] ?? []);
+        $managed = array_merge(
+            (array) ($operation['desired']['required_farmtree_rules']['customer_segment'] ?? []),
+            (array) ($operation['desired']['required_farmtree_rules']['proof_story'] ?? [])
+        );
+        $target_unrelated = array_diff_key($target, $managed);
+        $runtime_adopted = array_intersect_key($target, $runtime_only);
+        $runtime_reported = (array) ($operation['desired']['runtime_unrelated_rules_not_adopted'] ?? []);
+
+        $finalizer = new ReflectionMethod($reconciler, 'finalize_rewrite_rules');
+        $finalizer->setAccessible(true);
+        $finalizer_result = $finalizer->invoke($reconciler, $operation);
+        $persisted = get_option('rewrite_rules');
+        $after_plan = $reconciler->build_plan($options);
+
+        update_option('rewrite_rules', $stored_test_rules + ['^sp-login/?$' => 'index.php?seedprod=login']);
+        $sp_login_plan = $reconciler->build_plan($options);
+        $sp_login_target = (array) ($sp_login_plan['operations']['options'][1]['desired']['merged_rules'] ?? []);
+
+        update_option('rewrite_rules', ['farmtree-no-anchor/?$' => 'index.php?no_anchor=1']);
+        $ambiguous = $reconciler->build_plan($options);
+
+        update_option('rewrite_rules', ['(.+)?$' => 'index.php?shadow=1'] + $stored_test_rules);
+        $shadowed = $reconciler->build_plan($options);
+
+        $bad_identity = ['customer-segments/([^/]+)(?:/([0-9]+))?/?$' => 'index.php?foreign=$matches[1]']
+            + $stored_test_rules;
+        update_option('rewrite_rules', $bad_identity);
+        $identity_conflict = $reconciler->build_plan($options);
+
+        return [
+            'planSummary' => $plan['summary'],
+            'operation' => $operation['action'] ?? null,
+            'managedRuleCount' => count($managed),
+            'unrelatedPreserved' => $target_unrelated === $stored_test_rules,
+            'unrelatedOrderPreserved' => array_keys($target_unrelated) === array_keys($stored_test_rules),
+            'runtimeOnlyRuleCount' => count($runtime_only),
+            'runtimeOnlyAdoptedCount' => count($runtime_adopted),
+            'runtimeOnlyReportedCount' => count($runtime_reported),
+            'finalizerResult' => $finalizer_result,
+            'persistedExactTarget' => $persisted === $target,
+            'optionIdentityPreserved' => (int) $stored_row['option_id'] === (int) $wpdb->get_var($wpdb->prepare(
+                "SELECT option_id FROM {$wpdb->options} WHERE option_name = %s LIMIT 1",
+                'rewrite_rules'
+            )),
+            'optionAutoloadPreserved' => (string) $stored_row['autoload'] === (string) $wpdb->get_var($wpdb->prepare(
+                "SELECT autoload FROM {$wpdb->options} WHERE option_name = %s LIMIT 1",
+                'rewrite_rules'
+            )),
+            'afterAction' => $after_plan['operations']['options'][1]['action'] ?? null,
+            'spLoginPreservedWhenStored' => ($sp_login_target['^sp-login/?$'] ?? null) === 'index.php?seedprod=login',
+            'ambiguousReason' => $ambiguous['operations']['options'][1]['reason'] ?? null,
+            'shadowReason' => $shadowed['operations']['options'][1]['reason'] ?? null,
+            'identityReason' => $identity_conflict['operations']['options'][1]['reason'] ?? null,
+        ];
+    } finally {
+        $wp_rewrite->extra_rules_top = $original_extra_rules_top;
+        update_option('rewrite_rules', $original_rules);
+    }
+}
+
 $plugin_file = WP_CONTENT_DIR . '/plugins/farmtree-content/farmtree-content.php';
 $phases = [];
 $phases[] = farmtree_probe_phase('plugin-load-and-cli-registration', static function () use ($plugin_file) {
@@ -309,17 +438,34 @@ $phases[] = farmtree_probe_phase('build-plan', static function () use (&$reconci
     return ['summary' => $plan['summary'], 'plan_digest' => $plan['plan_digest']];
 });
 $phases[] = farmtree_probe_phase('cli-dry-run', static function () use ($source_commit) {
-    WP_CLI::$lines = [];
-    $command = new FarmTree_Content_CLI_Command();
-    $command->reconcile([], [
-        'dry-run' => true,
-        'source-commit' => $source_commit,
-        'expected-site' => home_url('/'),
-        'expected-theme' => get_stylesheet(),
-        'format' => 'json',
-    ]);
-    return json_decode((string) end(WP_CLI::$lines), true);
+    return farmtree_run_cli_dry_run($source_commit)['payload'];
 });
+$rewrite_regression = farmtree_rewrite_regression($reconciler, $options);
+$firewall_probes = [];
+$firewall_probes[] = farmtree_firewall_probe('select', static function () use ($wpdb) {
+    $wpdb->get_var('SELECT 1');
+}, $source_commit);
+$firewall_probes[] = farmtree_firewall_probe('insert', static function () use ($wpdb) {
+    $wpdb->query("INSERT INTO {$wpdb->options} (option_name, option_value, autoload) VALUES ('farmtree_firewall_insert', 'secret-redacted', 'no')");
+}, $source_commit);
+$firewall_probes[] = farmtree_firewall_probe('update', static function () use ($wpdb) {
+    $wpdb->query("UPDATE {$wpdb->options} SET option_value = 'secret-redacted' WHERE option_name = 'blogname'");
+}, $source_commit);
+$firewall_probes[] = farmtree_firewall_probe('delete', static function () use ($wpdb) {
+    $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name = 'blogname'");
+}, $source_commit);
+$firewall_probes[] = farmtree_firewall_probe('replace', static function () use ($wpdb) {
+    $wpdb->query("REPLACE INTO {$wpdb->options} (option_name, option_value, autoload) VALUES ('farmtree_firewall_replace', 'secret-redacted', 'no')");
+}, $source_commit);
+$firewall_probes[] = farmtree_firewall_probe('update-option', static function () {
+    update_option('farmtree_firewall_update_option', 'secret-redacted');
+}, $source_commit);
+$firewall_probes[] = farmtree_firewall_probe('insert-post', static function () {
+    wp_insert_post(['post_title' => 'Firewall test', 'post_status' => 'draft']);
+}, $source_commit);
+$firewall_probes[] = farmtree_firewall_probe('update-post-meta', static function () {
+    update_post_meta(1, 'farmtree_firewall_meta', 'secret-redacted');
+}, $source_commit);
 $phases[] = farmtree_probe_phase('plugin-activation', static function () {
     $result = activate_plugin('farmtree-content/farmtree-content.php');
     if (is_wp_error($result)) {
@@ -338,6 +484,8 @@ $payload = [
     'optionsTable' => $wpdb->options,
     'commands' => WP_CLI::$commands,
     'phases' => $phases,
+    'rewriteRegression' => $rewrite_regression,
+    'firewallProbes' => $firewall_probes,
 ];
 file_put_contents('/farmtree-output/result.json', wp_json_encode($payload, JSON_UNESCAPED_SLASHES));
 `;
@@ -452,6 +600,79 @@ try {
       .map(([postType, rules]) => [postType, Object.keys(rules).length])
   );
 
+  const rewriteRegression = result.rewriteRegression;
+  const expectedRewriteRegression = {
+    operation: 'update',
+    managedRuleCount: 34,
+    unrelatedPreserved: true,
+    unrelatedOrderPreserved: true,
+    runtimeOnlyRuleCount: 18,
+    runtimeOnlyAdoptedCount: 0,
+    runtimeOnlyReportedCount: 18,
+    persistedExactTarget: true,
+    optionIdentityPreserved: true,
+    optionAutoloadPreserved: true,
+    afterAction: 'unchanged',
+    spLoginPreservedWhenStored: true,
+    ambiguousReason: 'farmtree_rewrite_anchors_ambiguous',
+    shadowReason: 'canonical_farmtree_rule_shadowed',
+    identityReason: 'preexisting_farmtree_namespace_collision'
+  };
+  for (const [key, expected] of Object.entries(expectedRewriteRegression)) {
+    if (rewriteRegression?.[key] !== expected) {
+      fail(`FarmTree-only rewrite regression failed for ${key}.`, [
+        `expected: ${JSON.stringify(expected)}`,
+        `actual: ${JSON.stringify(rewriteRegression?.[key])}`
+      ]);
+    }
+  }
+  if (rewriteRegression?.finalizerResult?.status !== 'updated' ||
+      rewriteRegression?.planSummary?.conflict !== 0) {
+    fail('FarmTree-only rewrite finalization did not converge safely.', [JSON.stringify(rewriteRegression)]);
+  }
+
+  const firewallProbes = Object.fromEntries(
+    result.firewallProbes.map((probe) => [probe.name, probe])
+  );
+  const expectedFirewallOperations = {
+    insert: 'INSERT',
+    update: 'UPDATE',
+    delete: 'DELETE',
+    replace: 'REPLACE',
+    'update-option': 'INSERT',
+    'insert-post': 'INSERT',
+    'update-post-meta': 'INSERT'
+  };
+  for (const [name, probe] of Object.entries(firewallProbes)) {
+    const optionChanges = changedKeys(probe.before.options, probe.after.options);
+    const tableChanges = changedKeys(probe.before.tables, probe.after.tables);
+    const fileChanges = changedKeys(probe.before.files, probe.after.files);
+    if (optionChanges.length > 0 || tableChanges.length > 0 || fileChanges.length > 0) {
+      fail(`SQL firewall probe ${name} changed persistent state.`, [
+        `options: ${optionChanges.join(', ') || 'none'}`,
+        `tables: ${tableChanges.join(', ') || 'none'}`,
+        `files: ${fileChanges.join(', ') || 'none'}`
+      ]);
+    }
+    if (name === 'select') {
+      if (probe.attemptedWriteQueries.length !== 0 || probe.result?.payload?.summary?.conflict !== 0) {
+        fail('SQL firewall rejected a SELECT or changed the dry-run plan.', [JSON.stringify(probe.result)]);
+      }
+      continue;
+    }
+    const attempt = probe.result?.payload?.write_attempt;
+    if (probe.result?.payload?.error !== 'dry_run_sql_write_blocked' ||
+        attempt?.operation !== expectedFirewallOperations[name] ||
+        !/^[0-9a-f]{64}$/.test(String(attempt?.sha256 ?? '')) ||
+        typeof attempt?.redacted_fingerprint !== 'string' ||
+        attempt.redacted_fingerprint.includes('secret-redacted') ||
+        typeof attempt?.caller_classification !== 'string' ||
+        typeof attempt?.stack_origin !== 'string' ||
+        probe.attemptedWriteQueries.length !== 1) {
+      fail(`SQL firewall did not safely block ${name} before execution.`, [JSON.stringify(probe.result)]);
+    }
+  }
+
   console.log(JSON.stringify({
     ok: true,
     wordpress: result.wordpress,
@@ -464,6 +685,21 @@ try {
     farmtreeWriteQueriesOutsideApply: 0,
     filesystemChangesOutsideApply: 0,
     rewriteRulesChangesOutsideApply: 0,
+    rewriteRegression: {
+      managedRuleCount: rewriteRegression.managedRuleCount,
+      unrelatedRulesAndOrderPreserved: true,
+      runtimeOnlyRulesNotAdopted: rewriteRegression.runtimeOnlyReportedCount,
+      exactMergedTargetPersisted: true,
+      ambiguousAnchorsConflict: true,
+      routeShadowingConflict: true,
+      foreignCanonicalIdentityConflict: true
+    },
+    sqlFirewall: {
+      selectAllowed: true,
+      blockedBeforeExecution: Object.keys(expectedFirewallOperations),
+      persistentChanges: 0,
+      redactedEvidence: true
+    },
     dryRun: {
       summary: dryRun.summary,
       planDigest: dryRun.plan_digest,

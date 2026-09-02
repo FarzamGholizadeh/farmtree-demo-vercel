@@ -113,23 +113,30 @@ private-access mutation path.
 The two public-capable CPTs require persisted pretty-permalink rules, so
 dry-run also discloses one `rewrite-rules` option operation. It reads the raw
 option row directly, preserves its option ID, autoload state and ordered rule
-fingerprint, then generates the canonical stored `$matches[N]` form on an
-isolated rewrite object. The exact FarmTree-owned addition set is derived by
-comparing generation with and without the two reviewed permastructs. A populated
-option must remain an order-preserving exact subset: existing-rule removal or
-query change, shared-rule reorder, namespace collision, shadowing rule or any
-non-FarmTree addition is a conflict. The exact canonical CPT rule must be the
-first generated rule that matches each clean probe route. An absent/empty
-option may initialize the disclosed
-complete generated set because there is no persisted rule to overwrite.
+fingerprint, and derives exactly 17 canonical rules per CPT by comparing an
+isolated generator with and without only the two reviewed permastructs. Global
+runtime generation is used only to locate unambiguous neighboring anchors. The
+persisted target begins with the raw stored rule map, removes/reinserts only
+FarmTree identities at those anchors and preserves every unrelated key, query
+and relative position exactly. Runtime-only SeedProd, `sp-login` or other
+plugin rules are reported but never adopted into FarmTree's target. Missing
+anchors, reversed anchors, namespace collision, changed FarmTree query or a
+route-shadowing unrelated rule is a conflict; absent or empty stored rule state
+also fails closed.
 
-After every gate and managed write succeeds, APPLY alone may run one
-`flush_rewrite_rules(false)` soft refresh inside the transaction. It restores
-the WP-CLI process's in-memory rewrite state, verifies the raw ordered option
-fingerprint, row ID/autoload preservation and exact canonical single-route
-mappings, then runs the final
-idempotence check before commit. Exact rules skip the refresh, and literal soft
-mode never writes `.htaccess` or `web.config`.
+After every gate and managed write succeeds, APPLY alone persists the exact
+reviewed merged array with `update_option()`, then verifies the raw ordered
+fingerprint, row ID/autoload preservation, canonical route precedence and
+idempotence before commit. The deployable plugin contains no
+`flush_rewrite_rules()` call and cannot write `.htaccess` or `web.config`.
+
+The CLI's default dry-run branch additionally installs a scoped final-query
+firewall only around `build_plan()`. It allows `SELECT`, `SHOW`, `DESCRIBE` and
+`EXPLAIN`; every other SQL operation is rejected from the `query` filter before
+wpdb reaches its driver. The failure report includes a redacted fingerprint,
+SHA-256, safe table/entity context and classified stack origin without query
+values. The filter is always removed in `finally` and does not affect normal
+WordPress runtime or APPLY.
 
 ## Ownership And Conflict Rules
 
@@ -165,28 +172,37 @@ PHP 8.1 Playground with the local theme and plugin mounted. With a populated
 core rule set missing only FarmTree rules, its write-free dry run reported
 `create: 90`, `update: 1`, `unchanged: 2`, `conflict: 0`, `skipped: 1` with
 run-specific plan digest
-`a028de0c27ead9dfb485f26ee623053efc24804231d738e452c35b1dc0580456`.
+`8205ecc8188c7842ee7ad33aa5e1a08b19fad655e0b5b01d544e29c03085fc66`.
 The creates are six terms, 34 media objects, 40 private content entities and ten
 embedded Team identities. The two unchanged operations prove the absent
 reserved `/nl/` and `/de/` identities; the skipped operation is the
-unrequested front-page option; the update is the disclosed soft rewrite
-finalization containing 17 exact generated rules per CPT and both canonical
-single routes. Snapshots of all 12 database tables/options, targeted filesystem
+unrequested front-page option; the update is the disclosed exact FarmTree-only
+merge containing 17 generated rules per CPT and both canonical single routes.
+Snapshots of all 12 database tables/options, targeted filesystem
 metadata/content and non-SELECT queries were identical across plugin load/CLI
 registration, model registration, construction, `build_plan()` and the CLI dry
 run. Actual activation/deactivation added and removed only the exact FarmTree
 plugin identity through WordPress core `active_plugins` bookkeeping;
 `rewrite_rules`, content and files remained identical.
 
+The scoped SQL-firewall regression allowed `SELECT` and blocked raw `INSERT`,
+`UPDATE`, `DELETE` and `REPLACE` plus `update_option()`, `wp_insert_post()` and
+`update_post_meta()` before execution. Each case emitted only redacted query,
+table and stack evidence; complete before/after snapshots proved zero database
+or filesystem change.
+
 In a disposable local-only apply/idempotence probe, the same manifest created
 90 managed operations and skipped the front-page option. All managed content
 remained `private` (attachments remained `inherit`). The next dry run reported
 `create: 0`, `update: 0`, `unchanged: 92`, `conflict: 0`, `skipped: 1`.
-That historical APPLY probe predates the rewrite operation. The current
-finalizer is source-sealed and its plan is exercised in the write-free runtime
-probe, but it was not executed because this correction explicitly prohibits
-APPLY; after a future approved apply, the expected converged summary is 93
-unchanged and one skipped operation.
+That historical full APPLY probe predates the rewrite operation. A focused
+local-only regression now invokes the private rewrite finalizer against a
+populated disposable option: it persists exactly 34 FarmTree identities,
+preserves every unrelated key/query/order plus option ID/autoload, excludes 18
+runtime-only SeedProd/`sp-login` rules, and replans as `unchanged`. Ambiguous
+anchors, route shadowing and a changed canonical identity each conflict. The
+future complete apply is still expected to converge to 93 unchanged and one
+skipped operation.
 Changing the managed Contact ownership key to a foreign key produced exactly
 one `candidate_owned_by_other_key` conflict. Restoring ownership and changing
 its title manually produced exactly one
@@ -212,13 +228,14 @@ activation, Coming Soon, indexing, private access, DNS and SSL were untouched.
 
 `npm run validate:content-safety` tokenizes and source-seals the exact four
 deployable plugin runtime files at
-`b2682381bac6fda4710692a730444ed233fc9601a998f7cc4e9824faa0b669d9`.
+`5026cdeebcfa4611cebe50401fc7f2ccf0826a8fa174c8791e51b09094c24008`.
 Any runtime source byte change requires an explicit re-audit. The validator
 fails on a changed persistence-call inventory, lifecycle hook, dynamic
 execution, native filesystem write or direct modifying SQL; dynamic lock SQL
-is one private, caller-pinned, comment-free `SELECT` helper. The sole soft flush
-must stay private, literal-false and rooted only at `apply_plan()`. Every other
-writer is pinned to the apply graph: transaction control, managed term/post/
+is one private, caller-pinned, comment-free `SELECT` helper. Global rewrite
+flushing is forbidden and the exact merged-option writer remains private and
+rooted only at `apply_plan()`. Every other writer is pinned to the apply graph:
+transaction control, managed term/post/
 media and metadata writes, revisions, relationships, optional front-page
 settings, cache invalidation and rollback cleanup.
 

@@ -20,7 +20,7 @@ artifact: 81 intended runtime files are staged and 114 repository-only,
 development or obsolete files are excluded. Raw content JSON is compiled into
 an `ABSPATH`-guarded PHP manifest and never shipped as public data.
 
-The `farmtree-content` 0.4.1 plugin exposes a WP-CLI-only reconciler that defaults to
+The `farmtree-content` 0.4.2 plugin exposes a WP-CLI-only reconciler that defaults to
 JSON dry-run. It manages 40 English content entities, six categories and 34
 media assets by stable key, type/taxonomy, slug and canonical fingerprints.
 Exact unowned matches may be adopted in place; ambiguity, foreign ownership,
@@ -30,9 +30,12 @@ mutation path. `/nl/` and `/de/` remain reserved and unpublished.
 
 All FarmTree lifecycle hooks were removed, so load, command registration,
 construction, dry-run, activation and deactivation add no persistent write.
-CPT rewrite persistence is one disclosed, conflict-checked soft refresh
-reachable only after the fully gated APPLY reconciliation; it cannot write
-`.htaccess` or `web.config`.
+CPT rewrite persistence is one disclosed FarmTree-only 34-rule merge reachable
+only after the fully gated APPLY reconciliation. It preserves the raw stored
+unrelated rule map and ordering, rejects ambiguous anchors and route shadowing,
+never performs a global rewrite flush, and cannot write `.htaccess` or
+`web.config`. Dry-run planning is enclosed by a scoped final-query SQL firewall
+that allows reads and blocks any modifying SQL before database execution.
 
 Local WordPress 7.1 / PHP 8.1 evidence proves the corrected dry run was
 write-free and reported 90 creates, one disclosed rewrite update, two unchanged
@@ -40,9 +43,10 @@ reserved-locale checks and one skipped option. Full table/option/filesystem
 snapshots prove the five non-apply phases have zero FarmTree-authored writes;
 actual lifecycle changes were limited to core `active_plugins` bookkeeping.
 The earlier local-only apply kept all 40 English entities private and converged
-to 92 unchanged managed operations on its next dry run. That evidence predates
-the rewrite operation; this correction audits the new finalizer statically and
-through its write-free plan only because APPLY is prohibited in this task.
+to 92 unchanged managed operations on its next dry run. The new focused
+rewrite regression separately persisted the exact reviewed merge in the
+disposable runtime, preserved option ID/autoload plus all unrelated rules and
+order, and converged to `unchanged`; no production APPLY occurred.
 Foreign ownership and manual drift each stopped as a single conflict. Full
 design and evidence are in `docs/FT-NATIVE-RELEASE-PREPARATION.md`.
 
