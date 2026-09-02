@@ -48,8 +48,9 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 
 ### FT-NATIVE-004A - Audited release preparation
 
-Status: production-safety implementation and local runtime/audit validation
-complete; stopped before production deployment or WordPress mutation.
+Status: production-safety implementation corrected for lifecycle write safety;
+local runtime/audit validation complete and stopped before production
+deployment or WordPress mutation.
 
 The release path now stages an exhaustive allowlisted artifact instead of the
 raw theme/plugin trees. A WP-CLI-only, dry-run-first content reconciler manages
@@ -59,6 +60,11 @@ and never imports or deletes unrelated content. Raw content JSON, repository
 documentation, QA data and unused derivatives are excluded from the artifact.
 Architecture, commands, ownership rules and local evidence are recorded in
 `docs/FT-NATIVE-RELEASE-PREPARATION.md`.
+
+The 0.4.1 correction removes all plugin lifecycle hooks, discloses the required
+CPT soft rewrite refresh as APPLY-only, statically classifies the complete
+runtime write surface and adds a fail-closed semantic volatility model plus a
+disposable activation/deactivation zero-side-effect probe.
 
 The approved baseline `210ce51f7c4b573b51cf96bba1b575918757e9d1` was pushed
 only to `origin/feat/wordpress-native-rebuild`. The audited preparation commit

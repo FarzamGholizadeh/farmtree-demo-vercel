@@ -20,7 +20,7 @@ artifact: 81 intended runtime files are staged and 114 repository-only,
 development or obsolete files are excluded. Raw content JSON is compiled into
 an `ABSPATH`-guarded PHP manifest and never shipped as public data.
 
-The `farmtree-content` plugin exposes a WP-CLI-only reconciler that defaults to
+The `farmtree-content` 0.4.1 plugin exposes a WP-CLI-only reconciler that defaults to
 JSON dry-run. It manages 40 English content entities, six categories and 34
 media assets by stable key, type/taxonomy, slug and canonical fingerprints.
 Exact unowned matches may be adopted in place; ambiguity, foreign ownership,
@@ -28,12 +28,30 @@ duplicate identity, manual drift and media-binary drift are conflicts. It has
 no delete, blanket-import, activation, Coming Soon, robots or infrastructure
 mutation path. `/nl/` and `/de/` remain reserved and unpublished.
 
-Local PHP 8.1 runtime evidence proves the first dry run was write-free and
-reported 90 creates, two unchanged reserved-locale checks and one skipped
-option. The local-only apply kept all 40 English entities private and converged
-to 92 unchanged managed operations on its next dry run. Foreign ownership and
-manual drift each stopped as a single conflict. Full design and evidence are in
-`docs/FT-NATIVE-RELEASE-PREPARATION.md`.
+All FarmTree lifecycle hooks were removed, so load, command registration,
+construction, dry-run, activation and deactivation add no persistent write.
+CPT rewrite persistence is one disclosed, conflict-checked soft refresh
+reachable only after the fully gated APPLY reconciliation; it cannot write
+`.htaccess` or `web.config`.
+
+Local WordPress 7.1 / PHP 8.1 evidence proves the corrected dry run was
+write-free and reported 90 creates, one disclosed rewrite update, two unchanged
+reserved-locale checks and one skipped option. Full table/option/filesystem
+snapshots prove the five non-apply phases have zero FarmTree-authored writes;
+actual lifecycle changes were limited to core `active_plugins` bookkeeping.
+The earlier local-only apply kept all 40 English entities private and converged
+to 92 unchanged managed operations on its next dry run. That evidence predates
+the rewrite operation; this correction audits the new finalizer statically and
+through its write-free plan only because APPLY is prohibited in this task.
+Foreign ownership and manual drift each stopped as a single conflict. Full
+design and evidence are in `docs/FT-NATIVE-RELEASE-PREPARATION.md`.
+
+The source-sealed static write-API audit pins every persistence API to the apply
+graph. The fail-closed volatile-state comparator passes 66 fixtures without
+ignoring any table and rejects incomplete snapshots: cron, expired transient,
+theme-pattern TTL, plugin-update timestamp and old empty auto-draft changes
+require exact semantic proof, while all release-critical configuration and
+FarmTree content remain strict.
 
 ### Final English Master Delivery
 

@@ -182,6 +182,18 @@ before commit. Managed post updates create a verified revision; failures report
 rollback and media-cleanup status. There is no delete, trash or full-database
 import path.
 
+Plugin load, CLI registration, construction, planning, activation and
+deactivation have no FarmTree-authored persistence hook. Because the two
+public-capable CPTs need stored pretty-permalink rules, the plan reads the raw
+option row, generates canonical `$matches[N]` rules on an isolated rewrite
+object and fingerprints the full ordered set. A populated set may receive only
+exact additive FarmTree-permastruct rules; every existing-rule change, reorder
+or namespace/canonical-precedence collision stops. Only the fully gated APPLY
+path may perform one soft
+`flush_rewrite_rules(false)` after reconciliation and before final idempotence
+verification/commit. No lifecycle or HTTP request may refresh rules, and hard
+web-server configuration writes are forbidden.
+
 The optional front-page setting is excluded by default. Reserved Dutch and
 German roots are guard checks only: they are not created, published or linked.
 Runtime application remains a separate approval-gated operation from the

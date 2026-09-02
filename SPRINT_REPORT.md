@@ -20,11 +20,30 @@ Stable ownership plus last-applied fingerprints preserve matching IDs and stop
 on duplicates, foreign ownership, unowned near-matches, manual drift or changed
 media. Non-loopback apply uses a locked `SERIALIZABLE` transaction and requires
 a matching fresh plan plus a final idempotence postcondition. The command never
-deletes unrelated content and never imports a local database. Disposable PHP
-8.1 runtime tests proved a write-free `90/0/2/0/1` dry run, private-only apply,
+deletes unrelated content and never imports a local database. Earlier
+disposable PHP 8.1 runtime tests proved a write-free `90/0/2/0/1` dry run,
+private-only apply,
 `92` unchanged managed operations after apply, and blocking foreign-owner and
-manual-drift probes. See
+manual-drift probes. That APPLY evidence predates the new rewrite operation;
+the correction validates its finalizer statically and stops at dry-run as
+required. See
 `docs/FT-NATIVE-RELEASE-PREPARATION.md`.
+
+The 0.4.1 release-safety correction removes all FarmTree
+activation/deactivation hooks. A required CPT rewrite refresh is now an
+explicit dry-run operation and a single APPLY-only soft option refresh after
+all gates and managed writes; unrelated rewrite deltas block and hard
+`.htaccess`/`web.config` flushing is impossible. Disposable WordPress 7.1 / PHP
+8.1 snapshots proved load/CLI registration, model registration, construction,
+`build_plan`, dry-run, activation and deactivation add no FarmTree-authored DB
+or filesystem write. The corrected dry-run is `90/1/2/0/1`.
+
+Automated static classification source-seals the complete four-file deployable
+plugin runtime and pins every persistence API to the APPLY graph. A separate
+66-fixture, no-whole-table-ignore comparator rejects incomplete captures,
+accepts only proven cron/transient/theme-cache/update-check/expired-auto-draft
+volatility and fails closed for release-critical options, content, ownership
+metadata, taxonomies, media, users, roles and schema.
 
 ## Homepage Structure
 

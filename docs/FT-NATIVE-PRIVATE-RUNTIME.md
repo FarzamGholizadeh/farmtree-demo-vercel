@@ -166,6 +166,15 @@ digest, Coming Soon, `blog_public=0` and all typed confirmations. A conflict
 stops apply. `/nl/` and `/de/` are never materialized and must remain
 unpublished.
 
+The corrected plugin has no activation/deactivation hook. Its CPT rewrite
+refresh is a disclosed `rewrite-rules` plan operation and one soft,
+transactional APPLY-only finalizer after every release gate. Raw stored rules
+are compared with canonical generated rules; populated state permits only exact
+additive FarmTree-permastruct rules and namespace collisions stop. `.htaccess`
+is never written. Release verification requires complete captures, exact
+critical-state comparison and narrow predicates for known core volatility—never
+a whole-table ignore.
+
 ## Runtime Validation Checklist
 
 After an approved native private-runtime deployment, validate through WordPress

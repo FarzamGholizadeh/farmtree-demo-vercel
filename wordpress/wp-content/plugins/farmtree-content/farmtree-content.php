@@ -3,7 +3,7 @@
  * Plugin Name: FarmTree Content
  * Plugin URI: https://farmtree.eu/
  * Description: Canonical native content-model and global-settings layer for the isolated FarmTree rebuild.
- * Version: 0.4.0
+ * Version: 0.4.1
  * Author: FarmTree
  * Text Domain: farmtree-content
  * Requires at least: 6.6
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('FARMTREE_CONTENT_VERSION', '0.4.0');
+define('FARMTREE_CONTENT_VERSION', '0.4.1');
 define('FARMTREE_CONTENT_FILE', __FILE__);
 define('FARMTREE_CONTENT_DIR', plugin_dir_path(__FILE__));
 
@@ -123,22 +123,5 @@ function farmtree_content_redirect_legacy_proof_story_paths(): void
 }
 add_action('template_redirect', 'farmtree_content_redirect_legacy_proof_story_paths', 1);
 
-/**
- * Keep activation side-effect free during the foundation sprint.
- */
-function farmtree_content_activate(): void
-{
-    farmtree_content_register_customer_segments();
-    farmtree_content_register_proof_stories();
-    flush_rewrite_rules();
-}
-register_activation_hook(FARMTREE_CONTENT_FILE, 'farmtree_content_activate');
-
-/**
- * Clear rewrite rules without deleting content or options.
- */
-function farmtree_content_deactivate(): void
-{
-    flush_rewrite_rules();
-}
-register_deactivation_hook(FARMTREE_CONTENT_FILE, 'farmtree_content_deactivate');
+// Deliberately no activation/deactivation hooks: lifecycle transitions are
+// read-only apart from WordPress core's own active_plugins bookkeeping.

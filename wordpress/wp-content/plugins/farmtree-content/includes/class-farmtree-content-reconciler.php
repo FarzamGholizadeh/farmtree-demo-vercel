@@ -145,6 +145,7 @@ final class FarmTree_Content_Reconciler
         }
         $ops['embedded'] = $this->plan_embedded_members($ops['posts']);
         $ops['options'][] = $this->plan_front_page((bool) $options['set_front_page'], $entity_ids, $ops['posts']);
+        $ops['options'][] = $this->plan_rewrite_rules();
 
         $summary = ['create' => 0, 'update' => 0, 'unchanged' => 0, 'conflict' => 0, 'skipped' => 0];
         $conflicts = [];
@@ -359,6 +360,10 @@ final class FarmTree_Content_Reconciler
             $stage = 'options';
             $stage_key = 'front-page';
             $results[] = $this->apply_front_page($plan['operations']['options'][0], $entity_ids);
+
+            $stage = 'rewrite-finalization';
+            $stage_key = 'rewrite-rules';
+            $results[] = $this->finalize_rewrite_rules($plan['operations']['options'][1]);
 
             $stage = 'postcondition';
             $stage_key = '';
@@ -639,6 +644,14 @@ final class FarmTree_Content_Reconciler
             }
         }
 
+        foreach (['show_on_front', 'page_on_front', 'rewrite_rules'] as $option_name) {
+            $this->locked_query_ids(
+                "SELECT option_id FROM {$wpdb->options} WHERE option_name = %s ORDER BY option_id ASC{$lock}",
+                [$option_name],
+                'release-critical option ' . $option_name
+            );
+        }
+
         foreach ($post_ids as $post_id) {
             clean_post_cache($post_id);
         }
@@ -646,7 +659,7 @@ final class FarmTree_Content_Reconciler
             clean_term_cache($term_ids);
         }
         $this->invalidate_term_query_generation();
-        foreach (['show_on_front', 'page_on_front', 'blog_public', 'active_plugins', 'alloptions'] as $option) {
+        foreach (['show_on_front', 'page_on_front', 'blog_public', 'active_plugins', 'rewrite_rules', 'alloptions'] as $option) {
             wp_cache_delete($option, 'options');
         }
         if (is_multisite()) {
@@ -658,6 +671,12 @@ final class FarmTree_Content_Reconciler
     private function locked_query_ids(string $sql, array $arguments, string $label): array
     {
         global $wpdb;
+        $trimmed = ltrim($sql);
+        if (1 !== preg_match('/\ASELECT\b/i', $trimmed)
+            || str_contains($trimmed, ';')
+            || preg_match('/(?:--|#|\/\*)/', $trimmed)) {
+            throw new RuntimeException('Only one comment-free SELECT is permitted for a current-read lock.');
+        }
         $prepared = $arguments ? $wpdb->prepare($sql, $arguments) : $sql;
         if (!is_string($prepared)) {
             throw new RuntimeException('Could not prepare the ' . $label . ' current-read lock.');
@@ -730,7 +749,7 @@ final class FarmTree_Content_Reconciler
                 $outcome['targeted_failures'][] = 'term:' . $term_id;
             }
         }
-        foreach (['show_on_front', 'page_on_front', 'blog_public', 'active_plugins', 'alloptions'] as $option) {
+        foreach (['show_on_front', 'page_on_front', 'blog_public', 'active_plugins', 'rewrite_rules', 'alloptions'] as $option) {
             try {
                 wp_cache_delete($option, 'options');
                 $outcome['options_invalidated'][] = $option;
@@ -775,6 +794,10 @@ final class FarmTree_Content_Reconciler
         $option = $final_plan['operations']['options'][0] ?? [];
         if (!in_array((string) ($option['action'] ?? ''), ['unchanged', 'skipped'], true)) {
             throw new RuntimeException('The final front-page option state is not idempotent.');
+        }
+        $rewrite = $final_plan['operations']['options'][1] ?? [];
+        if ('unchanged' !== (string) ($rewrite['action'] ?? '')) {
+            throw new RuntimeException('The final rewrite-rule option state is not idempotent.');
         }
     }
 
@@ -2707,6 +2730,385 @@ final class FarmTree_Content_Reconciler
     }
 
     /**
+     * Plan the one-time soft refresh required by the two public FarmTree CPTs.
+     *
+     * Generating rules in memory is write-free. Existing unrelated rules must
+     * remain byte-for-byte represented in the generated set; otherwise APPLY
+     * stops instead of using a global rewrite refresh to guess ownership.
+     *
+     * @return array<string,mixed>
+     */
+    private function plan_rewrite_rules(): array
+    {
+        if (did_action('wp_loaded') < 1) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'wordpress_not_fully_loaded');
+        }
+        if (!post_type_exists('customer_segment') || !post_type_exists('proof_story')) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'farmtree_post_types_not_registered');
+        }
+
+        global $wp_rewrite;
+        if (!is_object($wp_rewrite) || !is_callable([$wp_rewrite, 'rewrite_rules'])) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'rewrite_generator_unavailable');
+        }
+        if (!$wp_rewrite->using_permalinks()) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'pretty_permalinks_unavailable');
+        }
+        if ('' !== (string) $wp_rewrite->root) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'unsupported_rewrite_root', [
+                'root_sha256' => hash('sha256', (string) $wp_rewrite->root),
+            ]);
+        }
+        $base_rules = $this->generate_rewrite_rules_read_only(['customer_segment', 'proof_story']);
+        $desired = $this->generate_rewrite_rules_read_only([]);
+        if (!is_array($base_rules) || !$base_rules || !is_array($desired) || !$desired) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'generated_rewrite_rules_invalid');
+        }
+
+        $required = ['customer_segment' => [], 'proof_story' => []];
+        foreach ($this->rewrite_rule_changes($base_rules, $desired) as $regex => $change) {
+            $desired_query = (string) ($change['desired'] ?? '');
+            if ('global_rule_order' === (string) ($change['scope'] ?? '')
+                || !empty($change['before_exists'])
+                || empty($change['desired_exists'])) {
+                return $this->op('option', 'rewrite-rules', 'conflict', 'generated_farmtree_rule_delta_invalid', [
+                    'rule' => (string) $regex,
+                    'change' => $change,
+                ]);
+            }
+            if (str_starts_with((string) $regex, 'customer-segments/')) {
+                $required['customer_segment'][(string) $regex] = $desired_query;
+                continue;
+            }
+            if (str_starts_with((string) $regex, 'proof-stories/')) {
+                $required['proof_story'][(string) $regex] = $desired_query;
+                continue;
+            }
+            return $this->op('option', 'rewrite-rules', 'conflict', 'generated_farmtree_rule_delta_invalid', [
+                'rule' => (string) $regex,
+                'change' => $change,
+            ]);
+        }
+        $canonical = [
+            'customer_segment' => [
+                'customer-segments/([^/]+)(?:/([0-9]+))?/?$'
+                    => 'index.php?customer_segment=$matches[1]&page=$matches[2]',
+            ],
+            'proof_story' => [
+                'proof-stories/([^/]+)(?:/([0-9]+))?/?$'
+                    => 'index.php?proof_story=$matches[1]&page=$matches[2]',
+            ],
+        ];
+        foreach ($canonical as $post_type => $rules) {
+            foreach ($rules as $regex => $query) {
+                if (($required[$post_type][$regex] ?? null) !== $query) {
+                    return $this->op('option', 'rewrite-rules', 'conflict', 'generated_canonical_farmtree_rules_ambiguous', [
+                        'post_type' => $post_type,
+                        'expected_regex' => $regex,
+                        'expected_query_sha256' => hash('sha256', $query),
+                    ]);
+                }
+                $slug = 'customer_segment' === $post_type ? 'customer-segments' : 'proof-stories';
+                $first = $this->first_matching_rewrite_rule($desired, $slug . '/farmtree-route-probe/');
+                if (empty($first['valid']) || ($first['regex'] ?? null) !== $regex
+                    || ($first['query'] ?? null) !== $query) {
+                    return $this->op('option', 'rewrite-rules', 'conflict', 'canonical_farmtree_rule_shadowed', [
+                        'post_type' => $post_type,
+                        'first_matching_regex' => $first['regex'] ?? null,
+                        'first_matching_query_sha256' => isset($first['query'])
+                            ? hash('sha256', (string) $first['query'])
+                            : null,
+                    ]);
+                }
+            }
+        }
+        if (empty($required['customer_segment']) || empty($required['proof_story'])) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'generated_canonical_farmtree_rules_ambiguous', [
+                'required_rule_counts' => [
+                    'customer_segment' => count($canonical['customer_segment']),
+                    'proof_story' => count($canonical['proof_story']),
+                ],
+            ]);
+        }
+
+        global $wpdb;
+        $stored = $wpdb->get_row($wpdb->prepare(
+            "SELECT option_id, option_value, autoload FROM {$wpdb->options} WHERE option_name = %s LIMIT 1",
+            'rewrite_rules'
+        ), ARRAY_A);
+        if ('' !== (string) $wpdb->last_error) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'stored_rewrite_rules_unreadable');
+        }
+        $option_exists = is_array($stored);
+        $current = $option_exists ? maybe_unserialize((string) $stored['option_value']) : null;
+        if (!in_array($current, [null, false, ''], true) && !is_array($current)) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'stored_rewrite_rules_invalid', [
+                'before_type' => gettype($current),
+            ]);
+        }
+        $current_rules = is_array($current) ? $current : [];
+        $current_has_rules = (bool) $current_rules;
+        $changes = $this->rewrite_rule_changes($current_rules, $desired);
+        $allowed_additions = array_merge($required['customer_segment'], $required['proof_story']);
+        $state = [
+            'option_name' => 'rewrite_rules',
+            'option_exists' => $option_exists,
+            'option_id' => $option_exists ? (int) $stored['option_id'] : null,
+            'autoload' => $option_exists ? (string) $stored['autoload'] : null,
+            'rule_count' => count($current_rules),
+            'sha256' => $this->rewrite_rules_hash($current_rules),
+        ];
+        $target = [
+            'option_name' => 'rewrite_rules',
+            'rule_count' => count($desired),
+            'sha256' => $this->rewrite_rules_hash($desired),
+            'required_farmtree_rules' => $required,
+            'required_canonical_rules' => $canonical,
+        ];
+
+        if (!$changes && $current_rules === $desired) {
+            return $this->op('option', 'rewrite-rules', 'unchanged', 'exact', [
+                'before' => $state,
+                'desired' => $target,
+            ]);
+        }
+        if ($current_has_rules) {
+            foreach ($current_rules as $regex => $query) {
+                if ((str_contains((string) $regex, 'customer-segments')
+                        || str_contains((string) $regex, 'proof-stories'))
+                    && ($allowed_additions[(string) $regex] ?? null) !== (string) $query) {
+                    return $this->op('option', 'rewrite-rules', 'conflict', 'preexisting_farmtree_namespace_collision', [
+                        'before' => $state,
+                        'desired' => $target,
+                        'rule' => (string) $regex,
+                        'query_sha256' => hash('sha256', (string) $query),
+                    ]);
+                }
+            }
+        }
+        if ($current_has_rules && $this->rewrite_changes_touch_unrelated_rules($changes, $allowed_additions)) {
+            return $this->op('option', 'rewrite-rules', 'conflict', 'unrelated_rewrite_delta', [
+                'before' => $state,
+                'desired' => $target,
+                'changes' => $changes,
+            ]);
+        }
+
+        return $this->op('option', 'rewrite-rules', $option_exists ? 'update' : 'create',
+            $option_exists ? ($current_has_rules ? 'farmtree_rules_missing' : 'rewrite_rules_empty') : 'rewrite_rules_absent', [
+                'before' => $state,
+                'desired' => $target,
+                'changes' => $changes,
+            ]);
+    }
+
+    /**
+     * Generate the canonical stored form without mutating the live rewrite
+     * object. Core soft refreshes use the named `$matches[N]` query form.
+     *
+     * @param array<int,string> $excluded_permastructs
+     * @return array<string,string>
+     */
+    private function generate_rewrite_rules_read_only(array $excluded_permastructs): array
+    {
+        global $wp_rewrite;
+        $generator = clone $wp_rewrite;
+        $generator->matches = 'matches';
+        $generator->rules = null;
+        $registered_top_rules = $generator->extra_rules_top;
+        foreach (array_keys($generator->extra_permastructs) as $name) {
+            foreach ($this->generate_permastruct_rules_read_only($generator, (string) $name) as $regex => $query) {
+                if (array_key_exists($regex, $registered_top_rules)
+                    && (string) $registered_top_rules[$regex] === (string) $query) {
+                    unset($registered_top_rules[$regex]);
+                }
+            }
+        }
+        $generator->extra_rules_top = $registered_top_rules;
+        foreach ($excluded_permastructs as $name) {
+            unset($generator->extra_permastructs[$name]);
+        }
+        $rules = $generator->rewrite_rules();
+        return is_array($rules) ? $rules : [];
+    }
+
+    /** @param array<string,string> $rules @return array<string,mixed> */
+    private function first_matching_rewrite_rule(array $rules, string $path): array
+    {
+        foreach ($rules as $regex => $query) {
+            $pattern = '~^' . str_replace('~', '\\~', (string) $regex) . '~';
+            $matches = @preg_match($pattern, $path);
+            if (false === $matches) {
+                return ['valid' => false, 'regex' => (string) $regex];
+            }
+            if (1 === $matches) {
+                return [
+                    'valid' => true,
+                    'regex' => (string) $regex,
+                    'query' => (string) $query,
+                ];
+            }
+        }
+        return ['valid' => true, 'regex' => null, 'query' => null];
+    }
+
+    /** @return array<string,string> */
+    private function generate_permastruct_rules_read_only(object $generator, string $name): array
+    {
+        $struct = $generator->extra_permastructs[$name] ?? null;
+        if (null === $struct) {
+            return [];
+        }
+        if (!is_array($struct)) {
+            $rules = $generator->generate_rewrite_rules($struct);
+        } elseif (2 === count($struct)) {
+            $rules = $generator->generate_rewrite_rules($struct[0], $struct[1]);
+        } else {
+            $rules = $generator->generate_rewrite_rules(
+                $struct['struct'],
+                $struct['ep_mask'],
+                $struct['paged'],
+                $struct['feed'],
+                $struct['forcomments'],
+                $struct['walk_dirs'],
+                $struct['endpoints']
+            );
+        }
+        $rules = apply_filters($name . '_rewrite_rules', $rules);
+        return is_array($rules) ? $rules : [];
+    }
+
+    /**
+     * Persist the disclosed rules only after every gate and managed write.
+     * The literal false is mandatory: no .htaccess or web.config write.
+     *
+     * @param array<string,mixed> $operation
+     * @return array<string,mixed>
+     */
+    private function finalize_rewrite_rules(array $operation): array
+    {
+        $this->assert_operation($operation, [
+            'create' => ['rewrite_rules_absent'],
+            'update' => ['farmtree_rules_missing', 'rewrite_rules_empty'],
+            'unchanged' => ['exact'],
+        ], 'rewrite-rules');
+
+        $fresh = $this->plan_rewrite_rules();
+        foreach (['kind', 'key', 'action', 'reason', 'before', 'desired'] as $field) {
+            if (($fresh[$field] ?? null) !== ($operation[$field] ?? null)) {
+                throw new RuntimeException('Rewrite rules changed after planning.');
+            }
+        }
+        if ('unchanged' === (string) $operation['action']) {
+            return $this->result('option', 'rewrite-rules', 'unchanged');
+        }
+
+        global $wp_rewrite;
+        $runtime_rewrite_state = [
+            'matches' => $wp_rewrite->matches,
+            'rules' => $wp_rewrite->rules,
+            'extra_rules_top' => $wp_rewrite->extra_rules_top,
+        ];
+        try {
+            flush_rewrite_rules(false);
+        } finally {
+            $wp_rewrite->matches = $runtime_rewrite_state['matches'];
+            $wp_rewrite->rules = $runtime_rewrite_state['rules'];
+            $wp_rewrite->extra_rules_top = $runtime_rewrite_state['extra_rules_top'];
+        }
+        $after = $this->plan_rewrite_rules();
+        if ('unchanged' !== (string) ($after['action'] ?? '')
+            || ($after['desired']['sha256'] ?? '') !== ($operation['desired']['sha256'] ?? '')) {
+            throw new RuntimeException('Soft rewrite-rule finalization did not reach the disclosed state.');
+        }
+        $after_state = $after['before'] ?? [];
+        if (empty($after_state['option_exists']) || (int) ($after_state['option_id'] ?? 0) < 1
+            || ($after_state['sha256'] ?? '') !== ($operation['desired']['sha256'] ?? '')
+            || (int) ($after_state['rule_count'] ?? -1) !== (int) ($operation['desired']['rule_count'] ?? -2)) {
+            throw new RuntimeException('Soft rewrite-rule finalization did not persist the disclosed raw option state.');
+        }
+        if (!empty($operation['before']['option_exists'])
+            && ((int) ($after_state['option_id'] ?? 0) !== (int) ($operation['before']['option_id'] ?? 0)
+                || (string) ($after_state['autoload'] ?? '') !== (string) ($operation['before']['autoload'] ?? ''))) {
+            throw new RuntimeException('Soft rewrite-rule finalization did not preserve the existing option identity/autoload.');
+        }
+        if (empty($operation['before']['option_exists']) && '' === (string) ($after_state['autoload'] ?? '')) {
+            throw new RuntimeException('Soft rewrite-rule finalization created an option without disclosed autoload state.');
+        }
+        return $this->result(
+            'option',
+            'rewrite-rules',
+            'create' === (string) $operation['action'] ? 'created' : 'updated'
+        );
+    }
+
+    /** @param array<string,string> $before @param array<string,string> $desired @return array<string,array<string,mixed>> */
+    private function rewrite_rule_changes(array $before, array $desired): array
+    {
+        $changes = [];
+        $keys = array_values(array_unique(array_merge(array_keys($before), array_keys($desired)), SORT_STRING));
+        sort($keys, SORT_STRING);
+        foreach ($keys as $regex) {
+            $before_exists = array_key_exists($regex, $before);
+            $desired_exists = array_key_exists($regex, $desired);
+            $before_query = $before_exists ? (string) $before[$regex] : '';
+            $desired_query = $desired_exists ? (string) $desired[$regex] : '';
+            if ($before_exists === $desired_exists && $before_query === $desired_query) {
+                continue;
+            }
+            $changes[(string) $regex] = [
+                'before_exists' => $before_exists,
+                'before' => $before_query,
+                'desired_exists' => $desired_exists,
+                'desired' => $desired_query,
+            ];
+        }
+        $shared = array_values(array_intersect(array_keys($before), array_keys($desired)));
+        $desired_shared = array_values(array_intersect(array_keys($desired), array_keys($before)));
+        if ($shared !== $desired_shared) {
+            $changes['__shared_rule_order__'] = [
+                'before_exists' => true,
+                'before' => hash('sha256', implode("\n", $shared)),
+                'desired_exists' => true,
+                'desired' => hash('sha256', implode("\n", $desired_shared)),
+                'scope' => 'global_rule_order',
+            ];
+        }
+        return $changes;
+    }
+
+    /** @param array<string,array<string,mixed>> $changes @param array<string,string> $allowed_additions */
+    private function rewrite_changes_touch_unrelated_rules(array $changes, array $allowed_additions): bool
+    {
+        foreach ($changes as $regex => $change) {
+            if ('global_rule_order' === (string) ($change['scope'] ?? '')) {
+                return true;
+            }
+            if (!empty($change['before_exists'])) {
+                return true;
+            }
+            $desired = (string) ($change['desired'] ?? '');
+            if (empty($change['desired_exists'])) {
+                return true;
+            }
+            if (($allowed_additions[(string) $regex] ?? null) !== $desired) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** @param array<string,string> $rules */
+    private function rewrite_rules_hash(array $rules): string
+    {
+        $json = wp_json_encode($rules, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        if (false === $json) {
+            throw new RuntimeException('Could not encode rewrite rules.');
+        }
+        return hash('sha256', $json);
+    }
+
+    /**
      * Reject malformed, stale or unexpected operations before the first write.
      *
      * @param array<string,mixed> $plan
@@ -2742,7 +3144,7 @@ final class FarmTree_Content_Reconciler
             || count($plan['operations']['media']) !== count($this->items('assets'))
             || count($plan['operations']['posts']) !== count($this->items('entities'))
             || count($plan['operations']['embedded']) !== count((array) ($this->manifest['team_member_keys'] ?? []))
-            || 1 !== count($plan['operations']['options'])) {
+            || 2 !== count($plan['operations']['options'])) {
             throw new RuntimeException('The supplied plan operation coverage is incomplete.');
         }
 
@@ -2811,6 +3213,31 @@ final class FarmTree_Content_Reconciler
         if ((bool) ($plan['set_front_page'] ?? false) !== ('skipped' !== $option['action'])) {
             throw new RuntimeException('The supplied front-page intent is inconsistent.');
         }
+        $rewrite = $plan['operations']['options'][1];
+        if ('option' !== ($rewrite['kind'] ?? '') || 'rewrite-rules' !== ($rewrite['key'] ?? '')) {
+            throw new RuntimeException('The supplied rewrite-rule operation is invalid.');
+        }
+        $this->assert_operation($rewrite, [
+            'conflict' => [
+                'canonical_farmtree_rule_shadowed',
+                'farmtree_post_types_not_registered',
+                'generated_canonical_farmtree_rules_ambiguous',
+                'generated_farmtree_rule_delta_invalid',
+                'generated_rewrite_rules_invalid',
+                'preexisting_farmtree_namespace_collision',
+                'pretty_permalinks_unavailable',
+                'rewrite_generator_unavailable',
+                'stored_rewrite_rules_invalid',
+                'stored_rewrite_rules_unreadable',
+                'unrelated_rewrite_delta',
+                'unsupported_rewrite_root',
+                'wordpress_not_fully_loaded',
+            ],
+            'create' => ['rewrite_rules_absent'],
+            'update' => ['farmtree_rules_missing', 'rewrite_rules_empty'],
+            'unchanged' => ['exact'],
+        ], 'rewrite-rules');
+        $this->assert_operation_disclosure($rewrite, 'rewrite-rules');
     }
 
     /**
