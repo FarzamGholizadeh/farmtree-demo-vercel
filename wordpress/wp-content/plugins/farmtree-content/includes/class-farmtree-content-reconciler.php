@@ -787,7 +787,20 @@ final class FarmTree_Content_Reconciler
         foreach (['terms', 'media', 'posts', 'embedded'] as $group) {
             foreach ((array) $final_plan['operations'][$group] as $operation) {
                 if ('unchanged' !== (string) $operation['action']) {
-                    throw new RuntimeException('The final no-write reconciliation is not idempotent for ' . (string) $operation['key'] . '.');
+                    if (isset($operation['desired'], $operation['before'])
+                        && is_array($operation['desired']) && is_array($operation['before'])) {
+                        $this->assert_desired(
+                            $operation['desired'],
+                            $operation['before'],
+                            (string) $operation['key'] . '.final-plan'
+                        );
+                    }
+                    throw new RuntimeException(
+                        'The final no-write reconciliation is not idempotent for ' . (string) $operation['key']
+                        . ' (' . (string) ($operation['action'] ?? 'missing-action')
+                        . '/' . (string) ($operation['reason'] ?? 'missing-reason')
+                        . '; fields=' . implode(',', array_keys((array) ($operation['changes'] ?? []))) . ').'
+                    );
                 }
             }
         }
@@ -1370,6 +1383,10 @@ final class FarmTree_Content_Reconciler
             return $this->op('post', $key, 'conflict', 'multiple_key_or_slug_matches', compact('key_ids', 'slug_ids', 'desired_hash', 'source_hash'));
         }
         $id = $key_ids ? (int) reset($key_ids) : ($slug_ids ? (int) reset($slug_ids) : 0);
+        if ($id > 0) {
+            $desired = $this->desired_entity($entity, $asset_ids, $resolved, $id);
+            $desired_hash = $this->hash($desired);
+        }
         $available_slug = wp_unique_post_slug(
             (string) $desired['post_name'],
             $id,
@@ -1473,7 +1490,9 @@ final class FarmTree_Content_Reconciler
         }
         $entity = $this->item_by_key('entities', 'page.en.team');
         $resolved = true;
-        $desired_state = $entity ? $this->desired_entity($entity, [], $resolved) : [];
+        $desired_state = $entity
+            ? $this->desired_entity($entity, [], $resolved, (int) ($parent['id'] ?? 0))
+            : [];
         $payloads = $resolved ? $this->embedded_member_payloads((string) ($desired_state['post_content'] ?? ''), $team_keys) : [];
         $valid = 10 === count($team_keys)
             && count($team_keys) === count(array_unique($team_keys, SORT_STRING))
@@ -1754,7 +1773,98 @@ final class FarmTree_Content_Reconciler
      * @param array<string,int> $asset_ids
      * @return array<string,mixed>
      */
-    private function desired_entity(array $entity, array $asset_ids, bool &$resolved): array
+    private function desired_entity(array $entity, array $asset_ids, bool &$resolved, int $post_id = 0): array
+    {
+        $state = $this->manifest_entity_state($entity, $resolved);
+        $state['post_title'] = $this->post_db_value('post_title', (string) $state['post_title'], $post_id);
+        $state['post_name'] = sanitize_title($this->post_db_value('post_name', (string) $state['post_name'], $post_id));
+        $state['post_excerpt'] = $this->post_db_value('post_excerpt', (string) $state['post_excerpt'], $post_id);
+        $state['post_content'] = $this->canonical_token_content(
+            (string) $state['post_content'],
+            $asset_ids,
+            $post_id,
+            $resolved
+        );
+        return $state;
+    }
+
+    /**
+     * Run save filters against syntactically valid URLs/IDs, never against the
+     * private release tokens. Stable placeholders cover media not created yet;
+     * all expansions are restored to stable tokens after canonicalization.
+     *
+     * @param array<string,int> $asset_ids
+     */
+    private function canonical_token_content(
+        string $content,
+        array $asset_ids,
+        int $post_id,
+        bool &$resolved
+    ): string {
+        $placeholder_tokens = [];
+        $content = preg_replace_callback('/%%FARMTREE_THEME_URI:([^%]+)%%/', function ($matches) use (&$resolved) {
+            $relative = ltrim((string) $matches[1], '/\\');
+            if ('' === $this->theme_path($relative)) {
+                $resolved = false;
+                return $matches[0];
+            }
+            $encoded = implode('/', array_map('rawurlencode', explode('/', $relative)));
+            return trailingslashit($this->theme_uri) . $encoded;
+        }, $content);
+        $asset_index = 0;
+        $content = preg_replace_callback(
+            '/%%FARMTREE_MEDIA_(ID|URL):([^%]+)%%/',
+            function ($matches) use ($asset_ids, &$resolved, &$placeholder_tokens, &$asset_index) {
+                $type = (string) $matches[1];
+                $key = (string) $matches[2];
+                if (!$this->item_by_key('assets', $key) || empty($this->asset_paths[$key])) {
+                    $resolved = false;
+                    return $matches[0];
+                }
+                if (!empty($asset_ids[$key])) {
+                    if ('ID' === $type) {
+                        return (string) (int) $asset_ids[$key];
+                    }
+                    $url = wp_get_attachment_url((int) $asset_ids[$key]);
+                    if (!is_string($url) || '' === $url) {
+                        $resolved = false;
+                        return $matches[0];
+                    }
+                    return esc_url_raw($url);
+                }
+                $placeholder = 'ID' === $type
+                    ? (string) (2147000000 + $asset_index)
+                    : 'https://farmtree.invalid/__managed_media__/' . rawurlencode($key);
+                $placeholder_tokens[$placeholder] = (string) $matches[0];
+                ++$asset_index;
+                return $placeholder;
+            },
+            $content
+        );
+        if (str_contains((string) $content, '%%FARMTREE_')) {
+            $resolved = false;
+            return (string) $content;
+        }
+        $content = $this->post_db_value('post_content', (string) $content, $post_id);
+        $content = $this->normalize_content_to_tokens((string) $content, array_flip($asset_ids));
+        if ($placeholder_tokens) {
+            $content = str_replace(array_keys($placeholder_tokens), array_values($placeholder_tokens), $content);
+        }
+        if (str_contains((string) $content, 'farmtree.invalid/__managed_media__')) {
+            $resolved = false;
+        }
+        return (string) $content;
+    }
+
+    /**
+     * Return unsanitized manifest semantics. WordPress must receive this state
+     * exactly once so its save filters are not applied once here and a second
+     * time inside wp_insert_post() / wp_update_post().
+     *
+     * @param array<string,mixed> $entity
+     * @return array<string,mixed>
+     */
+    private function manifest_entity_state(array $entity, bool &$resolved): array
     {
         $fields = (array) $entity['fields'];
         $content = (string) ($fields['post_content'] ?? '');
@@ -1778,12 +1888,12 @@ final class FarmTree_Content_Reconciler
         $content = $this->inject_child_markers((string) $content, $child_keys, $resolved);
         $state = [
             'post_type' => (string) $entity['post_type'],
-            'post_title' => $this->post_db_value('post_title', (string) ($fields['post_title'] ?? '')),
-            'post_name' => sanitize_title($this->post_db_value('post_name', (string) ($fields['post_name'] ?? $entity['slug']))),
+            'post_title' => (string) ($fields['post_title'] ?? ''),
+            'post_name' => (string) ($fields['post_name'] ?? $entity['slug']),
             'post_status' => (string) ($fields['post_status'] ?? ''),
             'post_parent' => 0,
-            'post_excerpt' => $this->post_db_value('post_excerpt', (string) ($fields['post_excerpt'] ?? '')),
-            'post_content' => $this->post_db_value('post_content', (string) $content),
+            'post_excerpt' => (string) ($fields['post_excerpt'] ?? ''),
+            'post_content' => (string) $content,
             'menu_order' => (int) ($fields['menu_order'] ?? 0),
             'featured_asset_key' => (string) ($entity['featured_asset_key'] ?? ''),
             'category_keys' => array_values((array) ($entity['category_keys'] ?? [])),
@@ -1857,7 +1967,7 @@ final class FarmTree_Content_Reconciler
      */
     private function write_entity_state(array $entity, array $asset_ids, bool &$resolved): array
     {
-        $state = $this->desired_entity($entity, $asset_ids, $resolved);
+        $state = $this->manifest_entity_state($entity, $resolved);
         $content = (string) $state['post_content'];
         $content = preg_replace_callback('/%%FARMTREE_THEME_URI:([^%]+)%%/', function ($matches) use (&$resolved) {
             $relative = ltrim((string) $matches[1], '/\\');
@@ -1888,6 +1998,25 @@ final class FarmTree_Content_Reconciler
             $resolved = false;
         }
         $state['post_content'] = (string) $content;
+        return $state;
+    }
+
+    /**
+     * Canonicalize the exact unsanitized write state once, then restore stable
+     * content tokens before comparing it with the persisted managed state.
+     *
+     * @param array<string,mixed> $write_state
+     * @param array<string,int> $asset_ids
+     * @return array<string,mixed>
+     */
+    private function expected_entity_after_write(array $write_state, array $asset_ids, int $post_id): array
+    {
+        $state = $write_state;
+        $state['post_title'] = $this->post_db_value('post_title', (string) $state['post_title'], $post_id);
+        $state['post_name'] = sanitize_title($this->post_db_value('post_name', (string) $state['post_name'], $post_id));
+        $state['post_excerpt'] = $this->post_db_value('post_excerpt', (string) $state['post_excerpt'], $post_id);
+        $content = $this->post_db_value('post_content', (string) $state['post_content'], $post_id);
+        $state['post_content'] = $this->normalize_content_to_tokens($content, array_flip($asset_ids));
         return $state;
     }
 
@@ -2548,7 +2677,12 @@ final class FarmTree_Content_Reconciler
     {
         $key = (string) $entity['key'];
         $resolved = true;
-        $desired = $this->desired_entity($entity, $asset_ids, $resolved);
+        $desired = $this->desired_entity(
+            $entity,
+            $asset_ids,
+            $resolved,
+            (int) ($operation['id'] ?? 0)
+        );
         if (!$resolved) {
             throw new RuntimeException('Media tokens remain unresolved for ' . $key . '.');
         }
@@ -2644,7 +2778,10 @@ final class FarmTree_Content_Reconciler
             $this->apply_relationships($id, $entity, $asset_ids, $term_ids);
         }
         $state = $this->current_entity($id, $entity, array_flip($asset_ids), array_flip($term_ids));
-        $this->assert_desired($desired, $state, $key);
+        $expected = 'adopted' === $status
+            ? $desired
+            : $this->expected_entity_after_write($write_desired, $asset_ids, $id);
+        $this->assert_desired($expected, $state, $key);
         $this->write_post_meta($id, $key, $this->hash($entity), $this->hash($state), $commit);
         $result = $this->result('post', $key, $status, $id);
         if ($revision_id) {
@@ -3412,9 +3549,43 @@ final class FarmTree_Content_Reconciler
     /** @param array<string,mixed> $desired @param array<string,mixed> $current */
     private function assert_desired(array $desired, array $current, string $key): void
     {
-        if (!hash_equals($this->hash($desired), $this->hash($current))) {
-            throw new RuntimeException('Applied state does not match the manifest for ' . $key . '.');
+        if (hash_equals($this->hash($desired), $this->hash($current))) {
+            return;
         }
+        $fields = array_values(array_unique(array_merge(array_keys($desired), array_keys($current)), SORT_STRING));
+        sort($fields, SORT_STRING);
+        foreach ($fields as $field) {
+            $desired_exists = array_key_exists($field, $desired);
+            $current_exists = array_key_exists($field, $current);
+            if ($desired_exists === $current_exists
+                && (!$desired_exists || $this->canonical($desired[$field]) === $this->canonical($current[$field]))) {
+                continue;
+            }
+            throw new RuntimeException(
+                'Applied state does not match the manifest for ' . $key . ' at ' . $field
+                . ' (desired ' . $this->postcondition_value_summary($desired_exists ? $desired[$field] : null)
+                . '; persisted ' . $this->postcondition_value_summary($current_exists ? $current[$field] : null) . ').'
+            );
+        }
+        throw new RuntimeException('Applied state does not match the manifest for ' . $key . ' at unknown-field.');
+    }
+
+    /** @param mixed $value */
+    private function postcondition_value_summary($value): string
+    {
+        if (is_string($value)) {
+            if (strlen($value) > 120) {
+                return 'string:length=' . strlen($value) . ',sha256=' . hash('sha256', $value);
+            }
+            $encoded = wp_json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+            return false === $encoded ? 'string:encoding-error' : $encoded;
+        }
+        if (is_scalar($value) || null === $value) {
+            $encoded = wp_json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+            return false === $encoded ? gettype($value) . ':encoding-error' : $encoded;
+        }
+        $encoded = wp_json_encode($this->canonical($value), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        return gettype($value) . ':sha256=' . hash('sha256', false === $encoded ? serialize($value) : $encoded);
     }
 
     private function write_term_meta(int $id, string $key, string $source_hash, string $applied_hash, string $commit): void
@@ -3451,6 +3622,29 @@ final class FarmTree_Content_Reconciler
                 throw new RuntimeException('Could not persist ownership metadata for ' . $key . '.');
             }
         }
+        $this->assert_post_metadata($id, $key, $source_hash, $applied_hash, $commit);
+    }
+
+    private function assert_post_metadata(
+        int $id,
+        string $key,
+        string $source_hash,
+        string $applied_hash,
+        string $commit
+    ): void {
+        $desired = [
+            self::META_KEY => [$key],
+            self::META_MANIFEST => [(string) $this->manifest['manifest_version']],
+            self::META_SOURCE_HASH => [$source_hash],
+            self::META_APPLIED_HASH => [$applied_hash],
+            self::META_RELEASE_COMMIT => [$commit],
+            self::META_BACKUP_EVIDENCE => [$this->backup_evidence_digest],
+        ];
+        $persisted = [];
+        foreach (array_keys($desired) as $meta_key) {
+            $persisted[$meta_key] = array_map('strval', (array) get_post_meta($id, $meta_key, false));
+        }
+        $this->assert_desired($desired, $persisted, $key . '.managed-metadata');
     }
 
     private function theme_path(string $relative): string

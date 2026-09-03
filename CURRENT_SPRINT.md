@@ -20,7 +20,7 @@ artifact: 81 intended runtime files are staged and 114 repository-only,
 development or obsolete files are excluded. Raw content JSON is compiled into
 an `ABSPATH`-guarded PHP manifest and never shipped as public data.
 
-The `farmtree-content` 0.4.2 plugin exposes a WP-CLI-only reconciler that defaults to
+The `farmtree-content` 0.4.3 plugin exposes a WP-CLI-only reconciler that defaults to
 JSON dry-run. It manages 40 English content entities, six categories and 34
 media assets by stable key, type/taxonomy, slug and canonical fingerprints.
 Exact unowned matches may be adopted in place; ambiguity, foreign ownership,
@@ -49,6 +49,14 @@ disposable runtime, preserved option ID/autoload plus all unrelated rules and
 order, and converged to `unchanged`; no production APPLY occurred.
 Foreign ownership and manual drift each stopped as a single conflict. Full
 design and evidence are in `docs/FT-NATIVE-RELEASE-PREPARATION.md`.
+
+The 0.4.3 Homepage postcondition fix separates token-safe planning from the raw
+write path: WordPress canonicalizes syntactically valid expanded values exactly
+once, then the verifier restores stable tokens and checks every managed field
+plus exact ownership/audit metadata. The regression reproduces the former
+double-save-filter Homepage failure against `49976f0`, commits the corrected
+full disposable APPLY, converges to 93 unchanged/one skipped, and proves wrong
+content, identity and release metadata still fail.
 
 The source-sealed static write-API audit pins every persistence API to the apply
 graph. The fail-closed volatile-state comparator passes 66 fixtures without

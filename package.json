@@ -11,6 +11,7 @@
     "wp:verify": "node scripts/bootstrap-local-wordpress.mjs --verify-only",
     "wp:verify:anonymous": "node scripts/validate-local-anonymous.mjs",
     "wp:verify:side-effects": "node scripts/validate-farmtree-runtime-side-effects.mjs",
+    "wp:verify:postconditions": "node scripts/validate-farmtree-postconditions.mjs",
     "content:manifest": "node scripts/generate-managed-content-manifest.mjs",
     "validate:agents": "node scripts/validate-agent-system.mjs",
     "validate:content-manifest": "node scripts/generate-managed-content-manifest.mjs --check",
@@ -23,7 +24,7 @@
     "release:check": "node scripts/build-native-release.mjs --check",
     "release:build": "node scripts/build-native-release.mjs --build",
     "release:audit": "node scripts/build-native-release.mjs --audit",
-    "lint:js": "node --check scripts/start-local-wordpress.mjs && node --check scripts/bootstrap-local-wordpress.mjs && node --check scripts/generate-managed-content-manifest.mjs && node --check scripts/build-native-release.mjs && node --check scripts/validate-farmtree-content-safety.mjs && node --check scripts/validate-farmtree-runtime-side-effects.mjs && node --check scripts/validate-local-anonymous.mjs && node --check scripts/validate-wordpress-state-safety.mjs && node --check scripts/preview-native-homepage.mjs && node --check scripts/validate-agent-system.mjs && node --check scripts/validate-native-foundation.mjs && node --check scripts/validate-native-workflows.mjs && node --check scripts/validate-visual-baseline.mjs && node --check stylelint.config.mjs",
+    "lint:js": "node --check scripts/start-local-wordpress.mjs && node --check scripts/bootstrap-local-wordpress.mjs && node --check scripts/generate-managed-content-manifest.mjs && node --check scripts/build-native-release.mjs && node --check scripts/validate-farmtree-content-safety.mjs && node --check scripts/validate-farmtree-runtime-side-effects.mjs && node --check scripts/validate-farmtree-postconditions.mjs && node --check scripts/validate-local-anonymous.mjs && node --check scripts/validate-wordpress-state-safety.mjs && node --check scripts/preview-native-homepage.mjs && node --check scripts/validate-agent-system.mjs && node --check scripts/validate-native-foundation.mjs && node --check scripts/validate-native-workflows.mjs && node --check scripts/validate-visual-baseline.mjs && node --check stylelint.config.mjs",
     "lint:css": "stylelint \"wordpress/wp-content/themes/farmtree-native/**/*.css\"",
     "test": "npm run validate:agents && npm run validate:content-manifest && npm run validate:content-safety && npm run validate:wordpress-state-safety && npm run validate:native && npm run validate:preview && npm run validate:visual && npm run validate:workflows && npm run release:check && npm run lint:js && npm run lint:css"
   },

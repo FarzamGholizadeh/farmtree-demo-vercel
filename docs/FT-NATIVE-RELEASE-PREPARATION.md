@@ -110,6 +110,17 @@ non-database third-party hook effects. The command has no delete, trash,
 database-import, theme/plugin activation, Coming Soon, robots, DNS, SSL or
 private-access mutation path.
 
+The 0.4.3 postcondition correction keeps stable manifest tokens in plans but
+runs WordPress save canonicalization against syntactically valid theme URLs and
+deterministic media stand-ins. APPLY passes unsanitized manifest fields to
+`wp_insert_post()` / `wp_update_post()`, so WordPress applies its save filters
+exactly once. The immediate postcondition independently canonicalizes the exact
+expanded write state once, restores stable tokens, and compares every managed
+field. A mismatch identifies the first field and reports bounded
+length/SHA-256 evidence for long values. Ownership, manifest, source,
+last-applied, release-commit and backup-evidence metadata are then verified as
+exact single values before the operation can continue.
+
 The two public-capable CPTs require persisted pretty-permalink rules, so
 dry-run also discloses one `rewrite-rules` option operation. It reads the raw
 option row directly, preserves its option ID, autoload state and ordered rule
@@ -208,6 +219,18 @@ one `candidate_owned_by_other_key` conflict. Restoring ownership and changing
 its title manually produced exactly one
 `owned_item_changed_since_apply` conflict; neither case was updated.
 
+The Homepage postcondition regression recreates the production failure mode
+with a non-idempotent WordPress content-save canonicalizer. Against baseline
+`49976f0`, normalized desired Homepage content contained one canonical marker
+(`45785` bytes, SHA-256 `6befe339…`) while persisted normalized content
+contained two (`45818` bytes, SHA-256 `092088a1…`), and APPLY rolled back at
+`page.en.home`. The corrected one-pass path commits all 90 managed operations,
+matches normalized Homepage content exactly, and replans as `0 create / 0
+update / 93 unchanged / 0 conflict / 1 skipped`. Homepage, Team, a normal Page,
+Proof Story, Customer Segment and News representative all converge. Deliberate
+wrong type/title/slug/status/content and all six ownership/audit metadata
+values still fail exact field verification.
+
 A separate ownership probe pre-created an exact unowned Contact page. The plan
 reported `update / adopt_exact`, disclosed the precise ownership-metadata
 write, and apply preserved its existing ID. An unrelated manual draft remained
@@ -228,7 +251,7 @@ activation, Coming Soon, indexing, private access, DNS and SSL were untouched.
 
 `npm run validate:content-safety` tokenizes and source-seals the exact four
 deployable plugin runtime files at
-`5026cdeebcfa4611cebe50401fc7f2ccf0826a8fa174c8791e51b09094c24008`.
+`07f118d592e3e1f768dbea8d9b56d71caec4f589412c2302201f4eb23c3a4a80`.
 Any runtime source byte change requires an explicit re-audit. The validator
 fails on a changed persistence-call inventory, lifecycle hook, dynamic
 execution, native filesystem write or direct modifying SQL; dynamic lock SQL

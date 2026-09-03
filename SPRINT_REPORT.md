@@ -40,6 +40,16 @@ registration, model registration, construction, `build_plan`, dry-run,
 activation and deactivation add no FarmTree-authored DB or filesystem write.
 The corrected dry-run is `90/1/2/0/1`.
 
+The 0.4.3 correction removes the Homepage postcondition's double application of
+WordPress save filters. Planning canonicalizes valid URL/ID stand-ins and
+restores stable tokens; APPLY sends raw expanded manifest fields through core
+exactly once and independently verifies the resulting canonical state and all
+six audit metadata values. The baseline failure is reproduced at
+`page.en.home`; the corrected full disposable APPLY commits and its next plan
+is `0/0/93/0/1`. Representative Homepage, Team, normal Page, Proof Story,
+Customer Segment and News entities converge, while deliberate wrong state and
+metadata still stop on their exact first field.
+
 Automated static classification source-seals the complete four-file deployable
 plugin runtime and pins every persistence API to the APPLY graph. A separate
 66-fixture, no-whole-table-ignore comparator rejects incomplete captures,
