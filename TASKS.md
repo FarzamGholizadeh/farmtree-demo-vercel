@@ -1,6 +1,6 @@
 # FarmTree Tasks
 
-_Last updated: 2026-09-01_
+_Last updated: 2026-09-03_
 
 ## Completed Governance Task
 
@@ -48,9 +48,9 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 
 ### FT-NATIVE-004A - Audited release preparation
 
-Status: production-safety implementation corrected for lifecycle and managed
-postcondition safety; local validation in progress before the explicitly
-authorized private-review APPLY retry.
+Status: production-specific Homepage root cause proven and the 0.4.4
+postcondition correction locally validated before the authorized production
+release loop continues.
 
 The release path now stages an exhaustive allowlisted artifact instead of the
 raw theme/plugin trees. A WP-CLI-only, dry-run-first content reconciler manages
@@ -72,6 +72,14 @@ canonicalizes valid token stand-ins during planning, verifies the exact
 one-pass persisted representation and reports the first mismatching field. Its
 full-manifest Homepage regression covers every managed entity family,
 idempotence and deliberate state/ownership/audit-metadata failures.
+
+The 0.4.4 correction mirrors WordPress 7.1's `utf8`/`utf8mb3`
+`wp_encode_emoji()` step. A rollback-protected production trace proved seven
+Homepage `↗` characters were converted to `&#x2197;`, exactly reproducing the
+historical 35-byte mismatch; complete database/filesystem/protection snapshots
+were identical after rollback. The regression pins both production `utf8mb3`
+and unchanged `utf8mb4` behavior and the full disposable APPLY remains
+idempotent.
 
 The approved baseline `210ce51f7c4b573b51cf96bba1b575918757e9d1` was pushed
 only to `origin/feat/wordpress-native-rebuild`. The audited preparation commit

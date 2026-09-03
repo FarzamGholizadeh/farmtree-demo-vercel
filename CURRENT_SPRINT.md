@@ -20,7 +20,7 @@ artifact: 81 intended runtime files are staged and 114 repository-only,
 development or obsolete files are excluded. Raw content JSON is compiled into
 an `ABSPATH`-guarded PHP manifest and never shipped as public data.
 
-The `farmtree-content` 0.4.3 plugin exposes a WP-CLI-only reconciler that defaults to
+The `farmtree-content` 0.4.4 plugin exposes a WP-CLI-only reconciler that defaults to
 JSON dry-run. It manages 40 English content entities, six categories and 34
 media assets by stable key, type/taxonomy, slug and canonical fingerprints.
 Exact unowned matches may be adopted in place; ambiguity, foreign ownership,
@@ -57,6 +57,16 @@ plus exact ownership/audit metadata. The regression reproduces the former
 double-save-filter Homepage failure against `49976f0`, commits the corrected
 full disposable APPLY, converges to 93 unchanged/one skipped, and proves wrong
 content, identity and release metadata still fail.
+
+The 0.4.4 production-charset correction mirrors WordPress 7.1's core
+`wp_encode_emoji()` step when the posts table uses `utf8`/`utf8mb3`. A
+rollback-protected production persistence trace proved that seven Homepage
+`↗` characters become `&#x2197;` between `content_save_pre` and
+`wp_insert_post_data`, exactly reproducing the historical `+35` bytes and
+`0aed9f…` SHA-256. The trace rolled back with identical database, filesystem,
+option and protection fingerprints. The focused PHP 8.3 regression proves the
+exact production representation, the unchanged `utf8mb4` representation and
+full APPLY idempotence.
 
 The source-sealed static write-API audit pins every persistence API to the apply
 graph. The fail-closed volatile-state comparator passes 66 fixtures without

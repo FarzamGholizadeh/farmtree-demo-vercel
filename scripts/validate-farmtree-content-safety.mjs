@@ -13,7 +13,7 @@ const cliPath = `${pluginPrefix}includes/class-farmtree-content-cli-command.php`
 const reconcilerPath = `${pluginPrefix}includes/class-farmtree-content-reconciler.php`;
 const managedManifestPath = `${pluginPrefix}includes/managed-content-manifest.php`;
 const exactPluginRuntime = [mainPath, cliPath, reconcilerPath, managedManifestPath].sort();
-const auditedRuntimeSourceSha256 = '07f118d592e3e1f768dbea8d9b56d71caec4f589412c2302201f4eb23c3a4a80';
+const auditedRuntimeSourceSha256 = '735d544d3da06386fee0ab754a9f3c5adf44f27a0f61f1c9816428d8d856dc21';
 
 function fail(message, details = []) {
   const suffix = details.length === 0

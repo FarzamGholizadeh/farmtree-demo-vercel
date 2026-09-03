@@ -121,6 +121,18 @@ length/SHA-256 evidence for long values. Ownership, manifest, source,
 last-applied, release-commit and backup-evidence metadata are then verified as
 exact single values before the operation can continue.
 
+The 0.4.4 production-charset correction additionally mirrors the WordPress 7.1
+`wp_insert_post()` emoji-encoding step for the three core emoji fields when the
+posts-table column charset is `utf8` or `utf8mb3`. WordPress performs this step
+after `content_save_pre` and before `wp_insert_post_data`; it is not a plugin or
+theme callback. A rollback-protected production persistence trace proved the
+exact Homepage transformation: seven UTF-8 `↗` characters became seven
+`&#x2197;` references, producing the historical `+35` bytes and exact
+`0aed9f019d41c1121184ac36e7d7bbad0dea23b6a967c4da9f843877c8d9b3e4`
+SHA-256. The transaction rolled back, the traced post and postmeta were absent,
+AUTO_INCREMENT remained unchanged by use of an existing gap, and the complete
+database/filesystem/protection audit remained identical.
+
 The two public-capable CPTs require persisted pretty-permalink rules, so
 dry-run also discloses one `rewrite-rules` option operation. It reads the raw
 option row directly, preserves its option ID, autoload state and ordered rule
@@ -230,6 +242,12 @@ update / 93 unchanged / 0 conflict / 1 skipped`. Homepage, Team, a normal Page,
 Proof Story, Customer Segment and News representative all converge. Deliberate
 wrong type/title/slug/status/content and all six ownership/audit metadata
 values still fail exact field verification.
+
+The same regression now invokes the charset helper explicitly for `utf8mb3`
+and `utf8mb4`. The tokenized Homepage is `46786 / 772277…` for `utf8mb4` and
+`46821 / 0aed9f…` for `utf8mb3`, with exactly seven encoded arrows and a
+35-byte delta. This pins the production behavior independently of the
+SQLite-backed test database's own column metadata.
 
 A separate ownership probe pre-created an exact unowned Contact page. The plan
 reported `update / adopt_exact`, disclosed the precise ownership-metadata

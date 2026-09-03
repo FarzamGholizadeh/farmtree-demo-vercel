@@ -100,6 +100,22 @@ $write_resolved = true;
 $pre_write = $write_method->invokeArgs($reconciler, [$home_entity, [], &$write_resolved]);
 $normalize_method = new ReflectionMethod($reconciler, 'normalize_content_to_tokens');
 $normalize_method->setAccessible(true);
+$emoji_method = new ReflectionMethod($reconciler, 'encode_emoji_for_database_charset');
+$emoji_method->setAccessible(true);
+$utf8mb3_content = wp_unslash($emoji_method->invoke(
+    $reconciler,
+    'post_content',
+    wp_slash((string) $pre_write['post_content']),
+    'utf8mb3'
+));
+$utf8mb4_content = wp_unslash($emoji_method->invoke(
+    $reconciler,
+    'post_content',
+    wp_slash((string) $pre_write['post_content']),
+    'utf8mb4'
+));
+$utf8mb3_normalized = $normalize_method->invoke($reconciler, $utf8mb3_content, []);
+$utf8mb4_normalized = $normalize_method->invoke($reconciler, $utf8mb4_content, []);
 add_action('wp_after_insert_post', static function ($post_id, $post, $update) use (
     $home_operation,
     $pre_write,
@@ -285,6 +301,14 @@ file_put_contents('/farmtree-output/result.json', wp_json_encode([
         'content_length' => strlen((string) $pre_write['post_content']),
         'content_sha256' => hash('sha256', (string) $pre_write['post_content']),
     ],
+    'utf8mb3_emoji_regression' => [
+        'normalized_length' => strlen((string) $utf8mb3_normalized),
+        'normalized_sha256' => hash('sha256', (string) $utf8mb3_normalized),
+        'byte_delta_from_utf8mb4' => strlen((string) $utf8mb3_normalized) - strlen((string) $utf8mb4_normalized),
+        'encoded_arrow_count' => substr_count((string) $utf8mb3_normalized, '&#x2197;'),
+        'utf8mb4_length' => strlen((string) $utf8mb4_normalized),
+        'utf8mb4_sha256' => hash('sha256', (string) $utf8mb4_normalized),
+    ],
     'apply' => ['summary' => $apply['summary'], 'transaction' => $apply['transaction'], 'postcondition' => $apply['postcondition']],
     'homepage' => [
         'id' => $home_id,
@@ -362,6 +386,14 @@ try {
   if (result.homepage?.canonical_marker_count !== 1) {
     fail('Homepage content was not canonicalized exactly once.', [JSON.stringify(result.homepage)]);
   }
+  const emoji = result.utf8mb3_emoji_regression;
+  if (emoji?.normalized_length !== 46821 ||
+      emoji?.normalized_sha256 !== '0aed9f019d41c1121184ac36e7d7bbad0dea23b6a967c4da9f843877c8d9b3e4' ||
+      emoji?.byte_delta_from_utf8mb4 !== 35 || emoji?.encoded_arrow_count !== 7 ||
+      emoji?.utf8mb4_length !== 46786 ||
+      emoji?.utf8mb4_sha256 !== '772277c3ec529861a5d24e5db40ab4792337215f8e318a7c585c8c04adb4b773') {
+    fail('WordPress utf8mb3 Homepage emoji canonicalization regression failed.', [JSON.stringify(emoji)]);
+  }
   if (Object.values(result.homepage.field_evidence).some(({ equal }) => !equal)) {
     fail('Homepage normalized desired and persisted states differ.', [JSON.stringify(result.homepage.field_evidence)]);
   }
@@ -390,6 +422,7 @@ try {
     wordpress: result.wordpress,
     php: result.php,
     regression: 'prewrite_save_filter_is_applied_exactly_once',
+    utf8mb3EmojiRegression: result.utf8mb3_emoji_regression,
     firstPlan: result.first_plan,
     apply: result.apply,
     homepage: result.homepage,

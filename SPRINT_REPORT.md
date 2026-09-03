@@ -50,6 +50,16 @@ is `0/0/93/0/1`. Representative Homepage, Team, normal Page, Proof Story,
 Customer Segment and News entities converge, while deliberate wrong state and
 metadata still stop on their exact first field.
 
+The 0.4.4 correction closes the remaining production-only postcondition gap.
+A fresh-backup, rollback-protected `wp_insert_post()` trace on WordPress 7.1 /
+PHP 8.3.31 / MariaDB `utf8mb3` reproduced the historical Homepage value exactly:
+core `wp_encode_emoji()` converted seven `↗` characters to `&#x2197;` before
+`wp_insert_post_data`, changing `46786 / 772277…` to `46821 / 0aed9f…`.
+No plugin or theme callback caused the change. The reconciler now mirrors that
+core charset step in its expected canonical database state; a focused
+disposable regression proves the exact `+35` production representation, the
+unchanged `utf8mb4` representation and a fully idempotent APPLY.
+
 Automated static classification source-seals the complete four-file deployable
 plugin runtime and pins every persistence API to the APPLY graph. A separate
 66-fixture, no-whole-table-ignore comparator rejects incomplete captures,

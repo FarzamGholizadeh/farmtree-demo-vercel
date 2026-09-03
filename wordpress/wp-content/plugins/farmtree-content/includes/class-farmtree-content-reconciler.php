@@ -3673,7 +3673,30 @@ final class FarmTree_Content_Reconciler
      */
     private function post_db_value(string $field, string $value, int $post_id = 0): string
     {
-        return (string) wp_unslash(sanitize_post_field($field, wp_slash($value), $post_id, 'db'));
+        $value = (string) sanitize_post_field($field, wp_slash($value), $post_id, 'db');
+        if (in_array($field, ['post_title', 'post_content', 'post_excerpt'], true)) {
+            global $wpdb;
+            $charset = $wpdb->get_col_charset($wpdb->posts, $field);
+            $value = $this->encode_emoji_for_database_charset(
+                $field,
+                $value,
+                is_string($charset) ? $charset : ''
+            );
+        }
+        return (string) wp_unslash($value);
+    }
+
+    /**
+     * Mirror the utf8/utf8mb3 emoji conversion in WordPress 7.1's
+     * wp_insert_post() before wp_insert_post_data runs.
+     */
+    private function encode_emoji_for_database_charset(string $field, string $value, string $charset): string
+    {
+        if (!in_array($field, ['post_title', 'post_content', 'post_excerpt'], true)
+            || !in_array(strtolower($charset), ['utf8', 'utf8mb3'], true)) {
+            return $value;
+        }
+        return wp_encode_emoji($value);
     }
 
     /** @param array<string,mixed> $desired */
