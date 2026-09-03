@@ -120,6 +120,7 @@ register_shutdown_function(static function () {
 require_once '/wordpress/wp-load.php';
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 require_once ABSPATH . 'wp-admin/includes/theme.php';
+require_once ABSPATH . 'wp-admin/includes/misc.php';
 
 switch_theme('farmtree-native');
 update_option('permalink_structure', '/%postname%/');
@@ -410,6 +411,69 @@ function farmtree_rewrite_regression(FarmTree_Content_Reconciler $reconciler, ar
     }
 }
 
+function farmtree_front_page_flush_suppression_regression(FarmTree_Content_Reconciler $reconciler): array
+{
+    $original_show = get_option('show_on_front');
+    $original_front = get_option('page_on_front');
+    $original_rules = get_option('rewrite_rules');
+    $original_priority = has_action('update_option_page_on_front', 'update_home_siteurl');
+    $test_priority = false === $original_priority ? 10 : (int) $original_priority;
+    if (false === $original_priority) {
+        add_action('update_option_page_on_front', 'update_home_siteurl', $test_priority, 2);
+    }
+
+    $page_ids = get_posts([
+        'post_type' => 'page',
+        'post_status' => 'any',
+        'numberposts' => 1,
+        'fields' => 'ids',
+    ]);
+    $page_id = (int) ($page_ids[0] ?? 0);
+    if ($page_id < 1 || !is_array($original_rules) || !$original_rules) {
+        throw new RuntimeException('Front-page flush suppression regression prerequisites are unavailable.');
+    }
+
+    update_option('show_on_front', 'posts');
+    update_option('page_on_front', 0);
+    update_option('rewrite_rules', $original_rules);
+    $rewrite_updates = 0;
+    $observer = static function ($option, $old, $new) use (&$rewrite_updates): void {
+        if ('rewrite_rules' === $option) {
+            $rewrite_updates++;
+        }
+    };
+    add_action('updated_option', $observer, PHP_INT_MAX, 3);
+    try {
+        $operation = [
+            'kind' => 'option',
+            'key' => 'front-page',
+            'action' => 'update',
+            'reason' => 'explicit_set_front_page',
+            'before' => ['show_on_front' => 'posts', 'page_on_front' => 0],
+        ];
+        $method = new ReflectionMethod($reconciler, 'apply_front_page');
+        $method->setAccessible(true);
+        $result = $method->invoke($reconciler, $operation, ['page.en.home' => $page_id]);
+        $callback_restored = $test_priority === has_action('update_option_page_on_front', 'update_home_siteurl');
+        $rules_unchanged = $original_rules === get_option('rewrite_rules');
+    } finally {
+        remove_action('updated_option', $observer, PHP_INT_MAX);
+        remove_action('update_option_page_on_front', 'update_home_siteurl', $test_priority);
+        update_option('page_on_front', $original_front);
+        update_option('show_on_front', $original_show);
+        update_option('rewrite_rules', $original_rules);
+        if (false !== $original_priority) {
+            add_action('update_option_page_on_front', 'update_home_siteurl', (int) $original_priority, 2);
+        }
+    }
+    return [
+        'result' => $result,
+        'rewriteUpdateCount' => $rewrite_updates,
+        'rewriteRulesUnchanged' => $rules_unchanged,
+        'coreCallbackRestored' => $callback_restored,
+    ];
+}
+
 $plugin_file = WP_CONTENT_DIR . '/plugins/farmtree-content/farmtree-content.php';
 $phases = [];
 $phases[] = farmtree_probe_phase('plugin-load-and-cli-registration', static function () use ($plugin_file) {
@@ -441,6 +505,7 @@ $phases[] = farmtree_probe_phase('cli-dry-run', static function () use ($source_
     return farmtree_run_cli_dry_run($source_commit)['payload'];
 });
 $rewrite_regression = farmtree_rewrite_regression($reconciler, $options);
+$front_page_flush_regression = farmtree_front_page_flush_suppression_regression($reconciler);
 $firewall_probes = [];
 $firewall_probes[] = farmtree_firewall_probe('select', static function () use ($wpdb) {
     $wpdb->get_var('SELECT 1');
@@ -485,6 +550,7 @@ $payload = [
     'commands' => WP_CLI::$commands,
     'phases' => $phases,
     'rewriteRegression' => $rewrite_regression,
+    'frontPageFlushRegression' => $front_page_flush_regression,
     'firewallProbes' => $firewall_probes,
 ];
 file_put_contents('/farmtree-output/result.json', wp_json_encode($payload, JSON_UNESCAPED_SLASHES));
@@ -631,6 +697,16 @@ try {
     fail('FarmTree-only rewrite finalization did not converge safely.', [JSON.stringify(rewriteRegression)]);
   }
 
+  const frontPageFlushRegression = result.frontPageFlushRegression;
+  if (frontPageFlushRegression?.result?.status !== 'updated' ||
+      frontPageFlushRegression?.rewriteUpdateCount !== 0 ||
+      frontPageFlushRegression?.rewriteRulesUnchanged !== true ||
+      frontPageFlushRegression?.coreCallbackRestored !== true) {
+    fail('Managed page_on_front reconciliation did not suppress and restore only the core global rewrite flush.', [
+      JSON.stringify(frontPageFlushRegression)
+    ]);
+  }
+
   const firewallProbes = Object.fromEntries(
     result.firewallProbes.map((probe) => [probe.name, probe])
   );
@@ -693,6 +769,11 @@ try {
       ambiguousAnchorsConflict: true,
       routeShadowingConflict: true,
       foreignCanonicalIdentityConflict: true
+    },
+    frontPageFlushRegression: {
+      coreGlobalFlushSuppressed: true,
+      rewriteRulesUnchanged: true,
+      coreCallbackRestored: true
     },
     sqlFirewall: {
       selectAllowed: true,

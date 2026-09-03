@@ -2855,7 +2855,23 @@ final class FarmTree_Content_Reconciler
         if ('page' !== (string) get_option('show_on_front')) {
             throw new RuntimeException('Could not update show_on_front.');
         }
-        update_option('page_on_front', $id);
+        // WordPress admin attaches update_home_siteurl() here and globally
+        // flushes every rewrite rule before this reconciler can persist its
+        // disclosed FarmTree-only merge. Suppress only that core callback for
+        // this managed option write, then restore it at the same priority.
+        // finalize_rewrite_rules() immediately performs the exact audited
+        // soft rewrite update without touching .htaccess or unrelated rules.
+        $core_flush_priority = has_action('update_option_page_on_front', 'update_home_siteurl');
+        if (false !== $core_flush_priority) {
+            remove_action('update_option_page_on_front', 'update_home_siteurl', (int) $core_flush_priority);
+        }
+        try {
+            update_option('page_on_front', $id);
+        } finally {
+            if (false !== $core_flush_priority) {
+                add_action('update_option_page_on_front', 'update_home_siteurl', (int) $core_flush_priority, 2);
+            }
+        }
         if ($id !== (int) get_option('page_on_front')) {
             throw new RuntimeException('Could not update page_on_front.');
         }

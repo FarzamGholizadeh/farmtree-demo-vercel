@@ -60,6 +60,16 @@ core charset step in its expected canonical database state; a focused
 disposable regression proves the exact `+35` production representation, the
 unchanged `utf8mb4` representation and a fully idempotent APPLY.
 
+The 0.4.5 correction closes the subsequent production rewrite-finalization
+gate. WordPress admin registers `update_home_siteurl()` on
+`update_option_page_on_front`; production tracing proved that callback globally
+replaced the reviewed 94-rule baseline with 147 generated rules inside the
+transaction. APPLY now suppresses only that core callback for the one managed
+front-page write, restores it in `finally`, and leaves the reconciler's exact
+128-rule FarmTree-only target as the sole rewrite persistence path. The focused
+WordPress 7.1 regression proves zero intermediate rewrite update, unchanged
+rules and exact callback restoration.
+
 Automated static classification source-seals the complete four-file deployable
 plugin runtime and pins every persistence API to the APPLY graph. A separate
 66-fixture, no-whole-table-ignore comparator rejects incomplete captures,

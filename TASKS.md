@@ -48,8 +48,8 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 
 ### FT-NATIVE-004A - Audited release preparation
 
-Status: production-specific Homepage root cause proven and the 0.4.4
-postcondition correction locally validated before the authorized production
+Status: production Homepage and rewrite-finalization root causes proven; the
+0.4.5 release correction is locally validated before the authorized production
 release loop continues.
 
 The release path now stages an exhaustive allowlisted artifact instead of the
@@ -80,6 +80,14 @@ historical 35-byte mismatch; complete database/filesystem/protection snapshots
 were identical after rollback. The regression pins both production `utf8mb3`
 and unchanged `utf8mb4` behavior and the full disposable APPLY remains
 idempotent.
+
+The 0.4.5 correction suppresses only WordPress admin's
+`update_home_siteurl()` callback while APPLY writes the managed
+`page_on_front`, restores it at the same priority in `finally`, and retains the
+exact audited FarmTree-only rewrite finalizer. Production tracing proved the
+callback was the sole source of the unexpected 147-rule global flush. The
+focused WordPress 7.1 regression proves the callback is restored and no
+intermediate rewrite persistence occurs.
 
 The approved baseline `210ce51f7c4b573b51cf96bba1b575918757e9d1` was pushed
 only to `origin/feat/wordpress-native-rebuild`. The audited preparation commit

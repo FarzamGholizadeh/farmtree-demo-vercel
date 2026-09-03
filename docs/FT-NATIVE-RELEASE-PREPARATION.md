@@ -133,6 +133,25 @@ SHA-256. The transaction rolled back, the traced post and postmeta were absent,
 AUTO_INCREMENT remained unchanged by use of an existing gap, and the complete
 database/filesystem/protection audit remained identical.
 
+The 0.4.5 production rewrite correction handles a separate WordPress admin
+side effect. `wp-admin/includes/admin-filters.php` attaches
+`update_home_siteurl()` to `update_option_page_on_front`; that callback calls
+`flush_rewrite_rules()` and can write both the complete runtime-generated rule
+set and server rewrite configuration. A rollback-protected full production
+trace observed the raw option move from the reviewed 94-rule baseline to 147
+generated rules immediately inside that callback. The persisted baseline and
+the previously disclosed 128-rule FarmTree-only target were otherwise stable.
+
+For the reconciler's single managed `page_on_front` update, APPLY now removes
+only `update_home_siteurl()` at its discovered priority, restores it with the
+same accepted-argument contract in `finally`, and proceeds to the existing
+exact soft rewrite finalizer. No other callback is removed. The finalizer still
+checks the raw option identity/fingerprint and persists only the disclosed
+baseline plus 34 FarmTree identities; it never calls a global flush or writes
+`.htaccess`/`web.config`. A disposable WordPress 7.1 regression installs the
+real core callback, invokes the private front-page operation, and proves zero
+rewrite update, byte-identical stored rules and exact callback restoration.
+
 The two public-capable CPTs require persisted pretty-permalink rules, so
 dry-run also discloses one `rewrite-rules` option operation. It reads the raw
 option row directly, preserves its option ID, autoload state and ordered rule

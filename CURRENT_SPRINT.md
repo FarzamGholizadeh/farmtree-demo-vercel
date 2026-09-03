@@ -20,7 +20,7 @@ artifact: 81 intended runtime files are staged and 114 repository-only,
 development or obsolete files are excluded. Raw content JSON is compiled into
 an `ABSPATH`-guarded PHP manifest and never shipped as public data.
 
-The `farmtree-content` 0.4.4 plugin exposes a WP-CLI-only reconciler that defaults to
+The `farmtree-content` 0.4.5 plugin exposes a WP-CLI-only reconciler that defaults to
 JSON dry-run. It manages 40 English content entities, six categories and 34
 media assets by stable key, type/taxonomy, slug and canonical fingerprints.
 Exact unowned matches may be adopted in place; ambiguity, foreign ownership,
@@ -67,6 +67,16 @@ rollback-protected production persistence trace proved that seven Homepage
 option and protection fingerprints. The focused PHP 8.3 regression proves the
 exact production representation, the unchanged `utf8mb4` representation and
 full APPLY idempotence.
+
+The 0.4.5 release correction handles WordPress admin's automatic
+`update_home_siteurl()` callback on `page_on_front`. A rollback-protected
+production APPLY trace proved that core performed a global 147-rule flush
+between the managed front-page write and the exact rewrite finalizer. The
+reconciler now removes only that callback for its single managed option write,
+restores it at the same priority in `finally`, and then persists the already
+reviewed 128-rule target. A WordPress 7.1 regression proves the automatic
+global flush is suppressed, the prior rule map stays exact and the callback is
+restored.
 
 The source-sealed static write-API audit pins every persistence API to the apply
 graph. The fail-closed volatile-state comparator passes 66 fixtures without

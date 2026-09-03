@@ -13,7 +13,7 @@ const cliPath = `${pluginPrefix}includes/class-farmtree-content-cli-command.php`
 const reconcilerPath = `${pluginPrefix}includes/class-farmtree-content-reconciler.php`;
 const managedManifestPath = `${pluginPrefix}includes/managed-content-manifest.php`;
 const exactPluginRuntime = [mainPath, cliPath, reconcilerPath, managedManifestPath].sort();
-const auditedRuntimeSourceSha256 = '735d544d3da06386fee0ab754a9f3c5adf44f27a0f61f1c9816428d8d856dc21';
+const auditedRuntimeSourceSha256 = '4674661f0a8737ed09fb25c26b0af10ac85c1e589ae99623818c26d2968bb360';
 
 function fail(message, details = []) {
   const suffix = details.length === 0
@@ -971,6 +971,22 @@ const finalizeMasked = reconcilerFile.masked.slice(
 if (/\bflush_rewrite_rules\s*\(/.test(files.map((file) => file.masked).join('\n'))
   || !finalizeMasked.includes('update_option')) {
   fail('Rewrite finalization must persist only its exact reviewed option target and never flush globally.');
+}
+
+const applyFrontPage = functionNamed(reconcilerFile, 'apply_front_page');
+const applyFrontPageSource = reconcilerFile.source.slice(
+  applyFrontPage.bodyStart,
+  applyFrontPage.bodyEnd
+);
+for (const contract of [
+  "has_action('update_option_page_on_front', 'update_home_siteurl')",
+  "remove_action('update_option_page_on_front', 'update_home_siteurl'",
+  "add_action('update_option_page_on_front', 'update_home_siteurl'",
+  'finally'
+]) {
+  if (!applyFrontPageSource.includes(contract)) {
+    fail('Managed front-page reconciliation must suppress and restore only the core global rewrite flush.', [contract]);
+  }
 }
 
 const dryRunBuilder = functionNamed(cliFile, 'build_dry_run_plan');
