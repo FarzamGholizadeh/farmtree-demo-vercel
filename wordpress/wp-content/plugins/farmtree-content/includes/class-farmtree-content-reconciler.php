@@ -1899,6 +1899,9 @@ final class FarmTree_Content_Reconciler
             'category_keys' => array_values((array) ($entity['category_keys'] ?? [])),
             'child_keys' => $child_keys,
         ];
+        if (isset($fields['comment_status'])) {
+            $state['comment_status'] = (string) $fields['comment_status'];
+        }
         sort($state['category_keys'], SORT_STRING);
         if (!empty($fields['post_date'])) {
             $state['post_date'] = (string) $fields['post_date'];
@@ -1951,6 +1954,9 @@ final class FarmTree_Content_Reconciler
             'category_keys' => $category_keys,
             'child_keys' => $this->content_child_keys((string) $post->post_content),
         ];
+        if (isset($entity['fields']['comment_status'])) {
+            $state['comment_status'] = (string) $post->comment_status;
+        }
         if (!empty($entity['fields']['post_date'])) {
             $state['post_date'] = (string) $post->post_date;
         }
@@ -2723,6 +2729,9 @@ final class FarmTree_Content_Reconciler
             'post_content' => (string) $write_desired['post_content'],
             'menu_order' => (int) $write_desired['menu_order'],
         ];
+        if (isset($write_desired['comment_status'])) {
+            $postarr['comment_status'] = (string) $write_desired['comment_status'];
+        }
         if (isset($write_desired['post_date'])) {
             $postarr['post_date'] = (string) $write_desired['post_date'];
         }

@@ -35,21 +35,6 @@ function farmtree_native_enable_page_excerpts(): void
 add_action('init', 'farmtree_native_enable_page_excerpts');
 
 /**
- * Load the approved typefaces in both the frontend and Block Editor.
- */
-function farmtree_native_enqueue_fonts(): void
-{
-    wp_enqueue_style(
-        'farmtree-native-fonts',
-        'https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap',
-        [],
-        null
-    );
-}
-add_action('wp_enqueue_scripts', 'farmtree_native_enqueue_fonts');
-add_action('enqueue_block_editor_assets', 'farmtree_native_enqueue_fonts');
-
-/**
  * Load the native theme stylesheet on the frontend with cache-safe versioning.
  *
  * Block themes do not automatically enqueue style.css on the frontend. The
@@ -65,7 +50,7 @@ function farmtree_native_enqueue_styles(): void
     wp_enqueue_style(
         'farmtree-native-style',
         get_stylesheet_uri(),
-        ['farmtree-native-fonts'],
+        [],
         $version
     );
 }

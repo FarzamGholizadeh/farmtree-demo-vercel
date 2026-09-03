@@ -127,6 +127,21 @@ function newsHubContent() {
   ].join('\n');
 }
 
+function legalDocumentContent(page) {
+  const paragraph = (text) => `<!-- wp:paragraph --><p>${escapeHtml(text).replaceAll('\n', '<br>')}</p><!-- /wp:paragraph -->`;
+  const list = (items) => `<!-- wp:list --><ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul><!-- /wp:list -->`;
+  return [
+    paragraph(`Last updated: ${page.lastUpdated}`),
+    ...page.introduction.map(paragraph),
+    ...page.sections.flatMap((section, index) => [
+      `<!-- wp:heading --><h2 class="wp-block-heading">${index + 1}. ${escapeHtml(section.heading)}</h2><!-- /wp:heading -->`,
+      ...(section.paragraphs ?? []).map(paragraph),
+      ...(section.items ? [list(section.items)] : []),
+      ...(section.after ?? []).map(paragraph)
+    ])
+  ].join('\n\n');
+}
+
 const mediaIdToken = (key) => `%%FARMTREE_MEDIA_ID:${key}%%`;
 const mediaUrlToken = (key) => `%%FARMTREE_MEDIA_URL:${key}%%`;
 
@@ -160,6 +175,7 @@ function proofStoryContent(story) {
 
 function englishPageContent(page) {
   if (page.body === 'news' || page.slug === 'blog') return newsHubContent();
+  if (page.lastUpdated && page.sections) return legalDocumentContent(page);
   if (page.body === 'contact') {
     return [
       '<!-- wp:paragraph --><p>The local pre-release form is intentionally unavailable until an approved delivery backend and privacy review are complete. No information entered here is transmitted, stored or logged.</p><!-- /wp:paragraph -->',
@@ -251,21 +267,23 @@ const terms = categoryNames.map((name) => ({
 }));
 
 const entities = [];
-const addEntity = ({ key, postType, title, slug, excerpt = '', content, order = 0, date = '', featuredAssetKey = '', categoryKeys = [], legacySlugs = [], childKeys = [] }) => {
+const addEntity = ({ key, postType, title, slug, excerpt = '', content, order = 0, date = '', commentStatus = '', featuredAssetKey = '', categoryKeys = [], legacySlugs = [], childKeys = [] }) => {
+  const fields = {
+    post_title: title,
+    post_name: slug,
+    post_status: 'private',
+    post_excerpt: excerpt,
+    post_content: content,
+    menu_order: order,
+    post_date: date
+  };
+  if (commentStatus) fields.comment_status = commentStatus;
   entities.push({
     key,
     post_type: postType,
     slug,
     legacy_slugs: legacySlugs,
-    fields: {
-      post_title: title,
-      post_name: slug,
-      post_status: 'private',
-      post_excerpt: excerpt,
-      post_content: content,
-      menu_order: order,
-      post_date: date
-    },
+    fields,
     featured_asset_key: featuredAssetKey,
     category_keys: categoryKeys,
     child_keys: childKeys
@@ -301,6 +319,7 @@ for (const article of editorialDefinitions) {
     excerpt: article.excerpt,
     content: editorialContent(article),
     date: `${article.sourceDate} 09:00:00`,
+    commentStatus: 'closed',
     featuredAssetKey: `asset.news.${article.slug}`,
     categoryKeys: [`category.en.${slugify(category)}`]
   });
@@ -352,7 +371,7 @@ assets.sort((left, right) => left.key.localeCompare(right.key));
 terms.sort((left, right) => left.key.localeCompare(right.key));
 
 const manifest = {
-  manifest_version: '2026-09-01-private-review-1',
+  manifest_version: '2026-09-03-legal-review-1',
   profile: 'private-review',
   publication_note: 'English content is materialized as authenticated private-review content; public publication remains a separate approval.',
   reserved_locales: ['nl', 'de'],

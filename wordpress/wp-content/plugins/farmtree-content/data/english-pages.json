@@ -1,17 +1,380 @@
 [
-  {"slug":"platform","title":"The FarmTree Platform","excerpt":"Design, compare and communicate agroforestry scenarios with connected scientific, environmental and economic project intelligence.","body":"FarmTree combines site, climate, soil, species and management information to create time-based agroforestry scenarios. Use it to compare options, keep assumptions visible and prepare decisions for field and specialist review."},
-  {"slug":"proof-stories","title":"Proof Stories","excerpt":"Explore four evidence themes grounded in FarmTree's published capabilities and project experience.","body":"These stories explain how FarmTree supports carbon planning, farm-value modelling, cocoa scenario work and water-resilience questions. They do not claim guaranteed or independently verified outcomes."},
-  {"slug":"customer-segments","title":"Customer Segments","excerpt":"Ten practical routes into FarmTree for organisations making different agroforestry decisions.","body":"The same model can support different decisions. Start with your organisation's question, available evidence and responsibilities, then choose an appropriately scoped workflow."},
-  {"slug":"case-studies","title":"Case Studies","excerpt":"FarmTree project experience, presented with clear sources and claim boundaries.","body":"This private pre-release hub will link only to editor-approved case material. Named organisations, outcomes and permissions require final human approval before publication."},
-  {"slug":"team","title":"Team","excerpt":"The people building and applying FarmTree's agroforestry planning approach.","body":"FarmTree brings together agroforestry, modelling, data and programme experience. Team biographies and portraits remain subject to final owner review before publication."},
-  {"slug":"vacancies","title":"Vacancies","excerpt":"Opportunities to contribute to FarmTree's mission and scientific platform.","body":"Current opportunities will appear here when approved. FarmTree does not publish speculative or expired roles."},
-  {"slug":"contact","title":"Contact FarmTree","excerpt":"Discuss an agroforestry planning, modelling or platform question with the FarmTree team.","body":"contact"},
-  {"slug":"blog","title":"News & Insights","excerpt":"Source-led FarmTree perspectives on agroforestry planning, evidence, policy and model practice.","body":"Nine original editorial drafts are prepared locally. They remain unpublished until an editor verifies sources, dates, images and final wording."},
-  {"slug":"acknowledgements","title":"Acknowledgements","excerpt":"The research, data, software and collaboration foundations that support FarmTree.","body":"FarmTree's acknowledgements should identify approved contributors and upstream resources without implying endorsement. Final names and permissions require owner review."},
-  {"slug":"licenses","title":"Licenses","excerpt":"Understand available FarmTree Platform access and discuss the right scope for your team.","body":"License scope depends on intended users, projects, support and data needs. Contact FarmTree for current approved terms; this page does not make a binding offer."},
-  {"slug":"privacy","title":"Privacy","excerpt":"How the FarmTree website and services handle personal information.","body":"A final privacy notice must be reviewed against the production analytics, hosting, contact delivery and FT Bot configuration before publication. The pre-release contact state transmits no form data and FT Bot remains disabled."},
-  {"slug":"terms","title":"Terms","excerpt":"Terms for the FarmTree website and Platform services.","body":"Final legal terms require authorised human review before publication. No draft wording on this local build overrides an executed agreement or Platform terms."},
-  {"slug":"solutions","title":"Solutions","excerpt":"Plan, understand, learn, capture, operate and scale agroforestry evidence.","body":"FarmTree supports farm planning, project investment cases, local data capture, team learning and portfolio analysis. Scope and outputs are agreed for each engagement."},
-  {"slug":"user-videos","title":"FarmTree Platform Videos","excerpt":"Practical guidance for building scenarios, comparing results and working with FarmTree tools.","body":"Approved training videos can be embedded here from the official FarmTree library. This private route avoids dead navigation while the final media selection is reviewed."},
-  {"slug":"cocoa-focus","title":"Cocoa Focus","excerpt":"Compare regenerative cocoa designs and landscape investment questions with transparent assumptions.","body":"FarmTree can support cocoa programmes in comparing shade-tree systems, renewal timing, production, farmer value, carbon and other indicators. Local evidence and field review remain essential."}
+  {
+    "slug": "platform",
+    "title": "The FarmTree Platform",
+    "excerpt": "Design, compare and communicate agroforestry scenarios with connected scientific, environmental and economic project intelligence.",
+    "body": "FarmTree combines site, climate, soil, species and management information to create time-based agroforestry scenarios. Use it to compare options, keep assumptions visible and prepare decisions for field and specialist review."
+  },
+  {
+    "slug": "proof-stories",
+    "title": "Proof Stories",
+    "excerpt": "Explore four evidence themes grounded in FarmTree's published capabilities and project experience.",
+    "body": "These stories explain how FarmTree supports carbon planning, farm-value modelling, cocoa scenario work and water-resilience questions. They do not claim guaranteed or independently verified outcomes."
+  },
+  {
+    "slug": "customer-segments",
+    "title": "Customer Segments",
+    "excerpt": "Ten practical routes into FarmTree for organisations making different agroforestry decisions.",
+    "body": "The same model can support different decisions. Start with your organisation's question, available evidence and responsibilities, then choose an appropriately scoped workflow."
+  },
+  {
+    "slug": "case-studies",
+    "title": "Case Studies",
+    "excerpt": "FarmTree project experience, presented with clear sources and claim boundaries.",
+    "body": "This private pre-release hub will link only to editor-approved case material. Named organisations, outcomes and permissions require final human approval before publication."
+  },
+  {
+    "slug": "team",
+    "title": "Team",
+    "excerpt": "The people building and applying FarmTree's agroforestry planning approach.",
+    "body": "FarmTree brings together agroforestry, modelling, data and programme experience. Team biographies and portraits remain subject to final owner review before publication."
+  },
+  {
+    "slug": "vacancies",
+    "title": "Vacancies",
+    "excerpt": "Opportunities to contribute to FarmTree's mission and scientific platform.",
+    "body": "Current opportunities will appear here when approved. FarmTree does not publish speculative or expired roles."
+  },
+  {
+    "slug": "contact",
+    "title": "Contact FarmTree",
+    "excerpt": "Discuss an agroforestry planning, modelling or platform question with the FarmTree team.",
+    "body": "contact"
+  },
+  {
+    "slug": "blog",
+    "title": "News & Insights",
+    "excerpt": "Source-led FarmTree perspectives on agroforestry planning, evidence, policy and model practice.",
+    "body": "Nine original editorial drafts are prepared locally. They remain unpublished until an editor verifies sources, dates, images and final wording."
+  },
+  {
+    "slug": "acknowledgements",
+    "title": "Acknowledgements",
+    "excerpt": "The research, data, software and collaboration foundations that support FarmTree.",
+    "body": "FarmTree's acknowledgements should identify approved contributors and upstream resources without implying endorsement. Final names and permissions require owner review."
+  },
+  {
+    "slug": "licenses",
+    "title": "Licenses",
+    "excerpt": "Understand available FarmTree Platform access and discuss the right scope for your team.",
+    "body": "License scope depends on intended users, projects, support and data needs. Contact FarmTree for current approved terms; this page does not make a binding offer."
+  },
+  {
+    "slug": "privacy",
+    "title": "Privacy Policy",
+    "excerpt": "How the FarmTree website handles personal information.",
+    "lastUpdated": "3 September 2026",
+    "introduction": [
+      "FarmTree B.V. respects your privacy and is committed to handling personal data in a transparent and responsible manner.",
+      "This Privacy Policy explains what information may be processed when you visit farmtree.eu, why it is processed and what rights you may have."
+    ],
+    "sections": [
+      {
+        "heading": "Who we are",
+        "paragraphs": [
+          "FarmTree B.V.\nPlus Ultra Building\nBronland 12C-1\n6708 WH Wageningen\nThe Netherlands",
+          "Email: info@farmtree.earth",
+          "FarmTree B.V. is the entity identified on farmtree.eu. This notice describes the website-related processing associated with farmtree.eu."
+        ]
+      },
+      {
+        "heading": "Information processed when you visit the website",
+        "paragraphs": [
+          "FarmTree does not currently use public behavioural analytics, advertising pixels or visitor-profiling technologies on farmtree.eu.",
+          "When you access the website, technical request information may nevertheless be processed by the hosting infrastructure. This may include:"
+        ],
+        "items": [
+          "IP address",
+          "date and time of the request",
+          "requested page or resource",
+          "browser and user-agent information",
+          "referring page, where provided",
+          "technical information required to deliver and protect the website"
+        ],
+        "after": [
+          "The hosting environment uses Apache access logs and AWStats for technical and aggregate website statistics.",
+          "This information is processed for website delivery, security, troubleshooting, availability and technical performance."
+        ]
+      },
+      {
+        "heading": "Contacting FarmTree",
+        "paragraphs": [
+          "The current website uses an email-based contact experience.",
+          "When you select a contact or quotation action, your own email application may open and allow you to send a message to info@farmtree.earth.",
+          "The website itself does not currently submit or store contact-form entries in the FarmTree WordPress database.",
+          "The reviewed website has no newsletter subscription, and comments are closed on all nine News posts.",
+          "If you email FarmTree, the information you choose to provide may be used to respond to your request, communicate with you and, where relevant, take steps related to a potential or existing business relationship."
+        ]
+      },
+      {
+        "heading": "Accounts and authentication",
+        "paragraphs": [
+          "farmtree.eu does not currently provide public account registration.",
+          "WordPress authentication functionality exists for authorised website administration and controlled access. When an authorised user signs in, WordPress may process authentication information and set strictly necessary login and session cookies.",
+          "These cookies are used for authentication and security."
+        ]
+      },
+      {
+        "heading": "Cookies and local browser storage",
+        "paragraphs": [
+          "At the date of this Privacy Policy, an ordinary anonymous visit to the public website does not set advertising or behavioural-tracking cookies.",
+          "The FarmTree Native interface may use browser session storage for presentation purposes, such as remembering whether a visual metric animation has already been displayed during the browser session. This storage does not contain information entered by the visitor.",
+          "WordPress authentication cookies are used only when login or controlled-access functionality is used.",
+          "No cookie banner is currently present. If FarmTree introduces analytics, marketing or other non-essential cookies in the future, this Privacy Policy and, where legally required, the consent mechanism will be updated before those technologies are enabled."
+        ]
+      },
+      {
+        "heading": "Hosting and technical services",
+        "paragraphs": [
+          "The website is hosted using Vimexx infrastructure on a network registered in the Netherlands.",
+          "Hosting systems process technical request information needed to provide, secure, maintain and troubleshoot the website.",
+          "The production WordPress installation also uses administrative and backup integrations supplied through the hosting environment. Extendify Insights and SeedProd usage telemetry are disabled in the reviewed configuration."
+        ]
+      },
+      {
+        "heading": "External websites and services",
+        "paragraphs": [
+          "farmtree.eu contains links to external websites and services, including the FarmTree Platform, LinkedIn, YouTube, OpenStreetMap and third-party information sources.",
+          "The FarmTree website does not embed those services or automatically transmit form data to the FarmTree Platform in the reviewed configuration.",
+          "When you follow an external link, you leave farmtree.eu and the privacy practices of the destination service apply.",
+          "The FarmTree Platform is currently accessed through links to tool.farmtree.earth."
+        ]
+      },
+      {
+        "heading": "Artificial intelligence features",
+        "paragraphs": [
+          "FarmTree has technical components that may support an AI assistant in the future.",
+          "The FarmTree AI Assistant is currently disabled.",
+          "No public AI widget is rendered, conversation logging is disabled, no conversation history is stored and visitor information is not currently sent by this website to OpenAI, Anthropic or another AI provider.",
+          "If such functionality is activated in the future, the applicable privacy information will be updated before public use."
+        ]
+      },
+      {
+        "heading": "Team and professional information",
+        "paragraphs": [
+          "The website contains professional information about FarmTree team members, including names, roles, biographies, photographs and links to professional profiles.",
+          "This information is presented as organisational and professional information about the FarmTree team."
+        ]
+      },
+      {
+        "heading": "Legal basis",
+        "paragraphs": [
+          "Depending on the processing activity, FarmTree processes personal data where this is necessary:"
+        ],
+        "items": [
+          "to operate, secure and maintain the website",
+          "for FarmTree's legitimate interests in communicating about its organisation, services and activities",
+          "to respond to enquiries and take steps requested by a person before entering into a business relationship",
+          "to comply with applicable legal obligations",
+          "where another legal basis under applicable data-protection law applies"
+        ],
+        "after": [
+          "FarmTree does not currently use this website for automated decision-making or visitor profiling that produces legal or similarly significant effects."
+        ]
+      },
+      {
+        "heading": "Data retention",
+        "paragraphs": [
+          "FarmTree does not state fixed retention periods in this Privacy Policy because no fixed periods were established by the website runtime audit.",
+          "The reviewed runtime currently stores authorised WordPress account and session information and team profile information. The hosting environment stores access-log and AWStats information and may retain website backups.",
+          "Email sent directly to info@farmtree.earth is handled outside the farmtree.eu WordPress database.",
+          "FarmTree retains personal data only for as long as reasonably necessary for the purpose for which it was processed, including applicable technical, security, business and legal requirements."
+        ]
+      },
+      {
+        "heading": "Data security",
+        "paragraphs": [
+          "FarmTree uses technical and organisational measures intended to protect website and account information against unauthorised access, loss, misuse or alteration.",
+          "No internet-based system can be guaranteed to be completely secure."
+        ]
+      },
+      {
+        "heading": "Your rights",
+        "paragraphs": [
+          "Where the GDPR applies, you may have rights concerning your personal data, including rights of access, rectification, erasure, restriction, objection and, where applicable, data portability.",
+          "You may contact FarmTree regarding a privacy request at info@farmtree.earth.",
+          "FarmTree may need to verify your identity before responding to certain requests.",
+          "You may also have the right to lodge a complaint with the competent data-protection authority."
+        ]
+      },
+      {
+        "heading": "External links and international processing",
+        "paragraphs": [
+          "The reviewed website configuration does not automatically load third-party fonts, maps, videos, analytics scripts or other third-party browser resources from FarmTree Native pages.",
+          "If you choose to follow an external link, the destination service receives the request and may process information outside the European Economic Area under its own privacy arrangements."
+        ]
+      },
+      {
+        "heading": "Changes to this Privacy Policy",
+        "paragraphs": [
+          "FarmTree may update this Privacy Policy when the website, services, technology or applicable requirements change.",
+          "The current version will be published on farmtree.eu with its latest revision date."
+        ]
+      },
+      {
+        "heading": "Contact",
+        "paragraphs": [
+          "Questions about this Privacy Policy or FarmTree's handling of personal data can be sent to:",
+          "FarmTree B.V.\nPlus Ultra Building\nBronland 12C-1\n6708 WH Wageningen\nThe Netherlands\ninfo@farmtree.earth"
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "terms",
+    "title": "Terms & Conditions",
+    "excerpt": "Terms for use of the public FarmTree website.",
+    "lastUpdated": "3 September 2026",
+    "introduction": [
+      "These Terms & Conditions apply to the use of the public FarmTree website at farmtree.eu.",
+      "By using this website, you agree to use it in accordance with these Terms and applicable law."
+    ],
+    "sections": [
+      {
+        "heading": "About FarmTree",
+        "paragraphs": [
+          "This website is operated by:",
+          "FarmTree B.V.\nPlus Ultra Building\nBronland 12C-1\n6708 WH Wageningen\nThe Netherlands\nEmail: info@farmtree.earth"
+        ]
+      },
+      {
+        "heading": "Purpose of the website",
+        "paragraphs": [
+          "farmtree.eu provides information about FarmTree, agroforestry planning, FarmTree's work, methodology, technology, projects, insights and related activities.",
+          "The website also provides links to the separate FarmTree Platform and other external services."
+        ]
+      },
+      {
+        "heading": "Informational nature of website content",
+        "paragraphs": [
+          "Information published on farmtree.eu is provided for general informational and professional-communication purposes.",
+          "Website content should not, by itself, be treated as a binding financial, investment, legal, regulatory, scientific, certification or other professional recommendation.",
+          "Agroforestry outcomes depend on project-specific assumptions, data, locations, management decisions, environmental conditions and other factors.",
+          "Users should assess relevant project-specific information before making material decisions."
+        ]
+      },
+      {
+        "heading": "FarmTree Platform",
+        "paragraphs": [
+          "The FarmTree Platform is available through a separate link from this website to tool.farmtree.earth.",
+          "Use of the FarmTree Platform may be governed by separate account, subscription, contractual or platform terms.",
+          "These website Terms do not replace an executed agreement between FarmTree and a customer, partner or other organisation.",
+          "If an executed agreement conflicts with these general website Terms, the executed agreement governs the relevant contractual relationship to the extent of that conflict."
+        ]
+      },
+      {
+        "heading": "No contract created by general website use",
+        "paragraphs": [
+          "Browsing farmtree.eu, reading website content or sending a general enquiry does not by itself create a contractual relationship with FarmTree.",
+          "A commercial or professional relationship may be established separately through an accepted proposal, agreement, Platform arrangement or other expressly agreed terms."
+        ]
+      },
+      {
+        "heading": "Intellectual property",
+        "paragraphs": [
+          "Unless otherwise stated, the website structure, FarmTree branding, original text, graphics, visual design, software-related website materials and other original FarmTree content are owned by or licensed to FarmTree B.V.",
+          "Third-party names, trademarks, logos, photographs, publications and other materials remain the property of their respective owners.",
+          "You may view and use the website for legitimate personal and professional informational purposes.",
+          "You may not reproduce, commercially exploit, misrepresent, remove ownership notices from or redistribute protected FarmTree materials beyond what is permitted by applicable law or expressly authorised by FarmTree."
+        ]
+      },
+      {
+        "heading": "Third-party materials and links",
+        "paragraphs": [
+          "The website links to third-party websites, publications, platforms and professional profiles.",
+          "Such links are provided for convenience, reference or supporting context.",
+          "FarmTree does not control third-party websites and is not responsible for their availability, security, privacy practices, accuracy or terms.",
+          "A link does not necessarily constitute endorsement of every statement, product or service available at the external destination."
+        ]
+      },
+      {
+        "heading": "Website availability",
+        "paragraphs": [
+          "FarmTree aims to keep the website accurate, secure and available but does not guarantee uninterrupted or error-free operation.",
+          "The website may occasionally be changed, updated, suspended or temporarily unavailable because of maintenance, security, technical problems or external circumstances."
+        ]
+      },
+      {
+        "heading": "Accuracy and updates",
+        "paragraphs": [
+          "FarmTree aims to maintain useful and accurate information.",
+          "However, website material may become outdated as projects, regulations, scientific knowledge, technologies, organisations or external sources change.",
+          "FarmTree may update or remove website content without prior notice."
+        ]
+      },
+      {
+        "heading": "Illustrative and modelling information",
+        "paragraphs": [
+          "Certain visualisations, scenarios, projections, maps, metrics or examples on the website may be illustrative or model-based.",
+          "They should be interpreted in the context provided and should not be assumed to represent a guaranteed project outcome, financial return, environmental result or verified project location unless specifically identified as such."
+        ]
+      },
+      {
+        "heading": "Limitation of liability",
+        "paragraphs": [
+          "To the extent permitted by applicable law, FarmTree B.V. is not liable for loss arising solely from reliance on general website information, temporary website unavailability, third-party websites or circumstances outside FarmTree's reasonable control.",
+          "Nothing in these Terms excludes or limits liability where such exclusion or limitation is prohibited by applicable law."
+        ]
+      },
+      {
+        "heading": "Acceptable use",
+        "paragraphs": [
+          "You must not use farmtree.eu in a way that:"
+        ],
+        "items": [
+          "violates applicable law",
+          "interferes with the security or operation of the website",
+          "attempts unauthorised access to systems or accounts",
+          "distributes malicious code",
+          "misrepresents FarmTree or its content",
+          "unlawfully infringes intellectual-property or privacy rights"
+        ]
+      },
+      {
+        "heading": "Privacy",
+        "paragraphs": [
+          "Use of farmtree.eu is also subject to the FarmTree Privacy Policy.",
+          "Where personal data is processed, the Privacy Policy explains the relevant website practices and rights."
+        ]
+      },
+      {
+        "heading": "Changes to these Terms",
+        "paragraphs": [
+          "FarmTree may update these Terms when the website, services or applicable requirements change.",
+          "The latest version published on farmtree.eu applies from the revision date shown above."
+        ]
+      },
+      {
+        "heading": "Severability",
+        "paragraphs": [
+          "If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions continue to apply to the extent permitted by law."
+        ]
+      },
+      {
+        "heading": "Contact",
+        "paragraphs": [
+          "Questions about these Terms may be sent to:",
+          "FarmTree B.V.\nPlus Ultra Building\nBronland 12C-1\n6708 WH Wageningen\nThe Netherlands\ninfo@farmtree.earth"
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "solutions",
+    "title": "Solutions",
+    "excerpt": "Plan, understand, learn, capture, operate and scale agroforestry evidence.",
+    "body": "FarmTree supports farm planning, project investment cases, local data capture, team learning and portfolio analysis. Scope and outputs are agreed for each engagement."
+  },
+  {
+    "slug": "user-videos",
+    "title": "FarmTree Platform Videos",
+    "excerpt": "Practical guidance for building scenarios, comparing results and working with FarmTree tools.",
+    "body": "Approved training videos can be embedded here from the official FarmTree library. This private route avoids dead navigation while the final media selection is reviewed."
+  },
+  {
+    "slug": "cocoa-focus",
+    "title": "Cocoa Focus",
+    "excerpt": "Compare regenerative cocoa designs and landscape investment questions with transparent assumptions.",
+    "body": "FarmTree can support cocoa programmes in comparing shade-tree systems, renewal timing, production, farmer value, carbon and other indicators. Local evidence and field review remain essential."
+  }
 ]

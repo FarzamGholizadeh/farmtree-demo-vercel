@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 }
 
 return [
-    'manifest_version' => '2026-09-01-private-review-1',
+    'manifest_version' => '2026-09-03-legal-review-1',
     'profile' => 'private-review',
     'publication_note' => 'English content is materialized as authenticated private-review content; public publication remains a separate approval.',
     'reserved_locales' => [
@@ -1504,6 +1504,7 @@ return [
 <!-- wp:paragraph --><p>Continue with <a href="/platform/">the FarmTree Platform</a>, <a href="/proof-stories/">Proof Stories</a> or <a href="/contact/">contact the team</a>.</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '2026-07-10 09:00:00',
+                'comment_status' => 'closed',
             ],
             'featured_asset_key' => 'asset.news.farmtree-water-erosion-microclimate-model-update-2026',
             'category_keys' => [
@@ -1544,6 +1545,7 @@ return [
 <!-- wp:paragraph --><p>Continue with <a href="/platform/">the FarmTree Platform</a>, <a href="/proof-stories/">Proof Stories</a> or <a href="/contact/">contact the team</a>.</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '2026-07-01 09:00:00',
+                'comment_status' => 'closed',
             ],
             'featured_asset_key' => 'asset.news.eu-carbon-farming-methodologies-agroforestry-2026',
             'category_keys' => [
@@ -1584,6 +1586,7 @@ return [
 <!-- wp:paragraph --><p>Continue with <a href="/platform/">the FarmTree Platform</a>, <a href="/proof-stories/">Proof Stories</a> or <a href="/contact/">contact the team</a>.</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '2026-05-04 09:00:00',
+                'comment_status' => 'closed',
             ],
             'featured_asset_key' => 'asset.news.eudr-2026-agroforestry-data-readiness',
             'category_keys' => [
@@ -1624,6 +1627,7 @@ return [
 <!-- wp:paragraph --><p>Continue with <a href="/platform/">the FarmTree Platform</a>, <a href="/proof-stories/">Proof Stories</a> or <a href="/contact/">contact the team</a>.</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '2025-10-21 09:00:00',
+                'comment_status' => 'closed',
             ],
             'featured_asset_key' => 'asset.news.verra-vm0042-v22-agricultural-land-management',
             'category_keys' => [
@@ -1664,6 +1668,7 @@ return [
 <!-- wp:paragraph --><p>Continue with <a href="/platform/">the FarmTree Platform</a>, <a href="/proof-stories/">Proof Stories</a> or <a href="/contact/">contact the team</a>.</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '2026-03-31 09:00:00',
+                'comment_status' => 'closed',
             ],
             'featured_asset_key' => 'asset.news.verra-vm0042-v30-consultation-lessons',
             'category_keys' => [
@@ -1704,6 +1709,7 @@ return [
 <!-- wp:paragraph --><p>Continue with <a href="/platform/">the FarmTree Platform</a>, <a href="/proof-stories/">Proof Stories</a> or <a href="/contact/">contact the team</a>.</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '2025-11-03 09:00:00',
+                'comment_status' => 'closed',
             ],
             'featured_asset_key' => 'asset.news.smallholder-agroforestry-wood-production-lessons-2025',
             'category_keys' => [
@@ -1744,6 +1750,7 @@ return [
 <!-- wp:paragraph --><p>Continue with <a href="/platform/">the FarmTree Platform</a>, <a href="/proof-stories/">Proof Stories</a> or <a href="/contact/">contact the team</a>.</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '2026-05-21 09:00:00',
+                'comment_status' => 'closed',
             ],
             'featured_asset_key' => 'asset.news.carbon-pricing-2026-nature-project-quality',
             'category_keys' => [
@@ -1784,6 +1791,7 @@ return [
 <!-- wp:paragraph --><p>Continue with <a href="/platform/">the FarmTree Platform</a>, <a href="/proof-stories/">Proof Stories</a> or <a href="/contact/">contact the team</a>.</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '2025-07-02 09:00:00',
+                'comment_status' => 'closed',
             ],
             'featured_asset_key' => 'asset.news.agroforestry-species-data-switchboard-2025',
             'category_keys' => [
@@ -1824,6 +1832,7 @@ return [
 <!-- wp:paragraph --><p>Continue with <a href="/platform/">the FarmTree Platform</a>, <a href="/proof-stories/">Proof Stories</a> or <a href="/contact/">contact the team</a>.</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '2025-05-20 09:00:00',
+                'comment_status' => 'closed',
             ],
             'featured_asset_key' => 'asset.news.nature-restoration-plans-report-once-agroforestry-2025',
             'category_keys' => [
@@ -2198,15 +2207,151 @@ return [
             'slug' => 'privacy',
             'legacy_slugs' => [],
             'fields' => [
-                'post_title' => 'Privacy',
+                'post_title' => 'Privacy Policy',
                 'post_name' => 'privacy',
                 'post_status' => 'private',
-                'post_excerpt' => 'How the FarmTree website and services handle personal information.',
-                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">A final privacy notice must be reviewed against the production analytics, hosting, contact delivery and FT Bot configuration before publication. The pre-release contact state transmits no form data and FT Bot remains disabled.</p><!-- /wp:paragraph -->
+                'post_excerpt' => 'How the FarmTree website handles personal information.',
+                'post_content' => '<!-- wp:paragraph --><p>Last updated: 3 September 2026</p><!-- /wp:paragraph -->
 
-<!-- wp:heading --><h2 class="wp-block-heading">A useful next step</h2><!-- /wp:heading -->
+<!-- wp:paragraph --><p>FarmTree B.V. respects your privacy and is committed to handling personal data in a transparent and responsible manner.</p><!-- /wp:paragraph -->
 
-<!-- wp:paragraph --><p>Explore <a href="/platform/">the Platform</a>, review <a href="/proof-stories/">Proof Stories</a>, or <a href="/contact/">contact FarmTree</a> with a specific planning question.</p><!-- /wp:paragraph -->',
+<!-- wp:paragraph --><p>This Privacy Policy explains what information may be processed when you visit farmtree.eu, why it is processed and what rights you may have.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">1. Who we are</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>FarmTree B.V.<br>Plus Ultra Building<br>Bronland 12C-1<br>6708 WH Wageningen<br>The Netherlands</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Email: info@farmtree.earth</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>FarmTree B.V. is the entity identified on farmtree.eu. This notice describes the website-related processing associated with farmtree.eu.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">2. Information processed when you visit the website</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>FarmTree does not currently use public behavioural analytics, advertising pixels or visitor-profiling technologies on farmtree.eu.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>When you access the website, technical request information may nevertheless be processed by the hosting infrastructure. This may include:</p><!-- /wp:paragraph -->
+
+<!-- wp:list --><ul><li>IP address</li><li>date and time of the request</li><li>requested page or resource</li><li>browser and user-agent information</li><li>referring page, where provided</li><li>technical information required to deliver and protect the website</li></ul><!-- /wp:list -->
+
+<!-- wp:paragraph --><p>The hosting environment uses Apache access logs and AWStats for technical and aggregate website statistics.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>This information is processed for website delivery, security, troubleshooting, availability and technical performance.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">3. Contacting FarmTree</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>The current website uses an email-based contact experience.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>When you select a contact or quotation action, your own email application may open and allow you to send a message to info@farmtree.earth.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The website itself does not currently submit or store contact-form entries in the FarmTree WordPress database.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The reviewed website has no newsletter subscription, and comments are closed on all nine News posts.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>If you email FarmTree, the information you choose to provide may be used to respond to your request, communicate with you and, where relevant, take steps related to a potential or existing business relationship.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">4. Accounts and authentication</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>farmtree.eu does not currently provide public account registration.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>WordPress authentication functionality exists for authorised website administration and controlled access. When an authorised user signs in, WordPress may process authentication information and set strictly necessary login and session cookies.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>These cookies are used for authentication and security.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">5. Cookies and local browser storage</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>At the date of this Privacy Policy, an ordinary anonymous visit to the public website does not set advertising or behavioural-tracking cookies.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The FarmTree Native interface may use browser session storage for presentation purposes, such as remembering whether a visual metric animation has already been displayed during the browser session. This storage does not contain information entered by the visitor.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>WordPress authentication cookies are used only when login or controlled-access functionality is used.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>No cookie banner is currently present. If FarmTree introduces analytics, marketing or other non-essential cookies in the future, this Privacy Policy and, where legally required, the consent mechanism will be updated before those technologies are enabled.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">6. Hosting and technical services</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>The website is hosted using Vimexx infrastructure on a network registered in the Netherlands.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Hosting systems process technical request information needed to provide, secure, maintain and troubleshoot the website.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The production WordPress installation also uses administrative and backup integrations supplied through the hosting environment. Extendify Insights and SeedProd usage telemetry are disabled in the reviewed configuration.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">7. External websites and services</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>farmtree.eu contains links to external websites and services, including the FarmTree Platform, LinkedIn, YouTube, OpenStreetMap and third-party information sources.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The FarmTree website does not embed those services or automatically transmit form data to the FarmTree Platform in the reviewed configuration.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>When you follow an external link, you leave farmtree.eu and the privacy practices of the destination service apply.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The FarmTree Platform is currently accessed through links to tool.farmtree.earth.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">8. Artificial intelligence features</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>FarmTree has technical components that may support an AI assistant in the future.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The FarmTree AI Assistant is currently disabled.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>No public AI widget is rendered, conversation logging is disabled, no conversation history is stored and visitor information is not currently sent by this website to OpenAI, Anthropic or another AI provider.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>If such functionality is activated in the future, the applicable privacy information will be updated before public use.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">9. Team and professional information</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>The website contains professional information about FarmTree team members, including names, roles, biographies, photographs and links to professional profiles.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>This information is presented as organisational and professional information about the FarmTree team.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">10. Legal basis</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>Depending on the processing activity, FarmTree processes personal data where this is necessary:</p><!-- /wp:paragraph -->
+
+<!-- wp:list --><ul><li>to operate, secure and maintain the website</li><li>for FarmTree\'s legitimate interests in communicating about its organisation, services and activities</li><li>to respond to enquiries and take steps requested by a person before entering into a business relationship</li><li>to comply with applicable legal obligations</li><li>where another legal basis under applicable data-protection law applies</li></ul><!-- /wp:list -->
+
+<!-- wp:paragraph --><p>FarmTree does not currently use this website for automated decision-making or visitor profiling that produces legal or similarly significant effects.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">11. Data retention</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>FarmTree does not state fixed retention periods in this Privacy Policy because no fixed periods were established by the website runtime audit.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The reviewed runtime currently stores authorised WordPress account and session information and team profile information. The hosting environment stores access-log and AWStats information and may retain website backups.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Email sent directly to info@farmtree.earth is handled outside the farmtree.eu WordPress database.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>FarmTree retains personal data only for as long as reasonably necessary for the purpose for which it was processed, including applicable technical, security, business and legal requirements.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">12. Data security</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>FarmTree uses technical and organisational measures intended to protect website and account information against unauthorised access, loss, misuse or alteration.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>No internet-based system can be guaranteed to be completely secure.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">13. Your rights</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>Where the GDPR applies, you may have rights concerning your personal data, including rights of access, rectification, erasure, restriction, objection and, where applicable, data portability.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>You may contact FarmTree regarding a privacy request at info@farmtree.earth.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>FarmTree may need to verify your identity before responding to certain requests.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>You may also have the right to lodge a complaint with the competent data-protection authority.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">14. External links and international processing</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>The reviewed website configuration does not automatically load third-party fonts, maps, videos, analytics scripts or other third-party browser resources from FarmTree Native pages.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>If you choose to follow an external link, the destination service receives the request and may process information outside the European Economic Area under its own privacy arrangements.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">15. Changes to this Privacy Policy</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>FarmTree may update this Privacy Policy when the website, services, technology or applicable requirements change.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The current version will be published on farmtree.eu with its latest revision date.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">16. Contact</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>Questions about this Privacy Policy or FarmTree\'s handling of personal data can be sent to:</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>FarmTree B.V.<br>Plus Ultra Building<br>Bronland 12C-1<br>6708 WH Wageningen<br>The Netherlands<br>info@farmtree.earth</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '',
             ],
@@ -2220,15 +2365,127 @@ return [
             'slug' => 'terms',
             'legacy_slugs' => [],
             'fields' => [
-                'post_title' => 'Terms',
+                'post_title' => 'Terms & Conditions',
                 'post_name' => 'terms',
                 'post_status' => 'private',
-                'post_excerpt' => 'Terms for the FarmTree website and Platform services.',
-                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Final legal terms require authorised human review before publication. No draft wording on this local build overrides an executed agreement or Platform terms.</p><!-- /wp:paragraph -->
+                'post_excerpt' => 'Terms for use of the public FarmTree website.',
+                'post_content' => '<!-- wp:paragraph --><p>Last updated: 3 September 2026</p><!-- /wp:paragraph -->
 
-<!-- wp:heading --><h2 class="wp-block-heading">A useful next step</h2><!-- /wp:heading -->
+<!-- wp:paragraph --><p>These Terms &amp; Conditions apply to the use of the public FarmTree website at farmtree.eu.</p><!-- /wp:paragraph -->
 
-<!-- wp:paragraph --><p>Explore <a href="/platform/">the Platform</a>, review <a href="/proof-stories/">Proof Stories</a>, or <a href="/contact/">contact FarmTree</a> with a specific planning question.</p><!-- /wp:paragraph -->',
+<!-- wp:paragraph --><p>By using this website, you agree to use it in accordance with these Terms and applicable law.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">1. About FarmTree</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>This website is operated by:</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>FarmTree B.V.<br>Plus Ultra Building<br>Bronland 12C-1<br>6708 WH Wageningen<br>The Netherlands<br>Email: info@farmtree.earth</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">2. Purpose of the website</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>farmtree.eu provides information about FarmTree, agroforestry planning, FarmTree\'s work, methodology, technology, projects, insights and related activities.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The website also provides links to the separate FarmTree Platform and other external services.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">3. Informational nature of website content</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>Information published on farmtree.eu is provided for general informational and professional-communication purposes.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Website content should not, by itself, be treated as a binding financial, investment, legal, regulatory, scientific, certification or other professional recommendation.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Agroforestry outcomes depend on project-specific assumptions, data, locations, management decisions, environmental conditions and other factors.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Users should assess relevant project-specific information before making material decisions.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">4. FarmTree Platform</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>The FarmTree Platform is available through a separate link from this website to tool.farmtree.earth.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Use of the FarmTree Platform may be governed by separate account, subscription, contractual or platform terms.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>These website Terms do not replace an executed agreement between FarmTree and a customer, partner or other organisation.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>If an executed agreement conflicts with these general website Terms, the executed agreement governs the relevant contractual relationship to the extent of that conflict.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">5. No contract created by general website use</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>Browsing farmtree.eu, reading website content or sending a general enquiry does not by itself create a contractual relationship with FarmTree.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>A commercial or professional relationship may be established separately through an accepted proposal, agreement, Platform arrangement or other expressly agreed terms.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">6. Intellectual property</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>Unless otherwise stated, the website structure, FarmTree branding, original text, graphics, visual design, software-related website materials and other original FarmTree content are owned by or licensed to FarmTree B.V.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Third-party names, trademarks, logos, photographs, publications and other materials remain the property of their respective owners.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>You may view and use the website for legitimate personal and professional informational purposes.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>You may not reproduce, commercially exploit, misrepresent, remove ownership notices from or redistribute protected FarmTree materials beyond what is permitted by applicable law or expressly authorised by FarmTree.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">7. Third-party materials and links</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>The website links to third-party websites, publications, platforms and professional profiles.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Such links are provided for convenience, reference or supporting context.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>FarmTree does not control third-party websites and is not responsible for their availability, security, privacy practices, accuracy or terms.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>A link does not necessarily constitute endorsement of every statement, product or service available at the external destination.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">8. Website availability</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>FarmTree aims to keep the website accurate, secure and available but does not guarantee uninterrupted or error-free operation.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The website may occasionally be changed, updated, suspended or temporarily unavailable because of maintenance, security, technical problems or external circumstances.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">9. Accuracy and updates</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>FarmTree aims to maintain useful and accurate information.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>However, website material may become outdated as projects, regulations, scientific knowledge, technologies, organisations or external sources change.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>FarmTree may update or remove website content without prior notice.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">10. Illustrative and modelling information</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>Certain visualisations, scenarios, projections, maps, metrics or examples on the website may be illustrative or model-based.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>They should be interpreted in the context provided and should not be assumed to represent a guaranteed project outcome, financial return, environmental result or verified project location unless specifically identified as such.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">11. Limitation of liability</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>To the extent permitted by applicable law, FarmTree B.V. is not liable for loss arising solely from reliance on general website information, temporary website unavailability, third-party websites or circumstances outside FarmTree\'s reasonable control.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Nothing in these Terms excludes or limits liability where such exclusion or limitation is prohibited by applicable law.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">12. Acceptable use</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>You must not use farmtree.eu in a way that:</p><!-- /wp:paragraph -->
+
+<!-- wp:list --><ul><li>violates applicable law</li><li>interferes with the security or operation of the website</li><li>attempts unauthorised access to systems or accounts</li><li>distributes malicious code</li><li>misrepresents FarmTree or its content</li><li>unlawfully infringes intellectual-property or privacy rights</li></ul><!-- /wp:list -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">13. Privacy</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>Use of farmtree.eu is also subject to the FarmTree Privacy Policy.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>Where personal data is processed, the Privacy Policy explains the relevant website practices and rights.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">14. Changes to these Terms</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>FarmTree may update these Terms when the website, services or applicable requirements change.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>The latest version published on farmtree.eu applies from the revision date shown above.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">15. Severability</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions continue to apply to the extent permitted by law.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">16. Contact</h2><!-- /wp:heading -->
+
+<!-- wp:paragraph --><p>Questions about these Terms may be sent to:</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph --><p>FarmTree B.V.<br>Plus Ultra Building<br>Bronland 12C-1<br>6708 WH Wageningen<br>The Netherlands<br>info@farmtree.earth</p><!-- /wp:paragraph -->',
                 'menu_order' => 0,
                 'post_date' => '',
             ],

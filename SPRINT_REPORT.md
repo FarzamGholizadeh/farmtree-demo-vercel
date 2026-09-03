@@ -7,7 +7,7 @@ validated; stopped at pre-release for visual and publication approval
 
 The feature branch now produces a clean, checksummed native artifact from an
 exhaustive allowlist instead of exposing the raw theme/plugin source trees.
-Current classification is 81 runtime files and 114 exclusions, including all
+Current classification is 85 runtime files and 114 exclusions, including all
 raw content JSON, documentation, local QA/bootstrap data and unused media
 derivatives. The manual-only workflow validates and transfers only that staged
 artifact; it remains undispatched.
@@ -207,6 +207,26 @@ plugin. Full evidence is in
 
 The correction stays in the Block Theme architecture. It does not modify the
 current production `farmtree` theme or restore the legacy SPA as the runtime.
+
+## Legal Review Preparation
+
+The final Privacy Policy and Terms & Conditions candidate copy is now compiled
+from repository-only structured source into the private managed-content
+manifest. Runtime claims were aligned to the 3 September 2026 production fact
+audit; no registration number, VAT number, DPO, fixed retention period,
+governing law or jurisdiction was added. The legal pages remain private and
+were not written to production.
+
+The Native release artifact now includes locally hosted Inter and Manrope Latin
+variable WOFF2 files plus both OFL texts, and both the runtime and local preview
+have no Google Fonts request. Exactly nine managed News entries declare
+`comment_status=closed` as reconciled state. On production, a fresh database
+backup was created outside the public webroot before the same nine owned,
+private News rows were closed. Extendify Insights was stopped and unscheduled;
+SeedProd's primary and UI usage-tracking flags were disabled. SeedProd Coming
+Soon stayed active, `blog_public` stayed `0`, `noindex,nofollow` stayed active,
+and no launch or legal publication occurred. The font artifact remains local
+until a separate deployment approval.
 
 ## Frank Feedback Implemented
 

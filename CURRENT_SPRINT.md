@@ -16,17 +16,28 @@ design controls.
 
 The native release candidate now has a separate production-safety layer. The
 deployment workflow builds an exhaustive allowlisted `.release/wordpress`
-artifact: 81 intended runtime files are staged and 114 repository-only,
+artifact: 85 intended runtime files are staged and 114 repository-only,
 development or obsolete files are excluded. Raw content JSON is compiled into
 an `ABSPATH`-guarded PHP manifest and never shipped as public data.
 
-The `farmtree-content` 0.4.6 plugin exposes a WP-CLI-only reconciler that defaults to
+The `farmtree-content` 0.4.7 plugin exposes a WP-CLI-only reconciler that defaults to
 JSON dry-run. It manages 40 English content entities, six categories and 34
 media assets by stable key, type/taxonomy, slug and canonical fingerprints.
 Exact unowned matches may be adopted in place; ambiguity, foreign ownership,
 duplicate identity, manual drift and media-binary drift are conflicts. It has
 no delete, blanket-import, activation, Coming Soon, robots or infrastructure
 mutation path. `/nl/` and `/de/` remain reserved and unpublished.
+
+The 0.4.7 legal-review preparation adds fact-audited, still-private Privacy
+Policy and Terms & Conditions source; makes closed comments part of the stable
+managed state for exactly the nine News posts; and self-hosts the Inter and
+Manrope Latin variable fonts with their OFL license texts. The theme and local
+preview contain no Google Fonts request. Production settings cleanup was
+preceded by a fresh off-webroot database backup: Extendify Insights scheduling
+is stopped, SeedProd usage telemetry is disabled, all nine owned private News
+posts have closed comments, and Coming Soon plus `blog_public=0` and the
+`noindex,nofollow` response remain unchanged. No legal page was published and
+the self-hosted-font artifact was not deployed.
 
 All FarmTree lifecycle hooks were removed, so load, command registration,
 construction, dry-run, activation and deactivation add no persistent write.

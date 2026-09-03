@@ -399,6 +399,21 @@ function newsHubContent() {
   ].join('\n');
 }
 
+function legalDocumentContent(page) {
+  const paragraph = (text) => `<!-- wp:paragraph --><p>${escapeHtml(text).replaceAll('\n', '<br>')}</p><!-- /wp:paragraph -->`;
+  const list = (items) => `<!-- wp:list --><ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul><!-- /wp:list -->`;
+  return [
+    paragraph(`Last updated: ${page.lastUpdated}`),
+    ...page.introduction.map(paragraph),
+    ...page.sections.flatMap((section, index) => [
+      `<!-- wp:heading --><h2 class="wp-block-heading">${index + 1}. ${escapeHtml(section.heading)}</h2><!-- /wp:heading -->`,
+      ...(section.paragraphs ?? []).map(paragraph),
+      ...(section.items ? [list(section.items)] : []),
+      ...(section.after ?? []).map(paragraph)
+    ])
+  ].join('\n\n');
+}
+
 function teamPageContent(mediaBySlug, heroMedia) {
   const cards = teamMemberDefinitions.map((member) => {
     const media = mediaBySlug.get(member.slug);
@@ -433,6 +448,9 @@ function proofStoryContent(story) {
 function englishPageContent(page, teamMedia = new Map()) {
   if (page.body === 'news' || page.slug === 'blog') {
     return newsHubContent();
+  }
+  if (page.lastUpdated && page.sections) {
+    return legalDocumentContent(page);
   }
   if (page.body === 'contact') {
     return [

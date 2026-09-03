@@ -35,7 +35,7 @@ rsyncs only the staged theme/plugin directories with checksum comparison, and
 verifies the same checksums remotely. It does not activate code or change
 WordPress data.
 
-The classification currently contains 81 intended runtime files and 114
+The classification currently contains 85 intended runtime files and 114
 excluded files. The excluded set includes all five raw content JSON sources,
 theme/plugin README and provenance documents, obsolete responsive image
 derivatives, unused portraits and superseded media. The only shipped JSON files

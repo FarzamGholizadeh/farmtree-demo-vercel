@@ -351,6 +351,18 @@ const localStart = readFileSync(resolve(root, 'scripts/start-local-wordpress.mjs
 const packageJson = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8'));
 const teamMembers = JSON.parse(readFileSync(resolve(plugin, 'data/team-members.json'), 'utf8'));
 const editorialDrafts = readFileSync(resolve(plugin, 'data/editorial-drafts.json'), 'utf8');
+const englishPages = JSON.parse(readFileSync(resolve(plugin, 'data/english-pages.json'), 'utf8'));
+const managedContentManifest = readFileSync(resolve(plugin, 'includes/managed-content-manifest.php'), 'utf8');
+
+if ((managedContentManifest.match(/'comment_status' => 'closed'/g) ?? []).length !== 9) {
+  throw new Error('All nine managed News posts, and only those posts, must declare closed comments.');
+}
+for (const [slug, title] of [['privacy', 'Privacy Policy'], ['terms', 'Terms & Conditions']]) {
+  const legalPage = englishPages.find((page) => page.slug === slug);
+  if (legalPage?.title !== title || legalPage.lastUpdated !== '3 September 2026' || legalPage.sections?.length !== 16) {
+    throw new Error(`${title} must contain the complete audited 3 September 2026 review copy.`);
+  }
+}
 
 if (teamMembers.length !== 10) {
   throw new Error('Team data must contain the ten requested current entries.');
@@ -723,11 +735,36 @@ for (const removedInteraction of ['initialiseTechnologySignal', 'initialiseTesti
   }
 }
 
+const themeStyle = readFileSync(resolve(theme, 'style.css'), 'utf8');
+for (const localFontContract of [
+  '@font-face',
+  'assets/fonts/inter-latin-variable.woff2',
+  'assets/fonts/manrope-latin-variable.woff2',
+  'font-weight: 400 900',
+  'font-weight: 500 800'
+]) {
+  if (!themeStyle.includes(localFontContract)) {
+    throw new Error(`Theme is missing self-hosted font contract: ${localFontContract}`);
+  }
+}
+for (const forbiddenFontHost of ['fonts.googleapis.com', 'fonts.gstatic.com']) {
+  if (functions.includes(forbiddenFontHost) || themeStyle.includes(forbiddenFontHost)) {
+    throw new Error(`Theme must not request public fonts from ${forbiddenFontHost}.`);
+  }
+}
+for (const localFontFile of [
+  'assets/fonts/inter-latin-variable.woff2',
+  'assets/fonts/manrope-latin-variable.woff2',
+  'assets/fonts/INTER-OFL.txt',
+  'assets/fonts/MANROPE-OFL.txt'
+]) {
+  if (!existsSync(resolve(theme, localFontFile))) {
+    throw new Error(`Theme is missing self-hosted font runtime file: ${localFontFile}`);
+  }
+}
+
 if (
-  !functions.includes('farmtree-native-fonts') ||
   !functions.includes('farmtree-native-style') ||
-  !functions.includes('family=Manrope') ||
-  !functions.includes('family=Inter') ||
   !functions.includes('get_stylesheet_uri()') ||
   !functions.includes("add_action('wp_enqueue_scripts', 'farmtree_native_enqueue_styles')") ||
   !functions.includes('assets/js/native-interactions.js') ||

@@ -96,6 +96,12 @@ rules, anchors, canonical rules and unrelated persisted rules remained exact
 after the managed front-page update. The diagnostic is neither adopted nor
 persisted; every release-critical comparison remains fail-closed.
 
+The 0.4.7 legal-review preparation keeps both legal pages private, adds the
+fact-audited review copy, closes comments as managed state for exactly nine News
+posts and replaces Google Fonts requests with audited local WOFF2/OFL runtime
+files. The separately authorised production settings cleanup is complete;
+publication, font deployment and public launch remain approval-gated.
+
 The approved baseline `210ce51f7c4b573b51cf96bba1b575918757e9d1` was pushed
 only to `origin/feat/wordpress-native-rebuild`. The audited preparation commit
 is a separate feature-branch release candidate; production remains untouched.

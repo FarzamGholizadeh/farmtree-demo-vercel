@@ -289,9 +289,6 @@ const document = `<!doctype html>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>FarmTree Native Homepage Preview</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap">
   <style>${previewCss}</style>
   <link rel="stylesheet" href="/theme/style.css">
   <script src="/theme/assets/js/native-interactions.js" defer></script>
