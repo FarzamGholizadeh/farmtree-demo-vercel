@@ -3287,8 +3287,19 @@ final class FarmTree_Content_Reconciler
         ], 'rewrite-rules');
 
         $fresh = $this->plan_rewrite_rules();
+        // page_on_front legitimately changes core's runtime-only generated
+        // root-comment query diagnostics. That diagnostic is never persisted
+        // or adopted by FarmTree, so exclude only it from equality while all
+        // raw option identity, target, canonical rules, anchors and preserved
+        // unrelated rules remain exact.
+        $planned_comparable = $operation;
+        $fresh_comparable = $fresh;
+        unset(
+            $planned_comparable['desired']['runtime_unrelated_rules_not_adopted'],
+            $fresh_comparable['desired']['runtime_unrelated_rules_not_adopted']
+        );
         foreach (['kind', 'key', 'action', 'reason', 'before', 'desired'] as $field) {
-            if (($fresh[$field] ?? null) !== ($operation[$field] ?? null)) {
+            if (($fresh_comparable[$field] ?? null) !== ($planned_comparable[$field] ?? null)) {
                 throw new RuntimeException('Rewrite rules changed after planning.');
             }
         }

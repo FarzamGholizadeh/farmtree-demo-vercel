@@ -70,6 +70,16 @@ front-page write, restores it in `finally`, and leaves the reconciler's exact
 WordPress 7.1 regression proves zero intermediate rewrite update, unchanged
 rules and exact callback restoration.
 
+The 0.4.6 correction addresses the final diagnostic-only mismatch proven by a
+second rollback-protected production trace. With the global flush suppressed,
+the raw 94-rule option, disclosed 128-rule target, merged rules, anchors and
+every canonical/unrelated-rule field remained exact; only the non-persisted
+`runtime_unrelated_rules_not_adopted` report changed because core generates a
+different root-comment query after `page_on_front` changes. Finalization now
+excludes only that diagnostic from equality and retains every write-safety
+comparison. The focused regression proves the diagnostic drift, the sole
+intended rewrite update and final exact convergence.
+
 Automated static classification source-seals the complete four-file deployable
 plugin runtime and pins every persistence API to the APPLY graph. A separate
 66-fixture, no-whole-table-ignore comparator rejects incomplete captures,

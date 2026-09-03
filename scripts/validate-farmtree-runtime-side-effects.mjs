@@ -421,6 +421,9 @@ function farmtree_front_page_flush_suppression_regression(FarmTree_Content_Recon
     if (false === $original_priority) {
         add_action('update_option_page_on_front', 'update_home_siteurl', $test_priority, 2);
     }
+    $rewrite_plan_method = new ReflectionMethod($reconciler, 'plan_rewrite_rules');
+    $rewrite_plan_method->setAccessible(true);
+    $rewrite_operation = $rewrite_plan_method->invoke($reconciler);
 
     $page_ids = get_posts([
         'post_type' => 'page',
@@ -456,6 +459,21 @@ function farmtree_front_page_flush_suppression_regression(FarmTree_Content_Recon
         $result = $method->invoke($reconciler, $operation, ['page.en.home' => $page_id]);
         $callback_restored = $test_priority === has_action('update_option_page_on_front', 'update_home_siteurl');
         $rules_unchanged = $original_rules === get_option('rewrite_rules');
+        $intermediate_rewrite_updates = $rewrite_updates;
+        $fresh_rewrite_operation = $rewrite_plan_method->invoke($reconciler);
+        $desired_changed_keys = array_keys(array_filter(
+            array_merge(
+                array_fill_keys(array_keys((array) ($rewrite_operation['desired'] ?? [])), true),
+                array_fill_keys(array_keys((array) ($fresh_rewrite_operation['desired'] ?? [])), true)
+            ),
+            static function ($unused, $key) use ($rewrite_operation, $fresh_rewrite_operation): bool {
+                return ($rewrite_operation['desired'][$key] ?? null) !== ($fresh_rewrite_operation['desired'][$key] ?? null);
+            },
+            ARRAY_FILTER_USE_BOTH
+        ));
+        $finalizer = new ReflectionMethod($reconciler, 'finalize_rewrite_rules');
+        $finalizer->setAccessible(true);
+        $finalizer_result = $finalizer->invoke($reconciler, $rewrite_operation);
     } finally {
         remove_action('updated_option', $observer, PHP_INT_MAX);
         remove_action('update_option_page_on_front', 'update_home_siteurl', $test_priority);
@@ -468,9 +486,12 @@ function farmtree_front_page_flush_suppression_regression(FarmTree_Content_Recon
     }
     return [
         'result' => $result,
-        'rewriteUpdateCount' => $rewrite_updates,
+        'intermediateRewriteUpdateCount' => $intermediate_rewrite_updates,
+        'totalRewriteUpdateCount' => $rewrite_updates,
         'rewriteRulesUnchanged' => $rules_unchanged,
         'coreCallbackRestored' => $callback_restored,
+        'desiredChangedKeysAfterFrontPage' => array_values($desired_changed_keys),
+        'finalizerResult' => $finalizer_result,
     ];
 }
 
@@ -699,9 +720,13 @@ try {
 
   const frontPageFlushRegression = result.frontPageFlushRegression;
   if (frontPageFlushRegression?.result?.status !== 'updated' ||
-      frontPageFlushRegression?.rewriteUpdateCount !== 0 ||
+      frontPageFlushRegression?.intermediateRewriteUpdateCount !== 0 ||
+      frontPageFlushRegression?.totalRewriteUpdateCount !== 1 ||
       frontPageFlushRegression?.rewriteRulesUnchanged !== true ||
-      frontPageFlushRegression?.coreCallbackRestored !== true) {
+      frontPageFlushRegression?.coreCallbackRestored !== true ||
+      JSON.stringify(frontPageFlushRegression?.desiredChangedKeysAfterFrontPage) !==
+        JSON.stringify(['runtime_unrelated_rules_not_adopted']) ||
+      frontPageFlushRegression?.finalizerResult?.status !== 'updated') {
     fail('Managed page_on_front reconciliation did not suppress and restore only the core global rewrite flush.', [
       JSON.stringify(frontPageFlushRegression)
     ]);
@@ -773,7 +798,9 @@ try {
     frontPageFlushRegression: {
       coreGlobalFlushSuppressed: true,
       rewriteRulesUnchanged: true,
-      coreCallbackRestored: true
+      coreCallbackRestored: true,
+      runtimeOnlyDiagnosticDriftAccepted: true,
+      exactFinalizerConverged: true
     },
     sqlFirewall: {
       selectAllowed: true,

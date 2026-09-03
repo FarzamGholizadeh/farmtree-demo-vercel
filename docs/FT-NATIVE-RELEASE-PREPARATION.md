@@ -152,6 +152,21 @@ baseline plus 34 FarmTree identities; it never calls a global flush or writes
 real core callback, invokes the private front-page operation, and proves zero
 rewrite update, byte-identical stored rules and exact callback restoration.
 
+The 0.4.6 follow-up is based on a second rollback-protected production trace
+with that core flush successfully suppressed. The trace recorded zero
+`rewrite_rules` update, callback restoration at priority 10, the same option
+ID/autoload/94-rule fingerprint, the same disclosed 128-rule target, and
+byte-identical merged rules and anchors before and after the managed
+front-page update. Only the audit-only
+`runtime_unrelated_rules_not_adopted` map changed because core's generated
+root-comment query incorporates `page_on_front`. That map is never a write
+target and is never adopted. Finalization therefore removes only that field
+from its repeated-plan equality comparison; action/reason, raw option state,
+target count/hash, required/canonical rules, managed count, preserved
+unrelated count, anchors and the complete merged target remain exact. The
+regression reproduces precisely that one-field drift and proves the finalizer
+then performs one exact update and converges.
+
 The two public-capable CPTs require persisted pretty-permalink rules, so
 dry-run also discloses one `rewrite-rules` option operation. It reads the raw
 option row directly, preserves its option ID, autoload state and ordered rule

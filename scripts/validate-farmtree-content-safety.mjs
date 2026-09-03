@@ -13,7 +13,7 @@ const cliPath = `${pluginPrefix}includes/class-farmtree-content-cli-command.php`
 const reconcilerPath = `${pluginPrefix}includes/class-farmtree-content-reconciler.php`;
 const managedManifestPath = `${pluginPrefix}includes/managed-content-manifest.php`;
 const exactPluginRuntime = [mainPath, cliPath, reconcilerPath, managedManifestPath].sort();
-const auditedRuntimeSourceSha256 = '4674661f0a8737ed09fb25c26b0af10ac85c1e589ae99623818c26d2968bb360';
+const auditedRuntimeSourceSha256 = '9976327d4df8b2a56dfcebf649f539962ee084d6054f50d0c3ee74ae533f14c9';
 
 function fail(message, details = []) {
   const suffix = details.length === 0
@@ -969,7 +969,10 @@ const finalizeMasked = reconcilerFile.masked.slice(
   finalizeRewriteRules.bodyEnd
 );
 if (/\bflush_rewrite_rules\s*\(/.test(files.map((file) => file.masked).join('\n'))
-  || !finalizeMasked.includes('update_option')) {
+  || !finalizeMasked.includes('update_option')
+  || !finalizeMasked.includes('$planned_comparable')
+  || !finalizeMasked.includes('$fresh_comparable')
+  || !finalizeMasked.includes('unset')) {
   fail('Rewrite finalization must persist only its exact reviewed option target and never flush globally.');
 }
 

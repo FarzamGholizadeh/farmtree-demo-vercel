@@ -20,7 +20,7 @@ artifact: 81 intended runtime files are staged and 114 repository-only,
 development or obsolete files are excluded. Raw content JSON is compiled into
 an `ABSPATH`-guarded PHP manifest and never shipped as public data.
 
-The `farmtree-content` 0.4.5 plugin exposes a WP-CLI-only reconciler that defaults to
+The `farmtree-content` 0.4.6 plugin exposes a WP-CLI-only reconciler that defaults to
 JSON dry-run. It manages 40 English content entities, six categories and 34
 media assets by stable key, type/taxonomy, slug and canonical fingerprints.
 Exact unowned matches may be adopted in place; ambiguity, foreign ownership,
@@ -77,6 +77,13 @@ restores it at the same priority in `finally`, and then persists the already
 reviewed 128-rule target. A WordPress 7.1 regression proves the automatic
 global flush is suppressed, the prior rule map stays exact and the callback is
 restored.
+
+The 0.4.6 correction narrows finalization equality for the one value production
+proved is runtime-only: `page_on_front` changes core's generated root-comment
+diagnostic even when the raw option, 128-rule target, anchors, canonical rules
+and all unrelated persisted rules remain byte-identical. Only
+`runtime_unrelated_rules_not_adopted` is excluded from the comparison; it is
+never persisted or adopted. Every release-critical field remains exact.
 
 The source-sealed static write-API audit pins every persistence API to the apply
 graph. The fail-closed volatile-state comparator passes 66 fixtures without

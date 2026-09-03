@@ -49,7 +49,7 @@ The pilot remains in the production theme until the isolated rebuild is stable.
 ### FT-NATIVE-004A - Audited release preparation
 
 Status: production Homepage and rewrite-finalization root causes proven; the
-0.4.5 release correction is locally validated before the authorized production
+0.4.6 release correction is locally validated before the authorized production
 release loop continues.
 
 The release path now stages an exhaustive allowlisted artifact instead of the
@@ -88,6 +88,13 @@ exact audited FarmTree-only rewrite finalizer. Production tracing proved the
 callback was the sole source of the unexpected 147-rule global flush. The
 focused WordPress 7.1 regression proves the callback is restored and no
 intermediate rewrite persistence occurs.
+
+The 0.4.6 correction excludes only the proven runtime-only
+`runtime_unrelated_rules_not_adopted` report from the final equality check.
+Production tracing proved the raw option identity/hash, exact target, merged
+rules, anchors, canonical rules and unrelated persisted rules remained exact
+after the managed front-page update. The diagnostic is neither adopted nor
+persisted; every release-critical comparison remains fail-closed.
 
 The approved baseline `210ce51f7c4b573b51cf96bba1b575918757e9d1` was pushed
 only to `origin/feat/wordpress-native-rebuild`. The audited preparation commit

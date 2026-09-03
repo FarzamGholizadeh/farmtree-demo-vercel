@@ -3,7 +3,7 @@
  * Plugin Name: FarmTree Content
  * Plugin URI: https://farmtree.eu/
  * Description: Canonical native content-model and global-settings layer for the isolated FarmTree rebuild.
- * Version: 0.4.5
+ * Version: 0.4.6
  * Author: FarmTree
  * Text Domain: farmtree-content
  * Requires at least: 6.6
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('FARMTREE_CONTENT_VERSION', '0.4.5');
+define('FARMTREE_CONTENT_VERSION', '0.4.6');
 define('FARMTREE_CONTENT_FILE', __FILE__);
 define('FARMTREE_CONTENT_DIR', plugin_dir_path(__FILE__));
 
