@@ -1010,8 +1010,9 @@ final class FarmTree_Content_Reconciler
             if (!post_type_exists($post_type)) {
                 $checks[] = $this->op('manifest', $entity_key, 'conflict', 'manifest_post_type_not_registered');
             }
-            if ('private' !== (string) ($entity['fields']['post_status'] ?? '')) {
-                $checks[] = $this->op('manifest', $entity_key, 'conflict', 'managed_entity_status_must_be_private');
+            $expected_status = 'page.en.home' === $entity_key && 'page' === $post_type ? 'publish' : 'private';
+            if ($expected_status !== (string) ($entity['fields']['post_status'] ?? '')) {
+                $checks[] = $this->op('manifest', $entity_key, 'conflict', 'managed_entity_status_not_approved');
             }
             $entity_slugs = array_values(array_unique(array_filter(array_merge(
                 [sanitize_title((string) ($entity['slug'] ?? ''))],

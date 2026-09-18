@@ -1,5 +1,10 @@
 # Current FarmTree Sprint
 
+Homepage publication approval (2026-09-18): production ID 439 intentionally
+remains public/published. The manifest and reconciler now require publish for
+page.en.home only; all other protected-review entity expectations remain private.
+The exact approved Homepage block content and existing front-page identity are preserved.
+
 Public launch preparation (2026-09-18): explicit launch authorization supersedes
 historical private-release gates. Source now uses left-to-right testimonial
 travel, an intentional mailto-only Contact CTA and production indexing governed

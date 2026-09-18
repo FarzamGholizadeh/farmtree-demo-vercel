@@ -1,5 +1,9 @@
 # FT-NATIVE-002 Sprint Report
 
+Homepage publication approval (2026-09-18): ID 439 publication is intentional.
+Source now expects publish for page.en.home without altering its approved content.
+Production reconciliation and final public-launch gates remain to be verified.
+
 Public launch preparation (2026-09-18): explicit launch authorization supersedes
 historical private-release gates. Source now uses left-to-right testimonial
 travel, an intentional mailto-only Contact CTA and production indexing governed

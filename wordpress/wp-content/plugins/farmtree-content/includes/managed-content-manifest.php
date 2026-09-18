@@ -393,7 +393,7 @@ return [
             'fields' => [
                 'post_title' => 'FarmTree Native Homepage',
                 'post_name' => 'home',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => '',
                 'post_content' => '<!-- wp:group {"templateLock":"contentOnly","lock":{"move":true,"remove":true},"metadata":{"name":"FarmTree Homepage"},"className":"ft-native-home","layout":{"type":"default"}} -->
 <div class="wp-block-group ft-native-home"><!-- wp:group {"tagName":"section","metadata":{"name":"FarmTree Hero"},"align":"full","className":"ft-home-hero","style":{"dimensions":{"minHeight":"780px"},"spacing":{"padding":{"top":"var:preset|spacing|80","right":"var:preset|spacing|50","bottom":"var:preset|spacing|80","left":"var:preset|spacing|50"}}},"backgroundColor":"farmtree-forest","layout":{"type":"constrained"}} -->

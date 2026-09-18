@@ -273,7 +273,8 @@ const addEntity = ({ key, postType, title, slug, excerpt = '', content, order = 
   const fields = {
     post_title: title,
     post_name: slug,
-    post_status: 'private',
+    // Explicitly approved production publication; never privatize the front page.
+    post_status: key === 'page.en.home' ? 'publish' : 'private',
     post_excerpt: excerpt,
     post_content: content,
     menu_order: order,
