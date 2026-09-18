@@ -167,6 +167,7 @@ function vacanciesPageContent() {
 }
 
 function proofStoryContent(story) {
+  if (story.approvedBlockContent) return story.approvedBlockContent;
   return story.sections.map(([heading, paragraph]) => [
     `<!-- wp:heading --><h2 class="wp-block-heading">${escapeHtml(heading)}</h2><!-- /wp:heading -->`,
     `<!-- wp:paragraph --><p>${escapeHtml(paragraph)}</p><!-- /wp:paragraph -->`

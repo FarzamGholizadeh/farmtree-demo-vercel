@@ -4,27 +4,96 @@
     "slug": "carbon-planning",
     "title": "Carbon planning",
     "excerpt": "Use traceable site, species and management assumptions to compare carbon projections without confusing planning with certification.",
-    "sections": [["The planning question", "How do alternative agroforestry designs change the timing and distribution of projected biomass and carbon while remaining workable for farmers and project teams?"], ["How FarmTree supports the work", "FarmTree connects site information, species characteristics and management choices to time-based carbon, production and economic projections. The assumptions remain visible for review."], ["Evidence boundaries", "Modelled carbon is a projection, not a verified credit or guaranteed outcome. Applicable standards, baseline requirements, field measurement, validation and verification remain separate."], ["A practical workflow", "Define the project boundary, compare a limited set of credible designs, review sensitivity, document data gaps and take the preferred scenario into field and specialist review."]]
+    "sections": [
+      [
+        "The planning question",
+        "How do alternative agroforestry designs change the timing and distribution of projected biomass and carbon while remaining workable for farmers and project teams?"
+      ],
+      [
+        "How FarmTree supports the work",
+        "FarmTree connects site information, species characteristics and management choices to time-based carbon, production and economic projections. The assumptions remain visible for review."
+      ],
+      [
+        "Evidence boundaries",
+        "Modelled carbon is a projection, not a verified credit or guaranteed outcome. Applicable standards, baseline requirements, field measurement, validation and verification remain separate."
+      ],
+      [
+        "A practical workflow",
+        "Define the project boundary, compare a limited set of credible designs, review sensitivity, document data gaps and take the preferred scenario into field and specialist review."
+      ]
+    ]
   },
   {
     "order": 2,
     "slug": "farm-value-projection",
-    "title": "Farm Value Projection",
+    "title": "Farm Valuation",
     "excerpt": "Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.",
-    "sections": [["The planning question", "Can a proposed agroforestry design create a credible path through establishment costs, changing labour needs and delayed tree-product revenues?"], ["How FarmTree supports the work", "FarmTree brings production, cost, revenue and labour assumptions into the same time-based scenario, helping teams see cash-flow timing and trade-offs."], ["Evidence boundaries", "Prices, yields and adoption conditions can change. Results are scenario evidence rather than financial advice, assurance or a guarantee of farmer income."], ["A practical workflow", "Agree representative farm types, document source assumptions, compare alternatives and sensitivities, then review the design with farmers and local specialists before implementation."]]
+    "sections": [
+      [
+        "The planning question",
+        "Can a proposed agroforestry design create a credible path through establishment costs, changing labour needs and delayed tree-product revenues?"
+      ],
+      [
+        "How FarmTree supports the work",
+        "FarmTree brings production, cost, revenue and labour assumptions into the same time-based scenario, helping teams see cash-flow timing and trade-offs."
+      ],
+      [
+        "Evidence boundaries",
+        "Prices, yields and adoption conditions can change. Results are scenario evidence rather than financial advice, assurance or a guarantee of farmer income."
+      ],
+      [
+        "A practical workflow",
+        "Agree representative farm types, document source assumptions, compare alternatives and sensitivities, then review the design with farmers and local specialists before implementation."
+      ]
+    ],
+    "approvedBlockContent": "<!-- wp:paragraph -->\n<p></p>\n<!-- /wp:paragraph -->\n\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">The planning question</h2>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Can a proposed agroforestry design create a credible path through establishment costs, changing labour needs and delayed tree-product revenues?</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">How FarmTree supports the work</h2>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>FarmTree brings production, cost, revenue and labour assumptions into the same time-based scenario, helping teams see cash-flow timing and trade-offs.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Evidence boundaries</h2>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Prices, yields and adoption conditions can change. Results are scenario evidence rather than financial advice, assurance or a guarantee of farmer income.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">A practical workflow</h2>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Agree representative farm types, document source assumptions, compare alternatives and sensitivities, then review the design with farmers and local specialists before implementation.</p>\n<!-- /wp:paragraph -->"
   },
   {
     "order": 3,
     "slug": "cocoa-scenario-planning",
     "title": "Cocoa scenario planning and monitoring",
     "excerpt": "Compare shade-tree density, species mix, renewal timing and farmer-value trade-offs before scaling a cocoa programme.",
-    "sections": [["The planning question", "Which regenerative cocoa design can balance production continuity, shade, diversified value, labour and long-term resilience in a specific context?"], ["How FarmTree supports the work", "FarmTree compares cocoa and shade-tree arrangements using site, management, species and price assumptions, then links representative farm designs to wider programme questions."], ["Evidence boundaries", "A representative scenario is not a measured outcome for every farm. Local calibration, farmer participation and field monitoring are required."], ["A practical workflow", "Capture the baseline, co-design a focused set of systems, review short- and long-term trade-offs, select indicators and update scenarios as field information improves."]]
+    "sections": [
+      [
+        "The planning question",
+        "Which regenerative cocoa design can balance production continuity, shade, diversified value, labour and long-term resilience in a specific context?"
+      ],
+      [
+        "How FarmTree supports the work",
+        "FarmTree compares cocoa and shade-tree arrangements using site, management, species and price assumptions, then links representative farm designs to wider programme questions."
+      ],
+      [
+        "Evidence boundaries",
+        "A representative scenario is not a measured outcome for every farm. Local calibration, farmer participation and field monitoring are required."
+      ],
+      [
+        "A practical workflow",
+        "Capture the baseline, co-design a focused set of systems, review short- and long-term trade-offs, select indicators and update scenarios as field information improves."
+      ]
+    ]
   },
   {
     "order": 4,
     "slug": "landscape-hydrology",
     "title": "Landscape Hydrology",
     "excerpt": "Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.",
-    "sections": [["The planning question", "Where can tree-based interventions support water and landscape objectives without creating unsupported expectations about hydrological outcomes?"], ["How FarmTree supports the work", "FarmTree can compare water-balance, erosion, production, carbon and economic indicators across defined scenarios and locations."], ["Evidence boundaries", "Hydrological responses are context-dependent. Model results require appropriate source data, calibration, uncertainty communication and field evidence."], ["A practical workflow", "Define the catchment decision, select representative land-use systems, compare interventions, identify sensitive assumptions and connect the preferred plan to a proportionate monitoring design."]]
+    "sections": [
+      [
+        "The planning question",
+        "Where can tree-based interventions support water and landscape objectives without creating unsupported expectations about hydrological outcomes?"
+      ],
+      [
+        "How FarmTree supports the work",
+        "FarmTree can compare water-balance, erosion, production, carbon and economic indicators across defined scenarios and locations."
+      ],
+      [
+        "Evidence boundaries",
+        "Hydrological responses are context-dependent. Model results require appropriate source data, calibration, uncertainty communication and field evidence."
+      ],
+      [
+        "A practical workflow",
+        "Define the catchment decision, select representative land-use systems, compare interventions, identify sensitive assumptions and connect the preferred plan to a proportionate monitoring design."
+      ]
+    ]
   }
 ]

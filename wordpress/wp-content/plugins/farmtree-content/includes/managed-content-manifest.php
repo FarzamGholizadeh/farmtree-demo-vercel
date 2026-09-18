@@ -180,7 +180,7 @@ return [
             'key' => 'asset.proof.farm-value-projection',
             'slug' => 'proof-farm-value-documentary-v2',
             'relative_path' => 'assets/images/proof/proof-farm-value-documentary-v2.jpg',
-            'title' => 'Farm Value Projection',
+            'title' => 'Farm Valuation',
             'alt' => 'Farmer and adviser reviewing scenario materials at a farm-office table',
             'mime_type' => 'image/jpeg',
             'sha256' => '8949f642e40265388de1517d10b29158576944d5b112e63d2df0faf20958c437',
@@ -396,7 +396,7 @@ return [
                 'post_status' => 'private',
                 'post_excerpt' => '',
                 'post_content' => '
-<!-- wp:group {"metadata":{"name":"FarmTree Homepage"},"className":"ft-native-home","layout":{"type":"default"},"templateLock":"contentOnly","lock":{"move":true,"remove":true}} -->
+<!-- wp:group {"templateLock":"contentOnly","lock":{"move":true,"remove":true},"metadata":{"name":"FarmTree Homepage"},"className":"ft-native-home","layout":{"type":"default"}} -->
 <div class="wp-block-group ft-native-home"><!-- wp:group {"tagName":"section","metadata":{"name":"FarmTree Hero"},"align":"full","className":"ft-home-hero","style":{"dimensions":{"minHeight":"780px"},"spacing":{"padding":{"top":"var:preset|spacing|80","right":"var:preset|spacing|50","bottom":"var:preset|spacing|80","left":"var:preset|spacing|50"}}},"backgroundColor":"farmtree-forest","layout":{"type":"constrained"}} -->
 <section class="wp-block-group alignfull ft-home-hero has-farmtree-forest-background-color has-background" style="min-height:780px;padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--50)"><!-- wp:group {"metadata":{"name":"Editable Hero images"},"className":"ft-home-hero-media","layout":{"type":"default"}} -->
 <div class="wp-block-group ft-home-hero-media"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide is-active"} -->
@@ -437,7 +437,7 @@ return [
 <p class="ft-native-eyebrow has-farmtree-gold-color has-text-color has-small-font-size">Science-Based Modelling</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":2,"textColor":"white","fontSize":"heading"} -->
+<!-- wp:heading {"textColor":"white","fontSize":"heading"} -->
 <h2 class="wp-block-heading has-white-color has-text-color has-heading-font-size">Turn field data into investment scenarios</h2>
 <!-- /wp:heading -->
 
@@ -451,7 +451,7 @@ return [
 <p class="ft-native-eyebrow has-farmtree-gold-color has-text-color has-small-font-size">Project Teams</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":2,"textColor":"white","fontSize":"heading"} -->
+<!-- wp:heading {"textColor":"white","fontSize":"heading"} -->
 <h2 class="wp-block-heading has-white-color has-text-color has-heading-font-size">Support project staff with clearer planning tools</h2>
 <!-- /wp:heading -->
 
@@ -465,7 +465,7 @@ return [
 <p class="ft-native-eyebrow has-farmtree-gold-color has-text-color has-small-font-size">Impact Reporting</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":2,"textColor":"white","fontSize":"heading"} -->
+<!-- wp:heading {"textColor":"white","fontSize":"heading"} -->
 <h2 class="wp-block-heading has-white-color has-text-color has-heading-font-size">Report carbon, farmer value and long-term performance</h2>
 <!-- /wp:heading -->
 
@@ -477,11 +477,11 @@ return [
 
 <!-- wp:buttons {"className":"ft-home-hero-actions","layout":{"type":"flex","justifyContent":"center"}} -->
 <div class="wp-block-buttons ft-home-hero-actions"><!-- wp:button {"backgroundColor":"farmtree-gold","textColor":"farmtree-ink"} -->
-<div class="wp-block-button"><a class="wp-block-button__link has-farmtree-ink-color has-farmtree-gold-background-color has-text-color has-background wp-element-button" href="https://tool.farmtree.earth/Identity/Account/Register" target="_blank" rel="noreferrer noopener">Request a demo ↗</a></div>
+<div class="wp-block-button"><a class="wp-block-button__link has-farmtree-ink-color has-farmtree-gold-background-color has-text-color has-background wp-element-button" href="https://tool.farmtree.earth/Identity/Account/Register" target="_blank" rel="noreferrer noopener">Request a demo &#x2197;</a></div>
 <!-- /wp:button -->
 
-<!-- wp:button {"className":"is-style-outline ft-native-quotation-action","textColor":"white"} -->
-<div class="wp-block-button is-style-outline ft-native-quotation-action"><a class="wp-block-button__link has-white-color has-text-color wp-element-button" href="mailto:info@farmtree.earth?subject=FarmTree%20quotation%20request">Ask for a quotation ↗</a></div>
+<!-- wp:button {"textColor":"white","className":"is-style-outline ft-native-quotation-action"} -->
+<div class="wp-block-button is-style-outline ft-native-quotation-action"><a class="wp-block-button__link has-white-color has-text-color wp-element-button" href="mailto:info@farmtree.earth?subject=FarmTree%20quotation%20request">Ask for a quotation &#x2197;</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:group -->
@@ -501,14 +501,14 @@ return [
 <!-- /wp:html --></section>
 <!-- /wp:group -->
 
-<!-- wp:group {"tagName":"section","anchor":"platform","metadata":{"name":"Platform / planning value"},"align":"full","className":"ft-home-section ft-home-platform","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-cream","layout":{"type":"constrained"}} -->
-<section id="platform" class="wp-block-group alignfull ft-home-section ft-home-platform has-farmtree-cream-background-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"align":"wide","verticalAlignment":"center","className":"ft-platform-layout","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|70"}}}} -->
+<!-- wp:group {"tagName":"section","metadata":{"name":"Platform / planning value"},"align":"full","className":"ft-home-section ft-home-platform","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-cream","layout":{"type":"constrained"},"anchor":"platform"} -->
+<section class="wp-block-group alignfull ft-home-section ft-home-platform has-farmtree-cream-background-color has-background" id="platform" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"verticalAlignment":"center","align":"wide","className":"ft-platform-layout","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|70"}}}} -->
 <div class="wp-block-columns alignwide are-vertically-aligned-center ft-platform-layout"><!-- wp:column {"verticalAlignment":"center","width":"42%","className":"ft-platform-copy"} -->
 <div class="wp-block-column is-vertically-aligned-center ft-platform-copy" style="flex-basis:42%"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
 <p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">The FarmTree Platform</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":2,"fontSize":"heading-small"} -->
+<!-- wp:heading {"fontSize":"heading-small"} -->
 <h2 class="wp-block-heading has-heading-small-font-size">Move from project idea to investment plan</h2>
 <!-- /wp:heading -->
 
@@ -517,7 +517,7 @@ return [
 <!-- /wp:paragraph -->
 
 <!-- wp:list {"className":"ft-home-value-list"} -->
-<ul class="ft-home-value-list"><!-- wp:list-item -->
+<ul class="wp-block-list ft-home-value-list"><!-- wp:list-item -->
 <li>Create agroforestry investment plans</li>
 <!-- /wp:list-item -->
 
@@ -563,7 +563,7 @@ return [
 <p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">How FarmTree works</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":2,"fontSize":"heading-small"} -->
+<!-- wp:heading {"fontSize":"heading-small"} -->
 <h2 class="wp-block-heading has-heading-small-font-size">How agroforestry projects are planned, monitored and reported</h2>
 <!-- /wp:heading -->
 
@@ -575,9 +575,7 @@ return [
 <!-- wp:group {"align":"wide","className":"ft-technology-story","layout":{"type":"default"}} -->
 <div class="wp-block-group alignwide ft-technology-story"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-technology-model"} -->
 <figure class="wp-block-image size-full ft-technology-model"><img src="%%FARMTREE_THEME_URI:assets/images/home/technology-model.webp%%" alt="FarmTree model connecting site, climate, soil and species information to impact monitoring and future projections"/></figure>
-<!-- /wp:image -->
-
-</div>
+<!-- /wp:image --></div>
 <!-- /wp:group -->
 
 <!-- wp:columns {"align":"wide","className":"ft-home-inputs"} -->
@@ -633,7 +631,7 @@ return [
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Compare business and impact projections time &#45; based</p>
+<p>Compare business and impact projections time - based</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
@@ -643,26 +641,64 @@ return [
 <section class="wp-block-group alignfull ft-home-section ft-home-metrics has-white-color has-farmtree-forest-background-color has-text-color has-background"><!-- wp:group {"align":"wide","className":"ft-home-section-heading","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignwide ft-home-section-heading"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-gold","fontSize":"small"} -->
 <p class="ft-native-eyebrow has-farmtree-gold-color has-text-color has-small-font-size">Track record</p>
-<!-- /wp:paragraph --><!-- wp:heading {"level":2,"textColor":"white","fontSize":"heading-small"} -->
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"textColor":"white","fontSize":"heading-small"} -->
 <h2 class="wp-block-heading has-white-color has-text-color has-heading-small-font-size">Agroforestry intelligence in active use</h2>
 <!-- /wp:heading --></div>
 <!-- /wp:group -->
+
 <!-- wp:columns {"align":"wide","className":"ft-metric-grid"} -->
-<div class="wp-block-columns alignwide ft-metric-grid"><!-- wp:column --><div class="wp-block-column ft-metric-card"><!-- wp:heading {"level":3,"className":"ft-metric-value","fontSize":"heading-small"} --><h3 class="wp-block-heading ft-metric-value has-heading-small-font-size">+100</h3><!-- /wp:heading --><!-- wp:paragraph --><p>Active FarmTree Tool users</p><!-- /wp:paragraph --></div><!-- /wp:column -->
-<!-- wp:column --><div class="wp-block-column ft-metric-card"><!-- wp:heading {"level":3,"className":"ft-metric-value","fontSize":"heading-small"} --><h3 class="wp-block-heading ft-metric-value has-heading-small-font-size">+30</h3><!-- /wp:heading --><!-- wp:paragraph --><p>Projects</p><!-- /wp:paragraph --></div><!-- /wp:column -->
-<!-- wp:column --><div class="wp-block-column ft-metric-card"><!-- wp:heading {"level":3,"className":"ft-metric-value","fontSize":"heading-small"} --><h3 class="wp-block-heading ft-metric-value has-heading-small-font-size">+40</h3><!-- /wp:heading --><!-- wp:paragraph --><p>Agricultural regions impacted</p><!-- /wp:paragraph --></div><!-- /wp:column -->
-<!-- wp:column --><div class="wp-block-column ft-metric-card"><!-- wp:heading {"level":3,"className":"ft-metric-value","fontSize":"heading-small"} --><h3 class="wp-block-heading ft-metric-value has-heading-small-font-size">+1,000,000</h3><!-- /wp:heading --><!-- wp:paragraph --><p>Farmers indirectly reached</p><!-- /wp:paragraph --></div><!-- /wp:column --></div>
+<div class="wp-block-columns alignwide ft-metric-grid"><!-- wp:column {"className":"ft-metric-card"} -->
+<div class="wp-block-column ft-metric-card"><!-- wp:heading {"level":3,"className":"ft-metric-value","fontSize":"heading-small"} -->
+<h3 class="wp-block-heading ft-metric-value has-heading-small-font-size">+100</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Active FarmTree Tool users</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"ft-metric-card"} -->
+<div class="wp-block-column ft-metric-card"><!-- wp:heading {"level":3,"className":"ft-metric-value","fontSize":"heading-small"} -->
+<h3 class="wp-block-heading ft-metric-value has-heading-small-font-size">+30</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Projects</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"ft-metric-card"} -->
+<div class="wp-block-column ft-metric-card"><!-- wp:heading {"level":3,"className":"ft-metric-value","fontSize":"heading-small"} -->
+<h3 class="wp-block-heading ft-metric-value has-heading-small-font-size">+40</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Agricultural regions impacted</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"ft-metric-card"} -->
+<div class="wp-block-column ft-metric-card"><!-- wp:heading {"level":3,"className":"ft-metric-value","fontSize":"heading-small"} -->
+<h3 class="wp-block-heading ft-metric-value has-heading-small-font-size">+1,000,000</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Farmers indirectly reached</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
 <!-- /wp:columns --></section>
 <!-- /wp:group -->
 
 <!-- wp:group {"tagName":"section","metadata":{"name":"Global FarmTree perspective"},"align":"full","className":"ft-home-section ft-home-globe","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-ivory","layout":{"type":"constrained"}} -->
-<section class="wp-block-group alignfull ft-home-section ft-home-globe has-farmtree-ivory-background-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"align":"wide","verticalAlignment":"center","className":"ft-globe-layout"} -->
+<section class="wp-block-group alignfull ft-home-section ft-home-globe has-farmtree-ivory-background-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"verticalAlignment":"center","align":"wide","className":"ft-globe-layout"} -->
 <div class="wp-block-columns alignwide are-vertically-aligned-center ft-globe-layout"><!-- wp:column {"verticalAlignment":"center","width":"40%","className":"ft-globe-copy"} -->
 <div class="wp-block-column is-vertically-aligned-center ft-globe-copy" style="flex-basis:40%"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
 <p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">Global perspective</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":2,"fontSize":"heading-small"} -->
+<!-- wp:heading {"fontSize":"heading-small"} -->
 <h2 class="wp-block-heading has-heading-small-font-size">Agroforestry decisions across diverse landscapes</h2>
 <!-- /wp:heading -->
 
@@ -689,7 +725,7 @@ return [
 <p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">Trust and references</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":2,"textColor":"farmtree-ink","fontSize":"heading-small"} -->
+<!-- wp:heading {"textColor":"farmtree-ink","fontSize":"heading-small"} -->
 <h2 class="wp-block-heading has-farmtree-ink-color has-text-color has-heading-small-font-size">FarmTree Client</h2>
 <!-- /wp:heading -->
 
@@ -729,43 +765,43 @@ return [
 <div class="wp-block-group ft-testimonial-cards"><!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
 <blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.</p>
-<!-- /wp:paragraph --><cite><img src="%%FARMTREE_THEME_URI:assets/images/testimonials/generated-placeholders/portrait-01.jpg%%" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Mona McCord"/><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Mona McCord <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · SAN</span></span></cite></blockquote>
+<!-- /wp:paragraph --><cite><img src="%%FARMTREE_THEME_URI:assets/images/testimonials/generated-placeholders/portrait-01.jpg%%" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Mona McCord"><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Mona McCord <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · SAN</span></span></cite></blockquote>
 <!-- /wp:quote -->
 
 <!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
 <blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything!</p>
-<!-- /wp:paragraph --><cite><img src="%%FARMTREE_THEME_URI:assets/images/testimonials/generated-placeholders/portrait-02.jpg%%" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Mathijs de Bruin"/><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Mathijs de Bruin <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · TreeScape</span></span></cite></blockquote>
+<!-- /wp:paragraph --><cite><img src="%%FARMTREE_THEME_URI:assets/images/testimonials/generated-placeholders/portrait-02.jpg%%" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Mathijs de Bruin"><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Mathijs de Bruin <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · TreeScape</span></span></cite></blockquote>
 <!-- /wp:quote -->
 
 <!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
 <blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">FarmTree provides a remarkable level of detail that helps us truly understand why coffee agroforestry systems perform the way they do.</p>
-<!-- /wp:paragraph --><cite><img src="%%FARMTREE_THEME_URI:assets/images/testimonials/generated-placeholders/portrait-03.jpg%%" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Katharina Lima de Miranda"/><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Katharina Lima de Miranda <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · HRNS</span></span></cite></blockquote>
+<!-- /wp:paragraph --><cite><img src="%%FARMTREE_THEME_URI:assets/images/testimonials/generated-placeholders/portrait-03.jpg%%" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Katharina Lima de Miranda"><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Katharina Lima de Miranda <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · HRNS</span></span></cite></blockquote>
 <!-- /wp:quote -->
 
 <!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
 <blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">We know very little of agroforestry options for a particular local context. The FarmTree tool is super helpful to generate location-specific scenarios!</p>
-<!-- /wp:paragraph --><cite><img src="%%FARMTREE_THEME_URI:assets/images/testimonials/generated-placeholders/portrait-04.jpg%%" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Rob Kelly"/><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Rob Kelly <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · World Vision Australia</span></span></cite></blockquote>
+<!-- /wp:paragraph --><cite><img src="%%FARMTREE_THEME_URI:assets/images/testimonials/generated-placeholders/portrait-04.jpg%%" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Rob Kelly"><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Rob Kelly <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · World Vision Australia</span></span></cite></blockquote>
 <!-- /wp:quote -->
 
 <!-- wp:quote {"className":"ft-trust-quote ft-testimonial-card"} -->
 <blockquote class="wp-block-quote ft-trust-quote ft-testimonial-card"><!-- wp:paragraph {"fontSize":"lead"} -->
 <p class="has-lead-font-size">We found the FarmTree Tool essential for predicting outcomes of highly complex farm scenarios, among many, also agroforestry systems.</p>
-<!-- /wp:paragraph --><cite><img src="%%FARMTREE_THEME_URI:assets/images/testimonials/generated-placeholders/portrait-05.jpg%%" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Lorenzo Mento"/><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Lorenzo Mento <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · Nectaerra</span></span></cite></blockquote>
+<!-- /wp:paragraph --><cite><img src="%%FARMTREE_THEME_URI:assets/images/testimonials/generated-placeholders/portrait-05.jpg%%" width="720" height="900" loading="lazy" decoding="async" alt="Illustrative portrait placeholder; not a likeness of Lorenzo Mento"><span class="ft-testimonial-profile-copy"><span class="ft-testimonial-name">Lorenzo Mento <span class="ft-testimonial-verified" aria-label="Source-attributed testimonial">✓</span></span><span class="ft-testimonial-identity">Illustrative portrait · Nectaerra</span></span></cite></blockquote>
 <!-- /wp:quote --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->
 
-<!-- wp:group {"tagName":"section","anchor":"proof","metadata":{"name":"Proof Stories / Themes"},"align":"full","className":"ft-home-section ft-home-proof","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-ivory","layout":{"type":"constrained"}} -->
-<section id="proof" class="wp-block-group alignfull ft-home-section ft-home-proof has-farmtree-ivory-background-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"align":"wide","className":"ft-home-section-heading","layout":{"type":"constrained"}} -->
+<!-- wp:group {"tagName":"section","metadata":{"name":"Proof Stories / Themes"},"align":"full","className":"ft-home-section ft-home-proof","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-ivory","layout":{"type":"constrained"},"anchor":"proof"} -->
+<section class="wp-block-group alignfull ft-home-section ft-home-proof has-farmtree-ivory-background-color has-background" id="proof" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"align":"wide","className":"ft-home-section-heading","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignwide ft-home-section-heading"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
 <p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">Proof Stories</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":2,"fontSize":"heading-small"} -->
+<!-- wp:heading {"fontSize":"heading-small"} -->
 <h2 class="wp-block-heading has-heading-small-font-size">See what better agroforestry decisions look like</h2>
 <!-- /wp:heading -->
 
@@ -792,7 +828,11 @@ return [
 
 <!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size">Turn field assumptions into consistent carbon projections across project scenarios</p>
-<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/carbon-planning/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ft-proof-link"} -->
+<p class="ft-proof-link"><a href="/proof-stories/carbon-planning/">Explore story <span aria-hidden="true">&#x2197;</span></a></p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
@@ -809,12 +849,16 @@ return [
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"fontSize":"lead"} -->
-<h3 class="wp-block-heading has-lead-font-size">Farm Value Projection</h3>
+<h3 class="wp-block-heading has-lead-font-size">Farm Valuation</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size">Compare costs, benefits and projected returns across different farm and project options</p>
-<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/farm-value-projection/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ft-proof-link"} -->
+<p class="ft-proof-link"><a href="/proof-stories/farm-value-projection/">Explore story <span aria-hidden="true">&#x2197;</span></a></p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
@@ -836,7 +880,11 @@ return [
 
 <!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size">Compare shade-tree systems, species mixes and long-term landscape scenarios</p>
-<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/cocoa-scenario-planning/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ft-proof-link"} -->
+<p class="ft-proof-link"><a href="/proof-stories/cocoa-scenario-planning/">Explore story <span aria-hidden="true">&#x2197;</span></a></p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
@@ -858,7 +906,11 @@ return [
 
 <!-- wp:paragraph {"fontSize":"small"} -->
 <p class="has-small-font-size">Connect water balance and ecosystem indicators to long-term monitoring and investment decisions</p>
-<!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-proof-link"} --><p class="ft-proof-link"><a href="/proof-stories/landscape-hydrology/">Explore story <span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></div>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ft-proof-link"} -->
+<p class="ft-proof-link"><a href="/proof-stories/landscape-hydrology/">Explore story <span aria-hidden="true">&#x2197;</span></a></p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
@@ -872,7 +924,7 @@ return [
 <p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">Last News</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":2,"fontSize":"heading-small"} -->
+<!-- wp:heading {"fontSize":"heading-small"} -->
 <h2 class="wp-block-heading has-heading-small-font-size">Latest from FarmTree</h2>
 <!-- /wp:heading -->
 
@@ -882,20 +934,20 @@ return [
 <!-- /wp:group --></div>
 <!-- /wp:group -->
 
-<!-- wp:query {"queryId":2,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"align":"wide","className":"ft-home-news-query"} -->
+<!-- wp:query {"queryId":2,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"excludeCurrent":null},"align":"wide","className":"ft-home-news-query"} -->
 <div class="wp-block-query alignwide ft-home-news-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
 <!-- wp:group {"className":"ft-news-item","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-news-item"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
 
 <!-- wp:post-terms {"term":"category","fontSize":"caption"} /-->
 
-<!-- wp:post-date {"fontSize":"caption"} /-->
+<!-- wp:post-date {"metadata":{"bindings":{"datetime":{"source":"core/post-data","args":{"field":"date"}}}},"fontSize":"caption"} /-->
 
 <!-- wp:post-title {"level":3,"isLink":true,"fontSize":"lead"} /-->
 
 <!-- wp:post-excerpt {"moreText":"","excerptLength":18,"fontSize":"small"} /-->
 
-<!-- wp:read-more {"content":"Read article ↗","className":"ft-news-read-more"} /--></div>
+<!-- wp:read-more {"content":"Read article \\u0026#x2197;","className":"ft-news-read-more"} /--></div>
 <!-- /wp:group -->
 <!-- /wp:post-template -->
 
@@ -913,14 +965,14 @@ return [
 <!-- /wp:buttons --></section>
 <!-- /wp:group -->
 
-<!-- wp:group {"tagName":"section","anchor":"faq","metadata":{"name":"Frequently asked questions"},"align":"full","className":"ft-home-section ft-home-faq","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-cream","layout":{"type":"constrained"}} -->
-<section id="faq" class="wp-block-group alignfull ft-home-section ft-home-faq has-farmtree-cream-background-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"align":"wide","className":"ft-faq-layout","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|70"}}}} -->
+<!-- wp:group {"tagName":"section","metadata":{"name":"Frequently asked questions"},"align":"full","className":"ft-home-section ft-home-faq","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"farmtree-cream","layout":{"type":"constrained"},"anchor":"faq"} -->
+<section class="wp-block-group alignfull ft-home-section ft-home-faq has-farmtree-cream-background-color has-background" id="faq" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"align":"wide","className":"ft-faq-layout","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|70"}}}} -->
 <div class="wp-block-columns alignwide ft-faq-layout"><!-- wp:column {"width":"34%"} -->
 <div class="wp-block-column" style="flex-basis:34%"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
 <p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">FAQ</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":2,"fontSize":"heading-small"} -->
+<!-- wp:heading {"fontSize":"heading-small"} -->
 <h2 class="wp-block-heading has-heading-small-font-size">Questions about FarmTree modelling</h2>
 <!-- /wp:heading -->
 
@@ -1880,25 +1932,45 @@ return [
                 'farm-value-modelling',
             ],
             'fields' => [
-                'post_title' => 'Farm Value Projection',
+                'post_title' => 'Farm Valuation',
                 'post_name' => 'farm-value-projection',
                 'post_status' => 'private',
                 'post_excerpt' => 'Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">The planning question</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
 
-<!-- wp:paragraph --><p>Can a proposed agroforestry design create a credible path through establishment costs, changing labour needs and delayed tree-product revenues?</p><!-- /wp:paragraph -->
+<!-- wp:heading -->
+<h2 class="wp-block-heading">The planning question</h2>
+<!-- /wp:heading -->
 
-<!-- wp:heading --><h2 class="wp-block-heading">How FarmTree supports the work</h2><!-- /wp:heading -->
+<!-- wp:paragraph -->
+<p>Can a proposed agroforestry design create a credible path through establishment costs, changing labour needs and delayed tree-product revenues?</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:paragraph --><p>FarmTree brings production, cost, revenue and labour assumptions into the same time-based scenario, helping teams see cash-flow timing and trade-offs.</p><!-- /wp:paragraph -->
+<!-- wp:heading -->
+<h2 class="wp-block-heading">How FarmTree supports the work</h2>
+<!-- /wp:heading -->
 
-<!-- wp:heading --><h2 class="wp-block-heading">Evidence boundaries</h2><!-- /wp:heading -->
+<!-- wp:paragraph -->
+<p>FarmTree brings production, cost, revenue and labour assumptions into the same time-based scenario, helping teams see cash-flow timing and trade-offs.</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:paragraph --><p>Prices, yields and adoption conditions can change. Results are scenario evidence rather than financial advice, assurance or a guarantee of farmer income.</p><!-- /wp:paragraph -->
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Evidence boundaries</h2>
+<!-- /wp:heading -->
 
-<!-- wp:heading --><h2 class="wp-block-heading">A practical workflow</h2><!-- /wp:heading -->
+<!-- wp:paragraph -->
+<p>Prices, yields and adoption conditions can change. Results are scenario evidence rather than financial advice, assurance or a guarantee of farmer income.</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:paragraph --><p>Agree representative farm types, document source assumptions, compare alternatives and sensitivities, then review the design with farmers and local specialists before implementation.</p><!-- /wp:paragraph -->',
+<!-- wp:heading -->
+<h2 class="wp-block-heading">A practical workflow</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Agree representative farm types, document source assumptions, compare alternatives and sensitivities, then review the design with farmers and local specialists before implementation.</p>
+<!-- /wp:paragraph -->',
                 'menu_order' => 2,
                 'post_date' => '',
             ],
@@ -2004,7 +2076,7 @@ return [
                 'post_name' => 'proof-stories',
                 'post_status' => 'private',
                 'post_excerpt' => 'Explore four evidence themes grounded in FarmTree\'s published capabilities and project experience.',
-                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">These stories explain how FarmTree supports carbon planning, farm-value modelling, cocoa scenario work and water-resilience questions. They do not claim guaranteed or independently verified outcomes.</p><!-- /wp:paragraph --><!-- wp:list --><ul><li><a href="/proof-stories/carbon-planning/">Carbon planning</a>: Use traceable site, species and management assumptions to compare carbon projections without confusing planning with certification.</li><li><a href="/proof-stories/farm-value-projection/">Farm Value Projection</a>: Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.</li><li><a href="/proof-stories/cocoa-scenario-planning/">Cocoa scenario planning and monitoring</a>: Compare shade-tree density, species mix, renewal timing and farmer-value trade-offs before scaling a cocoa programme.</li><li><a href="/proof-stories/landscape-hydrology/">Landscape Hydrology</a>: Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.</li></ul><!-- /wp:list -->',
+                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">These stories explain how FarmTree supports carbon planning, farm-value modelling, cocoa scenario work and water-resilience questions. They do not claim guaranteed or independently verified outcomes.</p><!-- /wp:paragraph --><!-- wp:list --><ul><li><a href="/proof-stories/carbon-planning/">Carbon planning</a>: Use traceable site, species and management assumptions to compare carbon projections without confusing planning with certification.</li><li><a href="/proof-stories/farm-value-projection/">Farm Valuation</a>: Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.</li><li><a href="/proof-stories/cocoa-scenario-planning/">Cocoa scenario planning and monitoring</a>: Compare shade-tree density, species mix, renewal timing and farmer-value trade-offs before scaling a cocoa programme.</li><li><a href="/proof-stories/landscape-hydrology/">Landscape Hydrology</a>: Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.</li></ul><!-- /wp:list -->',
                 'menu_order' => 0,
                 'post_date' => '',
             ],

@@ -4,11 +4,13 @@ Public launch preparation (2026-09-18): explicit launch authorization supersedes
 historical private-release gates. Source now uses left-to-right testimonial
 travel, an intentional mailto-only Contact CTA and production indexing governed
 by blog_public, with permanent loopback noindex. Approved legal source is unchanged.
-Local direction/coverage and WordPress checks pass. Production dry-run found
-editor changes on Homepage 439 and Proof Story 460: “Farm Valuation” replaces
-“Farm Value Projection” and block serialization differs. Ownership hashes and
-content were not overwritten. Fresh off-webroot database/runtime recovery
-backups are verified; publication awaits resolution of these two conflicts.
+Local direction/coverage and WordPress checks pass. The user approved Frank's
+production edits on Homepage 439 and Proof Story 460 as authoritative:
+“Farm Valuation” and the saved block structure are synchronized to source;
+the existing farm-value-projection URL remains unchanged. Fingerprint adoption
+is limited to these exact approved snapshots. Fresh off-webroot database/runtime
+recovery backups are verified; the authorized launch workflow continues after
+conflict-free reconciliation and validation.
 
 Status: controlled Homepage and Team refinement implemented and locally
 validated; stopped at pre-release for visual and publication approval

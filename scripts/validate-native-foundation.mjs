@@ -337,7 +337,8 @@ for (const pattern of [
   }
 }
 
-const homepage = readFileSync(resolve(theme, 'patterns/homepage-foundation.php'), 'utf8');
+const homepage = readFileSync(resolve(theme, 'patterns/homepage-foundation.php'), 'utf8')
+  .replaceAll('\\u0026#x2197;', '↗').replaceAll('&#x2197;', '↗');
 const frontPage = readFileSync(resolve(theme, 'templates/front-page.html'), 'utf8');
 const errorPage = readFileSync(resolve(theme, 'templates/404.html'), 'utf8');
 const themeStyles = readFileSync(resolve(theme, 'style.css'), 'utf8');
@@ -447,7 +448,7 @@ const requiredHomepageContent = [
   'How agroforestry projects are planned, monitored and reported',
   'science-based, multi-KPI business plans',
   'Connect local conditions, opportunities and risks',
-  'Compare business and impact projections time &#45; based',
+  'Compare business and impact projections time - based',
   'Global perspective',
   'Agroforestry decisions across diverse landscapes',
   'FarmTree supports scenario thinking across tropical, temperate, dryland and highland contexts.',
@@ -455,7 +456,7 @@ const requiredHomepageContent = [
   'Trusted by organisations, practitioners and partners working across agroforestry and climate.',
   'Proof Stories',
   'Carbon planning',
-  'Farm Value Projection',
+  'Farm Valuation',
   'Cocoa scenario planning and monitoring',
   'Landscape Hydrology',
   'FAQ',
@@ -923,7 +924,7 @@ for (const contract of [
   'The FarmTree Tool and team helped us understand the value of different agroforestry systems and the potential for increased revenue over a few decades.',
   'FarmTree is the first and only service that makes science-based agroforestry projections at scale: water, carbon, biomass, even cost and revenue. They do everything!',
   '>Carbon</h3>',
-  '>Farm Value Projection</h3>',
+  '>Farm Valuation</h3>',
   '>Cocoa scenario planning and monitoring</h3>',
   '>Landscape Hydrology</h3>',
   'alt="Illustrative field team reviewing an agroforestry plan and monitoring tools"',
