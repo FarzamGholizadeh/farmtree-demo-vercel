@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { documentaryContent } from './documentary-content.mjs';
 
 const baseUrl = new URL(process.env.FARMTREE_LOCAL_WP_URL ?? 'http://localhost:8888');
 const verifyOnly = process.argv.includes('--verify-only');
@@ -447,6 +448,12 @@ function proofStoryContent(story) {
 }
 
 function englishPageContent(page, teamMedia = new Map()) {
+  const images = documentaryContent(page.slug,
+    (path) => new URL(`/wp-content/themes/farmtree-native/${path}`, baseUrl).href);
+  return englishPageBaseContent(page, teamMedia) + (images ? '\n\n' + images : '');
+}
+
+function englishPageBaseContent(page, teamMedia = new Map()) {
   if (page.body === 'news' || page.slug === 'blog') {
     return newsHubContent();
   }

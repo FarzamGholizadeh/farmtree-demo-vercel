@@ -455,7 +455,7 @@ const requiredHomepageContent = [
   'FarmTree Client',
   'Trusted by organisations, practitioners and partners working across agroforestry and climate.',
   'Proof Stories',
-  'Carbon planning',
+  '>Carbon</h3>',
   'Farm Valuation',
   'Cocoa scenario planning and monitoring',
   'Landscape Hydrology',
@@ -575,7 +575,7 @@ if (
   (homepage.match(/class="wp-block-group ft-home-hero-current"/g) ?? []).length !== 1 ||
   (homepage.match(/class="wp-block-group ft-home-hero-copy-source"/g) ?? []).length !== 3 ||
   !homepage.includes('ft-home-hero-current-heading') ||
-  !homepage.includes('hero-project-teams.webp')
+  !homepage.includes('farmtree-mixed-agricultural-landscape-hero.jpg')
 ) {
   throw new Error('Homepage Hero must pair one persistent H1 with four editable approved media/message states.');
 }
@@ -927,10 +927,10 @@ for (const contract of [
   '>Farm Valuation</h3>',
   '>Cocoa scenario planning and monitoring</h3>',
   '>Landscape Hydrology</h3>',
-  'alt="Illustrative field team reviewing an agroforestry plan and monitoring tools"',
-  'alt="Three people reviewing information on a laptop"',
-  'alt="Four people discussing crops in a field"',
-  'alt="Agroforestry field team measuring a tree and reviewing monitoring information"',
+  'alt="Tall green crops growing between leafy trees"',
+  'alt="Green ground vegetation growing between rows of small trees"',
+  'alt="Trees and low crops on sandy ground beside rural structures"',
+  'alt="Rectangular green crop beds divided by earthen paths and small trees"',
   'alt="Field team measuring a mature tree and recording observations in an agroforestry landscape"',
   'alt="Farmer and adviser reviewing scenario materials at a farm-office table"',
   'alt="Cocoa field team inspecting pods and recording observations beneath shade trees"',
@@ -958,7 +958,7 @@ for (const contract of [
   'ft-testimonial-identity',
   'data-ft-earth-texture',
   'earth-blue-marble-nasa-2048.jpg',
-  'hero-impact-reporting-v2.jpg'
+  'farmtree-structured-field-plots-hero.jpg'
 ]) {
   if (!homepage.includes(contract)) {
     throw new Error(`Homepage refinement contract is missing: ${contract}`);

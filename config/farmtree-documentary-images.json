@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "policy": "Upload-order numbering is authoritative. Descriptions corrected from visible photographs. No location, species (except visible papaya/onions), identity, project attribution or outcome is inferred. Originals remain outside the deployable tree. Selected exports strip metadata; no generative editing, retouching, object removal or tonal changes.",
+  "variants": {
+    "hero": {
+      "width": 1920,
+      "height": 1080
+    },
+    "content": {
+      "width": 1200,
+      "height": 900
+    },
+    "card": {
+      "width": 800,
+      "height": 800
+    },
+    "preview": {
+      "width": 480,
+      "height": 360
+    }
+  },
+  "formats": [
+    "avif",
+    "webp",
+    "jpg"
+  ],
+  "images": [
+    {
+      "number": 1,
+      "source": "DSCF9327.JPG",
+      "slug": "farmtree-dryland-field-context",
+      "alt": "Two people standing beside vegetation in an open, rocky field",
+      "page": "proof-stories",
+      "section": "Field context",
+      "role": "contextual content",
+      "priority": "high",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 2,
+      "source": "IMG_1978.JPG",
+      "slug": "farmtree-community-field-visit",
+      "alt": "People walking through dry crop stalks beneath scattered trees",
+      "page": "customer-segments",
+      "section": "Field visits",
+      "role": "contextual content",
+      "priority": "high",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 3,
+      "source": "IMG_1991.JPG",
+      "slug": "farmtree-harvest-field-work",
+      "alt": "A person gathering dry crop stalks with a hand tool",
+      "page": "reserve",
+      "section": "Future contextual story",
+      "role": "reserved",
+      "priority": "secondary",
+      "selected": false,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 4,
+      "source": "IMG_1993.JPG",
+      "slug": "farmtree-rural-storage-landscape",
+      "alt": "Thatched storage structures beside a harvested field",
+      "page": "reserve",
+      "section": "Future contextual story",
+      "role": "reserved",
+      "priority": "secondary",
+      "selected": false,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 5,
+      "source": "IMG_1995.JPG",
+      "slug": "farmtree-household-grain-context",
+      "alt": "A child standing beside harvested grain heads",
+      "page": "reserve",
+      "section": "Inside a relevant Proof Story only; not selected",
+      "role": "reserved",
+      "priority": "secondary",
+      "selected": false,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 6,
+      "source": "IMG_2003.JPG",
+      "slug": "farmtree-dryland-landscape-path",
+      "alt": "A dirt path crossing dry fields towards scattered thatched structures",
+      "page": "reserve",
+      "section": "Future landscape context",
+      "role": "reserved",
+      "priority": "secondary",
+      "selected": false,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 7,
+      "source": "IMG_2063.JPG",
+      "slug": "farmtree-field-stump-context",
+      "alt": "A large cut tree stump among sparse crops with trees behind",
+      "page": "reserve",
+      "section": "Future challenge context; no inferred degradation claim",
+      "role": "reserved",
+      "priority": "secondary",
+      "selected": false,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 8,
+      "source": "IMG_2074.JPG",
+      "slug": "farmtree-onion-harvest-under-trees",
+      "alt": "Two people seated beside harvested onions under trees",
+      "page": "proof-stories",
+      "section": "Harvest context",
+      "role": "contextual content",
+      "priority": "high",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "south"
+    },
+    {
+      "number": 9,
+      "source": "IMG_2084.JPG",
+      "slug": "farmtree-post-harvest-field-visit",
+      "alt": "People standing beside plant material spread beneath trees",
+      "page": "reserve",
+      "section": "Future post-harvest context",
+      "role": "reserved",
+      "priority": "secondary",
+      "selected": false,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 10,
+      "source": "IMG_2170.JPG",
+      "slug": "farmtree-plant-observation",
+      "alt": "Two people examining long green pods on a plant",
+      "page": "solutions",
+      "section": "Field observation",
+      "role": "contextual content",
+      "priority": "high",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 11,
+      "source": "IMG_2380.JPG",
+      "slug": "farmtree-agroforestry-field-system",
+      "alt": "Green ground vegetation growing between rows of small trees",
+      "page": "home",
+      "section": "Hero slide 2",
+      "role": "hero",
+      "priority": "high",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 12,
+      "source": "IMG_2384.JPG",
+      "slug": "farmtree-dryland-tree-landscape",
+      "alt": "Scattered trees and patches of green vegetation in a sandy field",
+      "page": "solutions",
+      "section": "Landscape context",
+      "role": "contextual content",
+      "priority": "secondary",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 13,
+      "source": "IMG_2495.JPG",
+      "slug": "farmtree-cultivated-field-tree-border",
+      "alt": "Young crops bordered by trees beneath overhead power lines",
+      "page": "reserve",
+      "section": "Secondary context only; retain power lines",
+      "role": "reserved",
+      "priority": "secondary",
+      "selected": false,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 14,
+      "source": "IMG_2604.JPG",
+      "slug": "farmtree-green-field-climate-context",
+      "alt": "Green crops bordered by trees beneath an overcast sky",
+      "page": "blog",
+      "section": "Editorial field context",
+      "role": "contextual content",
+      "priority": "secondary",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 15,
+      "source": "IMG_2704.JPG",
+      "slug": "farmtree-integrated-agroforestry-cropping",
+      "alt": "Tall green crops growing between leafy trees",
+      "page": "home",
+      "section": "Hero slide 1",
+      "role": "hero",
+      "priority": "high",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 16,
+      "source": "IMG_4353.JPG",
+      "slug": "farmtree-harvested-green-stems",
+      "alt": "A person standing beside cut green stems and growing plants",
+      "page": "reserve",
+      "section": "Future harvest context",
+      "role": "reserved",
+      "priority": "secondary",
+      "selected": false,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 17,
+      "source": "IMG_4357.JPG",
+      "slug": "farmtree-mixed-garden-papaya",
+      "alt": "Papaya trees, mixed crops and a small shelter in a garden with people",
+      "page": "customer-segments",
+      "section": "Mixed production context",
+      "role": "contextual content",
+      "priority": "high",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 18,
+      "source": "IMG_4789.JPG",
+      "slug": "farmtree-open-cultivated-field",
+      "alt": "An open cultivated field with distant people and a green container",
+      "page": "reserve",
+      "section": "Future landscape context; retain container",
+      "role": "reserved",
+      "priority": "secondary",
+      "selected": false,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 19,
+      "source": "IMG_4911.JPG",
+      "slug": "farmtree-mixed-agricultural-landscape",
+      "alt": "Trees and low crops on sandy ground beside rural structures",
+      "page": "home",
+      "section": "Hero slide 3",
+      "role": "hero",
+      "priority": "high",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    },
+    {
+      "number": 20,
+      "source": "IMG_5922.JPG",
+      "slug": "farmtree-structured-field-plots",
+      "alt": "Rectangular green crop beds divided by earthen paths and small trees",
+      "page": "home,platform",
+      "section": "Hero slide 4; Platform field-layout context",
+      "role": "hero",
+      "priority": "high",
+      "selected": true,
+      "edit": "Responsive crop and compression only; no scene alteration",
+      "cropPosition": "centre"
+    }
+  ]
+}

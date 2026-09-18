@@ -1,0 +1,1194 @@
+{
+  "schemaVersion": 1,
+  "sharp": "0.35.4",
+  "files": [
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 140518,
+      "sha256": "279b1110a65ee2d112774b967085de3af9a3bad49d2b3e7fd75f915cacd1d98e"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 259654,
+      "sha256": "a11cd55716733508bb0a16a77f62642fbd3f44496ebb67a551e0c871c6c7d065"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 402045,
+      "sha256": "8129a95844c2f12de2122032b7375bd2c19a1e10acd8be82087726d385c4ae79"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 71360,
+      "sha256": "1a28a9cbe66f51818dee43898000d2d0c4f69ac1b5f570f9c1dccd5219bb3bc0"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 134416,
+      "sha256": "379aea7bd93c090245d0f1fcb7edfb052c8961a40d1755e73440af418aaf484e"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 204205,
+      "sha256": "4c77ab9ee7166b1bd11df9f2394ea7228ba4633e4fb6ff96edb7e1a5fcd7dabc"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 46821,
+      "sha256": "af89f8eb926b980d7cde77f069d7397f9c84d8dd4fa2338ecbf010bdd070a8c2"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 88374,
+      "sha256": "57b072caaba9a514a57a9a3a7fccf3f9e11fbbf02b65b354f9e14c81ddcc2602"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 130440,
+      "sha256": "d40097d979661251981877936ac548bdbf0aed4a6d71fde1302bbabbbdb4584b"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 12783,
+      "sha256": "be2deb84cd9202afabd90b54a012ad66630acc537e65b5fd7c296f9f44f677f8"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 23118,
+      "sha256": "84e08eda0fc37b8a5c9bb89b434bad3897959c042ca1a11773917502a065a66f"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 35014,
+      "sha256": "ee28c1ad838bb16a3468c9af0754febb7eec21d7968418b0088a962fe53e99b2"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 174257,
+      "sha256": "0fde5dec56da260487804b6f6bf7081b4840c6a8d8e0f7a4d14072a4b2d39746"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 320694,
+      "sha256": "62f343b212a27c9f7a12c5a2fe954d6deddf8630abad710f4c9e49c05c1931bd"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 494151,
+      "sha256": "7d7f9f7325aef9ab8cfe060129f98d8b9cfcb7df9611a02445fbab288f147196"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 118574,
+      "sha256": "6c65630e9f9034bbc9ef0a701c3585b22c353cbbe3975d4c94b526b39a88eb44"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 223980,
+      "sha256": "9c6596642de577f23335b195216eaa39fcc8f4cbe381fd7481e2f1ee2539b400"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 313610,
+      "sha256": "5ffd051b32f1f44f3361520c3a421c1e020416011aa508a937b431c1c2963bce"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 72376,
+      "sha256": "3636d797753a643f537fc9b4e08bf6fd4b1f727e950291a8b34729bb162542e4"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 136418,
+      "sha256": "d43f521884b42c3d054db9c4cda817e9a1250442e534147eada14a1df747cc14"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 187961,
+      "sha256": "af04a5728586407291ce3e582e2fd036907201be42f4eedc91ef18b8ec4a1bff"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 23838,
+      "sha256": "54106ae45115faa7cd42643d0477b3adfd7548763d58892c5e47f436a89346cb"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 45878,
+      "sha256": "ea888ae2acbdea3292c30a5ef7c23d5249f0d6e8b6ca2d8e6a2caf9ee7fe4734"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 58165,
+      "sha256": "a99c77461f384490113327c283452d011f948a0dfa5f022cecab504a6dfde1b8"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 196563,
+      "sha256": "2e0da5bd1e7821c31e71074bbb628ddcb1ea03ff21ffdfd1eedb6b07f22c8ac4"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 388392,
+      "sha256": "ba6256324d9455cb119675b9d649c3826072ddb34749a4cda1e2385504fbbcd4"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 551848,
+      "sha256": "d6f4c4a1bfeb5aabfd0310b5e36b8885487a641e545de4ecca97ef889b517de5"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 118261,
+      "sha256": "313448cf5d19204ddda5f2fbfb2bd00c6010d8c3126a1d4ea87646cb6d425637"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 232864,
+      "sha256": "5d238fd96d941cd089ffefed46353de9b955ab479f15b8314692ddaf21ac7b9c"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 317046,
+      "sha256": "d097cbdae6a741cb6f4142668bc425cbc4680ded29af591487ba7a3f2092707b"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 73138,
+      "sha256": "2386bdede9103fe7f07f462c8771624334eb75d2d98c60463d1bfeaa46bc4c94"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 144760,
+      "sha256": "c83be7f998b6f3bc52d9ca793a77993751da76f9363e1dd36e702420d83d7656"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 194211,
+      "sha256": "74a48156ea26336279ce5633a06474db5cb4562732ebf100a32705e1e2e6c1f4"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 22524,
+      "sha256": "fd05fe826270681b64efa98eea942f1584077832aebb455fa8843349acf1943f"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 46538,
+      "sha256": "08571acdebf89eeeb929a6074232e75f8e79406ad3ca1de2318feed7167bb22a"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 58019,
+      "sha256": "efb98ea70fcb34fbfe498671d59f3f7dfdd5d4ba434fad9b0f80c787874f0695"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 115460,
+      "sha256": "5351901e6c8d8c5ee1a9ecf1648c5030803f6925a5eea8534cc7773196b459ee"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 190302,
+      "sha256": "19ab346fd615ddcb69833aed2ed90c432b667e07579cf665b8520f7979da30e5"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 360498,
+      "sha256": "4768f770da80653435cc33ddf90037a8747ecf5205ae79b95220aa46fbcab495"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 75573,
+      "sha256": "6a5df31705f8503c3f31d94fcae6f91ac6fb64954ede852256051b495c41bbb8"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 131460,
+      "sha256": "8d381205bd0006d9cf90f484b61f3ebc726316796deeb5b51afedf6fa1de8dc2"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 219460,
+      "sha256": "f54693fd0733e35e98f5d0922392e3d3cca7d2a390788a2293b1097b67d84f1d"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 48152,
+      "sha256": "044630e833644029cb46a1b24dcfeda2596538bc650ff599e667bb0b459a790d"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 84030,
+      "sha256": "0ad63346615949b8921f58989a8e69910a630d4a574f41cb4d744f1b44d06299"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 136397,
+      "sha256": "08aa382551fda10a178665009c8e850c6a6a7168d006737a647eec2beed56213"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 16061,
+      "sha256": "1115498cf24468f62f606e0bde2465dab54ffd852cf6512f7e1b2f4c49a1eaba"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 28986,
+      "sha256": "03a2aadd7838adfba44444a94091fe2865ecddcb0ab5d8d3b98487fd1d929002"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 42608,
+      "sha256": "2ec188a1fd5db3e0db44c70549881e5b8d8833a708d2b9b4ed25b0411bc4204f"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 230397,
+      "sha256": "1e51a7746becb919c6b8779c1d00d319e9c547e199b5116995af105bf8ca8c33"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 468594,
+      "sha256": "1ac505982954d3efaf3e97357c35d810a9efdcaa6e6fab6829f5522d27f41774"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 600227,
+      "sha256": "a7755447469af7cd9051027cc612b5be5d1d2a8dd5eebd56646cff3285d3f2d5"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 109521,
+      "sha256": "50d0433721943928168153961258e85a405df3509f9ff20b65b2db6d4ef195c9"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 225934,
+      "sha256": "4e46d282e37d47789f39acef65115a5c7176cb3c8c463bc32b03525be5e8948c"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 293414,
+      "sha256": "559cb71a6aea9e7508ddd1e48ba618e033e4502140e14d1d01d841ec6e52d052"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 61328,
+      "sha256": "66bce0dfd36b1fd3e96bc44c52d1d59fb14e3f04b71ae7ff4cc49187b0877fb8"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 127380,
+      "sha256": "f1ff2da279e8e336358a469632bfcea1578b30d5e793c24f5ccb66bb44d656a9"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 166597,
+      "sha256": "73bed63c56ede1797a5214bc62befedd7835b0831ea9f20f7d4e92600941f897"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 15625,
+      "sha256": "02db50a0688a8be5d5b2879aa08b4a4790b3efa78572756a655b967455cac874"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 33244,
+      "sha256": "a261d1d2cb191313862d2bd29afe4110919432ec9ca85f7d3e16df958057bae7"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 43353,
+      "sha256": "c415dda7a4d14f17d95941c4fbd713a4698ced1ec3565efa454b7d92afa95c27"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 149130,
+      "sha256": "6f9844bb188e3e8c76294c20c2a62745c4c9b5e490274ee5b4bfa9cbe61ff453"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 271612,
+      "sha256": "718610d85174bc6de93c31bac52193fdcc682b2bac3413d2652ea6d49f28c9b7"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 427394,
+      "sha256": "19c4e58fd52cf81d868f7b7621ba807755ad7740d59645801b3632c9f5dd3f22"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 83708,
+      "sha256": "b6321b67e8b6c6e374e1d9ef41f6d67a8cddb716329d41609e773fdab19b59c7"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 161034,
+      "sha256": "b3b41ab685f2a03723ee60c72ca4a23b15f5f570da9d73a728709e620efce75d"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 235579,
+      "sha256": "f028062fa84fcabcd6a65a42af4e12408ba784b8a7de3be775604a5872405f1e"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 52903,
+      "sha256": "d4783a0da1abc8b3901354db7545864fc8e85d3f76eb4b1b6143b0b558afa265"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 102482,
+      "sha256": "321b24d52cd10dee78db7130ef259a3fec5029cb30b3d02d273175b672227d59"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 147056,
+      "sha256": "5ad85601ab3c5f3683f2aad5556af64e8e7ec7cf9fb4f069101bab5f82b0172a"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 14189,
+      "sha256": "7743bd483c8dd2b7bc48a47389fcc7f8ee2252d2338e00298e6694b3865c873c"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 27984,
+      "sha256": "12c52e628b325156339107ad4f0922a91264feb5f9f864e2a89b79c5522def6b"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 39055,
+      "sha256": "93f3f5631fbfdb97034ee6af284c397bdb9e33af426d09980b26d329ddf2e9a4"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 65241,
+      "sha256": "8eec0c3f2fe88675bc121eff304bdd0670b759f8bc4c7c17e44e4925ff7f75fd"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 103030,
+      "sha256": "1ece3b2fd8b0a97541d2451cc4b13dae58dd4220c4059792936a76381cc30431"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 218527,
+      "sha256": "3c152657064de2659a3a6c825bcffe888d80b7962cd66adafbe75b27a07f8ae4"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 37558,
+      "sha256": "dfedee38f9708d9de7fa5de12a3285daaa6ab3f95e55825beeb2d1deab09d8cc"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 60372,
+      "sha256": "5f675b86014a9c67fd576f9d44c6cfbbe565b71daffb8aeaf5b620fb06515cc6"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 119222,
+      "sha256": "f808a06577cc880053346879e5776ef25730de3c983dbfb43c950d94a1e947bb"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 23107,
+      "sha256": "e5ab3abd10c53636a2219382071e9f10257dc6176c7acc2a9af60e2e9f0576a2"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 36820,
+      "sha256": "32488a84499f8c4f9f4a794995a4dfdb56d6dbcbb3e070967180104197d81994"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 71673,
+      "sha256": "d59f71fbec69e1ae7b132e64bcc2417caa13da5911c92e5f31849e687d526bfb"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 8329,
+      "sha256": "ba65cb8a7a886347ef512f4f5df30a19c18c32cd40a7bebd7c7292552d684bc3"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 13316,
+      "sha256": "2cee23228e7025b1b87bee242dc525e307fe81e661e2b7987d206255f3c1a3d5"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 24134,
+      "sha256": "147877a25badb2198d09b743826aad0eed84c74efb1e7ef0a379d19511d78ac2"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 221107,
+      "sha256": "32e7ae59efcd7e2a4e21933dc2a7aced8bd3c8b99a9c47e57c860fef78db4c21"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 440700,
+      "sha256": "656ae9fb33bb582945a79cc0b55e76034448c6c7531cb5a22c5697c1fe632952"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 595078,
+      "sha256": "8623daef3301274abb02ecb39e1262ca78ec4eb5c526fde9f3b6701e6bc40151"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 118479,
+      "sha256": "c379c5cc1e4973a1fd17bc3ff9fb3cea032097a438931415a0b8987383b8a3a7"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 234022,
+      "sha256": "2ef1f284df03740ca90a4c31d21a9b9b41b70e83f7dce783e3b4578d133800d6"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 312312,
+      "sha256": "5553e14fdac12a9c38954c97d7069e0e7a53fe3f783f7c345323c768a63679eb"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 69528,
+      "sha256": "f8ef3028db11459a3ced9fc3e35a626840740f0fc20fe5be5da39ecffa6f6416"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 137824,
+      "sha256": "5ee29aee2d520662cc5b36a1341c14fe26029b027eaab16edf5128def6c6ae61"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 184105,
+      "sha256": "bad1ed2adc8063d892392e1d72de57b0b5cec7ae67c4d3fe441028a65e236e91"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 20399,
+      "sha256": "e95a5168a7a740d49f3ff8875793a8db345ef5f267e5912b9edda87e639662de"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 41778,
+      "sha256": "f145c6b16b90af50a543c11341f7b1b783ff3c674f09a74349c4e911cf6bb020"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 52945,
+      "sha256": "e3f23ec2f47baedf54a0d6ff53cc70e799514ede830a0a50b5251f71c5368095"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 218987,
+      "sha256": "f24bb681c1a9f2548b2e89f844b9d59284ea6389dc8ac4b087c7bc3c71d278fd"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 436392,
+      "sha256": "058423638917f27220021645f9f2f6131c9bfdf83d2e6c5bf22a0726fa544ed6"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 599032,
+      "sha256": "ae77978bce12ba3c7be6e8d5d07575fad5467c3bcc8f0bd080fad8e9b91c8d40"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 133688,
+      "sha256": "c52c24c0e5c3abadb4815b1d68f9e2513e1e37af394f0d78507eb07cbe5ef664"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 270694,
+      "sha256": "f2d0f1e65f15506a6a1840d0daaf67f5db0e4b68572a8d046b12568e25afd0b9"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 350521,
+      "sha256": "36aefe8bff2fee873dca5be67be026f4b2a1c16875acf8c1b7e1dfb9be163161"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 79775,
+      "sha256": "aa88d64cd62538fa8cdac3f1ebe9bc79e5261a3ca9433b0cfcaf244d10aec4be"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 164018,
+      "sha256": "933af55df354443944d3aece44996f08821071238f787b6055f960c069afc3ce"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 209776,
+      "sha256": "4de79a5b79dfdaa6ab2bd8f50a6f8ec61522705d7c9f2167f7e2ac54c1e6a47a"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 23754,
+      "sha256": "0f9b1fec4aaa1cc387dd68b7d966c44b05bf043c1c667a1dac9e15a4443732b3"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 50658,
+      "sha256": "4cbc758514664c3184002976b2f53aa8b55d354ff77123dbf2990dab13851592"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 61809,
+      "sha256": "256fe28bdc298efdc48dca8775b12d046b19cbb55875986e7e91cb0fcd193b4f"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 215660,
+      "sha256": "60e99f09bff3344ad3534b7c05a9381903e87927121771f6b079002ca6ee8ac1"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 441132,
+      "sha256": "2aa46c0dfbc543b31d9ea0b34f26a8be0b9e5f3bddc5c3944b6829eebc3c892c"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 583209,
+      "sha256": "7fb4fc4818958404c7e09aeeb6ac06f8112ff0bc07ca0af246f55f366e349ea3"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 114679,
+      "sha256": "85221a98da26c15176bb4b00a95dd90c91730f6322c5d1ec1b7f28c1e937f6af"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 232310,
+      "sha256": "4d1f2b3b5a5b0e6298a41b70058778d0faab35cd1077d17270275039000d205a"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 307801,
+      "sha256": "bb47c21f857551607eb3872d7f5317641a8368763734210db29dde698f735205"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 73832,
+      "sha256": "586ae20f544eaddaba1df914b56ec01bb96e9c3bee1de5fac6b5d9b8f49990c2"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 153650,
+      "sha256": "49546a5e7a05f508f6ace6e482806cace05cf1ecc9d71bd8bad6cf68d1455dbf"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 195903,
+      "sha256": "3e0fb9973571bffca108269455661d1dcac4a5315171f98a20c6cfa0bfab3084"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 18842,
+      "sha256": "0914bf5b93dc7c5e2614277c0e3b01872de17460a99428460a0bce97c22df0b5"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 39122,
+      "sha256": "166569e5f63c684546c41b9d5936d670a8ce16f4ad4b12f75c4e4e0f24c3dd43"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 50973,
+      "sha256": "a6702c79c04291d7435b89380f7484d507c9d36ef63714762dbd6e22ee55876f"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 298372,
+      "sha256": "0db60297c8571f6701d68fe76aa9317afe950523a732ab71126fe9c6a2f70644"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 677430,
+      "sha256": "bde0de7956779824260a1a21b8e3859ce96b94ee60a33c3335bad4d17219679b"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 789212,
+      "sha256": "d2b6c79d60bbf363d47b10b346f1c44c469a70fc5cd42222be9846a7dc66ff36"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 150483,
+      "sha256": "bb6fe5a1b72d2899ddf2f756660835f9493295b73fdef417771f765403eca89b"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 334246,
+      "sha256": "5897d1e1d47737e1c532374ea39a92cc5735e5ab53ded52f9bfe964f2121c237"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 395330,
+      "sha256": "e4df0e02daa098d330eb1d7f6416ef4e89399af6c6f5cd2bab5ac0de29169842"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 86992,
+      "sha256": "f825c70b7d6647b45e0254f0e3099ebb32f85b4da9ecfbada877b4799a60a860"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 193618,
+      "sha256": "d9b9edae413905caaf0dbce1f34c05bf414fe562bced016187534671c04b7f63"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 230104,
+      "sha256": "bee6bf69c7f5722bd5406d6f26b1dc5018abafee49529a0b3b437feeb9130706"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 21675,
+      "sha256": "8d972c93332d01837d696c554d5db0c3af9e475b0da1ca66a2bb5c312e21412d"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 47558,
+      "sha256": "2056dd421d40194b4d3f46370cc6b1afdf8d93672a21f3547d6009beb2def331"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 56941,
+      "sha256": "9ac9cb79818c2df3a7edcf44a5e3ff3a3e8c1ba0fe624d986d8ca03f9cbf8acf"
+    }
+  ]
+}

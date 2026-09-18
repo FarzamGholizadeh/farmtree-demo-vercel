@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { documentaryContent } from './documentary-content.mjs';
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const pluginRoot = resolve(repositoryRoot, 'wordpress/wp-content/plugins/farmtree-content');
@@ -175,6 +176,11 @@ function proofStoryContent(story) {
 }
 
 function englishPageContent(page) {
+  const images = documentaryContent(page.slug);
+  return englishPageBaseContent(page) + (images ? '\n\n' + images : '');
+}
+
+function englishPageBaseContent(page) {
   if (page.body === 'news' || page.slug === 'blog') return newsHubContent();
   if (page.lastUpdated && page.sections) return legalDocumentContent(page);
   if (page.body === 'contact') {

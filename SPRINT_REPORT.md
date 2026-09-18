@@ -1,5 +1,28 @@
 # FT-NATIVE-002 Sprint Report
 
+## Documentary images — local release preparation, 2026-09-18
+
+- Plan first: 20 exact upload-order records, 11 selected and nine reserved.
+- 132 outputs: 1920×1080, 1200×900, 800×800, 480×360; AVIF/WebP/JPEG.
+  Original photos unchanged; only crops/compression, no generative editing;
+  metadata stripped. Source/output SHA256 evidence is repository-only.
+- Existing Homepage hero now uses Images 15/11/19/20. Contextual figures are
+  added to Platform, Solutions, Proof Stories, Customer Segments and Blog.
+  No claim links these scenes to specific project outcomes or news events.
+- Runtime picture rendering supplies responsive sources, intrinsic dimensions,
+  eager/high-priority first hero and lazy below-fold images. WordPress parser
+  accepts all 12 documentary core Image blocks; URLs/alt/captions stay editable.
+- `npm test`, local `wp:verify`, anonymous 40-route/104-link checks and 12-picture
+  delivery checks pass. Disposable APPLY/postcondition regression converges to
+  93 unchanged, zero conflicts. Nine-width Homepage interaction/accessibility
+  and 54-view photo checks pass; screenshots in ignored qa/screenshots/documentary*.
+- Exact artifact build/audit must follow the focused local commit because the
+  release builder rejects source bytes that differ from HEAD. Runtime allowlist
+  has 217 files with 114 exclusions; no raw source photos or private manifests ship.
+- Production was not contacted or mutated. Push, production dry-run, deployment
+  and content APPLY remain pending explicit approval. See the photo plan for
+  exact filenames, alt text, variants, reproduction and rollback requirements.
+
 ## Public launch acceptance — 2026-09-18
 
 Deployed runtime: `7185c9b58b1d0f5f50f774b6cd2d97e042051e6f` (85 files verified).

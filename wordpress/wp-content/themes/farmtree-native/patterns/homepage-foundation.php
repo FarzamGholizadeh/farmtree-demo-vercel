@@ -15,19 +15,19 @@
 <div class="wp-block-group ft-native-home"><!-- wp:group {"tagName":"section","metadata":{"name":"FarmTree Hero"},"align":"full","className":"ft-home-hero","style":{"dimensions":{"minHeight":"780px"},"spacing":{"padding":{"top":"var:preset|spacing|80","right":"var:preset|spacing|50","bottom":"var:preset|spacing|80","left":"var:preset|spacing|50"}}},"backgroundColor":"farmtree-forest","layout":{"type":"constrained"}} -->
 <section class="wp-block-group alignfull ft-home-hero has-farmtree-forest-background-color has-background" style="min-height:780px;padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--50)"><!-- wp:group {"metadata":{"name":"Editable Hero images"},"className":"ft-home-hero-media","layout":{"type":"default"}} -->
 <div class="wp-block-group ft-home-hero-media"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide is-active"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide is-active"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/hero-field-planning-v1.jpg' ) ); ?>" alt="Illustrative field team reviewing an agroforestry plan and monitoring tools"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide is-active"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/documentary/farmtree-integrated-agroforestry-cropping-hero.jpg' ) ); ?>" alt="Tall green crops growing between leafy trees"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/proof-carbon.webp' ) ); ?>" alt="Three people reviewing information on a laptop"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/documentary/farmtree-agroforestry-field-system-hero.jpg' ) ); ?>" alt="Green ground vegetation growing between rows of small trees"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/hero-project-teams.webp' ) ); ?>" alt="Four people discussing crops in a field"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/documentary/farmtree-mixed-agricultural-landscape-hero.jpg' ) ); ?>" alt="Trees and low crops on sandy ground beside rural structures"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/home/hero-impact-reporting-v2.jpg' ) ); ?>" alt="Agroforestry field team measuring a tree and reviewing monitoring information"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/documentary/farmtree-structured-field-plots-hero.jpg' ) ); ?>" alt="Rectangular green crop beds divided by earthen paths and small trees"/></figure>
 <!-- /wp:image --></div>
 <!-- /wp:group -->
 
@@ -105,13 +105,13 @@
 <div class="ft-home-hero-controls">
 <button class="ft-home-hero-arrow ft-home-hero-arrow-prev" type="button" aria-label="Previous hero slide" data-ft-hero-prev>‹</button>
 <div class="ft-home-hero-dots" role="group" aria-label="Choose hero slide">
-<button class="ft-home-hero-dot is-active" type="button" aria-label="Project workshop" aria-pressed="true" data-ft-hero-dot></button>
-<button class="ft-home-hero-dot" type="button" aria-label="Carbon planning" aria-pressed="false" data-ft-hero-dot></button>
-<button class="ft-home-hero-dot" type="button" aria-label="Project Teams" aria-pressed="false" data-ft-hero-dot></button>
-<button class="ft-home-hero-dot" type="button" aria-label="Impact Reporting" aria-pressed="false" data-ft-hero-dot></button>
+<button class="ft-home-hero-dot is-active" type="button" aria-label="Trees and crops" aria-pressed="true" data-ft-hero-dot></button>
+<button class="ft-home-hero-dot" type="button" aria-label="Rows of trees" aria-pressed="false" data-ft-hero-dot></button>
+<button class="ft-home-hero-dot" type="button" aria-label="Mixed agricultural landscape" aria-pressed="false" data-ft-hero-dot></button>
+<button class="ft-home-hero-dot" type="button" aria-label="Structured field plots" aria-pressed="false" data-ft-hero-dot></button>
 </div>
 <button class="ft-home-hero-arrow ft-home-hero-arrow-next" type="button" aria-label="Next hero slide" data-ft-hero-next>›</button>
-<p class="screen-reader-text" aria-live="polite" data-ft-hero-status>Project workshop: Make agroforestry measurable, investable and scalable, slide 1 of 4</p>
+<p class="screen-reader-text" aria-live="polite" data-ft-hero-status>Trees and crops: Make agroforestry measurable, investable and scalable, slide 1 of 4</p>
 </div>
 <!-- /wp:html --></section>
 <!-- /wp:group -->

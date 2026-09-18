@@ -1,5 +1,15 @@
 # FarmTree Tasks
 
+## Documentary photography — 2026-09-18
+
+- [x] Audit upload-order descriptions and create manifest/placement map first.
+- [x] Export 11 selected photos to 132 metadata-stripped responsive assets.
+- [x] Integrate existing hero and contextual figures without changing story/legal copy.
+- [x] Validate assets, release classification, WordPress delivery/editability,
+  anonymous routes, reconciliation and responsive/accessibility behavior locally.
+- [ ] Review and explicitly approve a future photo release/push/deployment.
+  Prior launch authorization is not reused. Production remains untouched.
+
 Public launch preparation (2026-09-18): explicit launch authorization supersedes
 historical private-release gates. Source now uses left-to-right testimonial
 travel, an intentional mailto-only Contact CTA and production indexing governed

@@ -399,19 +399,19 @@ return [
 <div class="wp-block-group ft-native-home"><!-- wp:group {"tagName":"section","metadata":{"name":"FarmTree Hero"},"align":"full","className":"ft-home-hero","style":{"dimensions":{"minHeight":"780px"},"spacing":{"padding":{"top":"var:preset|spacing|80","right":"var:preset|spacing|50","bottom":"var:preset|spacing|80","left":"var:preset|spacing|50"}}},"backgroundColor":"farmtree-forest","layout":{"type":"constrained"}} -->
 <section class="wp-block-group alignfull ft-home-hero has-farmtree-forest-background-color has-background" style="min-height:780px;padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--50)"><!-- wp:group {"metadata":{"name":"Editable Hero images"},"className":"ft-home-hero-media","layout":{"type":"default"}} -->
 <div class="wp-block-group ft-home-hero-media"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide is-active"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide is-active"><img src="%%FARMTREE_THEME_URI:assets/images/home/hero-field-planning-v1.jpg%%" alt="Illustrative field team reviewing an agroforestry plan and monitoring tools"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide is-active"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-integrated-agroforestry-cropping-hero.jpg%%" alt="Tall green crops growing between leafy trees"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide"><img src="%%FARMTREE_THEME_URI:assets/images/home/proof-carbon.webp%%" alt="Three people reviewing information on a laptop"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-agroforestry-field-system-hero.jpg%%" alt="Green ground vegetation growing between rows of small trees"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide"><img src="%%FARMTREE_THEME_URI:assets/images/home/hero-project-teams.webp%%" alt="Four people discussing crops in a field"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-mixed-agricultural-landscape-hero.jpg%%" alt="Trees and low crops on sandy ground beside rural structures"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide"} -->
-<figure class="wp-block-image size-full ft-home-hero-slide"><img src="%%FARMTREE_THEME_URI:assets/images/home/hero-impact-reporting-v2.jpg%%" alt="Agroforestry field team measuring a tree and reviewing monitoring information"/></figure>
+<figure class="wp-block-image size-full ft-home-hero-slide"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-structured-field-plots-hero.jpg%%" alt="Rectangular green crop beds divided by earthen paths and small trees"/></figure>
 <!-- /wp:image --></div>
 <!-- /wp:group -->
 
@@ -489,13 +489,13 @@ return [
 <div class="ft-home-hero-controls">
 <button class="ft-home-hero-arrow ft-home-hero-arrow-prev" type="button" aria-label="Previous hero slide" data-ft-hero-prev>‹</button>
 <div class="ft-home-hero-dots" role="group" aria-label="Choose hero slide">
-<button class="ft-home-hero-dot is-active" type="button" aria-label="Project workshop" aria-pressed="true" data-ft-hero-dot></button>
-<button class="ft-home-hero-dot" type="button" aria-label="Carbon planning" aria-pressed="false" data-ft-hero-dot></button>
-<button class="ft-home-hero-dot" type="button" aria-label="Project Teams" aria-pressed="false" data-ft-hero-dot></button>
-<button class="ft-home-hero-dot" type="button" aria-label="Impact Reporting" aria-pressed="false" data-ft-hero-dot></button>
+<button class="ft-home-hero-dot is-active" type="button" aria-label="Trees and crops" aria-pressed="true" data-ft-hero-dot></button>
+<button class="ft-home-hero-dot" type="button" aria-label="Rows of trees" aria-pressed="false" data-ft-hero-dot></button>
+<button class="ft-home-hero-dot" type="button" aria-label="Mixed agricultural landscape" aria-pressed="false" data-ft-hero-dot></button>
+<button class="ft-home-hero-dot" type="button" aria-label="Structured field plots" aria-pressed="false" data-ft-hero-dot></button>
 </div>
 <button class="ft-home-hero-arrow ft-home-hero-arrow-next" type="button" aria-label="Next hero slide" data-ft-hero-next>›</button>
-<p class="screen-reader-text" aria-live="polite" data-ft-hero-status>Project workshop: Make agroforestry measurable, investable and scalable, slide 1 of 4</p>
+<p class="screen-reader-text" aria-live="polite" data-ft-hero-status>Trees and crops: Make agroforestry measurable, investable and scalable, slide 1 of 4</p>
 </div>
 <!-- /wp:html --></section>
 <!-- /wp:group -->
@@ -2056,7 +2056,9 @@ return [
 
 <!-- wp:heading --><h2 class="wp-block-heading">A useful next step</h2><!-- /wp:heading -->
 
-<!-- wp:paragraph --><p>Explore <a href="/platform/">the Platform</a>, review <a href="/proof-stories/">Proof Stories</a>, or <a href="/contact/">contact FarmTree</a> with a specific planning question.</p><!-- /wp:paragraph -->',
+<!-- wp:paragraph --><p>Explore <a href="/platform/">the Platform</a>, review <a href="/proof-stories/">Proof Stories</a>, or <a href="/contact/">contact FarmTree</a> with a specific planning question.</p><!-- /wp:paragraph -->
+
+<!-- wp:group {"className":"ft-documentary-context","layout":{"type":"default"}} --><div class="wp-block-group ft-documentary-context"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-documentary-image"} --><figure class="wp-block-image size-full ft-documentary-image"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-structured-field-plots-content.jpg%%" alt="Rectangular green crop beds divided by earthen paths and small trees"/><figcaption class="wp-element-caption">Field layout context: crop beds, small trees and earthen paths. Not a Platform output.</figcaption></figure><!-- /wp:image --></div><!-- /wp:group -->',
                 'menu_order' => 0,
                 'post_date' => '',
             ],
@@ -2074,7 +2076,13 @@ return [
                 'post_name' => 'proof-stories',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Explore four evidence themes grounded in FarmTree\'s published capabilities and project experience.',
-                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">These stories explain how FarmTree supports carbon planning, farm-value modelling, cocoa scenario work and water-resilience questions. They do not claim guaranteed or independently verified outcomes.</p><!-- /wp:paragraph --><!-- wp:list --><ul><li><a href="/proof-stories/carbon-planning/">Carbon planning</a>: Use traceable site, species and management assumptions to compare carbon projections without confusing planning with certification.</li><li><a href="/proof-stories/farm-value-projection/">Farm Valuation</a>: Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.</li><li><a href="/proof-stories/cocoa-scenario-planning/">Cocoa scenario planning and monitoring</a>: Compare shade-tree density, species mix, renewal timing and farmer-value trade-offs before scaling a cocoa programme.</li><li><a href="/proof-stories/landscape-hydrology/">Landscape Hydrology</a>: Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.</li></ul><!-- /wp:list -->',
+                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">These stories explain how FarmTree supports carbon planning, farm-value modelling, cocoa scenario work and water-resilience questions. They do not claim guaranteed or independently verified outcomes.</p><!-- /wp:paragraph --><!-- wp:list --><ul><li><a href="/proof-stories/carbon-planning/">Carbon planning</a>: Use traceable site, species and management assumptions to compare carbon projections without confusing planning with certification.</li><li><a href="/proof-stories/farm-value-projection/">Farm Valuation</a>: Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.</li><li><a href="/proof-stories/cocoa-scenario-planning/">Cocoa scenario planning and monitoring</a>: Compare shade-tree density, species mix, renewal timing and farmer-value trade-offs before scaling a cocoa programme.</li><li><a href="/proof-stories/landscape-hydrology/">Landscape Hydrology</a>: Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.</li></ul><!-- /wp:list -->
+
+<!-- wp:paragraph --><p>Documentary field context, shown independently of the four Proof Stories above.</p><!-- /wp:paragraph -->
+
+<!-- wp:group {"className":"ft-documentary-context","layout":{"type":"default"}} --><div class="wp-block-group ft-documentary-context"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-documentary-image"} --><figure class="wp-block-image size-full ft-documentary-image"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-dryland-field-context-content.jpg%%" alt="Two people standing beside vegetation in an open, rocky field"/><figcaption class="wp-element-caption">People and vegetation in an open field landscape.</figcaption></figure><!-- /wp:image -->
+
+<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-documentary-image"} --><figure class="wp-block-image size-full ft-documentary-image"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-onion-harvest-under-trees-content.jpg%%" alt="Two people seated beside harvested onions under trees"/><figcaption class="wp-element-caption">Harvested onions gathered beneath trees.</figcaption></figure><!-- /wp:image --></div><!-- /wp:group -->',
                 'menu_order' => 0,
                 'post_date' => '',
             ],
@@ -2092,7 +2100,11 @@ return [
                 'post_name' => 'customer-segments',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Ten practical routes into FarmTree for organisations making different agroforestry decisions.',
-                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">The same model can support different decisions. Start with your organisation\'s question, available evidence and responsibilities, then choose an appropriately scoped workflow.</p><!-- /wp:paragraph --><!-- wp:list {"ordered":true} --><ol><li><a href="/customer-segments/consultancy-agroforestry-advisors/">Consultancy &amp; Agroforestry Advisors</a>: Build consistent, evidence-led agroforestry scenarios for client strategy, design and investment planning.</li><li><a href="/customer-segments/development-banks-donor-organisations/">Development Banks &amp; Donor Organisations</a>: Assess agroforestry programmes with clearer assumptions, comparable scenarios and long-term impact context.</li><li><a href="/customer-segments/ngos-conservation-organisations/">NGOs &amp; Conservation Organisations</a>: Connect conservation goals and livelihood priorities to practical agroforestry planning and monitoring.</li><li><a href="/customer-segments/nbs-carbon-project-developers/">NbS &amp; Carbon Project Developers</a>: Test agroforestry design choices and connect project assumptions to carbon, production and financial scenarios.</li><li><a href="/customer-segments/mrv-esg-platforms/">MRV &amp; ESG Platforms</a>: Add forward-looking agroforestry scenario context to monitoring, reporting and sustainability workflows.</li><li><a href="/customer-segments/government-parastatal-institutions/">Government &amp; Parastatal Institutions</a>: Compare agroforestry programme options using consistent site, species, management and impact assumptions.</li><li><a href="/customer-segments/industry-associations-multi-stakeholder-platforms/">Industry Associations &amp; Multi-Stakeholder Platforms</a>: Create a shared scenario language for agroforestry discussions across members, value chains and landscapes.</li><li><a href="/customer-segments/large-agri-corporate/">Large Agri-Corporate</a>: Explore agroforestry options across sourcing landscapes with clearer business, production and environmental assumptions.</li><li><a href="/customer-segments/social-enterprise/">Social Enterprise</a>: Connect an agroforestry mission to practical operating assumptions, farmer value and an investable planning narrative.</li><li><a href="/customer-segments/investors/">Investors</a>: Review agroforestry opportunities through transparent scenarios, assumptions and long-term value drivers.</li></ol><!-- /wp:list -->',
+                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">The same model can support different decisions. Start with your organisation\'s question, available evidence and responsibilities, then choose an appropriately scoped workflow.</p><!-- /wp:paragraph --><!-- wp:list {"ordered":true} --><ol><li><a href="/customer-segments/consultancy-agroforestry-advisors/">Consultancy &amp; Agroforestry Advisors</a>: Build consistent, evidence-led agroforestry scenarios for client strategy, design and investment planning.</li><li><a href="/customer-segments/development-banks-donor-organisations/">Development Banks &amp; Donor Organisations</a>: Assess agroforestry programmes with clearer assumptions, comparable scenarios and long-term impact context.</li><li><a href="/customer-segments/ngos-conservation-organisations/">NGOs &amp; Conservation Organisations</a>: Connect conservation goals and livelihood priorities to practical agroforestry planning and monitoring.</li><li><a href="/customer-segments/nbs-carbon-project-developers/">NbS &amp; Carbon Project Developers</a>: Test agroforestry design choices and connect project assumptions to carbon, production and financial scenarios.</li><li><a href="/customer-segments/mrv-esg-platforms/">MRV &amp; ESG Platforms</a>: Add forward-looking agroforestry scenario context to monitoring, reporting and sustainability workflows.</li><li><a href="/customer-segments/government-parastatal-institutions/">Government &amp; Parastatal Institutions</a>: Compare agroforestry programme options using consistent site, species, management and impact assumptions.</li><li><a href="/customer-segments/industry-associations-multi-stakeholder-platforms/">Industry Associations &amp; Multi-Stakeholder Platforms</a>: Create a shared scenario language for agroforestry discussions across members, value chains and landscapes.</li><li><a href="/customer-segments/large-agri-corporate/">Large Agri-Corporate</a>: Explore agroforestry options across sourcing landscapes with clearer business, production and environmental assumptions.</li><li><a href="/customer-segments/social-enterprise/">Social Enterprise</a>: Connect an agroforestry mission to practical operating assumptions, farmer value and an investable planning narrative.</li><li><a href="/customer-segments/investors/">Investors</a>: Review agroforestry opportunities through transparent scenarios, assumptions and long-term value drivers.</li></ol><!-- /wp:list -->
+
+<!-- wp:group {"className":"ft-documentary-context","layout":{"type":"default"}} --><div class="wp-block-group ft-documentary-context"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-documentary-image"} --><figure class="wp-block-image size-full ft-documentary-image"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-community-field-visit-content.jpg%%" alt="People walking through dry crop stalks beneath scattered trees"/><figcaption class="wp-element-caption">Walking through a field with dry crop stalks.</figcaption></figure><!-- /wp:image -->
+
+<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-documentary-image"} --><figure class="wp-block-image size-full ft-documentary-image"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-mixed-garden-papaya-content.jpg%%" alt="Papaya trees, mixed crops and a small shelter in a garden with people"/><figcaption class="wp-element-caption">Mixed crops and fruit trees around a small garden shelter.</figcaption></figure><!-- /wp:image --></div><!-- /wp:group -->',
                 'menu_order' => 0,
                 'post_date' => '',
             ],
@@ -2221,7 +2233,9 @@ return [
 <!-- wp:post-excerpt {"moreText":"","excerptLength":24,"fontSize":"small"} /-->
 <!-- wp:read-more {"content":"Read article","className":"ft-news-read-more"} /-->
 </div><!-- /wp:group -->
-<!-- /wp:post-template --></div><!-- /wp:query -->',
+<!-- /wp:post-template --></div><!-- /wp:query -->
+
+<!-- wp:group {"className":"ft-documentary-context","layout":{"type":"default"}} --><div class="wp-block-group ft-documentary-context"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-documentary-image"} --><figure class="wp-block-image size-full ft-documentary-image"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-green-field-climate-context-content.jpg%%" alt="Green crops bordered by trees beneath an overcast sky"/><figcaption class="wp-element-caption">Field context: cropping beneath an overcast sky, independent of the news events above.</figcaption></figure><!-- /wp:image --></div><!-- /wp:group -->',
                 'menu_order' => 0,
                 'post_date' => '',
             ],
@@ -2579,7 +2593,11 @@ return [
 
 <!-- wp:heading --><h2 class="wp-block-heading">A useful next step</h2><!-- /wp:heading -->
 
-<!-- wp:paragraph --><p>Explore <a href="/platform/">the Platform</a>, review <a href="/proof-stories/">Proof Stories</a>, or <a href="/contact/">contact FarmTree</a> with a specific planning question.</p><!-- /wp:paragraph -->',
+<!-- wp:paragraph --><p>Explore <a href="/platform/">the Platform</a>, review <a href="/proof-stories/">Proof Stories</a>, or <a href="/contact/">contact FarmTree</a> with a specific planning question.</p><!-- /wp:paragraph -->
+
+<!-- wp:group {"className":"ft-documentary-context","layout":{"type":"default"}} --><div class="wp-block-group ft-documentary-context"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-documentary-image"} --><figure class="wp-block-image size-full ft-documentary-image"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-plant-observation-content.jpg%%" alt="Two people examining long green pods on a plant"/><figcaption class="wp-element-caption">Examining long green pods on a plant.</figcaption></figure><!-- /wp:image -->
+
+<!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-documentary-image"} --><figure class="wp-block-image size-full ft-documentary-image"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-dryland-tree-landscape-content.jpg%%" alt="Scattered trees and patches of green vegetation in a sandy field"/><figcaption class="wp-element-caption">Trees scattered across a sandy field.</figcaption></figure><!-- /wp:image --></div><!-- /wp:group -->',
                 'menu_order' => 0,
                 'post_date' => '',
             ],

@@ -4668,6 +4668,37 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
   object-position: center 62%;
 }
 
+.ft-home-hero-slide .ft-documentary-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ft-documentary-context {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: var(--wp--preset--spacing--50);
+  margin-block: var(--wp--preset--spacing--60);
+}
+
+.ft-documentary-image {
+  margin: 0;
+}
+
+.ft-documentary-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.ft-documentary-image figcaption {
+  margin-block-start: 0.75rem;
+  color: var(--wp--preset--color--farmtree-forest);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
 .ft-globe-stage::before {
   inset: 7%;
   background: radial-gradient(circle at 42% 34%, rgb(255 255 255 / 50%), rgb(195 213 86 / 16%) 35%, rgb(0 97 63 / 8%) 62%, transparent 76%);

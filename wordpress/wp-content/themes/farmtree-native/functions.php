@@ -161,6 +161,69 @@ function farmtree_native_image_loading_attributes(string $block_content, array $
 add_filter('render_block', 'farmtree_native_image_loading_attributes', 10, 2);
 
 /**
+ * Responsive documentary exports. Saved core Image blocks stay editor-owned.
+ * Only existing, same-theme, precompiled documentary sets are transformed.
+ * Replacing an image in the editor with other media leaves core output alone.
+ */
+function farmtree_native_documentary_picture(string $html, array $block): string
+{
+    if (($block['blockName'] ?? '') !== 'core/image' || str_contains($html, '<picture')
+        || !class_exists('WP_HTML_Tag_Processor')) {
+        return $html;
+    }
+    $processor = new WP_HTML_Tag_Processor($html);
+    if (!$processor->next_tag('img')) {
+        return $html;
+    }
+    $base = trailingslashit(get_theme_file_uri()) . 'assets/images/documentary/';
+    $source = (string) $processor->get_attribute('src');
+    if (!str_starts_with($source, $base)
+        || !preg_match('/^(farmtree-[a-z-]+)-(hero|content)\.jpg$/D', substr($source, strlen($base)), $match)) {
+        return $html;
+    }
+    [, $slug, $variant] = $match;
+    foreach (['hero', 'content', 'card', 'preview'] as $size) {
+        foreach (['jpg', 'webp', 'avif'] as $format) {
+            if (!is_file(get_theme_file_path("assets/images/documentary/{$slug}-{$size}.{$format}"))) {
+                return $html;
+            }
+        }
+    }
+    $hero = $variant === 'hero';
+    $primary = $hero && str_contains((string) ($block['attrs']['className'] ?? ''), 'is-active');
+    $processor->set_attribute('width', $hero ? '1920' : '1200');
+    $processor->set_attribute('height', $hero ? '1080' : '900');
+    $processor->set_attribute('loading', $primary ? 'eager' : 'lazy');
+    $processor->set_attribute('decoding', 'async');
+    if ($primary) {
+        $processor->set_attribute('fetchpriority', 'high');
+    } else {
+        $processor->remove_attribute('fetchpriority');
+    }
+    $sizes = $hero ? '100vw' : '(max-width: 767px) calc(100vw - 48px), 600px';
+    $set = static function (string $format) use ($base, $slug, $hero): string {
+        return $hero ? "{$base}{$slug}-hero.{$format} 1920w"
+            : "{$base}{$slug}-preview.{$format} 480w, {$base}{$slug}-content.{$format} 1200w";
+    };
+    $processor->set_attribute('srcset', $set('jpg'));
+    $processor->set_attribute('sizes', $sizes);
+    $sources = '';
+    if ($hero) {
+        foreach (['avif' => 'image/avif', 'webp' => 'image/webp', 'jpg' => 'image/jpeg'] as $format => $type) {
+            $sources .= '<source media="(max-width: 767px)" type="' . $type . '" width="800" height="800" srcset="'
+                . esc_url("{$base}{$slug}-card.{$format}") . '" />';
+        }
+    }
+    foreach (['avif' => 'image/avif', 'webp' => 'image/webp'] as $format => $type) {
+        $sources .= '<source type="' . $type . '" srcset="' . esc_attr($set($format)) . '" sizes="' . esc_attr($sizes) . '" />';
+    }
+    return preg_replace_callback('/<img\b[^>]*>/i', static function ($image) use ($sources) {
+        return '<picture class="ft-documentary-picture">' . $sources . $image[0] . '</picture>';
+    }, $processor->get_updated_html(), 1) ?? $html;
+}
+add_filter('render_block', 'farmtree_native_documentary_picture', 11, 2);
+
+/**
  * Add stable page-specific hooks without coupling CSS to ephemeral page IDs.
  *
  * @param array<int, string> $classes Existing body classes.

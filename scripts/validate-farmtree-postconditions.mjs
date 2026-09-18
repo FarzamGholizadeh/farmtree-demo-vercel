@@ -388,11 +388,11 @@ try {
   }
   const emoji = result.utf8mb3_emoji_regression;
   // Approved production block serialization already encodes the arrow characters.
-  if (emoji?.normalized_length !== 46999 ||
-      emoji?.normalized_sha256 !== 'b9a731d34cd074a1ecbea845584e2ad37c4b7260d84a4f4dbe19a24a1899f5c6' ||
+  if (emoji?.normalized_length !== 47122 ||
+      emoji?.normalized_sha256 !== '824a3698d2747913e9caf62da76501802a05c458f5b470a4b348bbad487b153f' ||
       emoji?.byte_delta_from_utf8mb4 !== 0 || emoji?.encoded_arrow_count !== 6 ||
-      emoji?.utf8mb4_length !== 46999 ||
-      emoji?.utf8mb4_sha256 !== 'b9a731d34cd074a1ecbea845584e2ad37c4b7260d84a4f4dbe19a24a1899f5c6') {
+      emoji?.utf8mb4_length !== 47122 ||
+      emoji?.utf8mb4_sha256 !== '824a3698d2747913e9caf62da76501802a05c458f5b470a4b348bbad487b153f') {
     fail('WordPress utf8mb3 Homepage emoji canonicalization regression failed.', [JSON.stringify(emoji)]);
   }
   if (Object.values(result.homepage.field_evidence).some(({ equal }) => !equal)) {

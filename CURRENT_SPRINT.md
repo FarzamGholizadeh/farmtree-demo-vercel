@@ -1,5 +1,18 @@
 # Current FarmTree Sprint
 
+## Documentary photo integration — local pre-release, 2026-09-18
+
+The supplied 20-photo set is mapped in `config/farmtree-documentary-images.json`
+and `docs/FT-DOCUMENTARY-IMAGE-PLAN.md`. Exact upload numbering is retained;
+the brief's mismatched descriptions after image 06 are corrected from the photos.
+Eleven selected originals produce 132 metadata-stripped AVIF/WebP/JPEG variants.
+Four existing Homepage slides and five contextual index/page placements use them.
+All changes are local: this task grants no new push/deployment authorization.
+Core Image content remains editable; typography, layout, hero motion, individual
+stories, legal copy, team portraits and Platform demonstration are preserved.
+Source release classification: 217 runtime files, 114 exclusions. Existing
+production launch acceptance below is historical and unchanged by this task.
+
 ## Public launch accepted — 2026-09-18
 
 Runtime release `7185c9b58b1d0f5f50f774b6cd2d97e042051e6f` is deployed:

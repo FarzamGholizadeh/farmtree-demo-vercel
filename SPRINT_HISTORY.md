@@ -1,5 +1,16 @@
 # FarmTree Sprint History
 
+## 2026-09-18 — documentary photo preparation
+
+Created a numbered 20-photo plan before implementation; corrected mismatched
+brief descriptions from the actual upload order. Selected 11 images for the
+existing four-slide hero and five contextual page/index sections, with 132
+responsive AVIF/WebP/JPEG exports and source/output provenance. Preserved source
+photographs, block editability and approved visual structure; no invented people,
+locations, roles or project outcomes. Added asset/runtime regressions and updated
+managed content plus the reviewed Homepage normalization fixture. Local-only
+pre-release work; no production action, push or launch operation belongs to this task.
+
 Public launch preparation (2026-09-18): explicit launch authorization supersedes
 historical private-release gates. Source now uses left-to-right testimonial
 travel, an intentional mailto-only Contact CTA and production indexing governed
