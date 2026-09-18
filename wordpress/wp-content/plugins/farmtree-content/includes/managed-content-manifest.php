@@ -78,6 +78,87 @@ return [
     ],
     'assets' => [
         [
+            'key' => 'asset.documentary.farmtree-agroforestry-field-system',
+            'slug' => 'farmtree-agroforestry-field-system-content',
+            'relative_path' => 'assets/images/documentary/farmtree-agroforestry-field-system-content.jpg',
+            'title' => 'Green ground vegetation growing between rows of small trees',
+            'alt' => 'Green ground vegetation growing between rows of small trees',
+            'mime_type' => 'image/jpeg',
+            'sha256' => '559cb71a6aea9e7508ddd1e48ba618e033e4502140e14d1d01d841ec6e52d052',
+        ],
+        [
+            'key' => 'asset.documentary.farmtree-community-field-visit',
+            'slug' => 'farmtree-community-field-visit-content',
+            'relative_path' => 'assets/images/documentary/farmtree-community-field-visit-content.jpg',
+            'title' => 'People walking through dry crop stalks beneath scattered trees',
+            'alt' => 'People walking through dry crop stalks beneath scattered trees',
+            'mime_type' => 'image/jpeg',
+            'sha256' => '5ffd051b32f1f44f3361520c3a421c1e020416011aa508a937b431c1c2963bce',
+        ],
+        [
+            'key' => 'asset.documentary.farmtree-dryland-tree-landscape',
+            'slug' => 'farmtree-dryland-tree-landscape-content',
+            'relative_path' => 'assets/images/documentary/farmtree-dryland-tree-landscape-content.jpg',
+            'title' => 'Scattered trees and patches of green vegetation in a sandy field',
+            'alt' => 'Scattered trees and patches of green vegetation in a sandy field',
+            'mime_type' => 'image/jpeg',
+            'sha256' => 'f028062fa84fcabcd6a65a42af4e12408ba784b8a7de3be775604a5872405f1e',
+        ],
+        [
+            'key' => 'asset.documentary.farmtree-green-field-climate-context',
+            'slug' => 'farmtree-green-field-climate-context-content',
+            'relative_path' => 'assets/images/documentary/farmtree-green-field-climate-context-content.jpg',
+            'title' => 'Green crops bordered by trees beneath an overcast sky',
+            'alt' => 'Green crops bordered by trees beneath an overcast sky',
+            'mime_type' => 'image/jpeg',
+            'sha256' => 'f808a06577cc880053346879e5776ef25730de3c983dbfb43c950d94a1e947bb',
+        ],
+        [
+            'key' => 'asset.documentary.farmtree-integrated-agroforestry-cropping',
+            'slug' => 'farmtree-integrated-agroforestry-cropping-content',
+            'relative_path' => 'assets/images/documentary/farmtree-integrated-agroforestry-cropping-content.jpg',
+            'title' => 'Tall green crops growing between leafy trees',
+            'alt' => 'Tall green crops growing between leafy trees',
+            'mime_type' => 'image/jpeg',
+            'sha256' => '5553e14fdac12a9c38954c97d7069e0e7a53fe3f783f7c345323c768a63679eb',
+        ],
+        [
+            'key' => 'asset.documentary.farmtree-mixed-agricultural-landscape',
+            'slug' => 'farmtree-mixed-agricultural-landscape-content',
+            'relative_path' => 'assets/images/documentary/farmtree-mixed-agricultural-landscape-content.jpg',
+            'title' => 'Trees and low crops on sandy ground beside rural structures',
+            'alt' => 'Trees and low crops on sandy ground beside rural structures',
+            'mime_type' => 'image/jpeg',
+            'sha256' => 'bb47c21f857551607eb3872d7f5317641a8368763734210db29dde698f735205',
+        ],
+        [
+            'key' => 'asset.documentary.farmtree-onion-harvest-under-trees',
+            'slug' => 'farmtree-onion-harvest-under-trees-content',
+            'relative_path' => 'assets/images/documentary/farmtree-onion-harvest-under-trees-content.jpg',
+            'title' => 'Two people seated beside harvested onions under trees',
+            'alt' => 'Two people seated beside harvested onions under trees',
+            'mime_type' => 'image/jpeg',
+            'sha256' => 'd097cbdae6a741cb6f4142668bc425cbc4680ded29af591487ba7a3f2092707b',
+        ],
+        [
+            'key' => 'asset.documentary.farmtree-plant-observation',
+            'slug' => 'farmtree-plant-observation-content',
+            'relative_path' => 'assets/images/documentary/farmtree-plant-observation-content.jpg',
+            'title' => 'Two people examining long green pods on a plant',
+            'alt' => 'Two people examining long green pods on a plant',
+            'mime_type' => 'image/jpeg',
+            'sha256' => 'f54693fd0733e35e98f5d0922392e3d3cca7d2a390788a2293b1097b67d84f1d',
+        ],
+        [
+            'key' => 'asset.documentary.farmtree-structured-field-plots',
+            'slug' => 'farmtree-structured-field-plots-content',
+            'relative_path' => 'assets/images/documentary/farmtree-structured-field-plots-content.jpg',
+            'title' => 'Rectangular green crop beds divided by earthen paths and small trees',
+            'alt' => 'Rectangular green crop beds divided by earthen paths and small trees',
+            'mime_type' => 'image/jpeg',
+            'sha256' => 'e4df0e02daa098d330eb1d7f6416ef4e89399af6c6f5cd2bab5ac0de29169842',
+        ],
+        [
             'key' => 'asset.news.agroforestry-species-data-switchboard-2025',
             'slug' => 'news-species-data-provenance-v1-1600',
             'relative_path' => 'assets/images/news/news-species-data-provenance-v1-1600.webp',
@@ -441,7 +522,7 @@ return [
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"textColor":"white","fontSize":"lead"} -->
-<p class="has-white-color has-text-color has-lead-font-size">Connect climate, soil, species and project assumptions into clear science-backed projections</p>
+<p class="has-white-color has-text-color has-lead-font-size">Combine climate, soil, species and project assumptions to create clear, science-backed projections</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -508,7 +589,7 @@ return [
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"fontSize":"heading-small"} -->
-<h2 class="wp-block-heading has-heading-small-font-size">Move from project idea to investment plan</h2>
+<h2 class="wp-block-heading has-heading-small-font-size">Move from a project idea to an investment plan</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"lead"} -->
@@ -549,7 +630,7 @@ return [
 <!-- /wp:group -->
 
 <!-- wp:paragraph {"className":"ft-home-media-caption","fontSize":"caption"} -->
-<p class="ft-home-media-caption has-caption-font-size">The approved FarmTree Platform workflow</p>
+<p class="ft-home-media-caption has-caption-font-size">The FarmTree Platform workflow</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
@@ -567,7 +648,7 @@ return [
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">FarmTree connects site information such as climate, soil and species data into a <strong>science-based, multi-KPI business plans</strong></p>
+<p class="has-lead-font-size">FarmTree combines site, climate, soil and species data to build <strong>science-based business plans with multiple performance indicators</strong>.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -588,7 +669,7 @@ return [
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Define location, inventory and management baseline</p>
+<p>Define the location, inventory and management baseline</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 
@@ -630,7 +711,7 @@ return [
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Compare business and impact projections time - based</p>
+<p>Compare business and impact projections over time</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
@@ -725,11 +806,11 @@ return [
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"textColor":"farmtree-ink","fontSize":"heading-small"} -->
-<h2 class="wp-block-heading has-farmtree-ink-color has-text-color has-heading-small-font-size">FarmTree Client</h2>
+<h2 class="wp-block-heading has-farmtree-ink-color has-text-color has-heading-small-font-size">FarmTree Clients</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"textColor":"farmtree-green","fontSize":"lead"} -->
-<p class="has-farmtree-green-color has-text-color has-lead-font-size">Trusted by organisations, practitioners and partners working across agroforestry and climate.</p>
+<p class="has-farmtree-green-color has-text-color has-lead-font-size">Trusted by organisations, practitioners and partners working in agroforestry and climate action.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -813,7 +894,7 @@ return [
 <div class="wp-block-columns alignwide ft-proof-grid"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="%%FARMTREE_THEME_URI:assets/images/proof/proof-carbon-documentary-v2.jpg%%" width="1122" height="1402" loading="lazy" decoding="async" alt="Field team measuring a mature tree and recording observations in an agroforestry landscape"/></picture></figure>
+<figure class="wp-block-image size-full"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-mixed-agricultural-landscape-content.jpg%%" alt="Trees and low crops on sandy ground beside rural structures"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -839,7 +920,7 @@ return [
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="%%FARMTREE_THEME_URI:assets/images/proof/proof-farm-value-documentary-v2.jpg%%" width="1122" height="1402" loading="lazy" decoding="async" alt="Farmer and adviser reviewing scenario materials at a farm-office table"/></picture></figure>
+<figure class="wp-block-image size-full"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-onion-harvest-under-trees-content.jpg%%" alt="Two people seated beside harvested onions under trees"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -865,7 +946,7 @@ return [
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="%%FARMTREE_THEME_URI:assets/images/proof/proof-cocoa-documentary-v2.jpg%%" width="1122" height="1402" loading="lazy" decoding="async" alt="Cocoa field team inspecting pods and recording observations beneath shade trees"/></picture></figure>
+<figure class="wp-block-image size-full"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-integrated-agroforestry-cropping-content.jpg%%" alt="Tall green crops growing between leafy trees"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -891,7 +972,7 @@ return [
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="%%FARMTREE_THEME_URI:assets/images/proof/proof-water-documentary-v2.jpg%%" width="1122" height="1402" loading="lazy" decoding="async" alt="Field team examining soil and recording water observations beside a stream"/></picture></figure>
+<figure class="wp-block-image size-full"><img src="%%FARMTREE_THEME_URI:assets/images/documentary/farmtree-structured-field-plots-content.jpg%%" alt="Rectangular green crop beds divided by earthen paths and small trees"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -920,7 +1001,7 @@ return [
 <section class="wp-block-group alignfull ft-home-section ft-home-news has-farmtree-cream-background-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)"><!-- wp:group {"align":"wide","className":"ft-home-news-header","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"bottom"}} -->
 <div class="wp-block-group alignwide ft-home-news-header"><!-- wp:group {"layout":{"type":"constrained"}} -->
 <div class="wp-block-group"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
-<p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">Last News</p>
+<p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">News &amp; insights</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"fontSize":"heading-small"} -->
@@ -1121,7 +1202,7 @@ return [
 
 <!-- wp:heading --><h2 class="wp-block-heading">Example workflow</h2><!-- /wp:heading -->
 
-<!-- wp:paragraph --><p>Agree the appraisal question, model representative project scenarios, document sensitivity and data gaps, then use the outputs alongside technical, financial and safeguards due diligence.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Agree on the appraisal question, model representative project scenarios, document sensitivity and data gaps, then use the outputs alongside technical, financial and safeguards due diligence.</p><!-- /wp:paragraph -->
 
 <!-- wp:heading --><h2 class="wp-block-heading">Frequently asked question</h2><!-- /wp:heading -->
 
@@ -1153,7 +1234,7 @@ return [
 
 <!-- wp:heading --><h2 class="wp-block-heading">The planning need</h2><!-- /wp:heading -->
 
-<!-- wp:paragraph --><p>Programme teams often need to balance ecological objectives, farmer realities and implementation constraints across varied sites.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Programme teams often need to balance ecological objectives, farmers’ circumstances and implementation constraints across varied sites.</p><!-- /wp:paragraph -->
 
 <!-- wp:heading --><h2 class="wp-block-heading">Common challenges</h2><!-- /wp:heading -->
 
@@ -1169,7 +1250,7 @@ return [
 
 <!-- wp:heading --><h2 class="wp-block-heading">Example workflow</h2><!-- /wp:heading -->
 
-<!-- wp:paragraph --><p>Frame the programme outcomes with field teams, model locally relevant options, select indicators for validation, and retain a reviewable assumptions trail.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Frame the programme outcomes with field teams, model locally relevant options, select indicators for validation, and retain a clear record of assumptions.</p><!-- /wp:paragraph -->
 
 <!-- wp:heading --><h2 class="wp-block-heading">Frequently asked question</h2><!-- /wp:heading -->
 
@@ -1361,7 +1442,7 @@ return [
 
 <!-- wp:heading --><h2 class="wp-block-heading">Example workflow</h2><!-- /wp:heading -->
 
-<!-- wp:paragraph --><p>Agree a shared question, prepare representative scenarios, review trade-offs in a facilitated session, and record where local validation or member-specific analysis is needed.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>Agree on a shared question, prepare representative scenarios, review trade-offs in a facilitated session, and record where local validation or member-specific analysis is needed.</p><!-- /wp:paragraph -->
 
 <!-- wp:heading --><h2 class="wp-block-heading">Frequently asked question</h2><!-- /wp:heading -->
 
@@ -1531,7 +1612,9 @@ return [
                 'post_name' => 'farmtree-water-erosion-microclimate-model-update-2026',
                 'post_status' => 'publish',
                 'post_excerpt' => 'A source-led guide to the July 2026 FarmTree model update and the questions project teams should revisit in existing scenarios.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">What this means</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>FarmTree\'s July 2026 release updates the water and erosion models, adds microclimate effects to growth, and changes nutrient uptake and release in the soil model. Teams should review affected scenarios rather than assume older and newer runs are directly comparable.</p><!-- /wp:paragraph -->
 
@@ -1556,7 +1639,7 @@ return [
                 'post_date' => '2026-07-10 09:00:00',
                 'comment_status' => 'closed',
             ],
-            'featured_asset_key' => 'asset.news.farmtree-water-erosion-microclimate-model-update-2026',
+            'featured_asset_key' => 'asset.documentary.farmtree-structured-field-plots',
             'category_keys' => [
                 'category.en.farmtree-updates',
             ],
@@ -1572,7 +1655,9 @@ return [
                 'post_name' => 'eu-carbon-farming-methodologies-agroforestry-2026',
                 'post_status' => 'publish',
                 'post_excerpt' => 'The European Commission\'s 2026 carbon-farming methodology work reinforces the need for traceable baselines, monitoring and clearly separated projections.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">What this means</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>The European Commission reports that carbon-farming methodologies now explicitly cover agriculture and agroforestry on mineral soils. Project teams should prepare transparent activity boundaries, baselines, monitoring responsibilities and durability assumptions.</p><!-- /wp:paragraph -->
 
@@ -1597,7 +1682,7 @@ return [
                 'post_date' => '2026-07-01 09:00:00',
                 'comment_status' => 'closed',
             ],
-            'featured_asset_key' => 'asset.news.eu-carbon-farming-methodologies-agroforestry-2026',
+            'featured_asset_key' => 'asset.documentary.farmtree-agroforestry-field-system',
             'category_keys' => [
                 'category.en.policy-standards',
             ],
@@ -1613,11 +1698,13 @@ return [
                 'post_name' => 'eudr-2026-agroforestry-data-readiness',
                 'post_status' => 'publish',
                 'post_excerpt' => 'A practical distinction between EUDR due-diligence information and the wider scenario evidence used to plan resilient agroforestry systems.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">What this means</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>The European Commission states that the revised EUDR applies from 30 December 2026 for large and medium operators and later for most micro and small operators. Teams should use the time to verify geolocation, product and due-diligence workflows.</p><!-- /wp:paragraph -->
 
-<!-- wp:heading --><h2 class="wp-block-heading">Do not confuse two evidence jobs</h2><!-- /wp:heading -->
+<!-- wp:heading --><h2 class="wp-block-heading">Keep compliance and planning evidence separate</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>EUDR due diligence addresses deforestation-free product requirements. Agroforestry scenario modelling addresses design choices and projected outcomes. One does not automatically satisfy the other.</p><!-- /wp:paragraph -->
 
@@ -1638,7 +1725,7 @@ return [
                 'post_date' => '2026-05-04 09:00:00',
                 'comment_status' => 'closed',
             ],
-            'featured_asset_key' => 'asset.news.eudr-2026-agroforestry-data-readiness',
+            'featured_asset_key' => 'asset.documentary.farmtree-integrated-agroforestry-cropping',
             'category_keys' => [
                 'category.en.policy-standards',
             ],
@@ -1654,7 +1741,9 @@ return [
                 'post_name' => 'verra-vm0042-v22-agricultural-land-management',
                 'post_status' => 'publish',
                 'post_excerpt' => 'What the active improved agricultural land-management methodology signals about soil data, baselines and disciplined claims.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">What this means</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>VM0042 v2.2 is an active Verra methodology for quantifying emission reductions and soil organic carbon removals from improved agricultural land management. Its existence does not make every agroforestry activity eligible.</p><!-- /wp:paragraph -->
 
@@ -1679,7 +1768,7 @@ return [
                 'post_date' => '2025-10-21 09:00:00',
                 'comment_status' => 'closed',
             ],
-            'featured_asset_key' => 'asset.news.verra-vm0042-v22-agricultural-land-management',
+            'featured_asset_key' => 'asset.documentary.farmtree-dryland-tree-landscape',
             'category_keys' => [
                 'category.en.data-evidence',
             ],
@@ -1695,7 +1784,9 @@ return [
                 'post_name' => 'verra-vm0042-v30-consultation-lessons',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Methodology revisions show why agroforestry teams need version control, documented assumptions and change-aware reporting.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">What this means</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>Verra\'s revision process for VM0042 highlights a simple operational lesson: methods evolve, so project evidence must preserve the version, inputs and decisions used at each stage.</p><!-- /wp:paragraph -->
 
@@ -1720,7 +1811,7 @@ return [
                 'post_date' => '2026-03-31 09:00:00',
                 'comment_status' => 'closed',
             ],
-            'featured_asset_key' => 'asset.news.verra-vm0042-v30-consultation-lessons',
+            'featured_asset_key' => 'asset.documentary.farmtree-community-field-visit',
             'category_keys' => [
                 'category.en.data-evidence',
             ],
@@ -1736,7 +1827,9 @@ return [
                 'post_name' => 'smallholder-agroforestry-wood-production-lessons-2025',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Lessons from the 2025 FAO and CIFOR-ICRAF report for teams comparing wood, crop, livelihood and resilience objectives.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">What this means</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>Multifunctional smallholder tree systems differ widely. A useful plan asks who manages the trees, which products matter, when value arrives, what labour is required, how crops interact, which markets exist and how risk is shared.</p><!-- /wp:paragraph -->
 
@@ -1761,7 +1854,7 @@ return [
                 'post_date' => '2025-11-03 09:00:00',
                 'comment_status' => 'closed',
             ],
-            'featured_asset_key' => 'asset.news.smallholder-agroforestry-wood-production-lessons-2025',
+            'featured_asset_key' => 'asset.documentary.farmtree-mixed-agricultural-landscape',
             'category_keys' => [
                 'category.en.species-design',
             ],
@@ -1777,7 +1870,9 @@ return [
                 'post_name' => 'carbon-pricing-2026-nature-project-quality',
                 'post_status' => 'publish',
                 'post_excerpt' => 'The World Bank\'s 2026 market overview reinforces the value of quality signals, transparent assumptions and diversified project economics.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">What this means</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>The World Bank reports wider carbon-pricing coverage and continued price differentiation by project quality. Agroforestry plans should not depend on a single assumed credit price.</p><!-- /wp:paragraph -->
 
@@ -1785,7 +1880,7 @@ return [
 
 <!-- wp:paragraph --><p>Test production, farmer value, programme cost and environmental indicators alongside carbon. A diversified decision case is more informative than a headline carbon estimate.</p><!-- /wp:paragraph -->
 
-<!-- wp:heading --><h2 class="wp-block-heading">Use sensitivities</h2><!-- /wp:heading -->
+<!-- wp:heading --><h2 class="wp-block-heading">Test key assumptions</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>Compare conservative, central and alternative assumptions for prices, timing, survival and verification cost. Label scenarios as projections rather than forecasts guaranteed to occur.</p><!-- /wp:paragraph -->
 
@@ -1802,7 +1897,7 @@ return [
                 'post_date' => '2026-05-21 09:00:00',
                 'comment_status' => 'closed',
             ],
-            'featured_asset_key' => 'asset.news.carbon-pricing-2026-nature-project-quality',
+            'featured_asset_key' => 'asset.documentary.farmtree-onion-harvest-under-trees',
             'category_keys' => [
                 'category.en.project-finance',
             ],
@@ -1817,8 +1912,10 @@ return [
                 'post_title' => 'Better species data starts with better provenance',
                 'post_name' => 'agroforestry-species-data-switchboard-2025',
                 'post_status' => 'publish',
-                'post_excerpt' => 'The Agroforestry Species Switchboard 4.0 shows how discoverable source provenance can strengthen species selection and model review.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
+                'post_excerpt' => 'The Agroforestry Species Switchboard 4.0 shows how clear source information can strengthen species selection and model review.',
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">What this means</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>Species databases become more useful when users can see where information comes from, which taxa it describes and how it can be accessed. Provenance is a quality feature, not administrative overhead.</p><!-- /wp:paragraph -->
 
@@ -1843,7 +1940,7 @@ return [
                 'post_date' => '2025-07-02 09:00:00',
                 'comment_status' => 'closed',
             ],
-            'featured_asset_key' => 'asset.news.agroforestry-species-data-switchboard-2025',
+            'featured_asset_key' => 'asset.documentary.farmtree-plant-observation',
             'category_keys' => [
                 'category.en.species-design',
             ],
@@ -1859,7 +1956,9 @@ return [
                 'post_name' => 'nature-restoration-plans-report-once-agroforestry-2025',
                 'post_status' => 'publish',
                 'post_excerpt' => 'The EU\'s common restoration-plan format offers a useful principle for agroforestry programmes: design information so it can support decisions and reporting without duplication.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">What this means</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>The European Commission\'s common format for national restoration plans emphasises comparable information, reused data and tracking over time. Agroforestry programmes can apply the same design principle at project scale.</p><!-- /wp:paragraph -->
 
@@ -1884,7 +1983,7 @@ return [
                 'post_date' => '2025-05-20 09:00:00',
                 'comment_status' => 'closed',
             ],
-            'featured_asset_key' => 'asset.news.nature-restoration-plans-report-once-agroforestry-2025',
+            'featured_asset_key' => 'asset.documentary.farmtree-green-field-climate-context',
             'category_keys' => [
                 'category.en.landscape-planning',
             ],
@@ -1900,7 +1999,9 @@ return [
                 'post_name' => 'carbon-planning',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Use traceable site, species and management assumptions to compare carbon projections without confusing planning with certification.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">The planning question</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">The planning question</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>How do alternative agroforestry designs change the timing and distribution of projected biomass and carbon while remaining workable for farmers and project teams?</p><!-- /wp:paragraph -->
 
@@ -1918,7 +2019,7 @@ return [
                 'menu_order' => 1,
                 'post_date' => '',
             ],
-            'featured_asset_key' => 'asset.proof.carbon-planning',
+            'featured_asset_key' => 'asset.documentary.farmtree-mixed-agricultural-landscape',
             'category_keys' => [],
             'child_keys' => [],
         ],
@@ -1934,7 +2035,9 @@ return [
                 'post_name' => 'farm-value-projection',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.',
-                'post_content' => '<!-- wp:paragraph -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
 <p></p>
 <!-- /wp:paragraph -->
 
@@ -1972,7 +2075,7 @@ return [
                 'menu_order' => 2,
                 'post_date' => '',
             ],
-            'featured_asset_key' => 'asset.proof.farm-value-projection',
+            'featured_asset_key' => 'asset.documentary.farmtree-onion-harvest-under-trees',
             'category_keys' => [],
             'child_keys' => [],
         ],
@@ -1986,7 +2089,9 @@ return [
                 'post_name' => 'cocoa-scenario-planning',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Compare shade-tree density, species mix, renewal timing and farmer-value trade-offs before scaling a cocoa programme.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">The planning question</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for general tree-and-crop context rather than as cocoa photography, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">The planning question</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>Which regenerative cocoa design can balance production continuity, shade, diversified value, labour and long-term resilience in a specific context?</p><!-- /wp:paragraph -->
 
@@ -2004,7 +2109,7 @@ return [
                 'menu_order' => 3,
                 'post_date' => '',
             ],
-            'featured_asset_key' => 'asset.proof.cocoa-scenario-planning',
+            'featured_asset_key' => 'asset.documentary.farmtree-integrated-agroforestry-cropping',
             'category_keys' => [],
             'child_keys' => [],
         ],
@@ -2020,7 +2125,9 @@ return [
                 'post_name' => 'landscape-hydrology',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.',
-                'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">The planning question</h2><!-- /wp:heading -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"caption"} --><p class="has-caption-font-size">Documentary photograph shown for agricultural context, not as evidence of the project, event or outcomes discussed below.</p><!-- /wp:paragraph -->
+
+<!-- wp:heading --><h2 class="wp-block-heading">The planning question</h2><!-- /wp:heading -->
 
 <!-- wp:paragraph --><p>Where can tree-based interventions support water and landscape objectives without creating unsupported expectations about hydrological outcomes?</p><!-- /wp:paragraph -->
 
@@ -2038,7 +2145,7 @@ return [
                 'menu_order' => 4,
                 'post_date' => '',
             ],
-            'featured_asset_key' => 'asset.proof.landscape-hydrology',
+            'featured_asset_key' => 'asset.documentary.farmtree-structured-field-plots',
             'category_keys' => [],
             'child_keys' => [],
         ],
@@ -2076,7 +2183,7 @@ return [
                 'post_name' => 'proof-stories',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Explore four evidence themes grounded in FarmTree\'s published capabilities and project experience.',
-                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">These stories explain how FarmTree supports carbon planning, farm-value modelling, cocoa scenario work and water-resilience questions. They do not claim guaranteed or independently verified outcomes.</p><!-- /wp:paragraph --><!-- wp:list --><ul><li><a href="/proof-stories/carbon-planning/">Carbon planning</a>: Use traceable site, species and management assumptions to compare carbon projections without confusing planning with certification.</li><li><a href="/proof-stories/farm-value-projection/">Farm Valuation</a>: Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.</li><li><a href="/proof-stories/cocoa-scenario-planning/">Cocoa scenario planning and monitoring</a>: Compare shade-tree density, species mix, renewal timing and farmer-value trade-offs before scaling a cocoa programme.</li><li><a href="/proof-stories/landscape-hydrology/">Landscape Hydrology</a>: Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.</li></ul><!-- /wp:list -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">These stories explain how FarmTree supports carbon planning, Farm Valuation, cocoa scenario work and water-resilience questions. They do not claim guaranteed or independently verified outcomes.</p><!-- /wp:paragraph --><!-- wp:list --><ul><li><a href="/proof-stories/carbon-planning/">Carbon planning</a>: Use traceable site, species and management assumptions to compare carbon projections without confusing planning with certification.</li><li><a href="/proof-stories/farm-value-projection/">Farm Valuation</a>: Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.</li><li><a href="/proof-stories/cocoa-scenario-planning/">Cocoa scenario planning and monitoring</a>: Compare shade-tree density, species mix, renewal timing and farmer-value trade-offs before scaling a cocoa programme.</li><li><a href="/proof-stories/landscape-hydrology/">Landscape Hydrology</a>: Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.</li></ul><!-- /wp:list -->
 
 <!-- wp:paragraph --><p>Documentary field context, shown independently of the four Proof Stories above.</p><!-- /wp:paragraph -->
 
@@ -2122,7 +2229,7 @@ return [
                 'post_name' => 'case-studies',
                 'post_status' => 'publish',
                 'post_excerpt' => 'FarmTree project experience, presented with clear sources and claim boundaries.',
-                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">This private pre-release hub will link only to editor-approved case material. Named organisations, outcomes and permissions require final human approval before publication.</p><!-- /wp:paragraph -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Explore FarmTree\'s approach through the Proof Stories. Contact the team to discuss relevant project experience and available case material.</p><!-- /wp:paragraph -->
 
 <!-- wp:heading --><h2 class="wp-block-heading">A useful next step</h2><!-- /wp:heading -->
 
@@ -2173,7 +2280,7 @@ return [
                 'post_name' => 'vacancies',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Opportunities to contribute to FarmTree\'s mission and scientific platform.',
-                'post_content' => '<!-- wp:group {"className":"ft-careers-empty","layout":{"type":"constrained"}} --><section class="wp-block-group ft-careers-empty"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Careers at FarmTree</p><!-- /wp:paragraph --><!-- wp:heading {"level":2,"fontSize":"heading-small"} --><h2 class="wp-block-heading has-heading-small-font-size">No approved vacancies are open right now</h2><!-- /wp:heading --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">New roles will appear here after they have been approved for publication. Until then, learn more about the people and work behind FarmTree.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/team/">Meet the team</a></div><!-- /wp:button --><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/contact/">Contact FarmTree</a></div><!-- /wp:button --></div><!-- /wp:buttons --></section><!-- /wp:group -->',
+                'post_content' => '<!-- wp:group {"className":"ft-careers-empty","layout":{"type":"constrained"}} --><section class="wp-block-group ft-careers-empty"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Careers at FarmTree</p><!-- /wp:paragraph --><!-- wp:heading {"level":2,"fontSize":"heading-small"} --><h2 class="wp-block-heading has-heading-small-font-size">There are no open vacancies at the moment</h2><!-- /wp:heading --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">New opportunities will be listed here as they become available. In the meantime, learn more about the people and work behind FarmTree.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/team/">Meet the team</a></div><!-- /wp:button --><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/contact/">Contact FarmTree</a></div><!-- /wp:button --></div><!-- /wp:buttons --></section><!-- /wp:group -->',
                 'menu_order' => 0,
                 'post_date' => '',
             ],
@@ -2253,7 +2360,7 @@ return [
                 'post_name' => 'acknowledgements',
                 'post_status' => 'publish',
                 'post_excerpt' => 'The research, data, software and collaboration foundations that support FarmTree.',
-                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">FarmTree\'s acknowledgements should identify approved contributors and upstream resources without implying endorsement. Final names and permissions require owner review.</p><!-- /wp:paragraph -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">FarmTree\'s work draws on research, data, software and collaboration. References to organisations and external resources provide context and do not imply endorsement.</p><!-- /wp:paragraph -->
 
 <!-- wp:heading --><h2 class="wp-block-heading">A useful next step</h2><!-- /wp:heading -->
 
@@ -2275,7 +2382,7 @@ return [
                 'post_name' => 'licenses',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Understand available FarmTree Platform access and discuss the right scope for your team.',
-                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">License scope depends on intended users, projects, support and data needs. Contact FarmTree for current approved terms; this page does not make a binding offer.</p><!-- /wp:paragraph -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">License scope depends on intended users, projects, support and data needs. Contact FarmTree for current terms; this page does not make a binding offer.</p><!-- /wp:paragraph -->
 
 <!-- wp:heading --><h2 class="wp-block-heading">A useful next step</h2><!-- /wp:heading -->
 
@@ -2615,7 +2722,7 @@ return [
                 'post_name' => 'user-videos',
                 'post_status' => 'publish',
                 'post_excerpt' => 'Practical guidance for building scenarios, comparing results and working with FarmTree tools.',
-                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Approved training videos can be embedded here from the official FarmTree library. This private route avoids dead navigation while the final media selection is reviewed.</p><!-- /wp:paragraph -->
+                'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Contact the FarmTree team for guidance on using the Platform and training relevant to your project.</p><!-- /wp:paragraph -->
 
 <!-- wp:heading --><h2 class="wp-block-heading">A useful next step</h2><!-- /wp:heading -->
 

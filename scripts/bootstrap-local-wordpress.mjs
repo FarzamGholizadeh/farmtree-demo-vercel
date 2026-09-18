@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { documentaryContent } from './documentary-content.mjs';
+import { proofPhotographs, newsPhotographs, photoContext } from './editorial-photographs.mjs';
 
 const baseUrl = new URL(process.env.FARMTREE_LOCAL_WP_URL ?? 'http://localhost:8888');
 const verifyOnly = process.argv.includes('--verify-only');
@@ -370,6 +371,7 @@ function segmentContent(segment) {
 
 function editorialContent(article) {
   return [
+    photoContext,
     ...article.sections.map(([heading, paragraph]) => [
     `<!-- wp:heading --><h2 class="wp-block-heading">${escapeHtml(heading)}</h2><!-- /wp:heading -->`,
     `<!-- wp:paragraph --><p>${escapeHtml(paragraph)}</p><!-- /wp:paragraph -->`
@@ -436,12 +438,13 @@ function teamPageContent(mediaBySlug, heroMedia) {
 }
 
 function vacanciesPageContent() {
-  return '<!-- wp:group {"className":"ft-careers-empty","layout":{"type":"constrained"}} --><section class="wp-block-group ft-careers-empty"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Careers at FarmTree</p><!-- /wp:paragraph --><!-- wp:heading {"level":2,"fontSize":"heading-small"} --><h2 class="wp-block-heading has-heading-small-font-size">No approved vacancies are open right now</h2><!-- /wp:heading --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">New roles will appear here after they have been approved for publication. Until then, learn more about the people and work behind FarmTree.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/team/">Meet the team</a></div><!-- /wp:button --><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/contact/">Contact FarmTree</a></div><!-- /wp:button --></div><!-- /wp:buttons --></section><!-- /wp:group -->';
+  return '<!-- wp:group {"className":"ft-careers-empty","layout":{"type":"constrained"}} --><section class="wp-block-group ft-careers-empty"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Careers at FarmTree</p><!-- /wp:paragraph --><!-- wp:heading {"level":2,"fontSize":"heading-small"} --><h2 class="wp-block-heading has-heading-small-font-size">There are no open vacancies at the moment</h2><!-- /wp:heading --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">New opportunities will be listed here as they become available. In the meantime, learn more about the people and work behind FarmTree.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/team/">Meet the team</a></div><!-- /wp:button --><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/contact/">Contact FarmTree</a></div><!-- /wp:button --></div><!-- /wp:buttons --></section><!-- /wp:group -->';
 }
 
 function proofStoryContent(story) {
-  if (story.approvedBlockContent) return story.approvedBlockContent;
-  return story.sections.map(([heading, paragraph]) => [
+  const context = story.slug === 'cocoa-scenario-planning' ? photoContext.replace('agricultural context', 'general tree-and-crop context rather than as cocoa photography') : photoContext;
+  if (story.approvedBlockContent) return context + '\n\n' + story.approvedBlockContent;
+  return context + '\n\n' + story.sections.map(([heading, paragraph]) => [
     `<!-- wp:heading --><h2 class="wp-block-heading">${escapeHtml(heading)}</h2><!-- /wp:heading -->`,
     `<!-- wp:paragraph --><p>${escapeHtml(paragraph)}</p><!-- /wp:paragraph -->`
   ].join('\n\n')).join('\n\n');
@@ -498,7 +501,7 @@ const proofMedia = new Map();
 for (const story of proofStoryDefinitions) {
   const [filename, alt] = proofPresentation[story.slug] ?? [];
   if (!filename) throw new Error(`Proof presentation metadata is missing: ${story.slug}`);
-  proofMedia.set(story.slug, await ensureThemeMedia({ directory: 'proof', filename, alt, title: story.title }));
+  proofMedia.set(story.slug, await ensureThemeMedia(proofPhotographs[story.slug]));
 }
 
 const teamMedia = new Map();
@@ -569,26 +572,7 @@ for (const article of editorialDefinitions) {
   if (!categories[0] && verifyOnly) throw new Error(`Editorial category is missing: ${presentation.category}`);
   if (!categories[0]) categories = [await api('/wp/v2/categories', { method: 'POST', body: JSON.stringify({ name: presentation.category }) })];
 
-  const mediaSlug = presentation.image.replace(/\.[^.]+$/, '');
-  let media = await api(`/wp/v2/media?slug=${encodeURIComponent(mediaSlug)}&context=edit&per_page=1`);
-  if (!media[0] && verifyOnly) throw new Error(`Editorial featured image is missing: ${presentation.image}`);
-  if (!media[0]) {
-    const imageBuffer = await readFile(new URL(`../wordpress/wp-content/themes/farmtree-native/assets/images/news/${presentation.image}`, import.meta.url));
-    media = [await api('/wp/v2/media', {
-      method: 'POST',
-      headers: {
-        'Content-Disposition': `attachment; filename="${presentation.image}"`,
-        'Content-Type': 'image/webp'
-      },
-      body: imageBuffer
-    })];
-  }
-  if (!verifyOnly) {
-    media[0] = await api(`/wp/v2/media/${media[0].id}`, {
-      method: 'POST',
-      body: JSON.stringify({ alt_text: presentation.alt, title: article.title })
-    });
-  }
+  const media = [await ensureThemeMedia(newsPhotographs[article.slug])];
   const existing = await api(
     `/wp/v2/posts?slug=${encodeURIComponent(article.slug)}&status=publish,draft,pending,private,future&context=edit&per_page=1`
   );
@@ -758,7 +742,7 @@ const requiredFrontendContent = [
   'Agroforestry decisions across diverse landscapes',
   'Trust and references',
   'Proof Stories',
-  'Last News',
+  'News &amp; insights',
   'ft-final-cta',
   'ft-native-site-footer'
 ];

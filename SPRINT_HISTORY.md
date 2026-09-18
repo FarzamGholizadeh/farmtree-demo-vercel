@@ -1,5 +1,15 @@
 # FarmTree Sprint History
 
+## 2026-09-18 — local editorial/documentary refinement
+
+Reviewed the supplied 20-photo set and all native English content. Refined client
+heading, grammar and stale public copy; replaced Proof/News imagery using existing
+responsive documentary exports and nine shared managed attachments. Old content
+identities/media preserved; local 9-create/23-update migration converges without
+conflicts. Public baseline read only; no deployment, push or production mutation.
+The six-page public APPLY gate remains intentionally narrow; this broader release
+needs a separately audited scope. Evidence: `docs/FT-EDITORIAL-IMAGE-AUDIT.md`.
+
 ## 2026-09-18 — controlled public documentary release
 
 Direct approval authorized SHA 47313843 push, runtime deployment and precisely

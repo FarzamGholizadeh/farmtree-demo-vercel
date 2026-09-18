@@ -318,7 +318,7 @@ function validateComposedPreview() {
     'How agroforestry projects are planned, monitored and reported',
     'Trust and references',
     'Proof Stories',
-    'Last News',
+    'News &amp; insights',
     'FAQ',
     'Ready to build a stronger agroforestry investment case?',
     'No insights have been published yet',

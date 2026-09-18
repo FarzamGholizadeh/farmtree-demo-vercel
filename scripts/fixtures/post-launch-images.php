@@ -20,7 +20,7 @@ try {
     $options = ['expected_site' => home_url('/'), 'expected_theme' => 'farmtree-native', 'source_commit' => $sha];
     $r = new FarmTree_Content_Reconciler();
     $property = new ReflectionProperty($r, 'manifest');
-    $desired = $property->getValue($r);
+    $desired = require '/farmtree-test/approved.php';
     $property->setValue($r, require '/farmtree-test/baseline.php');
     $initial = $r->build_plan($options);
     $r->apply_plan($initial, $sha, $backup);

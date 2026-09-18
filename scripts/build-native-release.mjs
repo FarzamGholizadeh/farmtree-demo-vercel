@@ -31,7 +31,7 @@ const requiredRuntime = [
   'wordpress/wp-content/plugins/farmtree-content/includes/class-farmtree-content-reconciler.php',
   'wordpress/wp-content/plugins/farmtree-content/includes/managed-content-manifest.php'
 ];
-const requiredMaterializerPathSetSha256 = 'cb471c7b5cf2b53d5109ddd1e1cd6fee984c357363c99ce91e09cdf1446812fa';
+const requiredMaterializerPathSetSha256 = 'dc637a20b56ed35fd1bdd03849b86bf074eaabacef91f47cf90b1510ae3efdbe';
 const privatePluginDataPrefix = 'wordpress/wp-content/plugins/farmtree-content/data/';
 const allowedManifestKeys = [
   'artifactRoot',
@@ -277,12 +277,12 @@ async function loadAndValidateManifest() {
     fail('Every required runtime path must also be classified as runtime.', requiredOutsideRuntime);
   }
 
-  if (manifest.materializerSourceImages.length !== 34) {
-    fail(`materializerSourceImages must contain exactly 34 paths, found ${manifest.materializerSourceImages.length}.`);
+  if (manifest.materializerSourceImages.length !== 43) {
+    fail(`materializerSourceImages must contain exactly 43 paths, found ${manifest.materializerSourceImages.length}.`);
   }
 
   if (pathSetDigest(manifest.materializerSourceImages) !== requiredMaterializerPathSetSha256) {
-    fail('materializerSourceImages does not match the approved exact 34-path source set.');
+    fail('materializerSourceImages does not match the approved exact 43-path source set.');
   }
 
   const materializerOutsideRuntime = manifest.materializerSourceImages.filter((path) => !runtime.has(path));

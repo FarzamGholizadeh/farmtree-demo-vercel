@@ -350,7 +350,7 @@ assertCssRuleInAtRule(
 for (const platformContract of [
   'final-tools-review-11s-to-40s-poster.png',
   'final-tools-review-11s-to-40s-2x.gif',
-  'The approved FarmTree Platform workflow'
+  'The FarmTree Platform workflow'
 ]) {
   if (!nativeHomepage.includes(platformContract)) {
     throw new Error(`Approved single-media Platform contract is missing: ${platformContract}`);

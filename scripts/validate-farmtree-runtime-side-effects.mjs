@@ -665,7 +665,7 @@ try {
       `CLI dry-run digest: ${String(dryRun.plan_digest ?? '')}`
     ]);
   }
-  const expectedSummary = { create: 90, update: 1, unchanged: 2, conflict: 0, skipped: 1 };
+  const expectedSummary = { create: 99, update: 1, unchanged: 2, conflict: 0, skipped: 1 };
   if (JSON.stringify(dryRun.summary) !== JSON.stringify(expectedSummary)) {
     fail('The real CLI dry-run summary changed unexpectedly.', [JSON.stringify(dryRun.summary)]);
   }

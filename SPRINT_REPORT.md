@@ -1,5 +1,28 @@
 # FT-NATIVE-002 Sprint Report
 
+## Editorial/documentary local refinement — 2026-09-18
+
+- Local-only implementation; production baseline read-only: 93 unchanged, no
+  conflicts. No push/deployment/APPLY or production settings changes.
+- Clients heading and homepage grammar corrected; four Proof and nine News
+  featured images use contextual approved photographs. Stale private/pre-release
+  visitor copy removed. Legal text, proper names, claims, source dates/URLs and
+  testimonial quotations/motion retained. See `docs/FT-EDITORIAL-IMAGE-AUDIT.md`.
+- Core featured media stays editor-selected; matching documentary files gain
+  AVIF/WebP/JPEG sources by exact identity/bytes. Sixteen saved core Image blocks
+  parse valid. No new binary assets or generative/retouching operations.
+- Local anonymous QA: 40 HTTP-200 English routes, 104 internal links, zero broken
+  links/unintended 404s; reserved locales stay unavailable. Testimonial regression
+  passes at six widths. Nine-width screenshot checks cover 19 image-bearing routes.
+- Disposable migration: 9 new media, 23 content updates, zero conflicts; converges
+  to 102 unchanged. Existing 40 content identities and 34 media IDs preserved;
+  manual edits rejected. Postcondition/lifecycle/firewall/rewrite tests pass.
+- Runtime classification remains 217 deployable / 114 excluded; materializer
+  source allowlist rises from 34 to 43 existing runtime images. Immutable artifact
+  build/audit follows the local commit. Existing public APPLY profile stays limited
+  to its original six-page contract, so this release requires a separately audited
+  broader public-state-preserving plan before any production deployment.
+
 ## Documentary production release evidence — 2026-09-18
 
 - Pushed/deployed SHA `47313843c47ef0e43dbdb80f0ec76dfd2dc2cff1` after explicit

@@ -446,21 +446,21 @@ const requiredHomepageContent = [
   'Compare farm and project options',
   'Understand future scenarios',
   'How agroforestry projects are planned, monitored and reported',
-  'science-based, multi-KPI business plans',
+  'science-based business plans with multiple performance indicators',
   'Connect local conditions, opportunities and risks',
-  'Compare business and impact projections time - based',
+  'Compare business and impact projections over time',
   'Global perspective',
   'Agroforestry decisions across diverse landscapes',
   'FarmTree supports scenario thinking across tropical, temperate, dryland and highland contexts.',
-  'FarmTree Client',
-  'Trusted by organisations, practitioners and partners working across agroforestry and climate.',
+  'FarmTree Clients',
+  'Trusted by organisations, practitioners and partners working in agroforestry and climate action.',
   'Proof Stories',
   '>Carbon</h3>',
   'Farm Valuation',
   'Cocoa scenario planning and monitoring',
   'Landscape Hydrology',
   'FAQ',
-  'Last News',
+  'News &amp; insights',
   'farmtree-native/call-to-action'
 ];
 
@@ -492,7 +492,7 @@ for (const contract of [
   'ft-platform-media',
   'final-tools-review-11s-to-40s-poster.png',
   'final-tools-review-11s-to-40s-2x.gif',
-  'The approved FarmTree Platform workflow',
+  'The FarmTree Platform workflow',
   'Site information',
   'Climate, soil and terrain',
   'Species database',
@@ -931,11 +931,11 @@ for (const contract of [
   'alt="Green ground vegetation growing between rows of small trees"',
   'alt="Trees and low crops on sandy ground beside rural structures"',
   'alt="Rectangular green crop beds divided by earthen paths and small trees"',
-  'alt="Field team measuring a mature tree and recording observations in an agroforestry landscape"',
-  'alt="Farmer and adviser reviewing scenario materials at a farm-office table"',
-  'alt="Cocoa field team inspecting pods and recording observations beneath shade trees"',
-  'alt="Field team examining soil and recording water observations beside a stream"',
-  'The approved FarmTree Platform workflow'
+  'alt="Trees and low crops on sandy ground beside rural structures"',
+  'alt="Two people seated beside harvested onions under trees"',
+  'alt="Tall green crops growing between leafy trees"',
+  'alt="Rectangular green crop beds divided by earthen paths and small trees"',
+  'The FarmTree Platform workflow'
 ]) {
   if (!homepage.includes(contract)) {
     throw new Error(`Homepage is missing approved publication copy or literal media text: ${contract}`);

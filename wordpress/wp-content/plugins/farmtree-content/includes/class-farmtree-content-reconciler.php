@@ -2161,6 +2161,10 @@ final class FarmTree_Content_Reconciler
             'assets/images/home/proof-carbon.webp',
             'assets/images/home/hero-project-teams.webp',
             'assets/images/home/hero-impact-reporting-v2.jpg',
+            'assets/images/proof/proof-carbon-documentary-v2.jpg',
+            'assets/images/proof/proof-farm-value-documentary-v2.jpg',
+            'assets/images/proof/proof-cocoa-documentary-v2.jpg',
+            'assets/images/proof/proof-water-documentary-v2.jpg',
         ) as $relative) {
             $content = str_replace(
                 trailingslashit($this->theme_uri) . $relative,

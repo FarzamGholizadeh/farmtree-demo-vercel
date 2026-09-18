@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 const base = new URL(process.env.FARMTREE_LOCAL_WP_URL ?? 'http://localhost:8888');
 assert.ok(['localhost', '127.0.0.1', '[::1]'].includes(base.hostname), 'This verification is loopback-only');
 let count = 0;
-for (const [route, expected] of [['/', 4], ['/platform/', 1], ['/solutions/', 2], ['/proof-stories/', 2], ['/customer-segments/', 2], ['/blog/', 1]]) {
+for (const [route, expected] of [['/', 11], ['/platform/', 1], ['/solutions/', 2], ['/proof-stories/', 2], ['/customer-segments/', 2], ['/blog/', 10]]) {
   const response = await fetch(new URL(route, base), {
     redirect: 'manual', signal: AbortSignal.timeout(30000),
     // Skip Playground auto-login without supplying any authentication cookie.

@@ -364,7 +364,7 @@ body {
 
 .ft-blog-featured-card {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(18rem, .8fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   overflow: hidden;
   margin-block: clamp(2rem, 5vw, 4rem);
   border-radius: 1.5rem;
@@ -385,8 +385,13 @@ body {
 }
 
 .ft-blog-featured-copy {
-  padding: clamp(2rem, 4vw, 4rem);
+  padding: clamp(1.5rem, 2.5vw, 2.5rem);
   align-self: center;
+}
+
+.ft-blog-featured-copy h2 {
+  font-size: clamp(1.75rem, 2.2vw, 2.5rem);
+  line-height: 1.18;
 }
 .ft-blog-featured-copy a { color: inherit; }
 .ft-blog-latest { margin-top: clamp(4rem, 8vw, 7rem); }
@@ -3292,6 +3297,13 @@ body.ft-quotation-open {
 }
 .ft-proof-card figure { aspect-ratio: 4 / 3; }
 
+.ft-proof-card .ft-documentary-picture,
+.wp-block-post-featured-image .ft-documentary-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .ft-proof-card img {
   width: 100%;
   height: 100%;
@@ -4864,6 +4876,10 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 .ft-proof-grid > .wp-block-column:nth-child(2) .ft-proof-card img { object-position: 58% center; }
 .ft-proof-grid > .wp-block-column:nth-child(3) .ft-proof-card img { object-position: 24% center; }
 .ft-proof-grid > .wp-block-column:nth-child(4) .ft-proof-card img { object-position: 64% center; }
+
+.ft-proof-grid > .wp-block-column:nth-child(2) .ft-proof-card img[src*="farmtree-onion-harvest-under-trees-"] {
+  object-position: 25% center;
+}
 
 .ft-proof-card-copy h3 {
   min-height: 3.35em;

@@ -1,5 +1,14 @@
 # FarmTree Tasks
 
+## Editorial/documentary refinement — 2026-09-18
+
+- [x] Review all 20 supplied photographs and whole-site copy without new claims.
+- [x] Improve Clients, Proof Stories and News using editor-managed documentary media.
+- [x] Preserve old assets/IDs, publication states, routes, legal copy and testimonials.
+- [x] Validate local routes, links, image blocks, runtime side effects and migration.
+- [ ] Approve push; prepare/review a broader public-safe production release scope
+  and real dry-run before deployment. Do not reuse the six-page APPLY authorization.
+
 ## Documentary production release — 2026-09-18
 
 - [x] Push/deploy approved 47313843 with verified off-webroot rollback backups.

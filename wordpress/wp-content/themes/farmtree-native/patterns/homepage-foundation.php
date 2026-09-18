@@ -57,7 +57,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"textColor":"white","fontSize":"lead"} -->
-<p class="has-white-color has-text-color has-lead-font-size">Connect climate, soil, species and project assumptions into clear science-backed projections</p>
+<p class="has-white-color has-text-color has-lead-font-size">Combine climate, soil, species and project assumptions to create clear, science-backed projections</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -124,7 +124,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"fontSize":"heading-small"} -->
-<h2 class="wp-block-heading has-heading-small-font-size">Move from project idea to investment plan</h2>
+<h2 class="wp-block-heading has-heading-small-font-size">Move from a project idea to an investment plan</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"lead"} -->
@@ -165,7 +165,7 @@
 <!-- /wp:group -->
 
 <!-- wp:paragraph {"className":"ft-home-media-caption","fontSize":"caption"} -->
-<p class="ft-home-media-caption has-caption-font-size">The approved FarmTree Platform workflow</p>
+<p class="ft-home-media-caption has-caption-font-size">The FarmTree Platform workflow</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
@@ -183,7 +183,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">FarmTree connects site information such as climate, soil and species data into a <strong>science-based, multi-KPI business plans</strong></p>
+<p class="has-lead-font-size">FarmTree combines site, climate, soil and species data to build <strong>science-based business plans with multiple performance indicators</strong>.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -204,7 +204,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Define location, inventory and management baseline</p>
+<p>Define the location, inventory and management baseline</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column -->
 
@@ -246,7 +246,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Compare business and impact projections time - based</p>
+<p>Compare business and impact projections over time</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></section>
@@ -341,11 +341,11 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"textColor":"farmtree-ink","fontSize":"heading-small"} -->
-<h2 class="wp-block-heading has-farmtree-ink-color has-text-color has-heading-small-font-size">FarmTree Client</h2>
+<h2 class="wp-block-heading has-farmtree-ink-color has-text-color has-heading-small-font-size">FarmTree Clients</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"textColor":"farmtree-green","fontSize":"lead"} -->
-<p class="has-farmtree-green-color has-text-color has-lead-font-size">Trusted by organisations, practitioners and partners working across agroforestry and climate.</p>
+<p class="has-farmtree-green-color has-text-color has-lead-font-size">Trusted by organisations, practitioners and partners working in agroforestry and climate action.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -429,7 +429,7 @@
 <div class="wp-block-columns alignwide ft-proof-grid"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-carbon-documentary-v2.jpg' ) ); ?>" width="1122" height="1402" loading="lazy" decoding="async" alt="Field team measuring a mature tree and recording observations in an agroforestry landscape"/></picture></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/documentary/farmtree-mixed-agricultural-landscape-content.jpg' ) ); ?>" alt="Trees and low crops on sandy ground beside rural structures"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -455,7 +455,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-farm-value-documentary-v2.jpg' ) ); ?>" width="1122" height="1402" loading="lazy" decoding="async" alt="Farmer and adviser reviewing scenario materials at a farm-office table"/></picture></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/documentary/farmtree-onion-harvest-under-trees-content.jpg' ) ); ?>" alt="Two people seated beside harvested onions under trees"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -481,7 +481,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-cocoa-documentary-v2.jpg' ) ); ?>" width="1122" height="1402" loading="lazy" decoding="async" alt="Cocoa field team inspecting pods and recording observations beneath shade trees"/></picture></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/documentary/farmtree-integrated-agroforestry-cropping-content.jpg' ) ); ?>" alt="Tall green crops growing between leafy trees"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -507,7 +507,7 @@
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"ft-proof-card","backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group ft-proof-card has-white-background-color has-background"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><picture><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/proof/proof-water-documentary-v2.jpg' ) ); ?>" width="1122" height="1402" loading="lazy" decoding="async" alt="Field team examining soil and recording water observations beside a stream"/></picture></figure>
+<figure class="wp-block-image size-full"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/documentary/farmtree-structured-field-plots-content.jpg' ) ); ?>" alt="Rectangular green crop beds divided by earthen paths and small trees"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"className":"ft-proof-card-copy","layout":{"type":"constrained"}} -->
@@ -536,7 +536,7 @@
 <section class="wp-block-group alignfull ft-home-section ft-home-news has-farmtree-cream-background-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)"><!-- wp:group {"align":"wide","className":"ft-home-news-header","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"bottom"}} -->
 <div class="wp-block-group alignwide ft-home-news-header"><!-- wp:group {"layout":{"type":"constrained"}} -->
 <div class="wp-block-group"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-green","fontSize":"small"} -->
-<p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">Last News</p>
+<p class="ft-native-eyebrow has-farmtree-green-color has-text-color has-small-font-size">News &amp; insights</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"fontSize":"heading-small"} -->

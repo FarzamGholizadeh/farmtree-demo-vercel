@@ -165,9 +165,10 @@ add_filter('render_block', 'farmtree_native_image_loading_attributes', 10, 2);
  * Only existing, same-theme, precompiled documentary sets are transformed.
  * Replacing an image in the editor with other media leaves core output alone.
  */
-function farmtree_native_documentary_picture(string $html, array $block): string
+function farmtree_native_documentary_picture(string $html, array $block, ?WP_Block $instance = null): string
 {
-    if (($block['blockName'] ?? '') !== 'core/image' || str_contains($html, '<picture')
+    $featured = ($block['blockName'] ?? '') === 'core/post-featured-image';
+    if (!in_array($block['blockName'] ?? '', array('core/image', 'core/post-featured-image'), true) || str_contains($html, '<picture')
         || !class_exists('WP_HTML_Tag_Processor')) {
         return $html;
     }
@@ -177,6 +178,27 @@ function farmtree_native_documentary_picture(string $html, array $block): string
     }
     $base = trailingslashit(get_theme_file_uri()) . 'assets/images/documentary/';
     $source = (string) $processor->get_attribute('src');
+    // Match the editor-selected attachment by bytes, never by post slug or title.
+    // Replacing/cropping media opts out; old attachments are never rewritten.
+    if (!str_starts_with($source, $base)) {
+        $id = $featured ? get_post_thumbnail_id((int) ($instance->context['postId'] ?? 0)) : (int) ($block['attrs']['id'] ?? 0);
+        $file = $id ? get_attached_file($id) : false;
+        if (!$file || !preg_match('/^farmtree-[a-z-]+-content\.jpg$/D', basename($file))) {
+            return $html;
+        }
+        $original = get_theme_file_path('assets/images/documentary/' . basename($file));
+        static $matches = array();
+        $cache_key = $file . ':' . $original;
+        if (!isset($matches[$cache_key])) {
+            $matches[$cache_key] = is_file($file) && is_file($original)
+                && hash_file('sha256', $file) === hash_file('sha256', $original);
+        }
+        if (!$matches[$cache_key]) {
+            return $html;
+        }
+        $source = $base . basename($file);
+        $processor->set_attribute('src', $source);
+    }
     if (!str_starts_with($source, $base)
         || !preg_match('/^(farmtree-[a-z-]+)-(hero|content)\.jpg$/D', substr($source, strlen($base)), $match)) {
         return $html;
@@ -201,6 +223,11 @@ function farmtree_native_documentary_picture(string $html, array $block): string
         $processor->remove_attribute('fetchpriority');
     }
     $sizes = $hero ? '100vw' : '(max-width: 767px) calc(100vw - 48px), 600px';
+    if ($featured) {
+        $sizes = ($block['attrs']['aspectRatio'] ?? '') === '4/3'
+            ? '(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc(50vw - 36px), 400px'
+            : '(max-width: 767px) calc(100vw - 48px), (max-width: 1199px) 90vw, 1200px';
+    }
     $set = static function (string $format) use ($base, $slug, $hero): string {
         return $hero ? "{$base}{$slug}-hero.{$format} 1920w"
             : "{$base}{$slug}-preview.{$format} 480w, {$base}{$slug}-content.{$format} 1200w";
@@ -221,7 +248,7 @@ function farmtree_native_documentary_picture(string $html, array $block): string
         return '<picture class="ft-documentary-picture">' . $sources . $image[0] . '</picture>';
     }, $processor->get_updated_html(), 1) ?? $html;
 }
-add_filter('render_block', 'farmtree_native_documentary_picture', 11, 2);
+add_filter('render_block', 'farmtree_native_documentary_picture', 11, 3);
 
 /**
  * Add stable page-specific hooks without coupling CSS to ephemeral page IDs.

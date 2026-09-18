@@ -3,6 +3,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { documentaryContent } from './documentary-content.mjs';
+import { editorialPhotographs, proofPhotographs, newsPhotographs, photoContext } from './editorial-photographs.mjs';
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const pluginRoot = resolve(repositoryRoot, 'wordpress/wp-content/plugins/farmtree-content');
@@ -98,6 +99,7 @@ function segmentContent(segment) {
 
 function editorialContent(article) {
   return [
+    photoContext,
     ...article.sections.map(([heading, paragraph]) => [
       `<!-- wp:heading --><h2 class="wp-block-heading">${escapeHtml(heading)}</h2><!-- /wp:heading -->`,
       `<!-- wp:paragraph --><p>${escapeHtml(paragraph)}</p><!-- /wp:paragraph -->`
@@ -164,12 +166,13 @@ function teamPageContent() {
 }
 
 function vacanciesPageContent() {
-  return '<!-- wp:group {"className":"ft-careers-empty","layout":{"type":"constrained"}} --><section class="wp-block-group ft-careers-empty"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Careers at FarmTree</p><!-- /wp:paragraph --><!-- wp:heading {"level":2,"fontSize":"heading-small"} --><h2 class="wp-block-heading has-heading-small-font-size">No approved vacancies are open right now</h2><!-- /wp:heading --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">New roles will appear here after they have been approved for publication. Until then, learn more about the people and work behind FarmTree.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/team/">Meet the team</a></div><!-- /wp:button --><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/contact/">Contact FarmTree</a></div><!-- /wp:button --></div><!-- /wp:buttons --></section><!-- /wp:group -->';
+  return '<!-- wp:group {"className":"ft-careers-empty","layout":{"type":"constrained"}} --><section class="wp-block-group ft-careers-empty"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Careers at FarmTree</p><!-- /wp:paragraph --><!-- wp:heading {"level":2,"fontSize":"heading-small"} --><h2 class="wp-block-heading has-heading-small-font-size">There are no open vacancies at the moment</h2><!-- /wp:heading --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">New opportunities will be listed here as they become available. In the meantime, learn more about the people and work behind FarmTree.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/team/">Meet the team</a></div><!-- /wp:button --><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/contact/">Contact FarmTree</a></div><!-- /wp:button --></div><!-- /wp:buttons --></section><!-- /wp:group -->';
 }
 
 function proofStoryContent(story) {
-  if (story.approvedBlockContent) return story.approvedBlockContent;
-  return story.sections.map(([heading, paragraph]) => [
+  const context = story.slug === 'cocoa-scenario-planning' ? photoContext.replace('agricultural context', 'general tree-and-crop context rather than as cocoa photography') : photoContext;
+  if (story.approvedBlockContent) return context + '\n\n' + story.approvedBlockContent;
+  return context + '\n\n' + story.sections.map(([heading, paragraph]) => [
     `<!-- wp:heading --><h2 class="wp-block-heading">${escapeHtml(heading)}</h2><!-- /wp:heading -->`,
     `<!-- wp:paragraph --><p>${escapeHtml(paragraph)}</p><!-- /wp:paragraph -->`
   ].join('\n\n')).join('\n\n');
@@ -237,6 +240,10 @@ async function addAsset({ key, relativePath, title, alt }) {
     mime_type: mimeTypes[extension],
     sha256: await fileSha256(absolutePath)
   });
+}
+
+for (const photo of editorialPhotographs) {
+  await addAsset({ key: photo.key, relativePath: `assets/images/${photo.directory}/${photo.filename}`, title: photo.title, alt: photo.alt });
 }
 
 for (const segment of segmentDefinitions) {
@@ -330,7 +337,7 @@ for (const article of editorialDefinitions) {
     content: editorialContent(article),
     date: `${article.sourceDate} 09:00:00`,
     commentStatus: 'closed',
-    featuredAssetKey: `asset.news.${article.slug}`,
+    featuredAssetKey: newsPhotographs[article.slug].key,
     categoryKeys: [`category.en.${slugify(category)}`]
   });
 }
@@ -343,7 +350,7 @@ for (const story of proofStoryDefinitions) {
     excerpt: story.excerpt,
     content: proofStoryContent(story),
     order: story.order,
-    featuredAssetKey: `asset.proof.${story.slug}`,
+    featuredAssetKey: proofPhotographs[story.slug].key,
     legacySlugs: proofLegacySlugs[story.slug] ?? []
   });
 }

@@ -14,6 +14,8 @@
     "wp:verify:side-effects": "node scripts/validate-farmtree-runtime-side-effects.mjs",
     "wp:verify:postconditions": "node scripts/validate-farmtree-postconditions.mjs",
     "wp:verify:post-launch": "node scripts/validate-post-launch-images.mjs",
+    "wp:verify:editorial": "node scripts/validate-post-launch-images.mjs --editorial",
+    "wp:verify:editorial:browser": "node scripts/validate-editorial-browser.cjs",
     "content:manifest": "node scripts/generate-managed-content-manifest.mjs",
     "images:prepare": "node scripts/prepare-documentary-images.mjs",
     "validate:documentary": "node scripts/validate-documentary-images.mjs",

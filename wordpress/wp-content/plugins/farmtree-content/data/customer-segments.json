@@ -20,7 +20,7 @@
     "use": "FarmTree can structure scenario comparisons across economic, environmental and operational considerations without replacing due diligence.",
     "challenges": ["Comparing programmes built on different assumptions", "Reviewing long time horizons before funding decisions", "Connecting planning evidence to later monitoring"],
     "capabilities": ["Transparent scenario assumptions", "Long-term economic and environmental projections", "Exportable project-planning evidence"],
-    "workflow": "Agree the appraisal question, model representative project scenarios, document sensitivity and data gaps, then use the outputs alongside technical, financial and safeguards due diligence.",
+    "workflow": "Agree on the appraisal question, model representative project scenarios, document sensitivity and data gaps, then use the outputs alongside technical, financial and safeguards due diligence.",
     "faq": ["Are projections investment assurance?", "No. They are decision-support evidence and do not replace due diligence or independent assurance."]
   },
   {
@@ -28,11 +28,11 @@
     "slug": "ngos-conservation-organisations",
     "title": "NGOs & Conservation Organisations",
     "excerpt": "Connect conservation goals and livelihood priorities to practical agroforestry planning and monitoring.",
-    "need": "Programme teams often need to balance ecological objectives, farmer realities and implementation constraints across varied sites.",
+    "need": "Programme teams often need to balance ecological objectives, farmers’ circumstances and implementation constraints across varied sites.",
     "use": "FarmTree can make assumptions and trade-offs visible so programmes can compare designs and communicate their planning rationale.",
     "challenges": ["Balancing livelihood and conservation priorities", "Adapting programme designs across sites", "Separating measured progress from modelled futures"],
     "capabilities": ["Scenario co-design", "Production, carbon, water and economic indicators", "Clear measured-versus-modelled reporting"],
-    "workflow": "Frame the programme outcomes with field teams, model locally relevant options, select indicators for validation, and retain a reviewable assumptions trail.",
+    "workflow": "Frame the programme outcomes with field teams, model locally relevant options, select indicators for validation, and retain a clear record of assumptions.",
     "faq": ["Can local teams update scenarios?", "Yes, subject to training, data access and the agreed project workflow."]
   },
   {
@@ -80,7 +80,7 @@
     "use": "FarmTree can support structured workshops and scenario conversations with a common evidence base for planning.",
     "challenges": ["Creating shared definitions across members", "Comparing options without erasing local differences", "Turning discussion into reviewable next steps"],
     "capabilities": ["Workshop-ready scenarios", "Comparable multi-KPI outputs", "Documented assumptions and trade-offs"],
-    "workflow": "Agree a shared question, prepare representative scenarios, review trade-offs in a facilitated session, and record where local validation or member-specific analysis is needed.",
+    "workflow": "Agree on a shared question, prepare representative scenarios, review trade-offs in a facilitated session, and record where local validation or member-specific analysis is needed.",
     "faq": ["Can one scenario represent every member?", "Usually not. Representative scenarios support discussion but should not replace local analysis."]
   },
   {

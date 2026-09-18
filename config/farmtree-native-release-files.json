@@ -11,6 +11,15 @@
     "wordpress/wp-content/plugins/farmtree-content/includes/managed-content-manifest.php"
   ],
   "materializerSourceImages": [
+    "wordpress/wp-content/themes/farmtree-native/assets/images/documentary/farmtree-agroforestry-field-system-content.jpg",
+    "wordpress/wp-content/themes/farmtree-native/assets/images/documentary/farmtree-community-field-visit-content.jpg",
+    "wordpress/wp-content/themes/farmtree-native/assets/images/documentary/farmtree-dryland-tree-landscape-content.jpg",
+    "wordpress/wp-content/themes/farmtree-native/assets/images/documentary/farmtree-green-field-climate-context-content.jpg",
+    "wordpress/wp-content/themes/farmtree-native/assets/images/documentary/farmtree-integrated-agroforestry-cropping-content.jpg",
+    "wordpress/wp-content/themes/farmtree-native/assets/images/documentary/farmtree-mixed-agricultural-landscape-content.jpg",
+    "wordpress/wp-content/themes/farmtree-native/assets/images/documentary/farmtree-onion-harvest-under-trees-content.jpg",
+    "wordpress/wp-content/themes/farmtree-native/assets/images/documentary/farmtree-plant-observation-content.jpg",
+    "wordpress/wp-content/themes/farmtree-native/assets/images/documentary/farmtree-structured-field-plots-content.jpg",
     "wordpress/wp-content/themes/farmtree-native/assets/images/news/news-carbon-pricing-2026-v1-1600.webp",
     "wordpress/wp-content/themes/farmtree-native/assets/images/news/news-eu-carbon-farming-methodologies-2026-v1-1600.webp",
     "wordpress/wp-content/themes/farmtree-native/assets/images/news/news-eudr-data-readiness-2026-v1-1600.webp",

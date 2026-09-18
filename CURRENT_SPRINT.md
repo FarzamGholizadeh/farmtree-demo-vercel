@@ -1,5 +1,17 @@
 # Current FarmTree Sprint
 
+## Editorial/documentary refinement — local pre-release, 2026-09-18
+
+Whole-site language review and approved photo placement implemented locally.
+Homepage Clients heading/copy, four Proof cards/detail heroes, nine News images,
+editorial headings and stale pre-release copy improved. Existing 132 image exports
+reused; nine new managed attachment identities preserve 34 old media records.
+Local migration: 9 creates/23 updates/0 conflicts, then 102 unchanged. No production
+mutation or push. Public six-page APPLY guard deliberately remains unchanged and
+rejects this broader release. See `docs/FT-EDITORIAL-IMAGE-AUDIT.md` for the exact
+placement/copy audit and validation; broader audited release scope is required
+before deployment, with public indexing and Coming Soon OFF preserved.
+
 ## Documentary release deployed — 2026-09-18
 
 Explicitly approved SHA `47313843c47ef0e43dbdb80f0ec76dfd2dc2cff1` pushed and
