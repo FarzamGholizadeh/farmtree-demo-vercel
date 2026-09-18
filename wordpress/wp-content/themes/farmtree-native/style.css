@@ -4774,7 +4774,7 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
   }
 
   to {
-    transform: translate3d(calc(var(--ft-testimonial-start-x) - var(--ft-rail-distance)), 0, 0);
+    transform: translate3d(calc(var(--ft-testimonial-start-x) + var(--ft-rail-distance)), 0, 0);
   }
 }
 

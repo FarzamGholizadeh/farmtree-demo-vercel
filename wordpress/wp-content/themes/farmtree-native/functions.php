@@ -442,18 +442,19 @@ function farmtree_native_render_social_metadata(): void
 add_action('wp_head', 'farmtree_native_render_social_metadata', 6);
 
 /**
- * Keep the inactive native build out of search until release approval.
- *
- * Removal of this filter is a production action and must be reviewed alongside
- * theme activation, translated-route publication and Coming Soon removal.
+ * Respect WordPress search visibility, with permanent loopback QA protection.
  *
  * @param array<string, bool|string> $robots Current robots directives.
  * @return array<string, bool|string>
  */
 function farmtree_native_pre_release_robots(array $robots): array
 {
-    $robots['noindex'] = true;
-    $robots['nofollow'] = true;
+    if (farmtree_native_private_runtime()) {
+        $robots['noindex'] = true;
+        $robots['nofollow'] = true;
+    } elseif (is_404() || is_search() || (is_singular() && 'publish' !== get_post_status())) {
+        $robots['noindex'] = true;
+    }
 
     return $robots;
 }
@@ -462,15 +463,17 @@ add_filter('wp_robots', 'farmtree_native_pre_release_robots', 99);
 /** Add an explicit HTTP-level indexing safeguard for pre-release responses. */
 function farmtree_native_pre_release_headers(array $headers): array
 {
-    $headers['X-Robots-Tag'] = 'noindex, nofollow';
+    if (farmtree_native_private_runtime()) {
+        $headers['X-Robots-Tag'] = 'noindex, nofollow';
+    }
 
     return $headers;
 }
 add_filter('wp_headers', 'farmtree_native_pre_release_headers', 99);
 
-/** Keep WordPress' effective search-engine visibility disabled pre-release. */
-function farmtree_native_pre_release_search_visibility(): int
+/** Local QA must never become indexable when production is launched. */
+function farmtree_native_private_runtime(): bool
 {
-    return 0;
+    return '1' !== (string) get_option('blog_public')
+        || in_array(wp_parse_url(home_url('/'), PHP_URL_HOST), ['localhost', '127.0.0.1', '::1', '[::1]'], true);
 }
-add_filter('pre_option_blog_public', 'farmtree_native_pre_release_search_visibility', 99);

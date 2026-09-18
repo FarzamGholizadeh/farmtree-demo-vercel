@@ -786,7 +786,7 @@ for (const contract of [
   'data-ft-quotation-dialog',
   'aria-describedby="ft-quotation-status"',
   'Ask for a quotation',
-  'Online quotation delivery is currently unavailable.',
+  'Request your quotation by email.',
   'does not collect, store or send personal data',
   'Email FarmTree about a quotation',
   'do not include sensitive or confidential information'
@@ -1139,7 +1139,8 @@ if (
   !functions.includes("$robots['noindex'] = true") ||
   !functions.includes("$robots['nofollow'] = true") ||
   !functions.includes("$headers['X-Robots-Tag'] = 'noindex, nofollow'") ||
-  !functions.includes("add_filter('pre_option_blog_public', 'farmtree_native_pre_release_search_visibility', 99)")
+  !functions.includes("'1' !== (string) get_option('blog_public')") ||
+  functions.includes("add_filter('pre_option_blog_public'")
 ) {
   throw new Error('Native theme must enforce the pre-release noindex/nofollow gate.');
 }

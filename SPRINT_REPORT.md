@@ -1,5 +1,15 @@
 # FT-NATIVE-002 Sprint Report
 
+Public launch preparation (2026-09-18): explicit launch authorization supersedes
+historical private-release gates. Source now uses left-to-right testimonial
+travel, an intentional mailto-only Contact CTA and production indexing governed
+by blog_public, with permanent loopback noindex. Approved legal source is unchanged.
+Local direction/coverage and WordPress checks pass. Production dry-run found
+editor changes on Homepage 439 and Proof Story 460: “Farm Valuation” replaces
+“Farm Value Projection” and block serialization differs. Ownership hashes and
+content were not overwritten. Fresh off-webroot database/runtime recovery
+backups are verified; publication awaits resolution of these two conflicts.
+
 Status: controlled Homepage and Team refinement implemented and locally
 validated; stopped at pre-release for visual and publication approval
 
