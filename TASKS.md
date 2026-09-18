@@ -197,3 +197,12 @@ dispatch.
   only if online quotation submission is required. The current modal safely
   collects no data and offers the approved email fallback.
 - FT-WP-005 - Add browser-based production verification checklist after an approved deployment.
+# Public launch acceptance — 2026-09-18
+
+- [x] Preserve Frank-approved Farm Valuation content and public Homepage 439.
+- [x] Publish only 40 approved managed English entities; synchronize fingerprints.
+- [x] Require conflict-free/idempotent production reconciliation (93 unchanged).
+- [x] Deploy checksum-verified runtime 7185c9b with off-webroot recovery backups.
+- [x] Complete anonymous route/link, responsive, interaction and testimonial QA.
+- [x] Remove Coming Soon/release noindex; enable public indexing; keep NL/DE and FT Bot off.
+- [ ] Optional human check: staff LinkedIn profiles block automated requests (HTTP 999).

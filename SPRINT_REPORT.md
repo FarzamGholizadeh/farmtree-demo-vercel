@@ -1,5 +1,24 @@
 # FT-NATIVE-002 Sprint Report
 
+## Public launch acceptance — 2026-09-18
+
+Deployed runtime: `7185c9b58b1d0f5f50f774b6cd2d97e042051e6f` (85 files verified).
+Homepage 439 and all 40 managed English entities are public. Approved Farm
+Valuation content, IDs and slug are preserved. Final reconciliation is fully
+idempotent: 93 unchanged, zero creates/updates/conflicts, one skipped front-page
+operation (already correct). Coming Soon off; blog_public=1; release noindex
+removed. Reserved locales absent, FT Bot off, telemetry disabled, comments closed.
+Production anonymous crawl: 40 intended routes and 55 internal destinations pass;
+36 page/viewport checks at 390/768/1440/1920 pass. Nine-width accessibility,
+keyboard, menu, FAQ, hero, quotation and landmark checks pass. Globe keyboard and
+drag pass; left-to-right testimonial geometry passes six widths/eight phases.
+No observed frontend PHP/console/asset errors, duplicate IDs or document overflow.
+Platform login/register, company LinkedIn, YouTube and map links respond; staff
+LinkedIn profiles return provider automation-block HTTP 999 and remain unverified.
+Fresh verified database/runtime backups remain outside the webroot. No unrelated
+content, DNS, SSL, uploads or legacy rollback theme were intentionally changed.
+These results supersede the historical private-release blockers below.
+
 Launch QA continuation: five approved updates applied transactionally; the next
 dry-run reported 93 unchanged, zero conflicts. Forty managed English entities
 were then published with exact content preservation. Final manifest preserves

@@ -1,5 +1,23 @@
 # Current FarmTree Sprint
 
+## Public launch accepted — 2026-09-18
+
+Runtime release `7185c9b58b1d0f5f50f774b6cd2d97e042051e6f` is deployed:
+85/85 runtime file checksums match, feature branch pushed. Homepage 439 remains
+published/front-page with approved content SHA256
+`943e84923f6699085fe06d4c24448fa0b0e60fe27a54be35f9085df5a9707962`.
+All 40 intended English entities are public; Coming Soon is off, blog_public=1,
+release noindex header removed, NL/DE absent, FT Bot off, News comments closed.
+Final production dry-run: create=0, update=0, unchanged=93, conflict=0, skipped=1.
+Anonymous acceptance: 40 routes, 55 internal destinations, 36 responsive page
+checks, zero failures. Homepage accessibility/interaction QA passes nine widths;
+globe keyboard/drag pass. Left-to-right testimonial coverage/boundary tests pass
+320/390/768/1024/1440/1920. Robots and sitemap are public and correct.
+External Platform/company LinkedIn/YouTube/map destinations respond; individual
+LinkedIn profile automation is blocked by provider HTTP 999 (not verified).
+Evidence: ignored qa/screenshots/public-launch*, final backups remain off-webroot.
+The historical preparation entries below are superseded by this accepted state.
+
 Launch QA continuation: protected APPLY completed and was idempotent (93
 unchanged, zero conflicts). All 40 approved English entities were published
 without body/title/slug changes. Source now preserves all 40 published statuses.

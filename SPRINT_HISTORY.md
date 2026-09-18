@@ -21,3 +21,15 @@ conflict-free reconciliation and validation.
 | FT-NATIVE-002 | Pre-release | `feat/wordpress-native-rebuild` | Native Homepage implementation and rendered QA complete; real production evidence exposed transparent reveal-state clones/source cards, and the corrected testimonial rail now starts Card 3-centred on an intrinsic five-sequence track, retains continuous eight-phase coverage plus its reduced-motion fallback, and awaits scoped release approval |
 | FT-NATIVE-004A | Release correction | `feat/wordpress-native-rebuild` | Production rollback traces proved the WordPress 7.1 `utf8mb3` Homepage representation, admin `page_on_front` global rewrite flush and one runtime-only root-comment diagnostic drift; 0.4.6 suppresses/restores only the conflicting flush callback and excludes only the non-persisted diagnostic while every exact FarmTree-only target check remains enforced |
 | FT-NATIVE-004B | Legal review preparation | `feat/wordpress-native-rebuild` | Fact-audited private legal copy, self-hosted Inter/Manrope, durable closed News comments and backed-up production telemetry/comment cleanup complete; no legal publication, font deployment or launch occurred |
+# 2026-09-18 — Public launch completed
+
+User-approved Homepage 439 publication and Frank's exact Farm Valuation block
+content were preserved. Runtime 7185c9b deployed with 85 checksum-verified files.
+Resolved revision by-reference compatibility, production dated News links and
+reduced-motion accessibility; all 40 English managed entities are public.
+Final dry-run is idempotent (93 unchanged, no conflicts). Anonymous 40-route,
+55-link and 36 responsive-page checks pass; Homepage accessibility/interaction,
+globe controls and left-to-right seamless testimonials pass. Coming Soon off,
+blog_public=1, release noindex removed; NL/DE absent and FT Bot off. Rollback
+theme verified byte-for-byte unchanged against backup. Individual LinkedIn
+profile destinations remain unverified because of provider automation blocking.
