@@ -97,12 +97,18 @@ Global Perspective, Trust, Proof Stories, Last News, FAQ and Final CTA. It is im
 
 The testimonial rail now starts from a geometry-derived middle composition
 with Card 3 centred rather than exposing a zero-origin first frame and relying
-on a negative time delay. It renders one semantic five-card sequence plus two
-inert, `aria-hidden` visual copies on each side at the tested widths, travels
-exactly one measured sequence over 46 seconds with linear timing, and preserves
-an uncloned scrollable reduced-motion fallback. Focused Chrome QA at 320, 390,
-768, 1024, 1440 and 1920 passed initial, midpoint and boundary equivalence,
-clone visibility/accessibility, coverage, overflow and runtime-error checks.
+on a negative time delay. A real production reload reproduced the previously
+missed failure: the original sequence moved partly offscreen while decorative
+clones and source cards outside the observer threshold retained
+`ft-motion-target` at zero opacity, leaving most of the right side blank. The
+fix removes reveal-state classes from all moving testimonial cards, explicitly
+keeps clones visible, waits for font geometry and uses a content-sized,
+non-shrinking track. It renders one semantic five-card sequence plus two inert,
+`aria-hidden` visual copies on each side, travels exactly one measured sequence
+over 46 seconds with linear timing, and preserves an uncloned scrollable
+reduced-motion fallback. Focused Chrome QA at 320, 390, 768, 1024, 1440 and
+1920 passed first-visible-frame and eight-phase visual-coverage checks, boundary
+equivalence, clone visibility/accessibility, overflow and runtime-error checks.
 Evidence is in `qa/screenshots/testimonial-marquee/`.
 
 The finalization pass moves Hero controls to the true viewport-safe edge on

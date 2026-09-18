@@ -136,7 +136,8 @@ approval-gated or deferred as recorded in the sprint evidence.
 
 The current refinement adds a generated illustrative field-planning Hero,
 Natural Earth-derived two-axis Globe, a measured Card 3-centred and
-boundary-equivalent five-testimonial marquee with `aria-hidden`, inert visual clones,
+boundary-equivalent five-testimonial marquee with `aria-hidden`, inert visual
+clones and production-evidence-driven full-width coverage at eight sampled phases,
 connector-free Technology cards, non-moving button hover, editorial News
 labels, balanced Footer copy and a ten-person 3/2/1-column Team page with a
 generated illustrative header. Human asset, claim and permission review remains

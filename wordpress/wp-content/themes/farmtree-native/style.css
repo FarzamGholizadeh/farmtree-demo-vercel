@@ -4736,6 +4736,10 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 }
 
 .ft-testimonial-cards .ft-moving-rail-track {
+  display: flex;
+  width: max-content;
+  min-width: max-content;
+  flex-wrap: nowrap;
   gap: 0;
   animation: ft-native-testimonial-marquee 46s linear infinite;
   transform: translate3d(var(--ft-testimonial-start-x, 0), 0, 0);
@@ -4747,8 +4751,21 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 }
 
 .ft-testimonial-cards .ft-moving-rail-sequence {
+  display: flex;
+  width: max-content;
+  min-width: max-content;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
   gap: 1rem;
   padding-right: 1rem;
+}
+
+.ft-testimonial-cards .ft-moving-rail-sequence[aria-hidden="true"] .ft-testimonial-card {
+  visibility: visible !important;
+  opacity: 1 !important;
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
 }
 
 @keyframes ft-native-testimonial-marquee {

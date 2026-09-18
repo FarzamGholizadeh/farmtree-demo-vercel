@@ -398,6 +398,16 @@
                 rail.dataset.ftRailStart = String(startIndex + 1);
             }
             rotatedItems.forEach((item) => sequence.append(item));
+            const neutralizeTestimonialMotion = (scope) => {
+                if (!isTestimonialRail) {
+                    return;
+                }
+                scope.querySelectorAll('.ft-testimonial-card').forEach((card) => {
+                    card.classList.remove('ft-motion-target', 'is-visible');
+                    card.style.removeProperty('--ft-motion-order');
+                });
+            };
+            neutralizeTestimonialMotion(sequence);
             track.append(sequence);
             rail.append(track);
 
@@ -408,7 +418,7 @@
                 clone.setAttribute('aria-hidden', 'true');
                 clone.setAttribute('inert', '');
                 clone.inert = true;
-                clone.querySelectorAll('.ft-motion-target').forEach((element) => element.classList.add('is-visible'));
+                neutralizeTestimonialMotion(clone);
                 clone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
                 clone.querySelectorAll('a, button, input, summary, [tabindex]').forEach((control) => {
                     control.setAttribute('tabindex', '-1');
@@ -416,8 +426,10 @@
                 return clone;
             };
             const fillTestimonialTrack = () => {
-                const sequenceWidth = sequence.getBoundingClientRect().width;
-                const railWidth = rail.clientWidth;
+                const railRect = rail.getBoundingClientRect();
+                const sequenceRect = sequence.getBoundingClientRect();
+                const sequenceWidth = sequenceRect.width;
+                const railWidth = railRect.width;
                 if (sequenceWidth <= 0 || railWidth <= 0) {
                     return;
                 }
@@ -440,8 +452,10 @@
 
                 const focalIndex = Math.min(2, Math.max(0, sequence.children.length - 1));
                 const focalCard = sequence.children[focalIndex];
-                const focalCenter = (focalCard.offsetLeft - sequence.offsetLeft) + (focalCard.getBoundingClientRect().width / 2);
-                const initialOffset = (railWidth / 2) - ((sideCopies * sequenceWidth) + focalCenter);
+                const focalRect = focalCard.getBoundingClientRect();
+                const focalCenter = (focalRect.left - sequenceRect.left) + (focalRect.width / 2);
+                const beforeCopiesWidth = sideCopies * sequenceWidth;
+                const initialOffset = -(beforeCopiesWidth + focalCenter - (railWidth / 2));
 
                 track.style.setProperty('--ft-testimonial-start-x', `${initialOffset}px`);
                 track.style.setProperty('--ft-rail-distance', `${sequenceWidth}px`);
@@ -449,6 +463,7 @@
                 rail.dataset.ftRailSequenceWidth = String(Math.round(sequenceWidth));
                 rail.dataset.ftRailViewportWidth = String(railWidth);
                 rail.dataset.ftRailInitialOffset = String(Math.round(initialOffset));
+                rail.dataset.ftRailTrackWidth = String(Math.round(track.scrollWidth));
                 rail.classList.add('is-ready');
             };
             const fillTrack = () => {
@@ -470,12 +485,19 @@
                 existingClones.slice(sequenceCount - 1).forEach((clone) => clone.remove());
                 track.style.setProperty('--ft-rail-distance', `${sequenceWidth}px`);
             };
-            fillTrack();
-            window.requestAnimationFrame(fillTrack);
-            if ('ResizeObserver' in window) {
-                const observer = new ResizeObserver(fillTrack);
-                observer.observe(rail);
-                observer.observe(sequence);
+            const startMeasuring = () => {
+                fillTrack();
+                window.requestAnimationFrame(fillTrack);
+                if ('ResizeObserver' in window) {
+                    const observer = new ResizeObserver(() => window.requestAnimationFrame(fillTrack));
+                    observer.observe(rail);
+                    observer.observe(sequence);
+                }
+            };
+            if (isTestimonialRail && document.fonts?.ready) {
+                document.fonts.ready.then(startMeasuring);
+            } else {
+                startMeasuring();
             }
         });
     }

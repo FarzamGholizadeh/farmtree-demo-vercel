@@ -174,13 +174,19 @@ The large audience section and Homepage Use Cases are omitted. News is lower,
 trust appears before proof stories, and the page is materially shorter than the
 legacy concept.
 
-The focused testimonial-marquee refinement removes the zero-origin animation
-phase and computes its initial transform from the rendered sequence and
-viewport widths. One original five-card sequence remains semantic; two cloned
-sequences on each side are `aria-hidden` and inert, and reduced-motion keeps the
-uncloned five-card horizontal fallback. Browser checks at 320, 390, 768, 1024,
-1440 and 1920 prove full coverage at initial, midpoint and loop boundary, with
-no duplicate IDs, focusable clones, console errors or horizontal overflow.
+Real production reload evidence reproduced the testimonial gap: the old
+negative-delay animation positioned the sole semantic sequence partly
+offscreen while appended clones and initially offscreen source cards inherited
+an unfulfilled intersection-reveal state at `opacity: 0`. The corrected rail
+removes that entrance-state ownership from every moving testimonial card,
+uses an intrinsic non-shrinking five-sequence track and computes its initial
+transform from the actual clipped viewport after fonts are ready. One original
+five-card sequence remains semantic; two cloned sequences on each side are
+`aria-hidden` and inert, and reduced-motion keeps the uncloned five-card
+horizontal fallback. Browser checks at 320, 390, 768, 1024, 1440 and 1920 prove
+continuous visual coverage at 0, 10, 25, 50, 75, 90, 99.9 and 99.9999 percent,
+including a non-zero first visible transform and equivalent loop boundary,
+with no duplicate IDs, focusable clones, console errors or body overflow.
 
 The dedicated visual-parity correction restores the approved production
 theme's fixed green Header, asset-backed brand-logo pill, five-card Bento menu,
