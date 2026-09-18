@@ -395,8 +395,7 @@ return [
                 'post_name' => 'home',
                 'post_status' => 'private',
                 'post_excerpt' => '',
-                'post_content' => '
-<!-- wp:group {"templateLock":"contentOnly","lock":{"move":true,"remove":true},"metadata":{"name":"FarmTree Homepage"},"className":"ft-native-home","layout":{"type":"default"}} -->
+                'post_content' => '<!-- wp:group {"templateLock":"contentOnly","lock":{"move":true,"remove":true},"metadata":{"name":"FarmTree Homepage"},"className":"ft-native-home","layout":{"type":"default"}} -->
 <div class="wp-block-group ft-native-home"><!-- wp:group {"tagName":"section","metadata":{"name":"FarmTree Hero"},"align":"full","className":"ft-home-hero","style":{"dimensions":{"minHeight":"780px"},"spacing":{"padding":{"top":"var:preset|spacing|80","right":"var:preset|spacing|50","bottom":"var:preset|spacing|80","left":"var:preset|spacing|50"}}},"backgroundColor":"farmtree-forest","layout":{"type":"constrained"}} -->
 <section class="wp-block-group alignfull ft-home-hero has-farmtree-forest-background-color has-background" style="min-height:780px;padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--50)"><!-- wp:group {"metadata":{"name":"Editable Hero images"},"className":"ft-home-hero-media","layout":{"type":"default"}} -->
 <div class="wp-block-group ft-home-hero-media"><!-- wp:image {"sizeSlug":"full","linkDestination":"none","className":"ft-home-hero-slide is-active"} -->
@@ -1034,8 +1033,7 @@ return [
 <!-- /wp:group -->
 
 <!-- wp:pattern {"slug":"farmtree-native/call-to-action"} /--></div>
-<!-- /wp:group -->
-',
+<!-- /wp:group -->',
                 'menu_order' => 0,
                 'post_date' => '',
             ],

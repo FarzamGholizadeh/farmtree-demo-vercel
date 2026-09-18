@@ -213,7 +213,7 @@ async function homepageContent() {
     (_match, relativePath) => `%%FARMTREE_THEME_URI:${relativePath}%%`
   );
   if (content.includes('<?php')) throw new Error('Homepage pattern contains an unsupported PHP expression.');
-  return content;
+  return content.trim();
 }
 
 const assets = [];
