@@ -1,5 +1,14 @@
 # FarmTree Sprint History
 
+## 2026-09-18 — controlled public documentary release
+
+Direct approval authorized SHA 47313843 push, runtime deployment and precisely
+gated six-Page content APPLY. Verified backups, 217 deployed checksums, zero-write
+six-update production dry-run, successful transaction and 93-unchanged final plan.
+Public state preserved; image/route/testimonial QA passes. Variable LCP/CLS
+measurements prevent an unqualified no-regression claim; current host fatal logs
+are unavailable. Retained rollback archives/directories; no rollback performed.
+
 ## 2026-09-18 — approved photo push and public-safe content preparation
 
 Pushed exactly `51ba0f5e4d28b7ed43cd1f2fe692185438006624` with direct chat

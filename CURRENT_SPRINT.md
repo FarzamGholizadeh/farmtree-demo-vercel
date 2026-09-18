@@ -1,5 +1,17 @@
 # Current FarmTree Sprint
 
+## Documentary release deployed — 2026-09-18
+
+Explicitly approved SHA `47313843c47ef0e43dbdb80f0ec76dfd2dc2cff1` pushed and
+deployed; all 217 runtime checksums match. Real post-launch dry-run: 6 updates,
+87 unchanged, 0 conflicts, 1 skipped; zero database mutation across 23 tables.
+APPLY committed exactly six Page bodies; final plan 93 unchanged, 0 updates,
+0 conflicts, 1 skipped. Public indexing/Coming Soon OFF/active Native and Content
+remain intact. Production QA passes 18 photo views and 72 asset URLs, plus 40
+routes/55 internal destinations and testimonial regression. Performance remained
+within good observed ranges but a strict no-regression claim is not established;
+see the report. This evidence-only follow-up does not change deployed runtime.
+
 ## Post-launch image update path — 2026-09-18
 
 Explicit chat approval pushed photo commit `51ba0f5e4d28b7ed43cd1f2fe692185438006624`

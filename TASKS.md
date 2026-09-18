@@ -1,5 +1,13 @@
 # FarmTree Tasks
 
+## Documentary production release — 2026-09-18
+
+- [x] Push/deploy approved 47313843 with verified off-webroot rollback backups.
+- [x] Require six-update/zero-conflict dry-run, apply exact digest, verify idempotence.
+- [x] Preserve public settings and verify photos, formats, routes and testimonials.
+- [ ] Strict performance non-regression remains unproven by variable synthetic
+  samples; preserve recorded measurements rather than claim an unsupported pass.
+
 ## Post-launch public-safe image update — 2026-09-18
 
 - [x] Push exactly approved photo SHA 51ba0f5e to feature branch.

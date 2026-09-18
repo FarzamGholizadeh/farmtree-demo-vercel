@@ -1,5 +1,48 @@
 # FT-NATIVE-002 Sprint Report
 
+## Documentary production release evidence — 2026-09-18
+
+- Pushed/deployed SHA `47313843c47ef0e43dbdb80f0ec76dfd2dc2cff1` after explicit
+  direct approval. Exact artifact: 217 files, 114 excluded; checksum-manifest
+  SHA256 `e6884c9dbd249a3d91dcca6507df3395676719c96f0f6919fd71860310d05b69`.
+- Fresh off-webroot database/runtime backups verified before mutation; existing
+  Native and Content directories retained for rollback. The separate `farmtree`
+  rollback theme is checksum-unchanged. No activation/deactivation was performed.
+- Dry-run digest `479f362f73d3a779a5d9da9effaecf6b7f761bf6b2f16862de74da7363f44d1b`:
+  create=0, update=6, unchanged=87, conflict=0, skipped=1. All 23 captured database
+  tables and all option hashes identical across the SQL-firewalled dry-run.
+- Reviewed body-only changes on IDs 439/463/464/465/470/475. Homepage only swaps
+  four image tags and corresponding accessibility labels; five other bodies
+  append exactly the approved documentary sections. APPLY committed six updates,
+  no creates/adoptions. Final plan: 0 updates/conflicts, 93 unchanged, 1 skipped.
+- Row-level comparison: only six existing Page rows, their managed audit metadata
+  and six new revisions changed. `category_children` was recreated with identical
+  value. No option values changed across APPLY. Theme-root transient expiry
+  rotated during deployment; no other pre-deploy option-value differences.
+- Homepage 439 remains public/front-page; blog_public=1, Native/Content active,
+  Coming Soon and maintenance OFF, Bot OFF, NL/DE absent. Farm Valuation title
+  and all other managed publication/URL identities unchanged. Homepage HTTP 200
+  in sampled checks before/during/after deployment; no continuous uptime claim.
+- Photo QA: all six areas at 390/1440/1920 (18 views), 72 responsive asset URLs,
+  exact approved photo/alt mapping, srcset/sizes, AVIF selection and forced
+  WebP/JPEG fallback pass. No distortion/overflow/console errors. Screenshots
+  visually reviewed for representative hero and every contextual section.
+- Existing acceptance: 40 public routes, 55 internal destinations, 36 broader
+  layout checks, no errors; broken links=0, unintended 404s=0. Robots/sitemap
+  public. Left-to-right testimonial regression passes all six existing widths.
+- Performance qualification: initial before/after median LCP in milliseconds
+  (390/1440/1920) = 548/668/512 versus 712/532/532. Repeat = 532/968/764.
+  All post-release observations were <=2444ms LCP and <=0.028718 CLS. Repeat
+  layout-shift sources were hero text/header elements. Samples are variable;
+  a strict no-LCP/CLS-regression claim is NOT conclusively established. No
+  speculative runtime changes were made to chase measurement noise.
+- No PHP fatal response observed. Current host error logs were not readable and
+  WordPress debug logging is disabled, so log-level absence is not certified.
+- Ignored evidence: `qa/image-release/`, `qa/screenshots/image-release/`,
+  `qa/screenshots/image-release-testimonials/`, public acceptance JSON. Backup
+  evidence digest: `79a2bec8e9c55c3deb72a627349f5c7eafdcaea6df88ae6311fbe31c9f5122ec`.
+  No rollback required; archives and prior directories remain off-webroot.
+
 ## Post-launch content safety — 2026-09-18
 
 - Approved photo commit `51ba0f5e4d28b7ed43cd1f2fe692185438006624` pushed and
