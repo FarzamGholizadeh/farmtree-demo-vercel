@@ -148,6 +148,12 @@ File deployment and WordPress content reconciliation are separate operations.
 The deployment workflow does not run the reconciler, activate its plugin,
 publish content or change front-page options.
 
+Post-launch update note (2026-09-18): this section describes the historical
+private-review path. The separately gated public-site documentary update profile
+is documented in `FT-POST-LAUNCH-CONTENT-UPDATES.md`; do not disable indexing or
+turn Coming Soon on for that profile. The published manifest supersedes the
+historical private-status description below.
+
 The release artifact contains a WP-CLI-only `farmtree content reconcile`
 command and a protected generated manifest. The command defaults to a
 write-free JSON plan and classifies every operation as create, update,

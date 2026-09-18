@@ -1,5 +1,29 @@
 # FT-NATIVE-002 Sprint Report
 
+## Post-launch content safety — 2026-09-18
+
+- Approved photo commit `51ba0f5e4d28b7ed43cd1f2fe692185438006624` pushed and
+  remote identity verified. New safety code is local preparation only.
+- Explicit `--post-launch-images` permits only six owned published Page bodies;
+  rejects creates, adoptions, other fields, relationships and routing changes.
+  Critical public settings are bound into the plan and checked before commit.
+- Exact retired hero URL token aliases preserve old ownership fingerprints;
+  manual changes still conflict. No content/manifest or visual redesign changes.
+- Disposable real WordPress test: dry-run 6 updates/87 unchanged/0 conflicts,
+  zero dry-run database mutation; APPLY updates six, preserves 34 other managed
+  posts; final 93 unchanged/0 conflicts. Core `category_children` cache rebuilding
+  is disclosed; other options remain identical. Save-hook indexing mutation
+  rejects and rolls back all tested persistent data except derived cache state.
+- Source call-graph audit retains zero dry-run write methods and no lifecycle
+  hooks. Production checks, backups, exact deployment and APPLY remain pending
+  separate approval; local HTTP probes use controlled fixture responses.
+- `npm test`, `wp:verify:post-launch`, `wp:verify:postconditions`,
+  `wp:verify:side-effects`, `wp:verify`, `wp:verify:anonymous` all pass.
+  Local anonymous checks cover 40 routes, 104 links and 12 documentary pictures.
+  The ordinary local site remains noindex; the disposable public-profile fixture
+  independently tests public indexing. Source classification: 217 runtime files,
+  114 exclusions; exact committed artifact build/audit follows the local commit.
+
 ## Documentary images — local release preparation, 2026-09-18
 
 - Plan first: 20 exact upload-order records, 11 selected and nine reserved.

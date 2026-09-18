@@ -78,6 +78,7 @@ final class FarmTree_Content_Reconciler
             'expected_site' => '',
             'expected_theme' => '',
             'source_commit' => '',
+            'post_launch_images' => false,
         ]);
         $site_url = trailingslashit(home_url('/'));
         $theme = get_stylesheet();
@@ -147,6 +148,14 @@ final class FarmTree_Content_Reconciler
         $ops['options'][] = $this->plan_front_page((bool) $options['set_front_page'], $entity_ids, $ops['posts']);
         $ops['options'][] = $this->plan_rewrite_rules();
 
+        $public_state = null;
+        if (!empty($options['post_launch_images'])) {
+            $public_state = $this->post_launch_state();
+            foreach (array_merge($public_state['errors'], $this->post_launch_scope_errors($ops, (bool) $options['set_front_page'])) as $error) {
+                $ops['checks'][] = $this->op('runtime', 'post-launch:' . $error, 'conflict', $error);
+            }
+        }
+
         $summary = ['create' => 0, 'update' => 0, 'unchanged' => 0, 'conflict' => 0, 'skipped' => 0];
         $conflicts = [];
         foreach ($ops as $group) {
@@ -175,8 +184,72 @@ final class FarmTree_Content_Reconciler
             'summary' => $summary,
             'conflicts' => $conflicts,
         ];
+        if (!empty($options['post_launch_images'])) {
+            $plan['post_launch_images'] = true;
+            $plan['public_state_sha256'] = $public_state['sha256'];
+        }
         $plan['plan_digest'] = $this->hash($plan);
         return $plan;
+    }
+
+    /** Pure, fail-closed scope check; no creates, adoptions, relationships or option changes. */
+    private function post_launch_scope_errors(array $operations, bool $set_front_page): array
+    {
+        $errors = $set_front_page ? ['front_page_change_forbidden'] : [];
+        $keys = ['page.en.home', 'page.en.platform', 'page.en.solutions', 'page.en.proof_stories', 'page.en.customer_segments', 'page.en.blog'];
+        foreach ($operations as $group => $items) {
+            foreach ($items as $op) {
+                if ('checks' === $group && 'reserved-locale' === ($op['kind'] ?? '')
+                    && in_array($op['key'], ['nl', 'de'], true) && 'skipped' === $op['action']
+                    && 'reserved_locale_unpublished_untouched' === $op['reason']) {
+                    continue;
+                }
+                if ('unchanged' === $op['action'] || ('options' === $group && 'front-page' === $op['key']
+                    && 'skipped' === $op['action'] && 'set_front_page_not_requested' === $op['reason'])) {
+                    continue;
+                }
+                if ('posts' !== $group || !in_array($op['key'], $keys, true)
+                    || 'update' !== $op['action'] || 'owned_update' !== $op['reason']
+                    || empty($op['id']) || array_keys($op['changes'] ?? []) !== ['post_content']
+                    || ($op['before']['post_type'] ?? '') !== 'page' || ($op['desired']['post_type'] ?? '') !== 'page'
+                    || ($op['before']['post_status'] ?? '') !== 'publish' || ($op['desired']['post_status'] ?? '') !== 'publish') {
+                    $errors[] = 'out_of_scope:' . $op['key'];
+                }
+            }
+        }
+        return $errors;
+    }
+
+    /** Read raw critical options, never write them or disclose their values in plans. */
+    private function post_launch_state(): array
+    {
+        global $wpdb;
+        $state = [];
+        foreach (['home', 'siteurl', 'blog_public', 'show_on_front', 'page_on_front', 'stylesheet', 'template',
+            'active_plugins', 'seedprod_settings', 'ft_ai_settings', 'rewrite_rules'] as $name) {
+            $state[$name] = $wpdb->get_var($wpdb->prepare("SELECT option_value FROM {$wpdb->options} WHERE option_name = %s LIMIT 1", $name));
+        }
+        $seed = maybe_unserialize($state['seedprod_settings']);
+        $seed = is_string($seed) ? json_decode($seed, true) : $seed;
+        $plugins = (array) maybe_unserialize($state['active_plugins']);
+        $bot = (array) maybe_unserialize($state['ft_ai_settings']);
+        $front = get_post((int) $state['page_on_front']);
+        $errors = [];
+        if (is_multisite()) $errors[] = 'multisite_not_supported';
+        if ('1' !== (string) $state['blog_public']) $errors[] = 'public_indexing_required';
+        if (!is_array($seed) || !array_key_exists('enable_coming_soon_mode', $seed)
+            || !in_array($seed['enable_coming_soon_mode'], [false, 0, '0'], true)
+            || !empty($seed['enable_maintenance_mode'])) $errors[] = 'coming_soon_off_not_proven';
+        if ('farmtree-native' !== $state['stylesheet'] || 'farmtree-native' !== $state['template']) $errors[] = 'native_theme_required';
+        if (!in_array('farmtree-content/farmtree-content.php', $plugins, true)) $errors[] = 'content_plugin_must_be_active';
+        if (!empty($bot['enabled'])) $errors[] = 'ft_bot_must_remain_off';
+        if ('page' !== $state['show_on_front'] || !$front || 'page' !== $front->post_type
+            || 'publish' !== $front->post_status || '' !== $front->post_password
+            || $this->post_managed_keys((int) $front->ID) !== ['page.en.home']) $errors[] = 'published_managed_front_page_required';
+        if (!$this->is_loopback() && (trailingslashit(home_url('/')) !== 'https://farmtree.eu/' || (int) $state['page_on_front'] !== 439)) {
+            $errors[] = 'approved_production_identity_required';
+        }
+        return ['sha256' => $this->hash($state), 'errors' => $errors];
     }
 
     /**
@@ -186,7 +259,7 @@ final class FarmTree_Content_Reconciler
      *
      * @return array<int,array<string,string>>
      */
-    public function runtime_gate_errors(string $expected_site, string $expected_theme): array
+    public function runtime_gate_errors(string $expected_site, string $expected_theme, bool $post_launch_images = false): array
     {
         $errors = [];
         if (trailingslashit($expected_site) !== trailingslashit(home_url('/'))) {
@@ -195,7 +268,7 @@ final class FarmTree_Content_Reconciler
         if ($expected_theme !== get_stylesheet()) {
             $errors[] = ['gate' => 'expected_theme', 'reason' => 'active_theme_mismatch'];
         }
-        if ($this->is_loopback()) {
+        if ($this->is_loopback() && !$post_launch_images) {
             return $errors;
         }
 
@@ -204,7 +277,7 @@ final class FarmTree_Content_Reconciler
             "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s LIMIT 1",
             'blog_public'
         ));
-        if ('0' !== (string) $blog_public) {
+        if (!$post_launch_images && '0' !== (string) $blog_public) {
             $errors[] = ['gate' => 'blog_public', 'reason' => 'search_engine_visibility_not_disabled'];
         }
         $plugins = (array) get_option('active_plugins', []);
@@ -218,9 +291,15 @@ final class FarmTree_Content_Reconciler
                 break;
             }
         }
-        if (!$coming_soon) {
+        if (!$coming_soon && !$post_launch_images) {
             $errors[] = ['gate' => 'coming_soon', 'reason' => 'coming_soon_plugin_not_active'];
             return $errors;
+        }
+
+        if ($post_launch_images) {
+            foreach ($this->post_launch_state()['errors'] as $reason) {
+                $errors[] = ['gate' => 'post_launch', 'reason' => $reason];
+            }
         }
 
         $probe_url = add_query_arg('_farmtree_protection_probe', wp_generate_uuid4(), home_url('/'));
@@ -249,7 +328,14 @@ final class FarmTree_Content_Reconciler
             '/<meta\b(?=[^>]*\bname=["\']robots["\'])(?=[^>]*\bcontent=["\'][^"\']*noindex[^"\']*["\'])[^>]*>/i',
             $body
         );
-        if (!$has_sentinel || (!str_contains($robots_header, 'noindex') && !$has_markup_noindex)) {
+        if ($post_launch_images) {
+            if (200 !== $status || $has_sentinel || $has_markup_noindex
+                || preg_match('/noindex|nofollow/i', $robots_header)
+                || preg_match('/<meta\b(?=[^>]*\bname=["\']robots["\'])(?=[^>]*\bcontent=["\'][^"\']*nofollow)/i', $body)
+                || !str_contains($body, 'ft-native-home')) {
+                $errors[] = ['gate' => 'post_launch', 'reason' => 'anonymous_public_native_response_required'];
+            }
+        } elseif (!$has_sentinel || (!str_contains($robots_header, 'noindex') && !$has_markup_noindex)) {
             $errors[] = ['gate' => 'coming_soon', 'reason' => 'anonymous_response_not_protected'];
         }
         return $errors;
@@ -277,7 +363,11 @@ final class FarmTree_Content_Reconciler
             throw new RuntimeException('A conflicted or undigested plan cannot be applied.');
         }
         $this->assert_plan_shape_and_actions($plan);
-        $gate_errors = $this->runtime_gate_errors((string) $plan['site_url'], (string) $plan['active_theme']);
+        $public_mode = !empty($plan['post_launch_images']);
+        if ($public_mode && $this->post_launch_scope_errors($plan['operations'], (bool) $plan['set_front_page'])) {
+            throw new RuntimeException('Post-launch image plan exceeds the six-page content-only scope.');
+        }
+        $gate_errors = $this->runtime_gate_errors((string) $plan['site_url'], (string) $plan['active_theme'], $public_mode);
         if ($gate_errors) {
             throw new RuntimeException('Runtime gates changed before apply: ' . wp_json_encode($gate_errors, JSON_UNESCAPED_SLASHES));
         }
@@ -312,6 +402,7 @@ final class FarmTree_Content_Reconciler
             $stage = 'locked-preflight';
             $this->lock_and_refresh_reconciliation_state();
             $fresh = $this->build_plan([
+                'post_launch_images' => $public_mode,
                 'set_front_page' => (bool) $plan['set_front_page'],
                 'expected_site' => (string) $plan['site_url'],
                 'expected_theme' => (string) $plan['active_theme'],
@@ -368,12 +459,16 @@ final class FarmTree_Content_Reconciler
             $stage = 'postcondition';
             $stage_key = '';
             $final_plan = $this->build_plan([
+                'post_launch_images' => $public_mode,
                 'set_front_page' => (bool) $plan['set_front_page'],
                 'expected_site' => (string) $plan['site_url'],
                 'expected_theme' => (string) $plan['active_theme'],
                 'source_commit' => $source_commit,
             ]);
             $this->assert_final_plan($final_plan);
+            if ($public_mode && !hash_equals((string) $plan['public_state_sha256'], (string) $final_plan['public_state_sha256'])) {
+                throw new RuntimeException('Public release settings changed during the content update.');
+            }
             if (false === $wpdb->query('COMMIT')) {
                 throw new RuntimeException('The database transaction could not be committed.');
             }
@@ -2057,6 +2152,21 @@ final class FarmTree_Content_Reconciler
                     $content
                 );
             }
+        }
+        // Retain the exact token identities used by the previous approved homepage.
+        // Removing a source image from the new manifest must not manufacture drift
+        // in its stored ownership fingerprint. This does not accept other edits.
+        foreach (array(
+            'assets/images/home/hero-field-planning-v1.jpg',
+            'assets/images/home/proof-carbon.webp',
+            'assets/images/home/hero-project-teams.webp',
+            'assets/images/home/hero-impact-reporting-v2.jpg',
+        ) as $relative) {
+            $content = str_replace(
+                trailingslashit($this->theme_uri) . $relative,
+                '%%FARMTREE_THEME_URI:' . $relative . '%%',
+                $content
+            );
         }
         return $content;
     }

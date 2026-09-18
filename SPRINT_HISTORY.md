@@ -1,5 +1,14 @@
 # FarmTree Sprint History
 
+## 2026-09-18 — approved photo push and public-safe content preparation
+
+Pushed exactly `51ba0f5e4d28b7ed43cd1f2fe692185438006624` with direct chat
+approval. Prepared Content 0.4.8 opt-in post-launch profile: six owned published
+Page bodies only, preserving public indexing and Coming Soon OFF. Added precise
+old hero URL normalization and integration coverage for conflicts, forbidden
+fields, idempotence, zero-write dry-run and rollback on critical state changes.
+No production access or deployment. New runtime release needs separate approval.
+
 ## 2026-09-18 — documentary photo preparation
 
 Created a numbered 20-photo plan before implementation; corrected mismatched

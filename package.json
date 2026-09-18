@@ -13,6 +13,7 @@
     "wp:verify:documentary": "node scripts/validate-documentary-runtime.mjs",
     "wp:verify:side-effects": "node scripts/validate-farmtree-runtime-side-effects.mjs",
     "wp:verify:postconditions": "node scripts/validate-farmtree-postconditions.mjs",
+    "wp:verify:post-launch": "node scripts/validate-post-launch-images.mjs",
     "content:manifest": "node scripts/generate-managed-content-manifest.mjs",
     "images:prepare": "node scripts/prepare-documentary-images.mjs",
     "validate:documentary": "node scripts/validate-documentary-images.mjs",

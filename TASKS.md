@@ -1,5 +1,12 @@
 # FarmTree Tasks
 
+## Post-launch public-safe image update — 2026-09-18
+
+- [x] Push exactly approved photo SHA 51ba0f5e to feature branch.
+- [x] Prepare scoped public-state-preserving reconciler and disposable regressions.
+- [x] Document separate public release path without weakening private workflow.
+- [ ] Approve new audited code push/deployment and gated production content APPLY.
+
 ## Documentary photography — 2026-09-18
 
 - [x] Audit upload-order descriptions and create manifest/placement map first.

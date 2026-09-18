@@ -33,6 +33,9 @@ final class FarmTree_Content_CLI_Command
     private const APPLY_CONFIRMATION = 'APPLY FARMTREE PRIVATE REVIEW CONTENT';
     private const PRIVATE_REVIEW_CONFIRMATION = 'MATERIALIZE ENGLISH CONTENT AS PRIVATE REVIEW';
     private const PROTECTION_CONFIRMATION = 'COMING SOON AND NOINDEX VERIFIED';
+    private const POST_LAUNCH_CONFIRMATION = 'APPLY SIX PAGE DOCUMENTARY CONTENT UPDATES';
+    private const PUBLICATION_CONFIRMATION = 'PRESERVE EXISTING PUBLICATION AND ROUTING';
+    private const PUBLIC_STATE_CONFIRMATION = 'PUBLIC INDEXING ON AND COMING SOON OFF VERIFIED';
 
     /**
      * Reconcile the protected private-review manifest.
@@ -47,6 +50,9 @@ final class FarmTree_Content_CLI_Command
      *
      * [--dry-run]
      * : Explicitly select write-free dry-run mode.
+     *
+     * [--post-launch-images]
+     * : Opt in to six-page, owned, published content-only updates; preserve public settings.
      *
      * [--plan-digest=<sha256>]
      * : Exact plan digest. Required with --apply.
@@ -88,6 +94,7 @@ final class FarmTree_Content_CLI_Command
             $this->validate_arguments((array) $args, (array) $assoc_args);
             $apply = isset($assoc_args['apply']);
             $options = [
+                'post_launch_images' => isset($assoc_args['post-launch-images']),
                 'set_front_page' => isset($assoc_args['set-front-page']),
                 'expected_site' => isset($assoc_args['expected-site']) ? (string) $assoc_args['expected-site'] : '',
                 'expected_theme' => isset($assoc_args['expected-theme']) ? (string) $assoc_args['expected-theme'] : '',
@@ -360,7 +367,7 @@ final class FarmTree_Content_CLI_Command
             'apply', 'dry-run', 'plan-digest', 'source-commit', 'expected-site',
             'expected-theme', 'backup-digest', 'confirmation',
             'publication-confirmation', 'protection-confirmation',
-            'set-front-page', 'format',
+            'set-front-page', 'format', 'post-launch-images',
         ];
         $unknown = array_diff(array_keys($assoc_args), $allowed);
         if ($unknown) {
@@ -368,6 +375,9 @@ final class FarmTree_Content_CLI_Command
         }
         if (isset($assoc_args['apply'], $assoc_args['dry-run'])) {
             throw new InvalidArgumentException('--apply and --dry-run are mutually exclusive.');
+        }
+        if (isset($assoc_args['post-launch-images'], $assoc_args['set-front-page'])) {
+            throw new InvalidArgumentException('Post-launch image mode cannot change the front page.');
         }
         if (isset($assoc_args['format']) && 'json' !== strtolower((string) $assoc_args['format'])) {
             throw new InvalidArgumentException('Only --format=json is supported.');
@@ -396,16 +406,17 @@ final class FarmTree_Content_CLI_Command
         if (!preg_match('/^[0-9a-f]{64}$/', strtolower((string) $args['backup-digest']))) {
             throw new InvalidArgumentException('--backup-digest must be a 64-character SHA-256.');
         }
-        if (self::APPLY_CONFIRMATION !== (string) $args['confirmation']) {
+        $public_mode = isset($args['post-launch-images']);
+        if (($public_mode ? self::POST_LAUNCH_CONFIRMATION : self::APPLY_CONFIRMATION) !== (string) $args['confirmation']) {
             throw new InvalidArgumentException('The apply confirmation text is not exact.');
         }
-        if (self::PRIVATE_REVIEW_CONFIRMATION !== (string) $args['publication-confirmation']) {
+        if (($public_mode ? self::PUBLICATION_CONFIRMATION : self::PRIVATE_REVIEW_CONFIRMATION) !== (string) $args['publication-confirmation']) {
             throw new InvalidArgumentException('The authenticated private-review confirmation text is not exact.');
         }
-        if (self::PROTECTION_CONFIRMATION !== (string) $args['protection-confirmation']) {
+        if (($public_mode ? self::PUBLIC_STATE_CONFIRMATION : self::PROTECTION_CONFIRMATION) !== (string) $args['protection-confirmation']) {
             throw new InvalidArgumentException('The protection confirmation text is not exact.');
         }
-        $errors = $reconciler->runtime_gate_errors((string) $args['expected-site'], (string) $args['expected-theme']);
+        $errors = $reconciler->runtime_gate_errors((string) $args['expected-site'], (string) $args['expected-theme'], $public_mode);
         if ($errors) {
             throw new RuntimeException('Runtime gates failed: ' . wp_json_encode($errors, JSON_UNESCAPED_SLASHES));
         }

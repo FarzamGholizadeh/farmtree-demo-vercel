@@ -1,5 +1,15 @@
 # Current FarmTree Sprint
 
+## Post-launch image update path — 2026-09-18
+
+Explicit chat approval pushed photo commit `51ba0f5e4d28b7ed43cd1f2fe692185438006624`
+to the feature branch (previous remote `34771e782f3b3d2118567ecd42f4bbf54aa93121`).
+Local Content 0.4.8 preparation adds an opt-in six-published-page body-only
+profile preserving blog_public=1 and Coming Soon OFF. Default private gates
+remain intact. See `docs/FT-POST-LAUNCH-CONTENT-UPDATES.md` for scope, evidence
+and the approval-bound release sequence. This new runtime is not deployed;
+production has not been accessed during this preparation task.
+
 ## Documentary photo integration — local pre-release, 2026-09-18
 
 The supplied 20-photo set is mapped in `config/farmtree-documentary-images.json`
