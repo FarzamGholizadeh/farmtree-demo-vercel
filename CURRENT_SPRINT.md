@@ -1,5 +1,13 @@
 # Current FarmTree Sprint
 
+Launch QA continuation: protected APPLY completed and was idempotent (93
+unchanged, zero conflicts). All 40 approved English entities were published
+without body/title/slug changes. Source now preserves all 40 published statuses.
+Anonymous QA found the host uses post-name News permalinks; narrowly scoped dated
+managed-News redirects preserve existing approved links without rewriting content.
+Reduced-motion testimonials now support keyboard scrolling; the Platform GIF
+uses its existing still poster for reduced motion. Final production QA pending.
+
 Homepage publication approval (2026-09-18): production ID 439 intentionally
 remains public/published. The manifest and reconciler now require publish for
 page.en.home only; all other protected-review entity expectations remain private.

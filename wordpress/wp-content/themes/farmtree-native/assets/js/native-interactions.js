@@ -374,6 +374,11 @@
     function initialiseMovingRails() {
         document.querySelectorAll('.ft-partner-logos, .ft-testimonial-cards').forEach((rail) => {
             const isTestimonialRail = rail.classList.contains('ft-testimonial-cards');
+            if (isTestimonialRail && reducedMotionQuery.matches) {
+                rail.tabIndex = 0;
+                rail.setAttribute('role', 'region');
+                rail.setAttribute('aria-label', 'Testimonials');
+            }
             if (rail.dataset.ftRailReady === 'true' || reducedMotionQuery.matches) {
                 return;
             }
@@ -1410,6 +1415,11 @@
     }
 
     function initialise() {
+        if (reducedMotionQuery.matches && interactionScriptUrl) {
+            document.querySelectorAll('.ft-platform-gif img').forEach((image) => {
+                image.src = new URL('../media/final-tools-review-11s-to-40s-poster.png', interactionScriptUrl).href;
+            });
+        }
         document.querySelectorAll(heroSelector).forEach(initialiseHero);
         initialiseLanguageSelector();
         initialiseBentoGroups();

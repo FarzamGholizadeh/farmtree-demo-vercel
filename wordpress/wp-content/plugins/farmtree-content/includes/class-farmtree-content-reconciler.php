@@ -1011,7 +1011,7 @@ final class FarmTree_Content_Reconciler
             if (!post_type_exists($post_type)) {
                 $checks[] = $this->op('manifest', $entity_key, 'conflict', 'manifest_post_type_not_registered');
             }
-            $expected_status = 'page.en.home' === $entity_key && 'page' === $post_type ? 'publish' : 'private';
+            $expected_status = false !== strpos($entity_key, '.en.') ? 'publish' : 'private';
             if ($expected_status !== (string) ($entity['fields']['post_status'] ?? '')) {
                 $checks[] = $this->op('manifest', $entity_key, 'conflict', 'managed_entity_status_not_approved');
             }

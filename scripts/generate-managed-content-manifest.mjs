@@ -273,8 +273,9 @@ const addEntity = ({ key, postType, title, slug, excerpt = '', content, order = 
   const fields = {
     post_title: title,
     post_name: slug,
-    // Explicitly approved production publication; never privatize the front page.
-    post_status: key === 'page.en.home' ? 'publish' : 'private',
+    // All 40 managed English entities have completed the approved publication gate.
+    // Keep future reconciliation from privatizing the launched website.
+    post_status: 'publish',
     post_excerpt: excerpt,
     post_content: content,
     menu_order: order,
@@ -376,7 +377,7 @@ terms.sort((left, right) => left.key.localeCompare(right.key));
 const manifest = {
   manifest_version: '2026-09-03-legal-review-1',
   profile: 'private-review',
-  publication_note: 'English content is materialized as authenticated private-review content; public publication remains a separate approval.',
+  publication_note: 'The 40 English entities are approved and published. The private-review command profile retains protected maintenance APPLY gates; it must preserve published status. Reserved locales remain unpublished.',
   reserved_locales: ['nl', 'de'],
   team_member_keys: teamMemberDefinitions.map(({ slug }) => `team_member.${slug}`),
   terms,

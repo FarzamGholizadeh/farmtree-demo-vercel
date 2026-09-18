@@ -1,5 +1,12 @@
 # FT-NATIVE-002 Sprint Report
 
+Launch QA continuation: five approved updates applied transactionally; the next
+dry-run reported 93 unchanged, zero conflicts. Forty managed English entities
+were then published with exact content preservation. Final manifest preserves
+their approved public state. Added narrowly scoped dated-News fallback redirects
+for the production post-name permalink configuration and reduced-motion
+keyboard/still-poster accessibility corrections. Final production QA pending.
+
 Homepage publication approval (2026-09-18): ID 439 publication is intentional.
 Source now expects publish for page.en.home without altering its approved content.
 Production reconciliation and final public-launch gates remain to be verified.

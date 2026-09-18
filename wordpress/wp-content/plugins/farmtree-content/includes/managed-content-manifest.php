@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 return [
     'manifest_version' => '2026-09-03-legal-review-1',
     'profile' => 'private-review',
-    'publication_note' => 'English content is materialized as authenticated private-review content; public publication remains a separate approval.',
+    'publication_note' => 'The 40 English entities are approved and published. The private-review command profile retains protected maintenance APPLY gates; it must preserve published status. Reserved locales remain unpublished.',
     'reserved_locales' => [
         'nl',
         'de',
@@ -1049,7 +1049,7 @@ return [
             'fields' => [
                 'post_title' => 'Consultancy & Agroforestry Advisors',
                 'post_name' => 'consultancy-agroforestry-advisors',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Build consistent, evidence-led agroforestry scenarios for client strategy, design and investment planning.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->
 
@@ -1097,7 +1097,7 @@ return [
             'fields' => [
                 'post_title' => 'Development Banks & Donor Organisations',
                 'post_name' => 'development-banks-donor-organisations',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Assess agroforestry programmes with clearer assumptions, comparable scenarios and long-term impact context.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->
 
@@ -1145,7 +1145,7 @@ return [
             'fields' => [
                 'post_title' => 'NGOs & Conservation Organisations',
                 'post_name' => 'ngos-conservation-organisations',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Connect conservation goals and livelihood priorities to practical agroforestry planning and monitoring.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->
 
@@ -1193,7 +1193,7 @@ return [
             'fields' => [
                 'post_title' => 'NbS & Carbon Project Developers',
                 'post_name' => 'nbs-carbon-project-developers',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Test agroforestry design choices and connect project assumptions to carbon, production and financial scenarios.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->
 
@@ -1241,7 +1241,7 @@ return [
             'fields' => [
                 'post_title' => 'MRV & ESG Platforms',
                 'post_name' => 'mrv-esg-platforms',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Add forward-looking agroforestry scenario context to monitoring, reporting and sustainability workflows.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->
 
@@ -1289,7 +1289,7 @@ return [
             'fields' => [
                 'post_title' => 'Government & Parastatal Institutions',
                 'post_name' => 'government-parastatal-institutions',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Compare agroforestry programme options using consistent site, species, management and impact assumptions.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->
 
@@ -1337,7 +1337,7 @@ return [
             'fields' => [
                 'post_title' => 'Industry Associations & Multi-Stakeholder Platforms',
                 'post_name' => 'industry-associations-multi-stakeholder-platforms',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Create a shared scenario language for agroforestry discussions across members, value chains and landscapes.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->
 
@@ -1385,7 +1385,7 @@ return [
             'fields' => [
                 'post_title' => 'Large Agri-Corporate',
                 'post_name' => 'large-agri-corporate',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Explore agroforestry options across sourcing landscapes with clearer business, production and environmental assumptions.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->
 
@@ -1433,7 +1433,7 @@ return [
             'fields' => [
                 'post_title' => 'Social Enterprise',
                 'post_name' => 'social-enterprise',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Connect an agroforestry mission to practical operating assumptions, farmer value and an investable planning narrative.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->
 
@@ -1481,7 +1481,7 @@ return [
             'fields' => [
                 'post_title' => 'Investors',
                 'post_name' => 'investors',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Review agroforestry opportunities through transparent scenarios, assumptions and long-term value drivers.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Who this is for</h2><!-- /wp:heading -->
 
@@ -1529,7 +1529,7 @@ return [
             'fields' => [
                 'post_title' => 'What FarmTree\'s 2026 water, erosion and microclimate update means for scenario planning',
                 'post_name' => 'farmtree-water-erosion-microclimate-model-update-2026',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'A source-led guide to the July 2026 FarmTree model update and the questions project teams should revisit in existing scenarios.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
 
@@ -1570,7 +1570,7 @@ return [
             'fields' => [
                 'post_title' => 'EU carbon-farming methodologies: what agroforestry planners should prepare',
                 'post_name' => 'eu-carbon-farming-methodologies-agroforestry-2026',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'The European Commission\'s 2026 carbon-farming methodology work reinforces the need for traceable baselines, monitoring and clearly separated projections.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
 
@@ -1611,7 +1611,7 @@ return [
             'fields' => [
                 'post_title' => 'EUDR 2026: a data-readiness checklist for agroforestry programmes',
                 'post_name' => 'eudr-2026-agroforestry-data-readiness',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'A practical distinction between EUDR due-diligence information and the wider scenario evidence used to plan resilient agroforestry systems.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
 
@@ -1652,7 +1652,7 @@ return [
             'fields' => [
                 'post_title' => 'Reading Verra VM0042 v2.2 through an agroforestry planning lens',
                 'post_name' => 'verra-vm0042-v22-agricultural-land-management',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'What the active improved agricultural land-management methodology signals about soil data, baselines and disciplined claims.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
 
@@ -1693,7 +1693,7 @@ return [
             'fields' => [
                 'post_title' => 'What the VM0042 v3.0 revision process teaches project teams about model governance',
                 'post_name' => 'verra-vm0042-v30-consultation-lessons',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Methodology revisions show why agroforestry teams need version control, documented assumptions and change-aware reporting.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
 
@@ -1734,7 +1734,7 @@ return [
             'fields' => [
                 'post_title' => 'Smallholder wood production: seven planning questions for multifunctional agroforestry',
                 'post_name' => 'smallholder-agroforestry-wood-production-lessons-2025',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Lessons from the 2025 FAO and CIFOR-ICRAF report for teams comparing wood, crop, livelihood and resilience objectives.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
 
@@ -1775,7 +1775,7 @@ return [
             'fields' => [
                 'post_title' => 'Carbon pricing in 2026: why nature projects still need a grounded investment case',
                 'post_name' => 'carbon-pricing-2026-nature-project-quality',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'The World Bank\'s 2026 market overview reinforces the value of quality signals, transparent assumptions and diversified project economics.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
 
@@ -1816,7 +1816,7 @@ return [
             'fields' => [
                 'post_title' => 'Better species data starts with better provenance',
                 'post_name' => 'agroforestry-species-data-switchboard-2025',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'The Agroforestry Species Switchboard 4.0 shows how discoverable source provenance can strengthen species selection and model review.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
 
@@ -1857,7 +1857,7 @@ return [
             'fields' => [
                 'post_title' => 'Report once, use evidence well: a lesson from EU nature-restoration planning',
                 'post_name' => 'nature-restoration-plans-report-once-agroforestry-2025',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'The EU\'s common restoration-plan format offers a useful principle for agroforestry programmes: design information so it can support decisions and reporting without duplication.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">Answer first</h2><!-- /wp:heading -->
 
@@ -1898,7 +1898,7 @@ return [
             'fields' => [
                 'post_title' => 'Carbon planning',
                 'post_name' => 'carbon-planning',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Use traceable site, species and management assumptions to compare carbon projections without confusing planning with certification.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">The planning question</h2><!-- /wp:heading -->
 
@@ -1932,7 +1932,7 @@ return [
             'fields' => [
                 'post_title' => 'Farm Valuation',
                 'post_name' => 'farm-value-projection',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.',
                 'post_content' => '<!-- wp:paragraph -->
 <p></p>
@@ -1984,7 +1984,7 @@ return [
             'fields' => [
                 'post_title' => 'Cocoa scenario planning and monitoring',
                 'post_name' => 'cocoa-scenario-planning',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Compare shade-tree density, species mix, renewal timing and farmer-value trade-offs before scaling a cocoa programme.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">The planning question</h2><!-- /wp:heading -->
 
@@ -2018,7 +2018,7 @@ return [
             'fields' => [
                 'post_title' => 'Landscape Hydrology',
                 'post_name' => 'landscape-hydrology',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.',
                 'post_content' => '<!-- wp:heading --><h2 class="wp-block-heading">The planning question</h2><!-- /wp:heading -->
 
@@ -2050,7 +2050,7 @@ return [
             'fields' => [
                 'post_title' => 'The FarmTree Platform',
                 'post_name' => 'platform',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Design, compare and communicate agroforestry scenarios with connected scientific, environmental and economic project intelligence.',
                 'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">FarmTree combines site, climate, soil, species and management information to create time-based agroforestry scenarios. Use it to compare options, keep assumptions visible and prepare decisions for field and specialist review.</p><!-- /wp:paragraph -->
 
@@ -2072,7 +2072,7 @@ return [
             'fields' => [
                 'post_title' => 'Proof Stories',
                 'post_name' => 'proof-stories',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Explore four evidence themes grounded in FarmTree\'s published capabilities and project experience.',
                 'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">These stories explain how FarmTree supports carbon planning, farm-value modelling, cocoa scenario work and water-resilience questions. They do not claim guaranteed or independently verified outcomes.</p><!-- /wp:paragraph --><!-- wp:list --><ul><li><a href="/proof-stories/carbon-planning/">Carbon planning</a>: Use traceable site, species and management assumptions to compare carbon projections without confusing planning with certification.</li><li><a href="/proof-stories/farm-value-projection/">Farm Valuation</a>: Compare costs, labour, yields and revenues over time so farmer value remains visible in project design.</li><li><a href="/proof-stories/cocoa-scenario-planning/">Cocoa scenario planning and monitoring</a>: Compare shade-tree density, species mix, renewal timing and farmer-value trade-offs before scaling a cocoa programme.</li><li><a href="/proof-stories/landscape-hydrology/">Landscape Hydrology</a>: Connect hydrology, erosion, land cover and farm-value questions in a transparent landscape planning process.</li></ul><!-- /wp:list -->',
                 'menu_order' => 0,
@@ -2090,7 +2090,7 @@ return [
             'fields' => [
                 'post_title' => 'Customer Segments',
                 'post_name' => 'customer-segments',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Ten practical routes into FarmTree for organisations making different agroforestry decisions.',
                 'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">The same model can support different decisions. Start with your organisation\'s question, available evidence and responsibilities, then choose an appropriately scoped workflow.</p><!-- /wp:paragraph --><!-- wp:list {"ordered":true} --><ol><li><a href="/customer-segments/consultancy-agroforestry-advisors/">Consultancy &amp; Agroforestry Advisors</a>: Build consistent, evidence-led agroforestry scenarios for client strategy, design and investment planning.</li><li><a href="/customer-segments/development-banks-donor-organisations/">Development Banks &amp; Donor Organisations</a>: Assess agroforestry programmes with clearer assumptions, comparable scenarios and long-term impact context.</li><li><a href="/customer-segments/ngos-conservation-organisations/">NGOs &amp; Conservation Organisations</a>: Connect conservation goals and livelihood priorities to practical agroforestry planning and monitoring.</li><li><a href="/customer-segments/nbs-carbon-project-developers/">NbS &amp; Carbon Project Developers</a>: Test agroforestry design choices and connect project assumptions to carbon, production and financial scenarios.</li><li><a href="/customer-segments/mrv-esg-platforms/">MRV &amp; ESG Platforms</a>: Add forward-looking agroforestry scenario context to monitoring, reporting and sustainability workflows.</li><li><a href="/customer-segments/government-parastatal-institutions/">Government &amp; Parastatal Institutions</a>: Compare agroforestry programme options using consistent site, species, management and impact assumptions.</li><li><a href="/customer-segments/industry-associations-multi-stakeholder-platforms/">Industry Associations &amp; Multi-Stakeholder Platforms</a>: Create a shared scenario language for agroforestry discussions across members, value chains and landscapes.</li><li><a href="/customer-segments/large-agri-corporate/">Large Agri-Corporate</a>: Explore agroforestry options across sourcing landscapes with clearer business, production and environmental assumptions.</li><li><a href="/customer-segments/social-enterprise/">Social Enterprise</a>: Connect an agroforestry mission to practical operating assumptions, farmer value and an investable planning narrative.</li><li><a href="/customer-segments/investors/">Investors</a>: Review agroforestry opportunities through transparent scenarios, assumptions and long-term value drivers.</li></ol><!-- /wp:list -->',
                 'menu_order' => 0,
@@ -2108,7 +2108,7 @@ return [
             'fields' => [
                 'post_title' => 'Case Studies',
                 'post_name' => 'case-studies',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'FarmTree project experience, presented with clear sources and claim boundaries.',
                 'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">This private pre-release hub will link only to editor-approved case material. Named organisations, outcomes and permissions require final human approval before publication.</p><!-- /wp:paragraph -->
 
@@ -2130,7 +2130,7 @@ return [
             'fields' => [
                 'post_title' => 'Team',
                 'post_name' => 'team',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'The people building and applying FarmTree\'s agroforestry planning approach.',
                 'post_content' => '<!-- wp:cover {"url":"%%FARMTREE_MEDIA_URL:asset.team.hero%%","id":%%FARMTREE_MEDIA_ID:asset.team.hero%%,"dimRatio":60,"overlayColor":"black","isUserOverlayColor":true,"minHeight":520,"contentPosition":"center center","align":"full","className":"ft-team-hero"} --><div class="wp-block-cover alignfull ft-team-hero" style="min-height:520px"><img class="wp-block-cover__image-background wp-image-%%FARMTREE_MEDIA_ID:asset.team.hero%%" alt="" src="%%FARMTREE_MEDIA_URL:asset.team.hero%%" data-object-fit="cover"/><span aria-hidden="true" class="wp-block-cover__background has-black-background-color has-background-dim-60 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"ft-native-eyebrow","textColor":"farmtree-gold","fontSize":"small"} --><p class="ft-native-eyebrow has-farmtree-gold-color has-text-color has-small-font-size">People behind the platform</p><!-- /wp:paragraph --><!-- wp:heading {"level":1,"textColor":"white","fontSize":"heading"} --><h1 class="wp-block-heading has-white-color has-text-color has-heading-font-size">Meet the FarmTree team</h1><!-- /wp:heading --><!-- wp:paragraph {"textColor":"white","fontSize":"lead"} --><p class="has-white-color has-text-color has-lead-font-size">Agroforestry science, modelling, technology and project experience in one multidisciplinary team.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-hero-caption","textColor":"white","fontSize":"caption"} --><p class="ft-team-hero-caption has-white-color has-text-color has-caption-font-size">Illustrative field collaboration</p><!-- /wp:paragraph --></div></div><!-- /wp:cover --><!-- wp:paragraph {"className":"ft-team-intro","fontSize":"lead"} --><p class="ft-team-intro has-lead-font-size">Meet the people building and supporting the FarmTree Platform.</p><!-- /wp:paragraph --><!-- wp:group {"className":"ft-team-grid","layout":{"type":"grid","minimumColumnWidth":"18rem"}} --><div class="wp-block-group ft-team-grid"><!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":%%FARMTREE_MEDIA_ID:asset.team.arnoud-braun%%,"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="%%FARMTREE_MEDIA_URL:asset.team.arnoud-braun%%" alt="Arnoud Braun, Founder &amp; CEO" class="wp-image-%%FARMTREE_MEDIA_ID:asset.team.arnoud-braun%%"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">Arnoud Braun</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">Founder &amp; CEO</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">Arnoud is FarmTree\'s CEO. He focuses on the company\'s legal, administrative and sales work, drawing on his upbringing in Kenya and studies in tropical soil science at Wageningen.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="https://www.linkedin.com/in/brauna" target="_blank" rel="noreferrer noopener"><span>View LinkedIn profile</span><span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></article><!-- /wp:group --><!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":%%FARMTREE_MEDIA_ID:asset.team.maximilian-michael-moeller%%,"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="%%FARMTREE_MEDIA_URL:asset.team.maximilian-michael-moeller%%" alt="Maximilian Michael Möller, Chief Growth Officer" class="wp-image-%%FARMTREE_MEDIA_ID:asset.team.maximilian-michael-moeller%%"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">Maximilian Michael Möller</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">Chief Growth Officer</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">Maximilian Michael Möller serves as Chief Growth Officer at FarmTree B.V.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="https://www.linkedin.com/in/maximilian-michael-moeller/" target="_blank" rel="noreferrer noopener"><span>View LinkedIn profile</span><span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></article><!-- /wp:group --><!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":%%FARMTREE_MEDIA_ID:asset.team.frank-van-schoubroeck%%,"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="%%FARMTREE_MEDIA_URL:asset.team.frank-van-schoubroeck%%" alt="Frank van Schoubroeck, Founder &amp; CTO" class="wp-image-%%FARMTREE_MEDIA_ID:asset.team.frank-van-schoubroeck%%"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">Frank van Schoubroeck</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">Founder &amp; CTO</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">Frank conceptualised the FarmTree model after two decades of supporting smallholder farmers. He leads FarmTree\'s marketing, modelling and IT research and development.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="https://www.linkedin.com/in/frank-van-schoubroeck-9524518" target="_blank" rel="noreferrer noopener"><span>View LinkedIn profile</span><span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></article><!-- /wp:group --><!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":%%FARMTREE_MEDIA_ID:asset.team.germaine-van-teeffelen%%,"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="%%FARMTREE_MEDIA_URL:asset.team.germaine-van-teeffelen%%" alt="Germaine van Teeffelen, Interim Project Manager" class="wp-image-%%FARMTREE_MEDIA_ID:asset.team.germaine-van-teeffelen%%"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">Germaine van Teeffelen</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">Interim Project Manager</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">Germaine supports project coordination at FarmTree as Interim Project Manager.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="https://www.linkedin.com/in/germaine-van-teeffelen/" target="_blank" rel="noreferrer noopener"><span>View LinkedIn profile</span><span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></article><!-- /wp:group --><!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":%%FARMTREE_MEDIA_ID:asset.team.irene-vinkenburg%%,"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="%%FARMTREE_MEDIA_URL:asset.team.irene-vinkenburg%%" alt="Irene Vinkenburg, Modelling &amp; IT Lead" class="wp-image-%%FARMTREE_MEDIA_ID:asset.team.irene-vinkenburg%%"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">Irene Vinkenburg</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">Modelling &amp; IT Lead</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">Irene develops the FarmTree Model, translating science into code through dynamic modelling and maintaining and improving tools across the FarmTree Platform.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="https://www.linkedin.com/in/irene-vinkenburg-abb49033" target="_blank" rel="noreferrer noopener"><span>View LinkedIn profile</span><span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></article><!-- /wp:group --><!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":%%FARMTREE_MEDIA_ID:asset.team.betelehem-beyene%%,"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="%%FARMTREE_MEDIA_URL:asset.team.betelehem-beyene%%" alt="Betelehem Beyene, Portfolio Manager" class="wp-image-%%FARMTREE_MEDIA_ID:asset.team.betelehem-beyene%%"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">Betelehem Beyene</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">Portfolio Manager</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">Betelehem builds client relationships, supports business development and helps clients get more from the FarmTree Platform. Her background is in private-sector development in Ethiopia\'s agricultural sector.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="https://www.linkedin.com/in/betelehem-beyene" target="_blank" rel="noreferrer noopener"><span>View LinkedIn profile</span><span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></article><!-- /wp:group --><!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":%%FARMTREE_MEDIA_ID:asset.team.roos-van-haeff%%,"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="%%FARMTREE_MEDIA_URL:asset.team.roos-van-haeff%%" alt="Roos van Haeff, Impact Quantification Lead" class="wp-image-%%FARMTREE_MEDIA_ID:asset.team.roos-van-haeff%%"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">Roos van Haeff</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">Impact Quantification Lead</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">Roos works on agroforestry quantification and has contributed to the FarmTree Model and Platform since their inception. Her current work in East Africa emphasises water management and livelihoods.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="https://www.linkedin.com/in/roos-van-haeff-3b6032137" target="_blank" rel="noreferrer noopener"><span>View LinkedIn profile</span><span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></article><!-- /wp:group --><!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":%%FARMTREE_MEDIA_ID:asset.team.edi-yoga%%,"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="%%FARMTREE_MEDIA_URL:asset.team.edi-yoga%%" alt="Edi Yoga, FarmTree Representative, Indonesia" class="wp-image-%%FARMTREE_MEDIA_ID:asset.team.edi-yoga%%"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">Edi Yoga</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">FarmTree Representative, Indonesia</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">Edi represents FarmTree in Indonesia\'s agroforestry and social-forestry sector. He specialises in soil geography and landscape dynamics.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="https://www.linkedin.com/in/edi-yoga/" target="_blank" rel="noreferrer noopener"><span>View LinkedIn profile</span><span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></article><!-- /wp:group --><!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":%%FARMTREE_MEDIA_ID:asset.team.hery-hanipan%%,"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="%%FARMTREE_MEDIA_URL:asset.team.hery-hanipan%%" alt="Hery Hanipan, FarmTree Database Management, Indonesia" class="wp-image-%%FARMTREE_MEDIA_ID:asset.team.hery-hanipan%%"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">Hery Hanipan</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">FarmTree Database Management, Indonesia</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">Hery is a data scientist supporting the creation of FarmTree\'s calibrated species library, with particular attention to Asian entries.</p><!-- /wp:paragraph --></article><!-- /wp:group --><!-- wp:group {"className":"ft-team-card","layout":{"type":"constrained"}} --><article class="wp-block-group ft-team-card"><!-- wp:image {"id":%%FARMTREE_MEDIA_ID:asset.team.alvaro-micheletti%%,"sizeSlug":"large","linkDestination":"none","className":"ft-team-portrait"} --><figure class="wp-block-image size-large ft-team-portrait"><img src="%%FARMTREE_MEDIA_URL:asset.team.alvaro-micheletti%%" alt="Álvaro Mitcheletti, Portfolio Manager, Latin America" class="wp-image-%%FARMTREE_MEDIA_ID:asset.team.alvaro-micheletti%%"/></figure><!-- /wp:image --><!-- wp:heading {"level":2,"fontSize":"lead"} --><h2 class="wp-block-heading has-lead-font-size">Álvaro Mitcheletti</h2><!-- /wp:heading --><!-- wp:paragraph {"className":"ft-team-role"} --><p class="ft-team-role">Portfolio Manager, Latin America</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"small"} --><p class="has-small-font-size">Álvaro is an agroforestry modeller responsible for FarmTree\'s Spanish-, Portuguese- and French-language portfolio across projects in Latin America and Africa. He is based in Brazil.</p><!-- /wp:paragraph --><!-- wp:paragraph {"className":"ft-team-link"} --><p class="ft-team-link"><a href="https://www.linkedin.com/in/%C3%A1lvaro-micheletti-583ab6129/" target="_blank" rel="noreferrer noopener"><span>View LinkedIn profile</span><span aria-hidden="true">↗</span></a></p><!-- /wp:paragraph --></article><!-- /wp:group --></div><!-- /wp:group -->',
                 'menu_order' => 0,
@@ -2159,7 +2159,7 @@ return [
             'fields' => [
                 'post_title' => 'Vacancies',
                 'post_name' => 'vacancies',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Opportunities to contribute to FarmTree\'s mission and scientific platform.',
                 'post_content' => '<!-- wp:group {"className":"ft-careers-empty","layout":{"type":"constrained"}} --><section class="wp-block-group ft-careers-empty"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Careers at FarmTree</p><!-- /wp:paragraph --><!-- wp:heading {"level":2,"fontSize":"heading-small"} --><h2 class="wp-block-heading has-heading-small-font-size">No approved vacancies are open right now</h2><!-- /wp:heading --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">New roles will appear here after they have been approved for publication. Until then, learn more about the people and work behind FarmTree.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/team/">Meet the team</a></div><!-- /wp:button --><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/contact/">Contact FarmTree</a></div><!-- /wp:button --></div><!-- /wp:buttons --></section><!-- /wp:group -->',
                 'menu_order' => 0,
@@ -2177,7 +2177,7 @@ return [
             'fields' => [
                 'post_title' => 'Contact FarmTree',
                 'post_name' => 'contact',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Discuss an agroforestry planning, modelling or platform question with the FarmTree team.',
                 'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Have a question about the FarmTree Platform, a project or a quotation? Email our team and tell us what you would like to explore.</p><!-- /wp:paragraph -->
 
@@ -2205,7 +2205,7 @@ return [
             'fields' => [
                 'post_title' => 'News & Insights',
                 'post_name' => 'blog',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Source-led FarmTree perspectives on agroforestry planning, evidence, policy and model practice.',
                 'post_content' => '<!-- wp:group {"className":"ft-blog-intro","layout":{"type":"constrained"}} --><div class="wp-block-group ft-blog-intro"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Ideas for better decisions</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Source-led FarmTree analysis and practical interpretation for agroforestry planning teams.</p><!-- /wp:paragraph --></div><!-- /wp:group -->
 <!-- wp:query {"queryId":8,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"ft-blog-featured"} -->
@@ -2237,7 +2237,7 @@ return [
             'fields' => [
                 'post_title' => 'Acknowledgements',
                 'post_name' => 'acknowledgements',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'The research, data, software and collaboration foundations that support FarmTree.',
                 'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">FarmTree\'s acknowledgements should identify approved contributors and upstream resources without implying endorsement. Final names and permissions require owner review.</p><!-- /wp:paragraph -->
 
@@ -2259,7 +2259,7 @@ return [
             'fields' => [
                 'post_title' => 'Licenses',
                 'post_name' => 'licenses',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Understand available FarmTree Platform access and discuss the right scope for your team.',
                 'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">License scope depends on intended users, projects, support and data needs. Contact FarmTree for current approved terms; this page does not make a binding offer.</p><!-- /wp:paragraph -->
 
@@ -2281,7 +2281,7 @@ return [
             'fields' => [
                 'post_title' => 'Privacy Policy',
                 'post_name' => 'privacy',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'How the FarmTree website handles personal information.',
                 'post_content' => '<!-- wp:paragraph --><p>Last updated: 3 September 2026</p><!-- /wp:paragraph -->
 
@@ -2439,7 +2439,7 @@ return [
             'fields' => [
                 'post_title' => 'Terms & Conditions',
                 'post_name' => 'terms',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Terms for use of the public FarmTree website.',
                 'post_content' => '<!-- wp:paragraph --><p>Last updated: 3 September 2026</p><!-- /wp:paragraph -->
 
@@ -2573,7 +2573,7 @@ return [
             'fields' => [
                 'post_title' => 'Solutions',
                 'post_name' => 'solutions',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Plan, understand, learn, capture, operate and scale agroforestry evidence.',
                 'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">FarmTree supports farm planning, project investment cases, local data capture, team learning and portfolio analysis. Scope and outputs are agreed for each engagement.</p><!-- /wp:paragraph -->
 
@@ -2595,7 +2595,7 @@ return [
             'fields' => [
                 'post_title' => 'FarmTree Platform Videos',
                 'post_name' => 'user-videos',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Practical guidance for building scenarios, comparing results and working with FarmTree tools.',
                 'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Approved training videos can be embedded here from the official FarmTree library. This private route avoids dead navigation while the final media selection is reviewed.</p><!-- /wp:paragraph -->
 
@@ -2617,7 +2617,7 @@ return [
             'fields' => [
                 'post_title' => 'Cocoa Focus',
                 'post_name' => 'cocoa-focus',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Compare regenerative cocoa designs and landscape investment questions with transparent assumptions.',
                 'post_content' => '<!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">FarmTree can support cocoa programmes in comparing shade-tree systems, renewal timing, production, farmer value, carbon and other indicators. Local evidence and field review remain essential.</p><!-- /wp:paragraph -->
 
@@ -2639,7 +2639,7 @@ return [
             'fields' => [
                 'post_title' => 'News & Insights',
                 'post_name' => 'news-insights',
-                'post_status' => 'private',
+                'post_status' => 'publish',
                 'post_excerpt' => 'Source-led FarmTree analysis for agroforestry planning teams.',
                 'post_content' => '<!-- wp:group {"className":"ft-blog-intro","layout":{"type":"constrained"}} --><div class="wp-block-group ft-blog-intro"><!-- wp:paragraph {"className":"ft-native-eyebrow"} --><p class="ft-native-eyebrow">Ideas for better decisions</p><!-- /wp:paragraph --><!-- wp:paragraph {"fontSize":"lead"} --><p class="has-lead-font-size">Source-led FarmTree analysis and practical interpretation for agroforestry planning teams.</p><!-- /wp:paragraph --></div><!-- /wp:group -->
 <!-- wp:query {"queryId":8,"query":{"perPage":1,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"ft-blog-featured"} -->

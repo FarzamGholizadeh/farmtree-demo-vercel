@@ -477,3 +477,33 @@ function farmtree_native_private_runtime(): bool
     return '1' !== (string) get_option('blog_public')
         || in_array(wp_parse_url(home_url('/'), PHP_URL_HOST), ['localhost', '127.0.0.1', '::1', '[::1]'], true);
 }
+
+/** Preserve approved dated News links when the host uses post-name permalinks. */
+function farmtree_native_managed_news_redirect(): void
+{
+    if (!is_404() || !in_array($_SERVER['REQUEST_METHOD'] ?? 'GET', ['GET', 'HEAD'], true)) {
+        return;
+    }
+    $path = wp_parse_url(wp_unslash($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
+    if (!is_string($path) || !preg_match('~^/(\d{4})/(\d{2})/(\d{2})/([a-z0-9-]+)/?$~', $path, $parts)) {
+        return;
+    }
+    $posts = get_posts([
+        'post_type' => 'post', 'post_status' => 'publish', 'name' => $parts[4],
+        'posts_per_page' => 2, 'meta_key' => '_farmtree_content_managed_key',
+    ]);
+    if (count($posts) !== 1) {
+        return;
+    }
+    $post = $posts[0];
+    $key = (string) get_post_meta($post->ID, '_farmtree_content_managed_key', true);
+    if (strpos($key, 'post.en.') !== 0 || substr($post->post_date, 0, 10) !== "$parts[1]-$parts[2]-$parts[3]") {
+        return;
+    }
+    $destination = get_permalink($post);
+    if ($destination && wp_parse_url($destination, PHP_URL_PATH) !== $path) {
+        wp_safe_redirect($destination, 301, 'FarmTree managed News');
+        exit;
+    }
+}
+add_action('template_redirect', 'farmtree_native_managed_news_redirect', 1);
