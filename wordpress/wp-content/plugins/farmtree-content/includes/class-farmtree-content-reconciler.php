@@ -455,7 +455,8 @@ final class FarmTree_Content_Reconciler
         }
         if ((int) $revision > 0) {
             $this->remember_touched_post_id((int) $revision);
-            $revision_post = wp_get_post_revision((int) $revision);
+            $revision_id = (int) $revision;
+            $revision_post = wp_get_post_revision($revision_id);
             if (!$revision_post || !$this->revision_matches_post($revision_post, $post)) {
                 throw new RuntimeException('The new pre-update revision could not be verified for ' . $key . '.');
             }

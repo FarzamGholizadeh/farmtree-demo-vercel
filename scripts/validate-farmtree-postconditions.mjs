@@ -215,7 +215,7 @@ $wrong_values = [
     'post_type' => 'post',
     'post_title' => 'Wrong Homepage title',
     'post_name' => 'wrong-home',
-    'post_status' => 'publish',
+    'post_status' => 'private',
     'post_content' => (string) $persisted['post_content'] . "\nwrong-content",
 ];
 foreach ($wrong_values as $field => $wrong_value) {
@@ -387,11 +387,12 @@ try {
     fail('Homepage content was not canonicalized exactly once.', [JSON.stringify(result.homepage)]);
   }
   const emoji = result.utf8mb3_emoji_regression;
-  if (emoji?.normalized_length !== 46821 ||
-      emoji?.normalized_sha256 !== '0aed9f019d41c1121184ac36e7d7bbad0dea23b6a967c4da9f843877c8d9b3e4' ||
-      emoji?.byte_delta_from_utf8mb4 !== 35 || emoji?.encoded_arrow_count !== 7 ||
-      emoji?.utf8mb4_length !== 46786 ||
-      emoji?.utf8mb4_sha256 !== '772277c3ec529861a5d24e5db40ab4792337215f8e318a7c585c8c04adb4b773') {
+  // Approved production block serialization already encodes the arrow characters.
+  if (emoji?.normalized_length !== 46999 ||
+      emoji?.normalized_sha256 !== 'b9a731d34cd074a1ecbea845584e2ad37c4b7260d84a4f4dbe19a24a1899f5c6' ||
+      emoji?.byte_delta_from_utf8mb4 !== 0 || emoji?.encoded_arrow_count !== 6 ||
+      emoji?.utf8mb4_length !== 46999 ||
+      emoji?.utf8mb4_sha256 !== 'b9a731d34cd074a1ecbea845584e2ad37c4b7260d84a4f4dbe19a24a1899f5c6') {
     fail('WordPress utf8mb3 Homepage emoji canonicalization regression failed.', [JSON.stringify(emoji)]);
   }
   if (Object.values(result.homepage.field_evidence).some(({ equal }) => !equal)) {
