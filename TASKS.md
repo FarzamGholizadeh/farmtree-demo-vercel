@@ -1,6 +1,6 @@
 # FarmTree Tasks
 
-_Last updated: 2026-09-03_
+_Last updated: 2026-09-18_
 
 ## Completed Governance Task
 
@@ -135,7 +135,8 @@ target widths. Release, production and final-content work remains explicitly
 approval-gated or deferred as recorded in the sprint evidence.
 
 The current refinement adds a generated illustrative field-planning Hero,
-Natural Earth-derived two-axis Globe, gapless five-testimonial marquee,
+Natural Earth-derived two-axis Globe, a measured Card 3-centred and
+boundary-equivalent five-testimonial marquee with `aria-hidden`, inert visual clones,
 connector-free Technology cards, non-moving button hover, editorial News
 labels, balanced Footer copy and a ten-person 3/2/1-column Team page with a
 generated illustrative header. Human asset, claim and permission review remains

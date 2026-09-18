@@ -965,11 +965,15 @@ for (const contract of [
 }
 
 for (const contract of [
-  "track.style.animationDelay = '-8s'",
-  "rail.dataset.ftRailOffsetSeconds = '8'",
-  "? Math.min(2, Math.max(0, items.length - 1))",
+  "sequence.dataset.ftRailOriginal = 'true'",
+  "rail.dataset.ftRailStart = 'middle-sequence-card-3'",
+  'Math.max(2, Math.ceil(railWidth / sequenceWidth) + 1)',
+  "track.prepend(before)",
+  "rail.classList.add('is-ready')",
   "clone.setAttribute('inert', '')",
-  'Math.ceil((rail.clientWidth * 2) / sequenceWidth) + 1',
+  "clone.querySelectorAll('.ft-motion-target').forEach((element) => element.classList.add('is-visible'))",
+  '--ft-testimonial-start-x',
+  'ft-native-testimonial-marquee 46s linear infinite',
   '.ft-platform-media-frame',
   '.ft-testimonial-verified',
   '.ft-proof-card::before',
@@ -980,6 +984,10 @@ for (const contract of [
   if (!`${interactions}\n${themeStyles}`.includes(contract)) {
     throw new Error(`Homepage or Team final refinement contract is missing: ${contract}`);
   }
+}
+
+if (interactions.includes("track.style.animationDelay = '-8s'") || themeStyles.includes('animation-delay: -8s')) {
+  throw new Error('Testimonial marquee must begin at its measured middle-sequence offset without a delayed zero-origin animation phase.');
 }
 
 for (const location of [

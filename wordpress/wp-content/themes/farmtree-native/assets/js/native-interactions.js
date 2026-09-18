@@ -373,6 +373,7 @@
 
     function initialiseMovingRails() {
         document.querySelectorAll('.ft-partner-logos, .ft-testimonial-cards').forEach((rail) => {
+            const isTestimonialRail = rail.classList.contains('ft-testimonial-cards');
             if (rail.dataset.ftRailReady === 'true' || reducedMotionQuery.matches) {
                 return;
             }
@@ -382,35 +383,79 @@
             const track = document.createElement('div');
             const sequence = document.createElement('div');
             const items = Array.from(rail.children);
-            const isTestimonialRail = rail.classList.contains('ft-testimonial-cards');
             const startIndex = isTestimonialRail
-                ? Math.min(2, Math.max(0, items.length - 1))
+                ? 0
                 : Math.min(4, Math.max(0, items.length - 1));
             const rotatedItems = items.slice(startIndex).concat(items.slice(0, startIndex));
 
             track.className = 'ft-moving-rail-track';
             sequence.className = 'ft-moving-rail-sequence';
-            rail.dataset.ftRailStart = String(startIndex + 1);
             if (isTestimonialRail) {
-                rail.dataset.ftRailOffsetSeconds = '8';
-                track.style.animationDelay = '-8s';
+                sequence.dataset.ftRailOriginal = 'true';
+                rail.dataset.ftRailStart = 'middle-sequence-card-3';
+                rail.dataset.ftRailFocalCard = String(Math.min(3, Math.max(1, items.length)));
+            } else {
+                rail.dataset.ftRailStart = String(startIndex + 1);
             }
             rotatedItems.forEach((item) => sequence.append(item));
             track.append(sequence);
             rail.append(track);
 
-            const createClone = () => {
+            const createClone = (side = 'after') => {
                 const clone = sequence.cloneNode(true);
+                delete clone.dataset.ftRailOriginal;
+                clone.dataset.ftRailClone = side;
                 clone.setAttribute('aria-hidden', 'true');
                 clone.setAttribute('inert', '');
                 clone.inert = true;
+                clone.querySelectorAll('.ft-motion-target').forEach((element) => element.classList.add('is-visible'));
                 clone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
                 clone.querySelectorAll('a, button, input, summary, [tabindex]').forEach((control) => {
                     control.setAttribute('tabindex', '-1');
                 });
                 return clone;
             };
+            const fillTestimonialTrack = () => {
+                const sequenceWidth = sequence.getBoundingClientRect().width;
+                const railWidth = rail.clientWidth;
+                if (sequenceWidth <= 0 || railWidth <= 0) {
+                    return;
+                }
+
+                const sideCopies = Math.max(2, Math.ceil(railWidth / sequenceWidth) + 1);
+                const sequenceCount = (sideCopies * 2) + 1;
+                const existingSideCopies = Number(rail.dataset.ftRailSideCopies || 0);
+                if (existingSideCopies !== sideCopies) {
+                    track.querySelectorAll('.ft-moving-rail-sequence[aria-hidden="true"]').forEach((clone) => clone.remove());
+                    const before = document.createDocumentFragment();
+                    const after = document.createDocumentFragment();
+                    for (let index = 0; index < sideCopies; index += 1) {
+                        before.append(createClone('before'));
+                        after.append(createClone('after'));
+                    }
+                    track.prepend(before);
+                    track.append(after);
+                    rail.dataset.ftRailSideCopies = String(sideCopies);
+                }
+
+                const focalIndex = Math.min(2, Math.max(0, sequence.children.length - 1));
+                const focalCard = sequence.children[focalIndex];
+                const focalCenter = (focalCard.offsetLeft - sequence.offsetLeft) + (focalCard.getBoundingClientRect().width / 2);
+                const initialOffset = (railWidth / 2) - ((sideCopies * sequenceWidth) + focalCenter);
+
+                track.style.setProperty('--ft-testimonial-start-x', `${initialOffset}px`);
+                track.style.setProperty('--ft-rail-distance', `${sequenceWidth}px`);
+                rail.dataset.ftRailSequenceCount = String(sequenceCount);
+                rail.dataset.ftRailSequenceWidth = String(Math.round(sequenceWidth));
+                rail.dataset.ftRailViewportWidth = String(railWidth);
+                rail.dataset.ftRailInitialOffset = String(Math.round(initialOffset));
+                rail.classList.add('is-ready');
+            };
             const fillTrack = () => {
+                if (isTestimonialRail) {
+                    fillTestimonialTrack();
+                    return;
+                }
                 const sequenceWidth = sequence.getBoundingClientRect().width;
                 if (sequenceWidth <= 0) {
                     return;
@@ -423,9 +468,6 @@
                 }
                 track.append(fragment);
                 existingClones.slice(sequenceCount - 1).forEach((clone) => clone.remove());
-                if (isTestimonialRail) {
-                    rail.dataset.ftRailSequenceCount = String(sequenceCount);
-                }
                 track.style.setProperty('--ft-rail-distance', `${sequenceWidth}px`);
             };
             fillTrack();

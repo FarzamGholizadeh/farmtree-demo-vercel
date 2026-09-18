@@ -4722,6 +4722,13 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
   display: none;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .ft-testimonial-cards:not(.ft-moving-rail) {
+    justify-content: center;
+    overflow: hidden;
+  }
+}
+
 .ft-testimonial-cards.ft-moving-rail {
   width: 100% !important;
   max-width: none !important;
@@ -4730,12 +4737,28 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 
 .ft-testimonial-cards .ft-moving-rail-track {
   gap: 0;
-  animation: ft-native-rail-reverse 46s linear infinite;
+  animation: ft-native-testimonial-marquee 46s linear infinite;
+  transform: translate3d(var(--ft-testimonial-start-x, 0), 0, 0);
+}
+
+.ft-testimonial-cards.ft-moving-rail:not(.is-ready) .ft-moving-rail-track {
+  visibility: hidden;
+  animation: none;
 }
 
 .ft-testimonial-cards .ft-moving-rail-sequence {
   gap: 1rem;
   padding-right: 1rem;
+}
+
+@keyframes ft-native-testimonial-marquee {
+  from {
+    transform: translate3d(var(--ft-testimonial-start-x), 0, 0);
+  }
+
+  to {
+    transform: translate3d(calc(var(--ft-testimonial-start-x) - var(--ft-rail-distance)), 0, 0);
+  }
 }
 
 .ft-testimonial-card {
@@ -5014,6 +5037,7 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 @media (prefers-reduced-motion: reduce) {
   .ft-testimonial-cards {
     mask-image: none;
+    overflow-x: auto;
     scrollbar-width: thin;
   }
 
@@ -5091,10 +5115,6 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 
 .ft-globe-canvas {
   filter: saturate(.95) contrast(1.02);
-}
-
-.ft-testimonial-cards .ft-moving-rail-track {
-  animation-delay: -8s;
 }
 
 .ft-testimonial-card {

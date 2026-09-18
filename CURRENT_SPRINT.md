@@ -113,7 +113,8 @@ direct, rounded 16:9 core-Image frame; connector-free Technology cards; equal
 responsive glass metrics; a lazy, two-axis draggable realistic Earth using a
 self-hosted NASA
 Blue Marble texture with a Natural Earth fallback; seamless partner and
-five-card social testimonial marquees with an eight-second initial offset;
+five-card social testimonial marquee with a measured Card 3-centred initial
+composition, symmetric inert clone sequences and an exact one-sequence loop;
 responsive 4-up/2-up/1-up Proof Stories with four new theme-specific
 documentary illustrations; a three-item editorial Last News feature before
 FAQ; and a branded real-404 recovery page. It also retains interaction pause;
@@ -172,6 +173,14 @@ explicit user approval before dispatch.
 The large audience section and Homepage Use Cases are omitted. News is lower,
 trust appears before proof stories, and the page is materially shorter than the
 legacy concept.
+
+The focused testimonial-marquee refinement removes the zero-origin animation
+phase and computes its initial transform from the rendered sequence and
+viewport widths. One original five-card sequence remains semantic; two cloned
+sequences on each side are `aria-hidden` and inert, and reduced-motion keeps the
+uncloned five-card horizontal fallback. Browser checks at 320, 390, 768, 1024,
+1440 and 1920 prove full coverage at initial, midpoint and loop boundary, with
+no duplicate IDs, focusable clones, console errors or horizontal overflow.
 
 The dedicated visual-parity correction restores the approved production
 theme's fixed green Header, asset-backed brand-logo pill, five-card Bento menu,
