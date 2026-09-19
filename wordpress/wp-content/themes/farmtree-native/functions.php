@@ -215,12 +215,19 @@ function farmtree_native_documentary_picture(string $html, array $block, ?WP_Blo
     $primary = $hero && str_contains((string) ($block['attrs']['className'] ?? ''), 'is-active');
     $processor->set_attribute('width', $hero ? '1920' : '1200');
     $processor->set_attribute('height', $hero ? '1080' : '900');
-    $processor->set_attribute('loading', $primary ? 'eager' : 'lazy');
     $processor->set_attribute('decoding', 'async');
-    if ($primary) {
-        $processor->set_attribute('fetchpriority', 'high');
-    } else {
-        $processor->remove_attribute('fetchpriority');
+    // Preserve core priorities only for the primary News/Proof featured image.
+    // Cards and unrelated templates keep their existing lazy-loading behavior.
+    $native_priority = $featured
+        && ($block['attrs']['aspectRatio'] ?? '') === '16/9'
+        && (is_page('blog') || is_singular(array('post', 'proof_story')));
+    if (!$native_priority) {
+        $processor->set_attribute('loading', $primary ? 'eager' : 'lazy');
+        if ($primary) {
+            $processor->set_attribute('fetchpriority', 'high');
+        } else {
+            $processor->remove_attribute('fetchpriority');
+        }
     }
     $sizes = $hero ? '100vw' : '(max-width: 767px) calc(100vw - 48px), 600px';
     if ($featured) {

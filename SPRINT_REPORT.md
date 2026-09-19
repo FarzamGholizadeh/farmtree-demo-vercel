@@ -1,5 +1,14 @@
 # FT-NATIVE-002 Sprint Report
 
+## Focused LCP correction — 2026-09-19
+
+Local primary-image regression passes 42 views (14 routes, 390/1440/1920):
+native priority preserved, below-fold lazy images, responsive attributes,
+no duplicate image preload, CLS below 0.1, no overflow or console errors.
+Production baseline dry-run: 0 creates/updates/conflicts, 102 unchanged,
+1 skipped. Public indexing enabled and Coming Soon OFF. Deployment remains
+gated on final tests, exact committed artifact and fresh verified backups.
+
 ## Editorial release-safety preparation — 2026-09-19
 
 - Explicit source push completed: `09ddf53098213e7e5a8cb51de57723f1fba0bc8e`.

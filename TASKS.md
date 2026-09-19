@@ -1,5 +1,11 @@
 # FarmTree Tasks
 
+## Authorized LCP priority fix — 2026-09-19
+
+- [x] Preserve native primary featured-image priorities without eager cards.
+- [x] Add local/production rendered-image priority regression.
+- [ ] Complete exact-artifact theme-only deployment and production QA.
+
 ## Editorial/documentary refinement — 2026-09-18
 
 - [x] Review all 20 supplied photographs and whole-site copy without new claims.

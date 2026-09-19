@@ -1,5 +1,14 @@
 # FarmTree Sprint History
 
+## 2026-09-19 — focused LCP priority correction
+
+The approved editorial release 4837321 deployed with a clean reconciliation.
+Final QA identified forced lazy loading of primary News/Proof images. User
+authorized this separate focused correction; preserve core priorities in the
+primary 16:9 News/Proof context, retain card lazy loading and all content/assets.
+Local rendered checks cover 14 routes at three widths; release evidence belongs
+in ignored QA reports and the final production handoff, not premature claims.
+
 ## 2026-09-18 — local editorial/documentary refinement
 
 Reviewed the supplied 20-photo set and all native English content. Refined client

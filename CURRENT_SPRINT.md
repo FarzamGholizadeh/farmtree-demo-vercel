@@ -1,5 +1,13 @@
 # Current FarmTree Sprint
 
+## Focused LCP loading correction — 2026-09-19
+
+Approved baseline `48373210b7a337c396c93869c628dc9b56271647` is live.
+Preserve WordPress loading/fetch priority for 16:9 primary featured images on
+News and Proof templates; all other documentary loading behavior stays intact.
+No content, asset, layout or public-state changes. See
+`docs/FT-LCP-PRIORITY-FIX.md` for validation and the theme-only release gate.
+
 ## Authorized editorial post-launch release — 2026-09-19
 
 Approved source `09ddf53098213e7e5a8cb51de57723f1fba0bc8e` pushed to the feature

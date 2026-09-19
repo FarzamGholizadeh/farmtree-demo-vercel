@@ -25,6 +25,8 @@ for (const [route, expected] of [['/', 11], ['/platform/', 1], ['/solutions/', 2
     if (route === '/' && index === 0) {
       assert.match(image, /loading="eager"/, route);
       assert.match(image, /fetchpriority="high"/, route);
+    } else if (route === '/blog/' && index === 0) {
+      assert.doesNotMatch(image, /loading="lazy"/, 'News primary preserves native priority');
     } else {
       assert.match(image, /loading="lazy"/, route);
       assert.doesNotMatch(image, /fetchpriority="high"/, route);
