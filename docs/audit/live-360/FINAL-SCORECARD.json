@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "IN_PROGRESS",
   "scoreStatus": "PROVISIONAL_PENDING_GROUP_REVIEW",
-  "runtimeCommit": "66134c6c7f60cca1e12abca6658f71591fb04ea1",
+  "runtimeCommit": "5104687c27b7b6aa69b100e55d905a8107726ec7",
   "rubric": "docs/audit/live-360/ACCEPTANCE.md",
   "meaning": "Evidence coverage only, not a UX-quality grade or certification.",
   "calculation": "category credit = weight * passed applicable groups / applicable groups; equal groups within category. UNKNOWN/MANUAL-VERIFY/FAIL earn0; N/A requires reviewed rationale.",
@@ -120,9 +120,9 @@
         {
           "id": 1,
           "text": "Per-criterion WCAG2.2 AA matrix",
-          "status": "FAIL",
+          "status": "MANUAL-VERIFY",
           "review": "PENDING_GROUP_REVIEW",
-          "evidence": "Two confirmed open P1 findings: WCAG2.5.7 globe dragging and1.4.12 metric text spacing; local candidates not deployed."
+          "evidence": "Specific globe/metric defects resolved in5104687 and retested live. The per-criterion matrix retains36 manual-verification entries; full AA acceptance is not established."
         },
         {
           "id": 2,
@@ -134,9 +134,9 @@
         {
           "id": 3,
           "text": "keyboard/focus/skip/menu/globe",
-          "status": "FAIL",
+          "status": "UNKNOWN",
           "review": "PENDING_GROUP_REVIEW",
-          "evidence": "Globe pointer alternative finding2.5.7 remains live; keyboard evidence alone does not satisfy whole group."
+          "evidence": "5104687 live globe direction, pause/reduced, navigation pointer/keyboard tests pass. All group constituents across programme states remain pending review; no automatic whole-group credit."
         },
         {
           "id": 4,
@@ -722,7 +722,7 @@
     "No N/A exclusions taken. Null is unassessed, not zero or pass. Once adjudicated, UNKNOWN/MANUAL-VERIFY/FAIL receive zero verified credit.",
     "Release-specific production browser suite PASS is retained but cannot substitute for full all-route programme coverage.",
     "Current22/36performance interruption with QUIC errors is not a completed passing matrix.",
-    "Two open confirmed P1 accessibility issues have local candidates only.",
+    "The two specific globe/metric P1 defects are resolved in5104687 within pinned production-test scopes; other manual accessibility evidence remains incomplete.",
     "Fresh production all-route, field CWV, assistive technology and managed idempotence remain unverified.",
     "Fourteen-body content proposal unimplemented; dry-run bootstrap-risk approval and human legal/retention evidence unresolved."
   ],
@@ -734,6 +734,7 @@
     "RISK-REGISTER.md",
     "FINAL-SEO-MATRIX.md",
     "FINAL-GEO-AEO-MATRIX.md",
-    "CONTENT-BATCH-PROPOSAL.md"
+    "CONTENT-BATCH-PROPOSAL.md",
+    "RELEASE-03-PRODUCTION.md"
   ]
 }

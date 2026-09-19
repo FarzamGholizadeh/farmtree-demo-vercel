@@ -1,5 +1,11 @@
 # FarmTree Live360 — executive checkpoint
 
+Checkpoint provenance: the following narrative records the pre-release03 handoff.
+Subsequent explicit approval, deployment of5104687 and scoped live QA are recorded
+in [RELEASE-03-PRODUCTION.md](RELEASE-03-PRODUCTION.md). Its release-approval blocker
+and two specific accessibility defects are now resolved. Wider programme gaps
+below remain open; the historical narrative is not current deployment status.
+
 Status: PARTIALLY VERIFIED / IN PROGRESS. This draft is not a release approval,
 final acceptance, certification, or a 100/100 claim.
 

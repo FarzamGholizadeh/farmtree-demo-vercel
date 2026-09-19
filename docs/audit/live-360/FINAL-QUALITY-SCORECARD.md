@@ -1,6 +1,6 @@
 # Provisional evidence-coverage scorecard
 
-Programme: **IN_PROGRESS**. Live66134c6; release-specific production browser QA PASS.
+Programme: **IN_PROGRESS**. Live5104687; release-specific production browser QA PASS.
 This is not certification,100/100, or a UX-quality grade. Fixed ACCEPTANCE.md groups
 and weights are preserved verbatim in FINAL-SCORECARD.json. Group adjudication is
 pending: no complete programme-wide credit is inferred from sampled releases.
@@ -32,8 +32,9 @@ Total weight: 100; applicable groups: 84. No thresholds or denominators changed.
 
 - Current production performance retest stopped after22/36 samples with QUIC
   errors; desktop autoplay hero late LCP remains an open gate, not a passing matrix.
-- Two confirmed P1 accessibility findings: globe WCAG2.5.7 and metric WCAG1.4.12.
-  Local candidates are not deployed and cannot earn live remediation credit.
+- The two specific globe/metric P1 defects are resolved in5104687 with live
+  regression evidence. Whole-group/manual accessibility coverage remains incomplete;
+  fixing those defects does not automatically award programme-wide group credit.
 - Fresh40-route/11-width browser matrix passes440views, with pending-image
   observations separately investigated. Full field/assistive-technology/idempotence
   coverage remains incomplete; browser PASS is narrower evidence.

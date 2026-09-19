@@ -1,12 +1,12 @@
 # WCAG 2.2 A/AA handoff matrix — IN_PROGRESS
 
 Evidence snapshot: 2026-09-19. Production release under verification:
-`66134c6c7f60cca1e12abca6658f71591fb04ea1`.
+`5104687c27b7b6aa69b100e55d905a8107726ec7`.
 
 **This is an in-progress evidence handoff, not certification, a conformance
 claim, a completed audit, or a 100/100 result.** The filename identifies the
-handoff artifact; it does not override this status. The production aggregate
-browser suite is still running at this snapshot and is NOT counted as complete.
+handoff artifact; it does not override this status. Release03 production aggregate QA completed; see RELEASE-03-PRODUCTION.md.
+Manual and all-state accessibility coverage remain incomplete.
 
 Scope: public English FarmTree marketing pages. Separate Platform service,
 external destinations and authenticated WordPress administration are excluded,
@@ -75,7 +75,7 @@ six cold browser contexts, **not an all-route responsive audit**.
 |1.4.5|AA|Text as images|MANUAL-VERIFY|Logos and workflow/model imagery exist; meaningful embedded text, necessity exceptions and equivalent content require review.|
 |1.4.10|AA|Reflow|MANUAL-VERIFY|L/MI and current sampled geometry show no horizontal overflow. Actual browser 400% zoom and all dialog/content-loss states remain unverified.|
 |1.4.11|AA|Non-text contrast|MANUAL-VERIFY|Visible controls/focus tokens exist; comprehensive icon/boundary/focus contrast measurements absent.|
-|1.4.12|AA|Text spacing|FAIL|Production24view probe applies required spacing with no root overflow or disappeared text, but visual review confirms metric +1,000,000 clipped at1440. Local wrapping correction is not yet deployed. Closed disclosure states and other clipping diagnostics remain separate review.|
+|1.4.12|AA|Text spacing|MANUAL-VERIFY|Metric clipping fixed and visually retested on5104687;24live views pass required spacing, text retention, overflow and default metric geometry. Closed disclosure states and other clipping diagnostics still prevent whole-criterion acceptance. See RELEASE-03-PRODUCTION.md.|
 |1.4.13|AA|Hover/focus content|MANUAL-VERIFY|Menu dismissal and focus behavior sampled. Complete hoverability/persistence/dismissibility review for every conditional-content state remains.|
 
 ## 2. Operable — 20 criteria
@@ -100,7 +100,7 @@ six cold browser contexts, **not an all-route responsive audit**.
 |2.5.2|A|Pointer cancellation|MANUAL-VERIFY|MP automated taps/clicks work; down-then-away/cancel behavior of all custom interactions remains untested.|
 |2.5.3|A|Visible label in name|MANUAL-VERIFY|MP controls retain visible Pause label and stable accessible name; visible status span is aria-hidden while aria-pressed exposes state. All other dynamic combinations still need review.|
 |2.5.4|A|Motion actuation|N/A|T uses pointer/keyboard, not shake/tilt/device-motion actuation.|
-|2.5.7|AA|Dragging alternatives|FAIL|Exact deployed globe source has drag/keyboard only; pause/autoplay is not orientation/pitch selection. Four local click/tap direction controls now pass scoped paused/reduced-motion tests, but are not yet deployed.|
+|2.5.7|AA|Dragging alternatives|PASS|Scoped authored globe dragging alternative verified on5104687: four44px click/tap direction controls,32 real direction checks at320/390/1440/1920 across paused/reduced states; canvas changes/inverse restoration and no autoplay restart asserted. No physical-device/AT claim. See RELEASE-03-PRODUCTION.md.|
 |2.5.8|AA|Minimum targets|MANUAL-VERIFY|MP motion controls satisfy 44px CSS minimum with 0.01px floating-geometry tolerance. Whole-site 24px criterion, spacing and inline exceptions remain to be assessed.|
 
 ## 3. Understandable — 13 criteria
@@ -133,16 +133,17 @@ Duplicate-ID validation remains engineering evidence, not an active 4.1.1 pass.
 
 ## Handoff totals and remaining gates
 
-This snapshot contains **4 scoped PASS, 35 MANUAL-VERIFY, 2 FAIL and 14 N/A**
-criterion entries. The two new failures have local candidates pending release;
-the two originally confirmed issues remain resolved in their retested scopes.
+This snapshot contains **5 scoped PASS, 36 MANUAL-VERIFY, 0 FAIL and 14 N/A**
+criterion entries. Both specific release03 defects are resolved in their retested
+scopes; broader text-spacing acceptance remains MANUAL-VERIFY. Zero FAIL entries
+here does not establish full conformance or absence of undiscovered defects.
 Historical FAIL evidence is preserved in the
 original matrix/assessment. No percentage, 10/10 or conformance score is awarded.
 
 Still required:
 
-1. Finish and review the currently running production aggregate/browser scope;
-   update this artifact only from actual results, including incomplete axe items.
+1. Complete all-state/manual review beyond the finished scoped production suites,
+   including incomplete axe items; do not infer full coverage from aggregate PASS.
 2. Conduct real screen-reader listening journeys with named browser/AT versions:
    reading order, landmarks, alternative meaning, controls/states and announcements.
 3. Test actual browser 200/400% zoom, text-only resizing, required text spacing,

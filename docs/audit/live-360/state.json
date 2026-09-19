@@ -36,8 +36,8 @@
   "score": null,
   "scoreStatus": "not_yet_assessed",
   "p0": 0,
-  "p1": 2,
-  "severityCountScope": "Pre-release03 known finding counts pending broader risk-register re-adjudication; release03 corrected globe/metric findings within documented live test scope. Not a current programme-wide defect count.",
+  "p1": 0,
+  "severityCountScope": "Zero open P1 among the enumerated confirmed RISK-REGISTER findings after scoped release03 retest; not proof of complete coverage, absence of undiscovered defects, or closure of P2/manual/performance work.",
   "unknownIsPass": false,
   "blockedPaths": [
     {

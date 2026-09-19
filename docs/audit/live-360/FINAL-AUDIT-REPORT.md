@@ -1,5 +1,10 @@
 # FarmTree Live360 — technical handoff draft
 
+Historical handoff checkpoint: subsequent release5104687 and its scoped production
+QA are complete; see [RELEASE-03-PRODUCTION.md](RELEASE-03-PRODUCTION.md). Statements
+below describing an unpushed candidate or release authorization refer to the
+earlier checkpoint, not current production. Broader acceptance remains incomplete.
+
 IN PROGRESS. Prepared for review, not the final completed report.
 
 ## Authority and provenance
