@@ -112,3 +112,25 @@ images retain their prior candidate sets. Their existing `sizes` are not newly
 certified as optimal; no blanket medium substitution is made. Blog desktop lead
 also has a tall cover box (380x809 in the sample), so its existing1200px slot
 is retained rather than replacing it with the visible box width blindly.
+
+## 66134c6 production retest — interrupted, not PASS
+
+The unchanged lab profile completed22/36samples before Chrome/CDP disconnected
+at1440px Platform run2. The precise browser-exit cause is unverified. Keep this
+report separate rather than discarding failed evidence or calling the matrix
+complete. All18mobile samples reached native load completion; Blog mobile
+LCP1660/1712/1676ms (median1676) selected the deployed smaller candidate.
+The earlier median3284ms is a separate-run comparison, not a controlled causal
+effect size. Homepage desktop still measured5672/5628/5644ms due to the retained
+autoplay behavior.
+
+The three mobile Homepage samples each logged five testimonial-image
+ERR_QUIC_PROTOCOL_ERROR failures (15requests and15console entries). Thus native
+load completion does not mean successful delivery and Homepage is not a clean
+PASS. Other completed samples had no recorded errors. Earlier HTTP/2 diagnostic
+evidence suggests a transport/emulation interaction, but these new errors and
+the browser disconnection must remain explicit; no host setting was changed.
+
+Frozen interrupted evidence:
+`qa/live-360/performance-production-66134c6-interrupted.json`, SHA256
+`5254158489a17fced9bc543ea0d7d9c777df849ce59ac5e01011ad12a20bd71f`.

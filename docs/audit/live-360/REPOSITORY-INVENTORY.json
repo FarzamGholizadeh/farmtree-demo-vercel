@@ -1,17 +1,17 @@
 {
   "schemaVersion": 2,
-  "sourceHead": "a23441ba6f72d120f8bd2aac5ada0adcf3bb8546",
+  "sourceHead": "66134c6c7f60cca1e12abca6658f71591fb04ea1",
   "scope": "Exact git ls-files index path snapshot. Runtime classification uses the current working-tree explicit allowlist. No file contents or credential values are included. Not a clean-commit checksum manifest.",
-  "trackedFileCount": 943,
+  "trackedFileCount": 957,
   "nativeRuntimeFileCount": 250,
   "categoryCounts": {
     "CONFIG": 16,
-    "DOCUMENTATION": 53,
+    "DOCUMENTATION": 66,
     "LEGACY_ASSET": 183,
     "LEGACY_SOURCE": 7,
     "GENERATED_CONFIG": 1,
     "EVIDENCE": 72,
-    "TEST": 37,
+    "TEST": 38,
     "SOURCE_TOOLING": 16,
     "SEPARATE_PLUGIN_SOURCE": 35,
     "SOURCE_ASSET": 108,
@@ -1871,6 +1871,102 @@
       "evidence": "Project documentation or documentation data"
     },
     {
+      "path": "docs/audit/live-360/FINAL-ARCHITECTURE.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-CHANGELOG.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-EVIDENCE-INDEX.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-GEO-AEO-MATRIX.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-PERFORMANCE-MATRIX.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-PRIVACY-MATRIX.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-QUALITY-SCORECARD.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-REPOSITORY-INVENTORY.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-SCORECARD.json",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-SECURITY-MATRIX.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-SEO-MATRIX.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/FINAL-WCAG-MATRIX.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
       "path": "docs/audit/live-360/PERFORMANCE-MATRIX.md",
       "category": "DOCUMENTATION",
       "owner": "FarmTree project/architecture",
@@ -1896,6 +1992,14 @@
     },
     {
       "path": "docs/audit/live-360/RELEASE-02.md",
+      "category": "DOCUMENTATION",
+      "owner": "FarmTree project/architecture",
+      "lifecycle": "documentation",
+      "nativeDeployable": false,
+      "evidence": "Project documentation or documentation data"
+    },
+    {
+      "path": "docs/audit/live-360/RELEASE-03.md",
       "category": "DOCUMENTATION",
       "owner": "FarmTree project/architecture",
       "lifecycle": "documentation",
@@ -3048,6 +3152,14 @@
     },
     {
       "path": "scripts/validate-security-headers.mjs",
+      "category": "TEST",
+      "owner": "FarmTree QA",
+      "lifecycle": "development",
+      "nativeDeployable": false,
+      "evidence": "Validation tooling"
+    },
+    {
+      "path": "scripts/validate-text-spacing.cjs",
       "category": "TEST",
       "owner": "FarmTree QA",
       "lifecycle": "development",

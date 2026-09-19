@@ -2,12 +2,12 @@
 
 Regenerate with `node scripts/build-repository-inventory.mjs`.
 
-Source HEAD: `a23441ba6f72d120f8bd2aac5ada0adcf3bb8546`. Exact indexed path snapshot: **943 tracked files**, **250 Native runtime allowlist entries**, **0 unmatched classifications**. Pending untracked paths: **0**, listed separately in [machine-readable inventory](REPOSITORY-INVENTORY.json).
+Source HEAD: `66134c6c7f60cca1e12abca6658f71591fb04ea1`. Exact indexed path snapshot: **957 tracked files**, **250 Native runtime allowlist entries**, **0 unmatched classifications**. Pending untracked paths: **0**, listed separately in [machine-readable inventory](REPOSITORY-INVENTORY.json).
 
 | Classification | Files |
 |---|---:|
 | CONFIG | 16 |
-| DOCUMENTATION | 53 |
+| DOCUMENTATION | 66 |
 | EVIDENCE | 72 |
 | GENERATED_CONFIG | 1 |
 | GENERATED_RUNTIME | 1 |
@@ -19,8 +19,8 @@ Source HEAD: `a23441ba6f72d120f8bd2aac5ada0adcf3bb8546`. Exact indexed path snap
 | SOURCE_ASSET | 108 |
 | SOURCE_DATA | 6 |
 | SOURCE_TOOLING | 16 |
-| TEST | 37 |
-| **Total** | **943** |
+| TEST | 38 |
+| **Total** | **957** |
 
 ## Scope and ownership
 

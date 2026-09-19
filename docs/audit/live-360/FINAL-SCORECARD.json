@@ -1,0 +1,739 @@
+{
+  "schemaVersion": 1,
+  "status": "IN_PROGRESS",
+  "scoreStatus": "PROVISIONAL_PENDING_GROUP_REVIEW",
+  "runtimeCommit": "66134c6c7f60cca1e12abca6658f71591fb04ea1",
+  "rubric": "docs/audit/live-360/ACCEPTANCE.md",
+  "meaning": "Evidence coverage only, not a UX-quality grade or certification.",
+  "calculation": "category credit = weight * passed applicable groups / applicable groups; equal groups within category. UNKNOWN/MANUAL-VERIFY/FAIL earn0; N/A requires reviewed rationale.",
+  "totalWeight": 100,
+  "totalApplicableGroups": 84,
+  "verifiedPassNumerator": null,
+  "score": null,
+  "categories": [
+    {
+      "name": "UI",
+      "weight": 8,
+      "groups": [
+        {
+          "id": 1,
+          "text": "All requested widths and public templates: no clipping/overflow",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "typography/grid/spacing/card/button consistency",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "approved imagery/crops",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 4,
+          "text": "CTA/header/footer consistency",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "hover/focus/loading states",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 6,
+          "text": "final visual critique with no unresolved controllable defects",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        }
+      ],
+      "applicableDenominator": 6,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "UX",
+      "weight": 8,
+      "groups": [
+        {
+          "id": 1,
+          "text": "All ten persona journeys",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "navigation/platform/proof/contact journeys",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "clear actions/no dead ends",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 4,
+          "text": "accessible mobile interactions",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "information scent/IA",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 6,
+          "text": "actual first-time comprehension/user evidence (not simulated human study)",
+          "status": "MANUAL-VERIFY",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Actual first-time comprehension/user study evidence not supplied; simulated personas are not human research."
+        }
+      ],
+      "applicableDenominator": 6,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "Accessibility",
+      "weight": 10,
+      "groups": [
+        {
+          "id": 1,
+          "text": "Per-criterion WCAG2.2 AA matrix",
+          "status": "FAIL",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Two confirmed open P1 findings: WCAG2.5.7 globe dragging and1.4.12 metric text spacing; local candidates not deployed."
+        },
+        {
+          "id": 2,
+          "text": "automated all-route axe",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "keyboard/focus/skip/menu/globe",
+          "status": "FAIL",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Globe pointer alternative finding2.5.7 remains live; keyboard evidence alone does not satisfy whole group."
+        },
+        {
+          "id": 4,
+          "text": "names/landmarks/headings/alt/link purpose",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "contrast/non-colour cues/targets",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 6,
+          "text": "motion/clones/carousels",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 7,
+          "text": "200/400% zoom/reflow",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 8,
+          "text": "assistive-technology manual semantics checks",
+          "status": "MANUAL-VERIFY",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Assistive-technology manual semantic checks incomplete."
+        }
+      ],
+      "applicableDenominator": 8,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "Front-end",
+      "weight": 8,
+      "groups": [
+        {
+          "id": 1,
+          "text": "Semantic DOM/no duplicateIDs",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "maintainable cascade and justified overrides",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "JS listeners/observers/lifecycle",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 4,
+          "text": "no layout thrash/leaks in tested journeys",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "CSS/JS budget and dependencies",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 6,
+          "text": "no-JS and reduced-motion fallbacks",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 7,
+          "text": "approved interaction regressions",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        }
+      ],
+      "applicableDenominator": 7,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "WordPress/back-end",
+      "weight": 10,
+      "groups": [
+        {
+          "id": 1,
+          "text": "Theme/plugin/CPT/taxonomy ownership",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "editor-safe blocks/revisions",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "write-path auth/validation/sanitisation",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 4,
+          "text": "managed identity/conflict/idempotence",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Fresh production managed-content dry-run blocked on exact bootstrap-risk approval; current idempotence unverified."
+        },
+        {
+          "id": 5,
+          "text": "media/rewrites/publication",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 6,
+          "text": "lifecycle side effects",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 7,
+          "text": "database/index/autoload/transaction/error review",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        }
+      ],
+      "applicableDenominator": 7,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "Security",
+      "weight": 10,
+      "groups": [
+        {
+          "id": 1,
+          "text": "Scoped ASVS applicability/matrix",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "authentication/session/admin/TemporaryLogin controls",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "CSRF/XSS/SQL/command/path/SSRF/upload controls",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 4,
+          "text": "REST/XMLRPC exposure",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "secure headers/cookies/error disclosure",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 6,
+          "text": "dependency/plugin/version assessment",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 7,
+          "text": "private artifacts/secrets/permissions/backup protection",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 8,
+          "text": "no known in-scope critical/high vulnerabilities",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        }
+      ],
+      "applicableDenominator": 8,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "Privacy",
+      "weight": 5,
+      "groups": [
+        {
+          "id": 1,
+          "text": "Actual network/cookie/storage inventory",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "published policy matches data flows",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "telemetry/Bot/fonts/external services",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 4,
+          "text": "account/contact/log/backup processing map",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "retention/deletion/processor evidence or explicit unresolved human gaps",
+          "status": "MANUAL-VERIFY",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Retention/deletion/processor human gaps explicitly documented; disclosure does not establish underlying practices."
+        }
+      ],
+      "applicableDenominator": 5,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "Performance",
+      "weight": 10,
+      "groups": [
+        {
+          "id": 1,
+          "text": "Multi-run representative lab LCP<=2500ms/CLS<=0.1",
+          "status": "FAIL",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Current production22/36-run retest interrupted with QUIC errors; desktop autoplay hero late LCP and incomplete representative gate. No passing aggregate."
+        },
+        {
+          "id": 2,
+          "text": "interaction latency<=200ms measured where possible",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "field CWV or explicitly unknown",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Field CWV explicitly UNKNOWN; disclosure is complete but no verified field-performance credit is inferred."
+        },
+        {
+          "id": 4,
+          "text": "image sizes/formats/priority/loading",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "fonts/cache/compression/TTFB",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 6,
+          "text": "render-blocking/task/DOM/CSS/JS review",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        }
+      ],
+      "applicableDenominator": 6,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "QA/reliability",
+      "weight": 8,
+      "groups": [
+        {
+          "id": 1,
+          "text": "Static/unit/integration coverage",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "all-route/link/404 coverage",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "real browser/visual/responsive coverage",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 4,
+          "text": "accessibility/manual evidence",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "all historical regression classes",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 6,
+          "text": "false-positive diagnosis and trustworthy assertions",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 7,
+          "text": "production smoke and rollback rehearsal",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        }
+      ],
+      "applicableDenominator": 7,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "DevOps/SRE",
+      "weight": 7,
+      "groups": [
+        {
+          "id": 1,
+          "text": "Checkout-reproducible artifact/deploy",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "exact-SHA provenance",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "concurrency/locks/path/SSH safety",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 4,
+          "text": "verified fresh backups/rollback",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "observable health/errors",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 6,
+          "text": "host/cron/disaster recovery responsibility",
+          "status": "MANUAL-VERIFY",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Host/cron/disaster-recovery responsibility needs organisational evidence."
+        },
+        {
+          "id": 7,
+          "text": "current docs/repository inventory/ownership and no uncertain deletions",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        }
+      ],
+      "applicableDenominator": 7,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "Technical SEO",
+      "weight": 6,
+      "groups": [
+        {
+          "id": 1,
+          "text": "All route statuses/redirects/domainHTTPS",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "titles/descriptions/H1/headings",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "canonicals/robots/sitemap/indexability",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 4,
+          "text": "internal linking/orphans/404",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "truthful structured data/author/dates",
+          "status": "FAIL",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Nine source citation publication labels remain incorrect; bounded14-body proposal not implemented. Article schema improvements do not close source-date consistency."
+        },
+        {
+          "id": 6,
+          "text": "OG/images/social metadata",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        }
+      ],
+      "applicableDenominator": 6,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "GEO/AEO/AI",
+      "weight": 5,
+      "groups": [
+        {
+          "id": 1,
+          "text": "Entity/platform definition consistency",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "direct answers/definitions/semantic relationships",
+          "status": "FAIL",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Thin/self-link resource routes remain open; source-backed corrections proposed only."
+        },
+        {
+          "id": 3,
+          "text": "factual proof/methodology/source context",
+          "status": "FAIL",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Citation semantics and company substantiation remain unresolved."
+        },
+        {
+          "id": 4,
+          "text": "useful FAQ and machine-readable truth",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "SSR and no unsupported ranking gimmicks",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        }
+      ],
+      "applicableDenominator": 5,
+      "verifiedPassNumerator": null,
+      "credit": null
+    },
+    {
+      "name": "Copy/brand/conversion",
+      "weight": 5,
+      "groups": [
+        {
+          "id": 1,
+          "text": "All public English spelling/grammar/punctuation",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 2,
+          "text": "natural language/terminology/CTA consistency",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 3,
+          "text": "scientific claims and figure provenance",
+          "status": "MANUAL-VERIFY",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Company metrics/testimonial/figure provenance needs substantiation; source-date labels are separately open defects."
+        },
+        {
+          "id": 4,
+          "text": "persona value/positioning/trust",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        },
+        {
+          "id": 5,
+          "text": "no unsupported legal/commercial claims",
+          "status": "MANUAL-VERIFY",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Technical runtime cannot validate every legal/commercial organisational assertion."
+        },
+        {
+          "id": 6,
+          "text": "approved vocabulary and final brand critique",
+          "status": "UNKNOWN",
+          "review": "PENDING_GROUP_REVIEW",
+          "evidence": "Recorded partial/release-specific tests do not yet establish every constituent at programme scope."
+        }
+      ],
+      "applicableDenominator": 6,
+      "verifiedPassNumerator": null,
+      "credit": null
+    }
+  ],
+  "limitations": [
+    "No group marked PASS until every constituent is mapped to sufficient current evidence; pending review is not a failed user experience.",
+    "No N/A exclusions taken. Null is unassessed, not zero or pass. Once adjudicated, UNKNOWN/MANUAL-VERIFY/FAIL receive zero verified credit.",
+    "Release-specific production browser suite PASS is retained but cannot substitute for full all-route programme coverage.",
+    "Current22/36performance interruption with QUIC errors is not a completed passing matrix.",
+    "Two open confirmed P1 accessibility issues have local candidates only.",
+    "Fresh production all-route, field CWV, assistive technology and managed idempotence remain unverified.",
+    "Fourteen-body content proposal unimplemented; dry-run bootstrap-risk approval and human legal/retention evidence unresolved."
+  ],
+  "sources": [
+    "RELEASE-02.md",
+    "PERFORMANCE-MATRIX.md",
+    "WCAG-MATRIX.md",
+    "PRIVACY-MATRIX.md",
+    "RISK-REGISTER.md",
+    "FINAL-SEO-MATRIX.md",
+    "FINAL-GEO-AEO-MATRIX.md",
+    "CONTENT-BATCH-PROPOSAL.md"
+  ]
+}

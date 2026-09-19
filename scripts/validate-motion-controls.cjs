@@ -99,6 +99,30 @@ const selector = name => `[data-ft-motion-control="${name}"]`;
         value.canvas = crypto.createHash('sha256').update(value.canvas || '').digest('hex');
         return value;
       };
+      const directionResults = [];
+      const checkDirections = async phase => {
+        assert.equal(await page.$$eval('[data-ft-globe-direction]', e => e.length), 4, 'Exactly four direction controls');
+        for (const pair of [['left', 'right'], ['up', 'down']]) {
+          const original = (await snapshot()).canvas;
+          for (const [index, direction] of pair.entries()) {
+            const button = await page.$(`[data-ft-globe-direction="${direction}"]`);
+            await button.evaluate(e => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+            await pause(100);
+            const geometry = await button.evaluate(e => { const r = e.getBoundingClientRect(), text = document.createRange(); text.selectNodeContents(e); return { width: r.width, height: r.height, labelLines: text.getClientRects().length, disabled: e.disabled, targetExists: !!document.getElementById(e.getAttribute('aria-controls')) }; });
+            assert.ok(geometry.width >= 43.99 && geometry.height >= 43.99 && geometry.labelLines === 1 && !geometry.disabled && geometry.targetExists);
+            width < 500 ? await button.tap() : await button.click();
+            const result = (await snapshot()).canvas;
+            if (index === 0) assert.notEqual(result, original, `${phase} ${direction} must rotate rendered canvas`);
+            else assert.equal(result, original, `${phase} inverse direction must restore rendered orientation`);
+            assert.equal(await page.$eval(selector('globe animation'), e => e.getAttribute('aria-pressed')), 'true', 'Direction must preserve pause');
+            await pause(250);
+            assert.equal((await snapshot()).canvas, result, 'Direction must not restart paused autoplay');
+            directionResults.push({ phase, direction, geometry, canvasChangedOrRestored: true, pausePreserved: true });
+          }
+        }
+        const file = `${evidenceDirectory}/${width}-globe-directions-${phase}.png`;
+        await page.screenshot({ path: file }); screenshots.push(file);
+      };
       const before = await snapshot();
       await page.addScriptTag({ path: require.resolve('axe-core/axe.min.js') });
       const axeViolations = await page.evaluate(async () => (await axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a','wcag2aa','wcag21aa','wcag22aa'] } })).violations);
@@ -109,6 +133,7 @@ const selector = name => `[data-ft-motion-control="${name}"]`;
       assert.equal(before.heroImageMotion, 'paused', 'Hero image breathing must pause with slides');
       assert.ok(before.gif.includes('poster.png') && before.tracks.every(t => t.state === 'paused') && before.clones && !before.overflow);
       assert.deepEqual(await gifAttributes(), originalGifAttributes, 'GIF pause must preserve alt/dimensions/responsive attributes');
+      await checkDirections('paused');
       await page.focus('[data-ft-globe]');
       await page.keyboard.press('ArrowRight');
       const keyboardGlobe = (await snapshot()).canvas;
@@ -160,11 +185,12 @@ const selector = name => `[data-ft-motion-control="${name}"]`;
       await pause(250);
       assert.ok(await page.$$eval('[data-ft-motion-control]', elements => elements.every(e => e.disabled && e.getAttribute('aria-pressed') === 'true')));
       assert.ok(await page.$eval('.ft-testimonial-cards', e => e.tabIndex === 0 && e.getAttribute('role') === 'region'));
+      await checkDirections('reduced-motion');
       await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }]);
       await pause(250);
       assert.ok(await page.$$eval('[data-ft-motion-control]', elements => elements.every(e => !e.disabled && e.getAttribute('aria-pressed') === (e.dataset.ftMotionControl === 'field quotes' ? 'false' : 'true'))));
       const metrics = { initialLoadCLS, observedSessionShiftSum: await page.evaluate(() => window.motionCLS) };
-      rows.push({ width, controls, heroGeometry, screenshots, gifAttributes: originalGifAttributes, stableForMs: 8100, keyboardResume: true, reducedMotionOverride: true, metrics });
+      rows.push({ width, controls, directionResults, heroGeometry, screenshots, gifAttributes: originalGifAttributes, stableForMs: 8100, keyboardResume: true, reducedMotionOverride: true, metrics });
       await page.close();
     }
     const reducedPage = await browser.newPage();

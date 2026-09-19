@@ -1,9 +1,10 @@
-# Motion and responsive media delivery — local candidate
+# Motion and responsive media delivery — release02
 
-Status: LOCAL VALIDATION PASSED; commit `ce4cdcc64ba90f8938488c4bdf38da612e4fa7c0`
-pushed and exact artifact audited. Deployment stopped before active replacement.
-Current verified live
-runtime remains `a23441ba6f72d120f8bd2aac5ada0adcf3bb8546`.
+Status: DEPLOYED; browser QA in progress. Remediation commit `ce4cdcc64ba90f8938488c4bdf38da612e4fa7c0`
+was followed by runner-only portability correction
+`66134c6c7f60cca1e12abca6658f71591fb04ea1`. The latter is now live after a
+successful guarded Native-only release; exact runtime bytes are identical to
+the first candidate. Production performance and full QA are not yet closed.
 
 ## Scope and reason
 
@@ -74,7 +75,7 @@ Lifecycle evidence SHA256:
 - Final `qa/live-360/motion/local.json`:
   `05e9b286fda7a7c18f09eb24b56a3eac93363a1dc6eb0f7a36de9ac42422ec70`
 
-## Remaining gates
+## Pre-deployment checkpoint (historical)
 
 Local source/scope/browser checks pass. Remaining: focused commit and exact
 artifact audit; approved feature-branch push; fresh
@@ -103,4 +104,38 @@ Source correction uses an independently checked regular NUL-separated PHP file
 list and requires nonempty discovery and lint output. Regression now must lint
 an actual PHP fixture and stop before replacement on lint failure. This is
 runner-only; the validated Native artifact remains unchanged. A new exact-SHA
-commit/build/audit is required before retry, with a fresh recovery directory.
+commit/build/audit was required before retry, with a fresh recovery directory.
+
+## Successful retry
+
+Deployed SHA `66134c6c7f60cca1e12abca6658f71591fb04ea1`; origin feature branch
+matches. Exact artifact250runtime files,114excluded,55,905,369bytes;
+SHA256SUMS digest `be0a54dd4fdd79960e44e90809f994ba2a6e7ea023eb3750e75f973ed5c2165a`.
+Recovery reference `live360-66134c6c7f60cca1e12abca6658f71591fb04ea1-1789848785091`.
+Runner reports PUBLIC_STATE_GATES_PASS and THEME_RELEASE_VERIFIED; database
+writes none by runner. Content and legacy hashes plus protected snapshots
+match before/after. No rollback required. Independent read-only SSH verification
+passes: all250active records exactly match the artifact, no extras/symlinks;
+Content/legacy hashes and protected snapshots equal. Backup52,164,450bytes,
+readable/nonzero/tar-valid; archiveSHA256
+`84ea9111f869c3677b480662eb73d01c7299d34111fe1c8ee7f12891c89dea81`.
+Backup checksum-set digest
+`777a9a3b178ca54be2105e837ecb401c1780cedac402ec7c94c8c36bdfbc45ff`;
+all entries pass, including five successful PHP lint lines. Real production
+browser/performance QA continues; do not infer it from swap success.
+
+Current real-browser results: six medium-selection contexts PASS, preserving
+Proof candidate behavior and stable geometry; four motion widths plus reduced/
+no-JS cases PASS. Exact-GIF initial viewport deferral and persistent pause pass.
+The release-specific aggregate suite has now completed:33menu views,
+200trusted pointer activations,162CTA views (135existing-CTA cases),42LCP image
+views,10prose views,19metadata responses and6security-header responses PASS.
+The testimonial regression passes320/390/768/1024/1440/1920 including reduced
+motion. No errors were reported by that suite. Cold performance and expanded
+all-route accessibility/text-spacing coverage remain pending; this is not a
+whole-programme completion or PHP fatal-log assurance.
+
+- `qa/live-360/documentary-medium-production.json`:
+  `4493cbdd87445818edb3c63ed07e8df8373d4d776731764c49ca8bd24d50aa4e`
+- `qa/live-360/motion/production.json`:
+  `1916f7aeb0e7b5729c5b446c4c46dcbc56e359f87a85bb0532efe3afda43f76e`

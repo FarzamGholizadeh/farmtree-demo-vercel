@@ -32,8 +32,18 @@ LCP); remediation evidence is in PERFORMANCE-MATRIX.md and RELEASE-02.md.
 Remediation commit `ce4cdcc` is pushed and artifact-audited. Its first deployment
 stopped before active replacement because host Bash process substitution could
 not open `/dev/fd/62`. Active217-file baseline is unchanged. Runner-only
-regular-file lint correction is locally tested; retry requires a new exact-SHA
-artifact and fresh recovery directory. See RELEASE-02.md.
+regular-file lint correction is tested and committed as `66134c6`. Its exact
+artifact is now deployed with fresh verified backup,250-file parity and public
+state preserved. Production motion/media and release-specific aggregate browser
+checks pass, including six-width testimonial regression. Cold performance and
+expanded all-route/text-spacing QA continue. See RELEASE-02.md.
+
+## Live360 accessibility follow-up — local, 2026-09-19
+
+Latest local Live360 follow-up: globe single-pointer direction controls and
+metric text-spacing containment are validated candidates; production remains
+66134c6. Release03 evidence records independent test review and corrected
+comparison methodology. Two findings remain open until production retest.
 
 ## Mobile pointer verification — local, 2026-09-19
 

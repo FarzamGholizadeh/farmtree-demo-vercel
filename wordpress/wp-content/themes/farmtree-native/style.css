@@ -4148,12 +4148,13 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 .ft-metric-card:last-child .ft-metric-value {
   width: 100%;
   min-width: 0;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
   font-size: clamp(1.65rem, 2.75vw, 2.6rem) !important;
   font-variant-numeric: tabular-nums lining-nums;
   letter-spacing: -.035em;
   text-align: center;
-  text-wrap: nowrap;
+  text-wrap: wrap;
 }
 
 .ft-globe-canvas {
@@ -5370,6 +5371,22 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
   border-inline-start: 1px solid currentcolor;
   font-size: 0.75rem;
   text-align: center;
+}
+
+.ft-globe-direction-controls {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 44px;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-block: 0.75rem;
+  padding-inline: 0;
+}
+
+.ft-globe-direction {
+  flex-shrink: 0;
+  padding-inline: 0.3rem;
+  white-space: nowrap;
 }
 
 .ft-moving-rail.is-motion-paused[data-ft-motion-paused="true"] .ft-moving-rail-track {

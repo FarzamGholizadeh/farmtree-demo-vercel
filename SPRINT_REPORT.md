@@ -17,6 +17,18 @@ is stable and image-suite maxCLS0.03234. Server fatal-log coverage remains
 unavailable, and original lint-output retention is an open observability finding;
 independent live5-file syntax check passes. See RELEASE-01 for provenance.
 
+## Live360 release02 — production QA in progress
+
+Live360 release02 checkpoint: motion/pause and exact-GIF viewport deferral plus
+Blog-only800px responsive candidates deployed in `66134c6`. A prior pre-swap
+host `/dev/fd` failure was corrected in the guarded runner and covered by an
+actual PHP traversal/lint-failure fixture. Fresh recovery backup,250-file exact
+parity and unchanged protected state independently verified; production motion
+and responsive selection pass. Release-specific navigation/CTA/LCP/prose/
+metadata/headers and six-width testimonial checks also pass. Expanded all-route
+and text-spacing browser coverage plus cold performance QA remain in progress.
+No content APPLY or production DB write by the runner; no final score claimed.
+
 ## 320px pointer diagnostic — local, 2026-09-19
 
 Reproduced the original pointer-test timeout at exactly 320px. At timeout the

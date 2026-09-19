@@ -877,6 +877,14 @@
                     requestRender();
                 }
             });
+            // Reserve adjacent control geometry before asynchronous activation.
+            // Buttons are exposed only after the canvas renderer is usable.
+            const directionControls = document.createElement('div');
+            directionControls.className = 'ft-globe-direction-controls';
+            directionControls.setAttribute('role', 'group');
+            directionControls.setAttribute('aria-label', 'Rotate globe without dragging');
+            directionControls.setAttribute('aria-hidden', 'true');
+            motionControls.get(shell).parentElement.after(directionControls);
 
             function resizeCanvas() {
                 const displaySize = Math.max(240, Math.round(canvas.getBoundingClientRect().width));
@@ -1173,19 +1181,37 @@
                 };
                 canvas.addEventListener('pointerup', stopDragging);
                 canvas.addEventListener('pointercancel', stopDragging);
+                const rotateManually = (horizontal, vertical) => {
+                    rotation += horizontal;
+                    pitch = Math.max(-1.15, Math.min(1.15, pitch + vertical));
+                    resumeStrength = 0;
+                    draw();
+                };
                 canvas.addEventListener('keydown', (event) => {
                     if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
                         return;
                     }
                     event.preventDefault();
-                    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                        rotation += event.key === 'ArrowLeft' ? -0.1 : 0.1;
-                    } else {
-                        pitch = Math.max(-1.15, Math.min(1.15, pitch + (event.key === 'ArrowUp' ? 0.1 : -0.1)));
-                    }
-                    resumeStrength = 0;
-                    draw();
+                    rotateManually(event.key === 'ArrowLeft' ? -0.1 : event.key === 'ArrowRight' ? 0.1 : 0,
+                        event.key === 'ArrowUp' ? 0.1 : event.key === 'ArrowDown' ? -0.1 : 0);
                 });
+                [
+                    ['left', 'Left', 'Rotate globe left', -0.1, 0],
+                    ['right', 'Right', 'Rotate globe right', 0.1, 0],
+                    ['up', 'Up', 'Tilt globe up', 0, 0.1],
+                    ['down', 'Down', 'Tilt globe down', 0, -0.1]
+                ].forEach(([direction, label, accessibleLabel, horizontal, vertical]) => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'ft-motion-toggle ft-globe-direction';
+                    button.textContent = label;
+                    button.setAttribute('aria-label', accessibleLabel);
+                    button.setAttribute('aria-controls', shell.id);
+                    button.dataset.ftGlobeDirection = direction;
+                    button.addEventListener('click', () => rotateManually(horizontal, vertical));
+                    directionControls.append(button);
+                });
+                directionControls.removeAttribute('aria-hidden');
                 if ('ResizeObserver' in window) {
                     new ResizeObserver(() => draw()).observe(shell);
                 }
