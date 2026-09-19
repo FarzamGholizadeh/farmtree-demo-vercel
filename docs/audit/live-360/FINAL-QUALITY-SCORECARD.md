@@ -34,8 +34,9 @@ Total weight: 100; applicable groups: 84. No thresholds or denominators changed.
   errors; desktop autoplay hero late LCP remains an open gate, not a passing matrix.
 - Two confirmed P1 accessibility findings: globe WCAG2.5.7 and metric WCAG1.4.12.
   Local candidates are not deployed and cannot earn live remediation credit.
-- Full current all-route browser/field/assistive-technology/idempotence coverage
-  remains incomplete; release-specific browser PASS is narrower evidence.
+- Fresh40-route/11-width browser matrix passes440views, with pending-image
+  observations separately investigated. Full field/assistive-technology/idempotence
+  coverage remains incomplete; browser PASS is narrower evidence.
 - The14-body content proposal is unimplemented. Fresh reconciler bootstrap-risk
   approval, reviewed digest and scope remain required before content mutation.
 - Human user research, legal sufficiency, retention/contracts and claim evidence

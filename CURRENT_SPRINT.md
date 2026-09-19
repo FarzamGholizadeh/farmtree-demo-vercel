@@ -1,5 +1,15 @@
 # Current FarmTree Sprint
 
+## Live360 current handoff — 2026-09-19
+
+Runtime candidate5104687 is locally validated but NOT pushed or deployed.
+Execution review rejected the combined push/release before execution; explicit
+approval is pending. Production remains66134c6. Read-only follow-up passes
+46-route crawl and440 browser views; separate14-image decode and bounded rail
+diagnosis found no persistent defect. Final-named report documents are provisional,
+not programme completion. See state.json and FINAL-AUDIT-REPORT.md. This handoff
+update changes documentation only; it does not supersede the runtime candidate.
+
 ## Live 360 programme — 2026-09-19
 
 Verified live baseline: `6b01611b1d87edd8190b54f405beefddf33ebf27`.

@@ -2,11 +2,19 @@
 
 Programme: **IN_PROGRESS**. Live66134c6; release-specific aggregate QA completed,
 with cold performance and expanded accessibility coverage still in progress.
+Follow-up:40-route/11-width browser matrix is now complete; manual accessibility
+and valid full cold-performance coverage remain incomplete. Candidate5104687 is
+not deployed; follow-up sourceSHA identifies its harness only.
 Only completed, scoped reports are pinned below. A passing sample is not a
 whole-programme pass. No hash for a still-growing aggregate report is declared final.
 
 | Completed evidence | SHA256 | Scope / interpretation |
 |---|---|---|
+| `qa/live-360/routes-production-66134c6-followup/report.json` | `6e1ceaba5a57b3721d777577d1c5409051c23f3e9c8eb5ce1d97d7eba021a117` |46routes/46internal destinations,0broken; public crawl |
+| `qa/live-360/browser-production-66134c6-followup/report.json` | `d0148bb28d0951af618e2ab44ea9c0f7c864c4ec57d7c33ca4de7c8f506ddc36` |440views,0automated failures/errors;175pending-image observations, not complete-load proof |
+| `qa/live-360/pending-image-diagnosis.json` | `32d09182ddaf7065e35dcc7e20c3f1ece435dcc2dbae741f9f30bf24405f6450` |14public URLs HTTP200/decoded; independent fetch, not original lazy timing |
+| `qa/live-360/pending-image-diagnosis-with-rail-dwell.json` | `4046415dd795f291b8f7c962b56a925e0deb3e0e000a30b806def6496573ce98` |320/1440 natural rail dwell; transient logo pending observations preserved |
+| `qa/live-360/logo-entry-320.json` | `49fef24f80c4d2de427566cbd699a6ee4ef73b6b2e5ccf672ee5351d92422792` |60samples/15.438s; no mostly-visible missing logo after first18ms sample; bounded, not full network matrix |
 | `qa/screenshots/cta-layout/production/report.json` | `89f09983d99b0096f14a95e75e760281b6eaa771567eea3c0fa1d669e7a56ecc` |162views,135 existing-CTA cases; PASS |
 | `qa/screenshots/menu-links/production/report.json` | `358041f66fb4179fe6d7e01795de68bd6902af5de5e8b3c65f7efa81fc86417e` |33views,11widths; PASS |
 | `qa/screenshots/menu-links/production/pointer-report.json` | `7430b4ff1195c30fbf17549ae9b8315e6e65bc26dbeef290f20ea731d3fe6cec` |200trusted activations at320/360/390/414 plus keyboard; PASS |

@@ -1,5 +1,15 @@
 # FT-NATIVE-002 Sprint Report
 
+## Live360 handoff checkpoint — 2026-09-19
+
+Candidate5104687 completed local validation and exact artifact audit; no push or
+deployment occurred after execution-review rejection. Fresh live66134c6 crawl
+passes46routes;40route/11width browser matrix passes440views and tested interactions.
+Fourteen pending image URLs decode; bounded logo-entry timing does not establish
+a persistent defect. Two local accessibility fixes still require live release
+and retest. Final report paths now contain explicitly provisional documents;
+numeric score adjudication, performance and human evidence remain incomplete.
+
 ## Current programme status — 2026-09-19
 
 Live baseline `6b01611b1d87edd8190b54f405beefddf33ebf27` matches its 217-file
