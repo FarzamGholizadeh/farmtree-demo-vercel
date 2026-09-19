@@ -1,6 +1,8 @@
 # Motion and responsive media delivery — local candidate
 
-Status: LOCAL VALIDATION PASSED, release pending. Not committed, pushed or deployed. Current verified live
+Status: LOCAL VALIDATION PASSED; commit `ce4cdcc64ba90f8938488c4bdf38da612e4fa7c0`
+pushed and exact artifact audited. Deployment stopped before active replacement.
+Current verified live
 runtime remains `a23441ba6f72d120f8bd2aac5ada0adcf3bb8546`.
 
 ## Scope and reason
@@ -84,3 +86,21 @@ dry-run remains separately blocked on exact bootstrap-risk approval.
 Runner evidence improvement includes absolute PHP-lint output in the rollback
 checksum set and verifies that set after deployment before disabling rollback.
 This does not explain the first release's missing original lint evidence.
+
+## Pre-swap host compatibility failure
+
+The first release attempt stopped at PHP lint input redirection: `/dev/fd/62`
+was unavailable for Bash process substitution. No active swap, rollback or
+state query occurred; only off-webroot package/staging files were created.
+Reference: `live360-ce4cdcc64ba90f8938488c4bdf38da612e4fa7c0-1789848437569`.
+Do not delete these diagnostic files or call the partial stage a recovery backup.
+All217active Native+Content file records match the reviewed a23441b baseline:
+canonical sorted aggregate `7665c120596b1b5a45b4c94d357c36d74613a7db565290d5cdcb196854d3aabc`
+(standard artifact `wordpress/` prefix removed). `pre-theme` and `state-before.txt`
+are absent. The deployment did not reach the database or replacement steps.
+
+Source correction uses an independently checked regular NUL-separated PHP file
+list and requires nonempty discovery and lint output. Regression now must lint
+an actual PHP fixture and stop before replacement on lint failure. This is
+runner-only; the validated Native artifact remains unchanged. A new exact-SHA
+commit/build/audit is required before retry, with a fresh recovery directory.

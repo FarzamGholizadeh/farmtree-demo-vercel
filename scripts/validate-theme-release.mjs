@@ -27,6 +27,7 @@ for (const name of ['deploy-wordpress-native.yml','test-vimexx-ssh.yml']) {
   assert.ok(source.includes('VIMEXX_KNOWN_HOSTS'));
 }
 const runner=readFileSync(join(root,'scripts/release-native-theme-remote.sh'),'utf8');
+assert.ok(!/[<>]\s*\(/.test(runner), 'Remote runner must not depend on process substitution /dev/fd');
 assert.ok(!/wp (?:option (?:update|delete)|db (?:import|reset)|theme activate|plugin activate)/.test(runner));
 assert.ok(runner.indexOf('cmp "$base/current.sha256"')<runner.indexOf('mv wp-content/themes/farmtree-native'));
 
@@ -47,17 +48,18 @@ function fixture(mode) {
   const dir=realpathSync(mkdtempSync(join(tmpdir(),'ft-release-test-'))),site=join(dir,'public_html'),recovery=join(dir,'recovery'),bin=join(dir,'bin');
   const release=`live360-${sha}-1`,base=join(recovery,release);
   for(const d of [site,recovery,base,bin])mkdirSync(d,{recursive:true});
-  const files={ [themePrefix+'style.css']:'old', 'wp-content/plugins/farmtree-content/plugin.php':'plugin','wp-content/themes/farmtree/style.css':'legacy'};
+  const oldPhp='<?php /* previous runtime */', newPhp='<?php /* replacement runtime */';
+  const files={ [themePrefix+'style.css']:'old', [themePrefix+'functions.php']:oldPhp, 'wp-content/plugins/farmtree-content/plugin.php':'plugin','wp-content/themes/farmtree/style.css':'legacy'};
   for(const [path,content] of Object.entries(files)){mkdirSync(join(site,path,'..'),{recursive:true});writeFileSync(join(site,path),content);}
   const baseline=Object.entries(files).filter(([p])=>!p.startsWith('wp-content/themes/farmtree/')).map(([p,c])=>`${hash(c)}  ${p}\n`).join('');
   writeFileSync(join(base,'baseline.sha256'), mode==='drift'?baseline.replace(hash('old'),hash('wrong')):baseline);
   const path=mode==='traversal'?themePrefix+'../escape':themePrefix+'style.css';
-  writeFileSync(join(base,'target.sha256'),`${hash('new')}  ${path}\n`);
-  writeFileSync(join(base,'theme.tar.gz'),archive([{name:path,content:mode==='symlink'?'':'new',type:mode==='symlink'?'2':'0',link:mode==='symlink'?'/etc/passwd':''}]));
+  writeFileSync(join(base,'target.sha256'),`${hash('new')}  ${path}\n${hash(newPhp)}  ${themePrefix}functions.php\n`);
+  writeFileSync(join(base,'theme.tar.gz'),archive([{name:path,content:mode==='symlink'?'':'new',type:mode==='symlink'?'2':'0',link:mode==='symlink'?'/etc/passwd':''},{name:themePrefix+'functions.php',content:newPhp}]));
   writeFileSync(join(base,'state-gates.php'),'mock');
   const mock=(name,code)=>{const p=join(bin,name);writeFileSync(p,`#!${process.execPath}\n${code}`);chmodSync(p,0o755);};
   mock('stat',"console.log('1')");
-  mock('php',"console.log('PHP_MOCK')");
+  mock('php',`if(process.argv[2]==='-l'){console.log('PHP_MOCK '+process.argv[3]);process.exit(${mode==='lint-fail'?1:0});}console.log('STATE_GATE_MOCK');`);
   mock('flock',`process.exit(${mode==='lock'?1:0})`);
   mock('wp',`const s=process.argv.slice(2).join(' ');if(s==='db prefix')console.log('ft_');else if(s.includes('post_name IN'))console.log('0');else if(s.includes('SELECT COUNT(*)'))console.log('1');else console.log('stable-state');`);
   mock('curl',`const fs=require('node:fs'),a=process.argv;fs.writeFileSync(a[a.indexOf('-D')+1],'HTTP/2 200');fs.writeFileSync(a[a.indexOf('-o')+1],'<html>Public</html>');console.log('${mode==='smoke-fail'?'503':'200'}');`);
@@ -65,10 +67,23 @@ function fixture(mode) {
   writeFileSync(script,runner.replace('root=/home/u80341p492940/domains/farmtree.eu/public_html',`root=${site}`).replace('recovery=/home/u80341p492940/farmtree-recovery-backups',`recovery=${recovery}`));
   const args=[script,sha,release,...['theme.tar.gz','target.sha256','baseline.sha256'].map(f=>hash(readFileSync(join(base,f))))];
   const result=spawnSync('bash',args,{encoding:'utf8',env:{...process.env,PATH:bin+':'+process.env.PATH},timeout:30000});
-  if(mode==='success') {assert.equal(result.status,0,result.stdout+result.stderr);assert.equal(readFileSync(join(site,themePrefix+'style.css'),'utf8'),'new');assert.ok(existsSync(join(base,'backup.sha256')));assert.ok(existsSync(join(base,'php-lint.txt')));assert.match(readFileSync(join(base,'backup.sha256'),'utf8'),/  php-lint\.txt/);}
+  if(mode==='success') {
+    assert.equal(result.status,0,result.stdout+result.stderr);
+    assert.equal(readFileSync(join(site,themePrefix+'style.css'),'utf8'),'new');
+    assert.equal(readFileSync(join(site,themePrefix+'functions.php'),'utf8'),newPhp);
+    const lint=readFileSync(join(base,'php-lint.txt'),'utf8');
+    assert.equal(lint,`PHP_MOCK stage/${themePrefix}functions.php\n`, 'Lint loop must actually visit PHP fixture');
+    const record=readFileSync(join(base,'backup.sha256'),'utf8').split('\n').find(line=>line.endsWith('  php-lint.txt'));
+    assert.equal(record,`${hash(lint)}  php-lint.txt`, 'Retained lint evidence checksum must match');
+  }
   else {assert.notEqual(result.status,0);assert.equal(readFileSync(join(site,themePrefix+'style.css'),'utf8'),'old');if(mode==='smoke-fail')assert.match(result.stderr,/THEME_ROLLED_BACK/);}
+  if(mode!=='success') assert.equal(readFileSync(join(site,themePrefix+'functions.php'),'utf8'),oldPhp);
+  if(mode==='lint-fail') {
+    assert.match(readFileSync(join(base,'php-lint.txt'),'utf8'),/PHP_MOCK .*functions\.php/);
+    for(const name of ['pre-theme','state-before.txt','theme-before.tar.gz','backup.sha256']) assert.ok(!existsSync(join(base,name)), `Lint failure must stop before ${name}`);
+  }
   assert.equal(readFileSync(join(site,'wp-content/themes/farmtree/style.css'),'utf8'),'legacy');
   assert.equal(readFileSync(join(site,'wp-content/plugins/farmtree-content/plugin.php'),'utf8'),'plugin');
 }
-for(const mode of ['success','drift','traversal','symlink','lock','smoke-fail'])fixture(mode);
+for(const mode of ['success','lint-fail','drift','traversal','symlink','lock','smoke-fail'])fixture(mode);
 console.log('THEME_RELEASE_TESTS_PASS: source mismatch/dirty; path traversal; symlink; baseline drift; simulated lock contention; real filesystem swap/rollback; legacy/plugin preserved. PHP/WP/HTTP/flock are mocked, production verification remains required.');

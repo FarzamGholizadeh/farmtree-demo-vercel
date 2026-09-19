@@ -33,8 +33,12 @@ mkdir stage
 tar -xzf theme.tar.gz --no-same-owner --no-same-permissions -C stage
 test "$(find stage -type l | wc -l)" -eq 0
 (cd stage && sha256sum -c --quiet "$base/target.sha256")
-while IFS= read -r -d '' source; do php -l "$source"; done < <(find stage -name '*.php' -type f -print0) > "$base/php-lint.txt"
-test -f "$base/php-lint.txt"
+# Restricted hosts may lack usable /dev/fd process-substitution descriptors.
+# A checked regular NUL list also makes discovery failure independently fatal.
+find stage -name '*.php' -type f -print0 > "$base/php-sources.list"
+test -s "$base/php-sources.list"
+while IFS= read -r -d '' source; do php -l "$source"; done < "$base/php-sources.list" > "$base/php-lint.txt"
+test -s "$base/php-lint.txt"
 find stage -type d -exec chmod 755 {} +
 find stage -type f -exec chmod 644 {} +
 cd "$root"

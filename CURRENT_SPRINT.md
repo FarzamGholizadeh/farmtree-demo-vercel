@@ -29,7 +29,11 @@ Fresh public crawl passes46routes/46internal
 destinations. Cold production lab baseline exposes three failed route/viewport
 groups (Homepage mobile incomplete load, Homepage desktop late LCP, Blog mobile
 LCP); remediation evidence is in PERFORMANCE-MATRIX.md and RELEASE-02.md.
-No new release from this resumed work has been pushed or deployed yet.
+Remediation commit `ce4cdcc` is pushed and artifact-audited. Its first deployment
+stopped before active replacement because host Bash process substitution could
+not open `/dev/fd/62`. Active217-file baseline is unchanged. Runner-only
+regular-file lint correction is locally tested; retry requires a new exact-SHA
+artifact and fresh recovery directory. See RELEASE-02.md.
 
 ## Mobile pointer verification — local, 2026-09-19
 

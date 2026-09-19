@@ -5,7 +5,7 @@
   "started": "2026-09-19",
   "baselineCommit": "6b01611b1d87edd8190b54f405beefddf33ebf27",
   "lastVerifiedRuntimeCommit": "a23441ba6f72d120f8bd2aac5ada0adcf3bb8546",
-  "phase": "motion_and_blog_media_validated_release_preparation",
+  "phase": "pre_swap_runner_compatibility_fix",
   "productionMutationsThisProgramme": [{"sha":"a23441ba6f72d120f8bd2aac5ada0adcf3bb8546","scope":"Native theme only","backup":"live360-a23441ba6f72d120f8bd2aac5ada0adcf3bb8546-1789834663137","checksumAndStateGates":"PASS","browserQA":"PASS release-specific suite","databaseWrites":"none by runner"}],
   "score": null,
   "scoreStatus": "not_yet_assessed",
@@ -13,7 +13,7 @@
   "p1": 1,
   "unknownIsPass": false,
   "blockedPaths": [{"path":"fresh production reconciler dry-run","reason":"Execution approval reviewer rejected active-plugin bootstrap before scoped SQL firewall for a23441b; no command executed. Exact bounded approval requested; no retry or workaround."}],
-  "next": "Motion/GIF and Blog-only medium candidates pass local core/WP/browser checks and independent review. Prepare focused commit/exact artifact/push/backup/theme-only release and live QA; synthetic asset timing is not accepted as production performance. Content body proposal remains design-only; exact production dry-run approval pending. Preserve approved autoplay unless the user explicitly changes the product choice.",
+  "next": "ce4cdcc pushed/audited but deployment stopped at host /dev/fd lint redirection before swap/state queries. Active217filebaseline verified unchanged. Validate/commit regular-file lint correction, rebuild exact artifact and retry guarded release with fresh directory; then live QA. Content dry-run approval and autoplay product choice remain pending separately.",
   "preserve": ["English public", "Homepage public", "blog_public=1", "Coming Soon OFF", "Native active", "Content active", "NL/DE unpublished", "FT Bot OFF", "legacy rollback theme", "approved stakeholder terminology"],
   "evidence": ["BASELINE.md", "assessments/security-architecture.md", "assessments/experience-engineering.md", "assessments/search-content.md"]
 }
