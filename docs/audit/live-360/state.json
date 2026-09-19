@@ -4,18 +4,64 @@
   "status": "in_progress",
   "started": "2026-09-19",
   "baselineCommit": "6b01611b1d87edd8190b54f405beefddf33ebf27",
-  "lastVerifiedRuntimeCommit": "66134c6c7f60cca1e12abca6658f71591fb04ea1",
-  "phase": "release03_awaiting_explicit_authorization",
+  "lastVerifiedRuntimeCommit": "5104687c27b7b6aa69b100e55d905a8107726ec7",
+  "phase": "release03_production_qa_complete_programme_in_progress",
   "releaseCandidateCommit": "5104687c27b7b6aa69b100e55d905a8107726ec7",
-  "productionMutationsThisProgramme": [{"sha":"a23441ba6f72d120f8bd2aac5ada0adcf3bb8546","scope":"Native theme only","backup":"live360-a23441ba6f72d120f8bd2aac5ada0adcf3bb8546-1789834663137","checksumAndStateGates":"PASS","browserQA":"PASS release-specific suite","databaseWrites":"none by runner"},{"sha":"66134c6c7f60cca1e12abca6658f71591fb04ea1","scope":"Native theme only","backup":"live360-66134c6c7f60cca1e12abca6658f71591fb04ea1-1789848785091","checksumAndStateGates":"PASS; independent250file/backup/lint verification","browserQA":"in progress","databaseWrites":"none by runner"}],
+  "productionMutationsThisProgramme": [
+    {
+      "sha": "a23441ba6f72d120f8bd2aac5ada0adcf3bb8546",
+      "scope": "Native theme only",
+      "backup": "live360-a23441ba6f72d120f8bd2aac5ada0adcf3bb8546-1789834663137",
+      "checksumAndStateGates": "PASS",
+      "browserQA": "PASS release-specific suite",
+      "databaseWrites": "none by runner"
+    },
+    {
+      "sha": "66134c6c7f60cca1e12abca6658f71591fb04ea1",
+      "scope": "Native theme only",
+      "backup": "live360-66134c6c7f60cca1e12abca6658f71591fb04ea1-1789848785091",
+      "checksumAndStateGates": "PASS; independent250file/backup/lint verification",
+      "browserQA": "in progress",
+      "databaseWrites": "none by runner"
+    },
+    {
+      "sha": "5104687c27b7b6aa69b100e55d905a8107726ec7",
+      "scope": "Native theme only, explicit exact-SHA user approval",
+      "backup": "live360-5104687c27b7b6aa69b100e55d905a8107726ec7-1789853896798",
+      "checksumAndStateGates": "PASS; independent backup/theme/plugin/legacy/state verification",
+      "browserQA": "PASS scoped motion, spacing, aggregate and testimonial; 46-route crawl",
+      "databaseWrites": "none by runner; no reconciler"
+    }
+  ],
   "score": null,
   "scoreStatus": "not_yet_assessed",
   "p0": 0,
   "p1": 2,
-  "severityCountScope": "Known open findings in RISK-REGISTER only; not an assertion that unfinished audit coverage contains no further defects.",
+  "severityCountScope": "Pre-release03 known finding counts pending broader risk-register re-adjudication; release03 corrected globe/metric findings within documented live test scope. Not a current programme-wide defect count.",
   "unknownIsPass": false,
-  "blockedPaths": [{"path":"fresh production reconciler dry-run","reason":"Execution approval reviewer rejected active-plugin bootstrap before scoped SQL firewall for a23441b; no command executed. Exact bounded approval requested; no retry or workaround."},{"path":"5104687 feature-branch push and production theme release","reason":"Execution approval reviewer rejected combined push/release before execution. Explicit exact-candidate approval remains pending; no retry, split or workaround."}],
-  "next": "5104687 local motion/spacing, core/WP/anonymous, aggregate browser and artifact validation completed. Obtain explicit candidate release approval before push/deploy, then fresh backup/state and live remediation checks. Follow-up66134c6 public crawl46routes and browser440views completed; pending-image follow-up found no persistent defect in bounded observation. Performance matrix remains interrupted, content dry-run/bootstrap approval and autoplay decision pending. Final report documents remain provisional; acceptance-group adjudication and human evidence remain incomplete.",
-  "preserve": ["English public", "Homepage public", "blog_public=1", "Coming Soon OFF", "Native active", "Content active", "NL/DE unpublished", "FT Bot OFF", "legacy rollback theme", "approved stakeholder terminology"],
-  "evidence": ["BASELINE.md", "assessments/security-architecture.md", "assessments/experience-engineering.md", "assessments/search-content.md"]
+  "blockedPaths": [
+    {
+      "path": "fresh production reconciler dry-run",
+      "reason": "Execution approval reviewer rejected active-plugin bootstrap before scoped SQL firewall for a23441b; no command executed. Exact bounded approval requested; no retry or workaround."
+    }
+  ],
+  "next": "Release03 deployed and scoped production QA passed; see RELEASE-03-PRODUCTION.md. Wider performance, content/reconciler authorization, acceptance-group adjudication and human evidence remain incomplete. Re-audit broader risk counts rather than infer overall completion from the scoped release.",
+  "preserve": [
+    "English public",
+    "Homepage public",
+    "blog_public=1",
+    "Coming Soon OFF",
+    "Native active",
+    "Content active",
+    "NL/DE unpublished",
+    "FT Bot OFF",
+    "legacy rollback theme",
+    "approved stakeholder terminology"
+  ],
+  "evidence": [
+    "BASELINE.md",
+    "assessments/security-architecture.md",
+    "assessments/experience-engineering.md",
+    "assessments/search-content.md"
+  ]
 }

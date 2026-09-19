@@ -1,5 +1,13 @@
 # Current FarmTree Sprint
 
+## Latest approved production release
+
+5104687 is now pushed and deployed with fresh verified rollback backup following
+explicit exact-SHA approval. Scoped production motion/spacing/navigation/CTA/
+image/metadata/header/link/testimonial QA passes. No reconciler or database write
+by the runner. See docs/audit/live-360/RELEASE-03-PRODUCTION.md; older pending
+release entries below are historical. Wider Live360 completion is not claimed.
+
 ## Live360 current handoff — 2026-09-19
 
 Runtime candidate5104687 is locally validated but NOT pushed or deployed.
