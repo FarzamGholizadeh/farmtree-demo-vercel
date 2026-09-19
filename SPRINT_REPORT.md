@@ -1,5 +1,23 @@
 # FT-NATIVE-002 Sprint Report
 
+## Shared CTA layout correction — local, 2026-09-19
+
+Root cause: the shared pattern omitted full alignment, so constrained inner
+main blocks applied the 760px content maximum and global gutters. Homepage's
+flow layout did not apply that constraint. Use native full alignment, leaving
+the inner constrained layout and all existing CTA styles/content intact.
+Affected existing uses: Homepage and 10 Customer Segment / 4 Proof Story detail
+pages. Solutions/News controls do not currently include this pattern; none added.
+Regression script: `node scripts/validate-cta-layout.cjs`; screenshots/report in
+`qa/screenshots/cta-layout/`. Local fixture refresh is needed because the local
+bootstrap stores expanded pattern markup; no managed manifest changes required.
+Validation passed: 162 views / 18 routes / nine widths including
+390/768/1440/1920. All 135 existing-CTA views are edge-to-edge and centered,
+with unchanged typography/padding/destinations, no footer gap, no overflow or
+console errors. Homepage geometry is identical with/without full alignment.
+`npm test`, `wp:verify` and `wp:verify:anonymous` pass after local fixture refresh;
+40 English routes and 104 internal links pass with zero broken links.
+
 ## Focused LCP correction — 2026-09-19
 
 Local primary-image regression passes 42 views (14 routes, 390/1440/1920):

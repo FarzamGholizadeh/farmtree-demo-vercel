@@ -1,5 +1,12 @@
 # FarmTree Sprint History
 
+## 2026-09-19 — local shared CTA full-width correction
+
+Added native full alignment to the common Call To Action pattern. Inner detail
+templates previously constrained it to content width; Homepage was already full
+width. No template duplication or per-page/content changes. Preserved centered
+inner content, typography, buttons and destinations. Release remains local only.
+
 ## 2026-09-19 — focused LCP priority correction
 
 The approved editorial release 4837321 deployed with a clean reconciliation.

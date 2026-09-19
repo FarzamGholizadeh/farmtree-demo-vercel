@@ -1,5 +1,12 @@
 # Current FarmTree Sprint
 
+## Shared full-width pre-footer CTA — local, 2026-09-19
+
+The shared Call To Action pattern now declares core `align: full` with matching
+saved `alignfull` markup. This removes inner-template content-width boxing while
+preserving the existing constrained inner content and Homepage appearance.
+No per-page patches, copy, links, routing, SEO or production changes.
+
 ## Focused LCP loading correction — 2026-09-19
 
 Approved baseline `48373210b7a337c396c93869c628dc9b56271647` is live.

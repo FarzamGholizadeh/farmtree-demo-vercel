@@ -9,8 +9,8 @@
  * @package FarmTree_Native
  */
 ?>
-<!-- wp:group {"tagName":"section","anchor":"contact","metadata":{"name":"FarmTree Call To Action"},"className":"ft-final-cta","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80","right":"var:preset|spacing|50","left":"var:preset|spacing|50"}}},"backgroundColor":"farmtree-forest","textColor":"white","layout":{"type":"constrained"},"templateLock":"contentOnly"} -->
-<section id="contact" class="wp-block-group ft-final-cta has-white-color has-farmtree-forest-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--50)"><!-- wp:paragraph {"className":"ft-native-eyebrow ft-final-cta-tagline","textColor":"farmtree-gold","fontSize":"small"} -->
+<!-- wp:group {"tagName":"section","align":"full","anchor":"contact","metadata":{"name":"FarmTree Call To Action"},"className":"ft-final-cta","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80","right":"var:preset|spacing|50","left":"var:preset|spacing|50"}}},"backgroundColor":"farmtree-forest","textColor":"white","layout":{"type":"constrained"},"templateLock":"contentOnly"} -->
+<section id="contact" class="wp-block-group alignfull ft-final-cta has-white-color has-farmtree-forest-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--50)"><!-- wp:paragraph {"className":"ft-native-eyebrow ft-final-cta-tagline","textColor":"farmtree-gold","fontSize":"small"} -->
 <p class="ft-native-eyebrow ft-final-cta-tagline has-farmtree-gold-color has-text-color has-small-font-size">Make agroforestry measurable, investable and scalable.</p>
 <!-- /wp:paragraph -->
 

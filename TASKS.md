@@ -1,5 +1,11 @@
 # FarmTree Tasks
 
+## Shared CTA layout — local, 2026-09-19
+
+- [x] Fix the shared outer block alignment without changing inner design/copy.
+- [x] Add responsive CTA geometry/style/destination/Homepage regression checks.
+- [ ] Push/deploy only with explicit approval; production unchanged in this task.
+
 ## Authorized LCP priority fix — 2026-09-19
 
 - [x] Preserve native primary featured-image priorities without eager cards.
