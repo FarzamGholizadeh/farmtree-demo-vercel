@@ -2,6 +2,7 @@
   "name": "farmtree-wordpress-native-validation",
   "version": "1.0.0",
   "private": true,
+  "engines": { "node": ">=22.12.0" },
   "description": "Repository-side validation for the FarmTree native WordPress rebuild.",
   "scripts": {
     "preview:native": "node scripts/preview-native-homepage.mjs",
@@ -20,12 +21,20 @@
     "images:prepare": "node scripts/prepare-documentary-images.mjs",
     "validate:documentary": "node scripts/validate-documentary-images.mjs",
     "validate:agents": "node scripts/validate-agent-system.mjs",
+    "validate:browser": "node scripts/validate-browser-regressions.mjs",
+    "audit:browser": "node scripts/validate-live360-browser.cjs",
+    "validate:metadata": "node scripts/validate-discovery-metadata.cjs",
+    "validate:headers": "node scripts/validate-security-headers.mjs",
+    "validate:theme-release": "node scripts/validate-theme-release.mjs",
+    "audit:performance": "node scripts/audit-performance.cjs",
     "validate:content-manifest": "node scripts/generate-managed-content-manifest.mjs --check",
     "validate:content-safety": "node scripts/validate-farmtree-content-safety.mjs",
     "validate:native": "node scripts/validate-native-foundation.mjs",
     "validate:preview": "node scripts/preview-native-homepage.mjs --check",
     "validate:visual": "node scripts/validate-visual-baseline.mjs",
-    "validate:workflows": "node scripts/validate-native-workflows.mjs",
+    "validate:workflows": "node scripts/validate-native-workflows.mjs && node scripts/validate-theme-release.mjs",
+    "validate:jsonld": "node scripts/validate-jsonld-serialization.mjs",
+    "validate:sitemap": "node scripts/validate-news-hub-sitemap.mjs",
     "validate:wordpress-state-safety": "node scripts/validate-wordpress-state-safety.mjs",
     "release:check": "node scripts/build-native-release.mjs --check",
     "release:build": "node scripts/build-native-release.mjs --build",
@@ -34,8 +43,15 @@
     "lint:css": "stylelint \"wordpress/wp-content/themes/farmtree-native/**/*.css\"",
     "test": "npm run validate:agents && npm run validate:documentary && npm run validate:content-manifest && npm run validate:content-safety && npm run validate:wordpress-state-safety && npm run validate:native && npm run validate:preview && npm run validate:visual && npm run validate:workflows && npm run release:check && npm run lint:js && npm run lint:css"
   },
+  "overrides": {
+    "express": {
+      "qs": "6.16.0"
+    }
+  },
   "devDependencies": {
     "@wordpress/env": "11.14.0",
+    "axe-core": "4.12.1",
+    "puppeteer-core": "25.11.0",
     "sharp": "0.35.4",
     "stylelint": "17.14.1",
     "stylelint-config-standard": "40.0.0",

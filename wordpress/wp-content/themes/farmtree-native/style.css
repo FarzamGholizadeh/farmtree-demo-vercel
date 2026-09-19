@@ -374,6 +374,8 @@ body {
 }
 
 .ft-blog-featured-card > figure {
+  width: 100%;
+  min-width: 0;
   height: 100%;
   margin: 0;
 }
@@ -664,6 +666,13 @@ h6 {
 
 .wp-site-blocks > * {
   margin-block-start: 0;
+}
+
+/* Prose links must not rely on color alone (WCAG 1.4.1). Keep standalone
+ * navigation, cards and button links in their existing visual system. */
+.ft-native-page-main .wp-block-post-content :where(p, .wp-block-list) a:not(.wp-element-button, .wp-block-button__link) {
+  text-decoration-line: underline;
+  text-underline-offset: 0.16em;
 }
 
 :where(.ft-skip-link, .wp-block-template-skip-link) {

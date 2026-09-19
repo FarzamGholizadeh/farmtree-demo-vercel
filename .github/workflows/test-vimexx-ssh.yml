@@ -14,13 +14,16 @@ jobs:
       - name: Configure SSH
         env:
           SSH_KEY: ${{ secrets.VIMEXX_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VIMEXX_KNOWN_HOSTS }}
           HOST: ${{ secrets.VIMEXX_HOST }}
           PORT: ${{ secrets.VIMEXX_PORT }}
         run: |
           mkdir -p ~/.ssh
           printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
+          test -n "$KNOWN_HOSTS"
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh-keygen -F "[$HOST]:$PORT" -f ~/.ssh/known_hosts >/dev/null
           chmod 600 ~/.ssh/known_hosts
 
       - name: Test Vimexx connection

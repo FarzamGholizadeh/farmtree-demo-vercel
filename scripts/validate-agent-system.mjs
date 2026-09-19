@@ -33,8 +33,12 @@ for (const source of [
   assert.match(agentMap, new RegExp(source.replace('.', '\\.')));
 }
 assert.match(agentMap, /https:\/\/farmtree\.eu\//);
-assert.match(agentMap, /`farmtree` is the current public and\s+rollback-safe theme/);
-assert.match(agentMap, /`farmtree-native` remains inactive and must not become\s+public without explicit approval/);
+assert.match(agentMap, /`farmtree-native` is the approved public theme/);
+assert.match(agentMap, /`farmtree` is the retained\s+legacy rollback theme/);
+assert.match(agentMap, /Coming Soon OFF and `blog_public=1`/);
+assert.match(agentMap, /remain unpublished and FT Bot remains OFF/);
+assert.match(agentMap, /never restore historical private-review settings/);
+assert.match(agentMap, /not as standing authorization/);
 assert.match(agentMap, /Coming Soon removal/);
 assert.match(agentMap, /VISUAL DESIGN LOCK/);
 assert.match(

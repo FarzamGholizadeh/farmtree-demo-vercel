@@ -399,6 +399,11 @@ function farmtree_native_meta_description(): string
         return $excerpt !== '' ? wp_strip_all_tags($excerpt) : '';
     }
 
+    if (is_category()) {
+        $description = trim(wp_strip_all_tags(category_description()));
+        return $description !== '' ? $description : sprintf('FarmTree News & Insights: %s.', single_cat_title('', false));
+    }
+
     return '';
 }
 
@@ -427,7 +432,7 @@ function farmtree_native_render_discovery_metadata(): void
                 'url' => home_url('/'),
                 'logo' => get_theme_file_uri('assets/images/brand/farmtree-logo.webp'),
                 'email' => 'info@farmtree.earth',
-                'description' => $description,
+                'description' => 'FarmTree helps organisations plan, compare, monitor and report agroforestry investments with science-based project intelligence.',
             ],
             [
                 '@type' => 'WebSite',
@@ -495,8 +500,8 @@ function farmtree_native_render_discovery_metadata(): void
             ];
     } elseif (is_singular()) {
         $post_type = get_post_type();
-        $canonical = get_permalink();
-        $schema['@graph'][] = [
+        $canonical = wp_get_canonical_url() ?: get_permalink();
+        $content_schema = [
             '@type' => $post_type === 'post' ? 'BlogPosting' : 'WebPage',
             '@id' => $canonical . '#content',
             'url' => $canonical,
@@ -506,6 +511,17 @@ function farmtree_native_render_discovery_metadata(): void
             'isPartOf' => ['@id' => home_url('/#website')],
             'publisher' => ['@id' => home_url('/#organization')],
         ];
+        if ($post_type === 'post') {
+            // Match the rendered headline and publication date. Do not expose
+            // administrator identity or imply an unshown editorial review date.
+            $content_schema['headline'] = single_post_title('', false);
+            $content_schema['datePublished'] = get_the_date(DATE_W3C);
+            $image = farmtree_native_social_image();
+            if (has_post_thumbnail() && $image !== []) {
+                $content_schema['image'] = $image['url'];
+            }
+        }
+        $schema['@graph'][] = $content_schema;
         $schema['@graph'][] = [
             '@type' => 'BreadcrumbList',
             '@id' => $canonical . '#breadcrumbs',
@@ -518,23 +534,94 @@ function farmtree_native_render_discovery_metadata(): void
 
     printf(
         "<script type=\"application/ld+json\">%s</script>\n",
-        wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+        wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)
     );
 }
 add_action('wp_head', 'farmtree_native_render_discovery_metadata', 5);
 
-/** Add canonical and restrained Open Graph metadata for the private English build. */
+/** Use actual local featured imagery, otherwise the already approved brand logo. */
+function farmtree_native_social_image(): array
+{
+    if (is_singular() && has_post_thumbnail()) {
+        $id = get_post_thumbnail_id();
+        $image = wp_get_attachment_image_src($id, 'full');
+        if ($image && wp_parse_url($image[0], PHP_URL_HOST) === wp_parse_url(home_url('/'), PHP_URL_HOST)) {
+            return ['url' => $image[0], 'width' => $image[1], 'height' => $image[2], 'alt' => (string) get_post_meta($id, '_wp_attachment_image_alt', true)];
+        }
+    }
+    $file = get_theme_file_path('assets/images/brand/farmtree-logo.webp');
+    $size = is_readable($file) ? wp_getimagesize($file) : false;
+    return $size ? ['url' => get_theme_file_uri('assets/images/brand/farmtree-logo.webp'), 'width' => $size[0], 'height' => $size[1], 'alt' => 'FarmTree'] : [];
+}
+
+/** Keep the approved brand casing without changing the stored site-name option. */
+function farmtree_native_document_title_parts(array $parts): array
+{
+    foreach (['site', 'title'] as $key) {
+        if (isset($parts[$key]) && strcasecmp($parts[$key], 'FarmTree') === 0) {
+            $parts[$key] = 'FarmTree';
+        }
+    }
+    return $parts;
+}
+add_filter('document_title_parts', 'farmtree_native_document_title_parts');
+
+/** Resolve only the two published, uniquely managed duplicate News hub Pages. */
+function farmtree_native_news_hub_pair(): array
+{
+    $pair = [];
+    foreach (['blog', 'news-insights'] as $slug) {
+        $page = get_page_by_path($slug, OBJECT, 'page');
+        $key = 'page.en.' . str_replace('-', '_', $slug);
+        if (!$page || $page->post_status !== 'publish' || $page->post_password !== ''
+            || get_post_meta($page->ID, '_farmtree_content_managed_key', false) !== [$key]) return [];
+        $pair[$slug] = $page;
+    }
+    return $pair;
+}
+
+/** Preserve the duplicate route while identifying the existing primary News hub. */
+function farmtree_native_news_hub_canonical(string $url, WP_Post $post): string
+{
+    if ($post->post_type !== 'page' || $post->post_name !== 'news-insights') return $url;
+    $pair = farmtree_native_news_hub_pair();
+    return $pair && $post->ID === $pair['news-insights']->ID ? get_permalink($pair['blog']) : $url;
+}
+add_filter('get_canonical_url', 'farmtree_native_news_hub_canonical', 10, 2);
+
+/** Exclude only the verified duplicate; retain all existing sitemap exclusions. */
+function farmtree_native_news_hub_sitemap_args(array $args, string $post_type): array
+{
+    if ($post_type !== 'page') return $args;
+    $pair = farmtree_native_news_hub_pair();
+    if ($pair) $args['post__not_in'] = array_values(array_unique(array_merge($args['post__not_in'] ?? [], [$pair['news-insights']->ID])));
+    return $args;
+}
+add_filter('wp_sitemaps_posts_query_args', 'farmtree_native_news_hub_sitemap_args', 10, 2);
+
+/** Add canonical and restrained Open Graph metadata for public English pages. */
 function farmtree_native_render_social_metadata(): void
 {
-    if (!is_singular() && !is_front_page()) return;
-    $url = is_front_page() ? home_url('/') : get_permalink();
-    $title = is_front_page() ? get_bloginfo('name') : single_post_title('', false);
+    if (defined('WPSEO_VERSION') || defined('RANK_MATH_VERSION')) return;
+    if (!is_singular() && !is_front_page() && !is_category()) return;
+    $url = is_category() ? get_category_link(get_queried_object_id()) : (is_front_page() ? home_url('/') : (wp_get_canonical_url() ?: get_permalink()));
+    if (is_wp_error($url)) return;
+    if (is_category() && get_query_var('paged') > 1) $url = get_pagenum_link((int) get_query_var('paged'));
+    $title = is_category() ? single_cat_title('', false) : (is_front_page() ? 'FarmTree' : single_post_title('', false));
     $description = farmtree_native_meta_description();
-    printf("\n<link rel=\"canonical\" href=\"%s\" />\n", esc_url($url));
+    // WordPress core already owns the canonical for singular content.
+    if (!is_singular()) printf("\n<link rel=\"canonical\" href=\"%s\" />\n", esc_url($url));
     printf("<meta property=\"og:type\" content=\"%s\" />\n", is_singular('post') ? 'article' : 'website');
     printf("<meta property=\"og:title\" content=\"%s\" />\n", esc_attr($title));
     printf("<meta property=\"og:url\" content=\"%s\" />\n", esc_url($url));
     if ($description !== '') printf("<meta property=\"og:description\" content=\"%s\" />\n", esc_attr($description));
+    $image = farmtree_native_social_image();
+    if ($image !== []) {
+        printf("<meta property=\"og:image\" content=\"%s\" />\n", esc_url($image['url']));
+        printf("<meta property=\"og:image:width\" content=\"%d\" />\n", $image['width']);
+        printf("<meta property=\"og:image:height\" content=\"%d\" />\n", $image['height']);
+        printf("<meta property=\"og:image:alt\" content=\"%s\" />\n", esc_attr($image['alt']));
+    }
 }
 add_action('wp_head', 'farmtree_native_render_social_metadata', 6);
 
@@ -567,6 +654,20 @@ function farmtree_native_pre_release_headers(array $headers): array
     return $headers;
 }
 add_filter('wp_headers', 'farmtree_native_pre_release_headers', 99);
+
+/** Conservative public-response defaults; preserve stronger upstream policies. */
+function farmtree_native_security_headers(array $headers): array
+{
+    $present = array_change_key_case($headers, CASE_LOWER);
+    if (!isset($present['x-content-type-options'])) {
+        $headers['X-Content-Type-Options'] = 'nosniff';
+    }
+    if (!isset($present['referrer-policy'])) {
+        $headers['Referrer-Policy'] = 'strict-origin-when-cross-origin';
+    }
+    return $headers;
+}
+add_filter('wp_headers', 'farmtree_native_security_headers');
 
 /** Local QA must never become indexable when production is launched. */
 function farmtree_native_private_runtime(): bool

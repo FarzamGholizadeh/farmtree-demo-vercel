@@ -5,6 +5,11 @@ description: Deliver FarmTree WordPress-native, Block Theme, Gutenberg, plugin, 
 
 # FarmTree Autonomous Delivery
 
+For an explicitly requested live, multidisciplinary audit/remediation programme,
+use [FARMTREE LIVE 360 LOOP](references/live-360-loop.md). Do not run the broad
+programme for ordinary bounded fixes. The reference adds evidence/score and
+re-audit requirements; it does not grant standing production authorization.
+
 Take ordinary FarmTree engineering work from the actual repository state to a
 validated local pre-release result without waiting for routine confirmations.
 
@@ -30,8 +35,8 @@ user explicitly requests redesign. Frank/Max/user-approved content and IA
 changes must be implemented inside the existing approved visual language.
 
 Apply this lock to every current and future FarmTree page. Use the approved
-frontend at `https://farmtree.eu/#home` and existing production `farmtree`
-theme for visual composition, layout, typography, color, spacing, components,
+frontend at `https://farmtree.eu/#home` and the documented approved theme
+baseline for visual composition, layout, typography, color, spacing, components,
 responsive behavior and motion. Do not reinterpret, modernize or replace that
 approved visual language without an explicit redesign request. Use the relevant
 approved brief for content and information architecture, and keep technical
@@ -80,8 +85,10 @@ preview servers, screenshots, generated local artifacts covered by `.gitignore`,
 and focused local commits requested by the task. Prefer read-only inspection of
 external or production state.
 
-Backup, noindex, Coming Soon and production-access blockers prevent deployment
-or runtime mutation. They do not prevent local development or local validation.
+Missing backups, production access or mismatched approved visibility safeguards
+prevent deployment or runtime mutation. They do not prevent local development
+or local validation. Preserve the current explicitly approved public/private
+state; do not restore historical noindex or Coming Soon settings by assumption.
 
 Independent GitHub Environment Required Reviewer protection may remain a
 deferred governance enhancement when the private repository's current plan
@@ -89,9 +96,10 @@ cannot provide it. Do not recommend making the repository public, moving it,
 changing ownership or billing, or purchasing/migrating a GitHub plan as a
 routine development prerequisite. Preserve the compensating release boundary:
 the repository stays private, production workflows stay `workflow_dispatch`
-only, no push automatically deploys WordPress production, Coming Soon stays active,
-the rollback theme and documented rollback path stay in place, and the loop
-stops at pre-release for explicit user approval before any manual dispatch.
+only, no push automatically deploys WordPress production, the approved visibility
+state and documented rollback path stay in place, and the loop stops at
+pre-release unless the current user instruction explicitly authorizes that
+bounded release. Manual dispatch still requires explicit authorization.
 Never weaken existing workflow protections.
 
 ## Preserve The Production Boundary

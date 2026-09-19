@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "programme": "FARMTREE LIVE 360 LOOP",
+  "status": "in_progress",
+  "started": "2026-09-19",
+  "baselineCommit": "6b01611b1d87edd8190b54f405beefddf33ebf27",
+  "lastVerifiedRuntimeCommit": "6b01611b1d87edd8190b54f405beefddf33ebf27",
+  "phase": "first_theme_only_remediation_local_validation",
+  "productionMutationsThisProgramme": [],
+  "score": null,
+  "scoreStatus": "not_yet_assessed",
+  "p0": 0,
+  "p1": 3,
+  "unknownIsPass": false,
+  "next": "Complete first-batch regressions, commit/push exact source, build/audit, backup and theme-only deployment; production retest before closing P1. Then evidence-backed content remediation and remaining matrices.",
+  "preserve": ["English public", "Homepage public", "blog_public=1", "Coming Soon OFF", "Native active", "Content active", "NL/DE unpublished", "FT Bot OFF", "legacy rollback theme", "approved stakeholder terminology"],
+  "evidence": ["BASELINE.md", "assessments/security-architecture.md", "assessments/experience-engineering.md", "assessments/search-content.md"]
+}

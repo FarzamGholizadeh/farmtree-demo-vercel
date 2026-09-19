@@ -1,6 +1,36 @@
 # FarmTree Native WordPress Architecture
 
-## Architecture Decision
+## Current deployed architecture — verified 2026-09-19
+
+The active `farmtree-native` Block Theme is the approved public presentation
+layer; active `farmtree-content` owns Customer Segment and Proof Story CPTs,
+legacy redirects and the guarded WP-CLI reconciliation path. `farmtree` remains
+untouched for rollback. See `audit/live-360/BASELINE.md` and `state.json` for
+verified runtime facts; inspect runtime before every release.
+
+- Core Pages, Posts, categories and media remain native WordPress entities.
+- Core Images/featured attachments retain editorial alt text and dimensions;
+  the theme supplies audited documentary AVIF/WebP/JPEG responsive delivery.
+- `parts/header.html` owns the shared desktop/mobile menu; Customer Segments →
+  Investors remains distinct from the removed For Investors/For Advisors links.
+- `parts/footer.html` owns the footer; the shared Call To Action pattern supplies
+  full-width background only on templates that already use it.
+- `functions.php` owns presentation, discovery metadata and resource loading;
+  theme.json, CSS, templates and patterns own the approved visual system.
+- Gutenberg bodies remain editable. Managed fingerprints detect manual drift;
+  reconciliation never guesses ownership or blanket-imports a database.
+- News uses post-name canonical URLs and dated legacy redirects. Segment and
+  Proof slugs remain stable. Team is an approved managed page composition, not
+  the speculative future content models below.
+- Contact is mailto-only; FT Bot is OFF; NL/DE remain unpublished.
+- Production is public: Coming Soon OFF, `blog_public=1`. Local noindex remains.
+
+## Historical architecture proposal (not current runtime instructions)
+
+The following records the original migration plan. Its future models, private
+activation gates and example URLs are not proof those features currently exist.
+
+### Architecture Decision
 
 FarmTree will move from a classic static-style theme to an isolated Block Theme.
 The approved production theme remains active until private runtime validation

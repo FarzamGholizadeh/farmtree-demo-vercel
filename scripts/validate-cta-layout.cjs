@@ -2,28 +2,29 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
-const { createRequire } = require('node:module');
-const puppeteer = createRequire(path.resolve('qa/tools/package.json'))('puppeteer-core');
+const puppeteer = require('puppeteer-core');
 const data = name => JSON.parse(fs.readFileSync(`wordpress/wp-content/plugins/farmtree-content/data/${name}.json`));
 const routes = ['/', ...data('customer-segments').map(p => `/customer-segments/${p.slug}/`),
   ...data('proof-stories').map(p => `/proof-stories/${p.slug}/`), '/solutions/', '/blog/',
   `/${data('editorial-drafts')[0].slug}/`];
 const widths = [320, 375, 390, 430, 768, 1024, 1280, 1440, 1920];
+const base = process.argv[2] || 'http://localhost:8888/';
+assert.ok(['http://localhost:8888/', 'https://farmtree.eu/'].includes(base));
 (async () => {
-  const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
+  const browser = await puppeteer.launch({ executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
   const results = [], errors = [];
-  const out = 'qa/screenshots/cta-layout';
+  const out = `qa/screenshots/cta-layout/${base.includes('localhost') ? 'local' : 'production'}`;
   fs.mkdirSync(out, { recursive: true });
   try {
     const page = await browser.newPage();
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
-    await page.setCookie({ name: 'playground_auto_login_already_happened', value: '1', domain: 'localhost', path: '/' });
+    if (base.includes('localhost')) await page.setCookie({ name: 'playground_auto_login_already_happened', value: '1', domain: 'localhost', path: '/' });
     page.on('pageerror', e => errors.push(e.message));
     page.on('console', e => { if (e.type() === 'error') errors.push(e.text()); });
     for (const width of widths) {
       await page.setViewport({ width, height: 1000 });
       for (const route of routes) {
-        assert.equal((await page.goto('http://localhost:8888' + route, { waitUntil: 'networkidle2' })).status(), 200);
+        assert.equal((await page.goto(new URL(route, base).href, { waitUntil: 'networkidle2' })).status(), 200);
         await page.evaluate(() => document.fonts.ready);
         const result = await page.evaluate(() => {
           const cta = document.querySelector('.ft-final-cta');

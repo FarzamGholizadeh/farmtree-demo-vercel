@@ -1,5 +1,14 @@
 # FT-NATIVE-002 Sprint Report
 
+## Current programme status — 2026-09-19
+
+Live baseline `6b01611b1d87edd8190b54f405beefddf33ebf27` matches its 217-file
+runtime manifest. Native and Content are active; English site public, indexing
+enabled, Coming Soon OFF. Older local/pre-launch entries describe historical
+checkpoints, not current production instructions. See `docs/audit/live-360/`
+for the active audit/remediation loop. No final perfect score or standards
+certification is claimed.
+
 ## 320px pointer diagnostic — local, 2026-09-19
 
 Reproduced the original pointer-test timeout at exactly 320px. At timeout the

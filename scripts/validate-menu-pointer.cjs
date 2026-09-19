@@ -1,13 +1,15 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
-const puppeteer = require('../qa/tools/node_modules/puppeteer-core');
+const puppeteer = require('puppeteer-core');
+const base = process.argv[2] || 'http://localhost:8888/';
+assert.ok(['http://localhost:8888/', 'https://farmtree.eu/'].includes(base));
 const menu = '.wp-block-navigation__responsive-container.is-menu-open';
 const links = `${menu} .wp-block-navigation__container a`;
 const investor = `${menu} .ft-native-menu-segments a[href="/customer-segments/investors/"]`;
 const pause = () => new Promise(resolve => setTimeout(resolve, 700));
 
 (async () => {
-  const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
+  const browser = await puppeteer.launch({ executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
   const rows = [], errors = [];
   try {
     for (const width of [320, 360, 390, 414]) for (const mode of ['mouse', 'touch']) {
@@ -16,7 +18,7 @@ const pause = () => new Promise(resolve => setTimeout(resolve, 700));
       page.on('console', e => { if (e.type() === 'error') errors.push(e.text()); });
       await page.setViewport({ width, height: 1000, isMobile: mode === 'touch', hasTouch: mode === 'touch' });
       await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
-      await page.setCookie({ name: 'playground_auto_login_already_happened', value: '1', domain: 'localhost', path: '/' });
+      if (base.includes('localhost')) await page.setCookie({ name: 'playground_auto_login_already_happened', value: '1', domain: 'localhost', path: '/' });
       const activate = selector => mode === 'touch' ? page.tap(selector) : page.click(selector);
       const open = async () => {
         await activate('.wp-block-navigation__responsive-container-open');
@@ -24,7 +26,7 @@ const pause = () => new Promise(resolve => setTimeout(resolve, 700));
         await pause();
         assert.equal(await page.$$eval(menu, els => els.length), 1);
       };
-      await page.goto('http://localhost:8888/', { waitUntil: 'networkidle2' });
+      await page.goto(base, { waitUntil: 'networkidle2' });
       await open();
       // Check real pointer dispatch for every link without opening external
       // accounts/mail clients or submitting anything. Destination checks follow.
@@ -71,7 +73,7 @@ const pause = () => new Promise(resolve => setTimeout(resolve, 700));
       await page.waitForFunction(() => !document.querySelector('.is-menu-open'));
       await pause();
       assert.ok(await page.$eval('.wp-block-navigation__responsive-container-open', e => document.activeElement === e));
-      await page.goto('http://localhost:8888/', { waitUntil: 'domcontentloaded' });
+      await page.goto(base, { waitUntil: 'domcontentloaded' });
       await page.waitForSelector('.ft-native-menu-topbar');
       await open();
       await page.focus(investor);
@@ -82,7 +84,8 @@ const pause = () => new Promise(resolve => setTimeout(resolve, 700));
       await page.close();
     }
     assert.deepEqual(errors, []);
-    fs.mkdirSync('qa/screenshots/menu-links', { recursive: true });
-    fs.writeFileSync('qa/screenshots/menu-links/pointer-report.json', JSON.stringify({ rows, errors }, null, 2));
+    const out = `qa/screenshots/menu-links/${base.includes('localhost') ? 'local' : 'production'}`;
+    fs.mkdirSync(out, { recursive: true });
+    fs.writeFileSync(`${out}/pointer-report.json`, JSON.stringify({ rows, errors }, null, 2));
   } finally { await browser.close(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });

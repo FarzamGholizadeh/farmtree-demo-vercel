@@ -1,21 +1,22 @@
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
-const { createRequire } = require('node:module');
-const puppeteer = createRequire(path.resolve('qa/tools/package.json'))('puppeteer-core');
+const puppeteer = require('puppeteer-core');
 const segments = JSON.parse(fs.readFileSync('wordpress/wp-content/plugins/farmtree-content/data/customer-segments.json'));
+const base = process.argv[2] || 'http://localhost:8888/';
+assert.ok(['http://localhost:8888/', 'https://farmtree.eu/'].includes(base));
 (async () => {
-  const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
-  const rows = [], errors = [], out = 'qa/screenshots/menu-links';
+  const browser = await puppeteer.launch({ executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
+  const rows = [], errors = [], out = `qa/screenshots/menu-links/${base.includes('localhost') ? 'local' : 'production'}`;
   fs.mkdirSync(out, { recursive: true });
   try {
     const page = await browser.newPage();
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
-    await page.setCookie({ name: 'playground_auto_login_already_happened', value: '1', domain: 'localhost', path: '/' });
+    if (base.includes('localhost')) await page.setCookie({ name: 'playground_auto_login_already_happened', value: '1', domain: 'localhost', path: '/' });
     page.on('pageerror', e => errors.push(e.message));
     page.on('console', e => { if (e.type() === 'error') errors.push(e.text()); });
     for (const width of [320, 360, 375, 390, 414, 430, 768, 1024, 1280, 1440, 1920]) {
       await page.setViewport({ width, height: 1000 });
       for (const route of ['/', '/proof-stories/farm-value-projection/', '/customer-segments/investors/']) {
-        assert.equal((await page.goto('http://localhost:8888' + route, { waitUntil: 'networkidle2' })).status(), 200);
+        assert.equal((await page.goto(new URL(route, base).href, { waitUntil: 'networkidle2' })).status(), 200);
         await page.click('.wp-block-navigation__responsive-container-open');
         await page.waitForSelector('.wp-block-navigation__responsive-container.is-menu-open');
         // Let the existing modal focus/scroll-lock animation-frame callbacks settle.

@@ -1,5 +1,17 @@
 # Current FarmTree Sprint
 
+## Live 360 programme — 2026-09-19
+
+Verified live baseline: `6b01611b1d87edd8190b54f405beefddf33ebf27`.
+Navigation cleanup is deployed. Native/Content are active; English site public,
+indexing enabled, Coming Soon OFF and FT Bot OFF. Older entries retain their
+historical checkpoint context. Thirty independent AI role perspectives are in
+`docs/audit/live-360/assessments/`, not human research or certification.
+The confirmed production P1 prose-link distinction issue passes local remediation;
+production closure awaits guarded release. Safe metadata, release tooling and
+documentation are also under remediation. Progress and fixed acceptance are in
+`docs/audit/live-360/state.json` and `docs/audit/live-360/ACCEPTANCE.md`.
+
 ## Mobile pointer verification — local, 2026-09-19
 
 The earlier 320px timeout was a Puppeteer lifecycle-wait false negative, not a
