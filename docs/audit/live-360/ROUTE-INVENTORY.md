@@ -33,7 +33,10 @@ No claim of actual search-engine index inclusion is made.
 
 Rebuild this baseline document from its recorded evidence with:
 
-`node qa/live-360/search/build-inventory.cjs`
+`node scripts/build-route-inventory.cjs`
+
+The generator initializes incoming-anchor counts at numeric zero and rejects
+any count that is not a non-negative safe integer before writing the inventory.
 
 After deployment, save a new crawl snapshot and produce a separate post-release
 inventory/diff; do not overwrite baseline evidence or promote unknown checks.

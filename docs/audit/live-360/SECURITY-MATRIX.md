@@ -11,6 +11,31 @@ Statuses: VERIFIED = bounded observed check; PARTIAL = source/sample evidence
 only; OPEN = evidenced gap; UNKNOWN = not verified; N/A = explicitly absent
 feature, not a blanket exclusion of related administrative functionality.
 
+## First-release update
+
+Theme release `a23441ba6f72d120f8bd2aac5ada0adcf3bb8546` passed real checksum,
+fresh-backup, unchanged plugin/legacy and protected-state equality checks.
+Live header checks pass6responses; JSON-LD/metadata checks pass19responses.
+Live syntax checks pass5PHPfiles. Browser suite reports no console errors.
+Current PHP fatal logs remain unavailable. Missing original lint evidence is
+recorded separately as OPS-003; fresh lint is not substituted for historical
+server-log evidence. See RELEASE-01.md for exact scope and backup provenance.
+
+Primary WordPress.org version/changelog review found installed SeedProd6.20.9,
+Temporary Login1.9.9 and OpenAI Provider1.1.0 match official listings. The
+Temporary Login release includes documented revocation/permission fixes; actual
+historical credential revocation was not tested. No applicable unpatched match
+was established in this bounded review, not proof of vulnerability absence.
+Host Site Assistant1.0.0 is a differently packaged standalone integration and
+cannot be mapped to the directory Extendify3.2.1 release. Its maintenance
+provenance remains unknown. Insights opt-out does not establish that every
+administrative host hook is disabled. Primary references and limitations are in
+`qa/live-360/security/plugin-advisories.md`.
+
+The matrix below retains baseline-to-first-release applicability and remaining
+assurance gaps; the update above supersedes its first-release-pending labels,
+not its untested authentication, logging, update-policy or full-audit boundaries.
+
 | Control area | Applicability | Evidence / result | Status and remaining boundary |
 |---|---|---|---|
 | Output encoding / XSS | Dynamic titles, excerpts, metadata, editor content | Inspected metadata uses URL/attribute escaping. Raw JSON-LD script context hardened locally with JSON_HEX flags; actual PHP-WASM malicious-terminator/Unicode round-trip test passes | PARTIAL; live verification of new source required, no exhaustive theme/plugin XSS review |

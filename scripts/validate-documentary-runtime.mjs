@@ -22,6 +22,16 @@ for (const [route, expected] of [['/', 11], ['/platform/', 1], ['/solutions/', 2
     assert.match(picture, /type="image\/webp"/, route);
     assert.match(image, /src="[^"]+\.jpg"/, route);
     assert.match(image, /sizes="[^"]+"/, route);
+    if (/width="1200"/.test(image)) {
+      // Same-ratio intermediate candidate; never substitute the square hero crop.
+      for (const format of ['avif', 'webp', 'jpg']) {
+        assert.ok(picture.includes(`-preview.${format} 480w`), `${route}: ${format} preview`);
+        // Only Blog featured blocks opt in; its final core Image stays unchanged.
+        const mediumExpected = route === '/blog/' && index < 9;
+        assert.equal(picture.includes(`-medium.${format} 800w`), mediumExpected, `${route}: ${format} medium scope`);
+        assert.ok(picture.includes(`-content.${format} 1200w`), `${route}: ${format} content`);
+      }
+    }
     if (route === '/' && index === 0) {
       assert.match(image, /loading="eager"/, route);
       assert.match(image, /fetchpriority="high"/, route);

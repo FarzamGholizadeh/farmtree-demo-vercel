@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "phase": "pre-remediation-production-baseline",
   "observedAt": "2026-09-19T14:02:15.186Z",
-  "generatedAt": "2026-09-19T14:39:24.224Z",
+  "generatedAt": "2026-09-19T16:26:05.306Z",
   "production": "https://farmtree.eu/",
   "baselineCommit": "6b01611b1d87edd8190b54f405beefddf33ebf27",
   "limitations": [
@@ -50,7 +50,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]555555555555555555555555555555555555555555555555555555"
+        "incomingAnchorOccurrences": 275
       },
       "canonical": "https://farmtree.eu/",
       "robots": {
@@ -377,7 +377,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]100100001100111000000000000000111111111111111111000000"
+        "incomingAnchorOccurrences": 26
       },
       "canonical": "https://farmtree.eu/platform/",
       "robots": {
@@ -562,7 +562,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]100100001100111011111111111111111111111111111111000000"
+        "incomingAnchorOccurrences": 39
       },
       "canonical": "https://farmtree.eu/proof-stories/",
       "robots": {
@@ -696,7 +696,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/customer-segments/",
       "robots": {
@@ -830,7 +830,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]222222222222222222222222222222222222222222222222222222"
+        "incomingAnchorOccurrences": 110
       },
       "canonical": "https://farmtree.eu/case-studies/",
       "robots": {
@@ -968,7 +968,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]222223222222222222222222222222222222222222222222222222"
+        "incomingAnchorOccurrences": 111
       },
       "canonical": "https://farmtree.eu/team/",
       "robots": {
@@ -1142,7 +1142,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]222222222222222222222222222222222222222222222222222222"
+        "incomingAnchorOccurrences": 110
       },
       "canonical": "https://farmtree.eu/vacancies/",
       "robots": {
@@ -1280,7 +1280,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]433434334433444333334444444444444444444444444444333333"
+        "incomingAnchorOccurrences": 201
       },
       "canonical": "https://farmtree.eu/contact/",
       "robots": {
@@ -1418,7 +1418,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]222222222222222222223333333333222222222222222222222222"
+        "incomingAnchorOccurrences": 121
       },
       "canonical": "https://farmtree.eu/blog/",
       "robots": {
@@ -1592,7 +1592,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]222222222222222222222222222222222222222222222222222222"
+        "incomingAnchorOccurrences": 116
       },
       "canonical": "https://farmtree.eu/acknowledgements/",
       "robots": {
@@ -1730,7 +1730,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]222222222222222222222222222222222222222222222222222222"
+        "incomingAnchorOccurrences": 110
       },
       "canonical": "https://farmtree.eu/licenses/",
       "robots": {
@@ -1868,7 +1868,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]111111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 55
       },
       "canonical": "https://farmtree.eu/privacy/",
       "robots": {
@@ -2066,7 +2066,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]111111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 55
       },
       "canonical": "https://farmtree.eu/terms/",
       "robots": {
@@ -2264,7 +2264,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]111111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 55
       },
       "canonical": "https://farmtree.eu/solutions/",
       "robots": {
@@ -2449,7 +2449,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]222222222222222222222222222222222222222222222222222222"
+        "incomingAnchorOccurrences": 110
       },
       "canonical": "https://farmtree.eu/user-videos/",
       "robots": {
@@ -2587,7 +2587,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]111111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 55
       },
       "canonical": "https://farmtree.eu/cocoa-focus/",
       "robots": {
@@ -2725,7 +2725,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/news-insights/",
       "robots": {
@@ -2899,7 +2899,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]010000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 2
       },
       "canonical": "https://farmtree.eu/proof-stories/carbon-planning/",
       "robots": {
@@ -3053,7 +3053,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]010000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 2
       },
       "canonical": "https://farmtree.eu/proof-stories/farm-value-projection/",
       "robots": {
@@ -3254,7 +3254,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]010000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 2
       },
       "canonical": "https://farmtree.eu/proof-stories/cocoa-scenario-planning/",
       "robots": {
@@ -3408,7 +3408,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]010000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 2
       },
       "canonical": "https://farmtree.eu/proof-stories/landscape-hydrology/",
       "robots": {
@@ -3562,7 +3562,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]112111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 56
       },
       "canonical": "https://farmtree.eu/customer-segments/consultancy-agroforestry-advisors/",
       "robots": {
@@ -3732,7 +3732,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]112111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 56
       },
       "canonical": "https://farmtree.eu/customer-segments/development-banks-donor-organisations/",
       "robots": {
@@ -3902,7 +3902,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]112111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 56
       },
       "canonical": "https://farmtree.eu/customer-segments/ngos-conservation-organisations/",
       "robots": {
@@ -4072,7 +4072,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]112111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 56
       },
       "canonical": "https://farmtree.eu/customer-segments/nbs-carbon-project-developers/",
       "robots": {
@@ -4242,7 +4242,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]112111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 56
       },
       "canonical": "https://farmtree.eu/customer-segments/mrv-esg-platforms/",
       "robots": {
@@ -4412,7 +4412,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]112111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 56
       },
       "canonical": "https://farmtree.eu/customer-segments/government-parastatal-institutions/",
       "robots": {
@@ -4582,7 +4582,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]112111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 56
       },
       "canonical": "https://farmtree.eu/customer-segments/industry-associations-multi-stakeholder-platforms/",
       "robots": {
@@ -4752,7 +4752,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]112111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 56
       },
       "canonical": "https://farmtree.eu/customer-segments/large-agri-corporate/",
       "robots": {
@@ -4922,7 +4922,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]112111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 56
       },
       "canonical": "https://farmtree.eu/customer-segments/social-enterprise/",
       "robots": {
@@ -5092,7 +5092,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]112111111111111111111111111111111111111111111111111111"
+        "incomingAnchorOccurrences": 56
       },
       "canonical": "https://farmtree.eu/customer-segments/investors/",
       "robots": {
@@ -5313,7 +5313,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": false,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/farmtree-water-erosion-microclimate-model-update-2026/",
       "robots": {
@@ -5471,7 +5471,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": false,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/eu-carbon-farming-methodologies-agroforestry-2026/",
       "robots": {
@@ -5629,7 +5629,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": false,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/eudr-2026-agroforestry-data-readiness/",
       "robots": {
@@ -5787,7 +5787,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": false,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/verra-vm0042-v22-agricultural-land-management/",
       "robots": {
@@ -5945,7 +5945,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": false,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/verra-vm0042-v30-consultation-lessons/",
       "robots": {
@@ -6103,7 +6103,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": false,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/smallholder-agroforestry-wood-production-lessons-2025/",
       "robots": {
@@ -6261,7 +6261,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": false,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/carbon-pricing-2026-nature-project-quality/",
       "robots": {
@@ -6419,7 +6419,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": false,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/agroforestry-species-data-switchboard-2025/",
       "robots": {
@@ -6577,7 +6577,7 @@
       "discovery": {
         "manifestDerived": true,
         "sitemap": false,
-        "incomingAnchorOccurrences": "[object Object]000000000000000000000000000000000000000000000000000000"
+        "incomingAnchorOccurrences": 0
       },
       "canonical": "https://farmtree.eu/nature-restoration-plans-report-once-agroforestry-2025/",
       "robots": {
@@ -6731,7 +6731,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000030000000300000000000000000000000000000000020000"
+        "incomingAnchorOccurrences": 11
       },
       "canonical": "https://farmtree.eu/farmtree-water-erosion-microclimate-model-update-2026/",
       "robots": {
@@ -6885,7 +6885,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000030000000300000000000000000000000000000000000200"
+        "incomingAnchorOccurrences": 11
       },
       "canonical": "https://farmtree.eu/eu-carbon-farming-methodologies-agroforestry-2026/",
       "robots": {
@@ -7039,7 +7039,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000030000000300000000000000000000000000000000000200"
+        "incomingAnchorOccurrences": 8
       },
       "canonical": "https://farmtree.eu/eudr-2026-agroforestry-data-readiness/",
       "robots": {
@@ -7193,7 +7193,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000030000000300000000000000000000000000000000200000"
+        "incomingAnchorOccurrences": 8
       },
       "canonical": "https://farmtree.eu/verra-vm0042-v22-agricultural-land-management/",
       "robots": {
@@ -7347,7 +7347,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000030000000300000000000000000000000000000000200000"
+        "incomingAnchorOccurrences": 8
       },
       "canonical": "https://farmtree.eu/verra-vm0042-v30-consultation-lessons/",
       "robots": {
@@ -7501,7 +7501,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000030000000300000000000000000000000000000000000002"
+        "incomingAnchorOccurrences": 8
       },
       "canonical": "https://farmtree.eu/smallholder-agroforestry-wood-production-lessons-2025/",
       "robots": {
@@ -7655,7 +7655,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000030000000300000000000000000000000000000000000020"
+        "incomingAnchorOccurrences": 11
       },
       "canonical": "https://farmtree.eu/carbon-pricing-2026-nature-project-quality/",
       "robots": {
@@ -7809,7 +7809,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000030000000300000000000000000000000000000000000002"
+        "incomingAnchorOccurrences": 8
       },
       "canonical": "https://farmtree.eu/agroforestry-species-data-switchboard-2025/",
       "robots": {
@@ -7963,7 +7963,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000030000000300000000000000000000000000000000002000"
+        "incomingAnchorOccurrences": 8
       },
       "canonical": "https://farmtree.eu/nature-restoration-plans-report-once-agroforestry-2025/",
       "robots": {
@@ -8117,7 +8117,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000020000000200000000000000000110000000110000000000"
+        "incomingAnchorOccurrences": 8
       },
       "canonical": null,
       "robots": {
@@ -8227,7 +8227,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000010000000100000000000000100000000100000000000000"
+        "incomingAnchorOccurrences": 5
       },
       "canonical": null,
       "robots": {
@@ -8333,7 +8333,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000010000000100000000000000000000001000000001000000"
+        "incomingAnchorOccurrences": 4
       },
       "canonical": null,
       "robots": {
@@ -8439,7 +8439,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000020000000200000000000000011000000011000000000000"
+        "incomingAnchorOccurrences": 9
       },
       "canonical": null,
       "robots": {
@@ -8549,7 +8549,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000010000000100000000000000000000100000000100000000"
+        "incomingAnchorOccurrences": 5
       },
       "canonical": null,
       "robots": {
@@ -8655,7 +8655,7 @@
       "discovery": {
         "manifestDerived": false,
         "sitemap": true,
-        "incomingAnchorOccurrences": "[object Object]000000020000000200000000000000000001010000001010000000"
+        "incomingAnchorOccurrences": 8
       },
       "canonical": null,
       "robots": {

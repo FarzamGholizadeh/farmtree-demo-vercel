@@ -65,7 +65,7 @@ function fixture(mode) {
   writeFileSync(script,runner.replace('root=/home/u80341p492940/domains/farmtree.eu/public_html',`root=${site}`).replace('recovery=/home/u80341p492940/farmtree-recovery-backups',`recovery=${recovery}`));
   const args=[script,sha,release,...['theme.tar.gz','target.sha256','baseline.sha256'].map(f=>hash(readFileSync(join(base,f))))];
   const result=spawnSync('bash',args,{encoding:'utf8',env:{...process.env,PATH:bin+':'+process.env.PATH},timeout:30000});
-  if(mode==='success') {assert.equal(result.status,0,result.stdout+result.stderr);assert.equal(readFileSync(join(site,themePrefix+'style.css'),'utf8'),'new');assert.ok(existsSync(join(base,'backup.sha256')));}
+  if(mode==='success') {assert.equal(result.status,0,result.stdout+result.stderr);assert.equal(readFileSync(join(site,themePrefix+'style.css'),'utf8'),'new');assert.ok(existsSync(join(base,'backup.sha256')));assert.ok(existsSync(join(base,'php-lint.txt')));assert.match(readFileSync(join(base,'backup.sha256'),'utf8'),/  php-lint\.txt/);}
   else {assert.notEqual(result.status,0);assert.equal(readFileSync(join(site,themePrefix+'style.css'),'utf8'),'old');if(mode==='smoke-fail')assert.match(result.stderr,/THEME_ROLLED_BACK/);}
   assert.equal(readFileSync(join(site,'wp-content/themes/farmtree/style.css'),'utf8'),'legacy');
   assert.equal(readFileSync(join(site,'wp-content/plugins/farmtree-content/plugin.php'),'utf8'),'plugin');

@@ -2102,8 +2102,12 @@ body.ft-quotation-open {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .ft-home-hero-slide.is-active img {
+  .ft-home-hero[data-ft-motion-paused] .ft-home-hero-slide.is-active img {
     animation: ft-native-hero-breathe 14s ease-in-out infinite alternate;
+  }
+
+  .ft-home-hero[data-ft-motion-paused="true"] .ft-home-hero-slide.is-active img {
+    animation-play-state: paused;
   }
 
   .ft-home-hero-slide.is-active,
@@ -5320,3 +5324,72 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 }
 
 /* stylelint-enable no-duplicate-selectors, no-descending-specificity */
+
+/* Local motion controls: visible, touch-friendly and outside moving tracks. */
+.ft-motion-control-row {
+  display: flex;
+  min-height: 44px;
+  justify-content: center;
+  margin-block: 0.75rem;
+  padding-inline: 1rem;
+}
+
+.ft-motion-toggle {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.55rem 1rem;
+  border: 1px solid currentcolor;
+  border-radius: 999px;
+  background: var(--ft-approved-cream);
+  color: var(--ft-approved-green);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+.ft-motion-toggle:focus-visible {
+  outline: 3px solid var(--ft-approved-gold);
+  outline-offset: 3px;
+}
+
+.ft-motion-toggle[aria-pressed="true"] {
+  background: var(--ft-approved-green);
+  color: var(--ft-approved-white);
+}
+
+.ft-motion-toggle:disabled {
+  cursor: default;
+}
+
+.ft-motion-toggle-state {
+  display: inline-block;
+  width: 4.5em;
+  margin-inline-start: 0.5em;
+  border-inline-start: 1px solid currentcolor;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.ft-moving-rail.is-motion-paused[data-ft-motion-paused="true"] .ft-moving-rail-track {
+  animation-play-state: paused;
+}
+
+.ft-motion-control-row--hero {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+  bottom: 0.5rem;
+  left: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.ft-motion-control-row--hero .ft-motion-toggle {
+  pointer-events: auto;
+}
+
+.ft-home-hero:has(.ft-motion-control-row--hero) .ft-home-hero-dots {
+  bottom: 4rem;
+}

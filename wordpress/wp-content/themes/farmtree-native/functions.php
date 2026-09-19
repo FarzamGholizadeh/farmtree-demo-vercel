@@ -161,6 +161,34 @@ function farmtree_native_image_loading_attributes(string $block_content, array $
 add_filter('render_block', 'farmtree_native_image_loading_attributes', 10, 2);
 
 /**
+ * Defer only the approved large Platform animation until its viewport entry.
+ * Saved core Image content remains unchanged; editorial replacements opt out.
+ * Run after native image attributes (10) and documentary picture rendering (11).
+ */
+function farmtree_native_defer_platform_animation(string $html, array $block): string
+{
+    if (($block['blockName'] ?? '') !== 'core/image'
+        || !in_array('ft-platform-gif', preg_split('/\s+/', trim((string) ($block['attrs']['className'] ?? ''))), true)
+        || !class_exists('WP_HTML_Tag_Processor')) {
+        return $html;
+    }
+    $processor = new WP_HTML_Tag_Processor($html);
+    if (!$processor->next_tag('img')) {
+        return $html;
+    }
+    $animation = get_theme_file_uri('assets/media/final-tools-review-11s-to-40s-2x.gif');
+    if ($processor->get_attribute('src') !== $animation
+        || $processor->get_attribute('srcset') !== null
+        || $processor->get_attribute('sizes') !== null) {
+        return $html;
+    }
+    $processor->set_attribute('data-ft-animation-src', $animation);
+    $processor->set_attribute('src', get_theme_file_uri('assets/media/final-tools-review-11s-to-40s-poster.png'));
+    return $processor->get_updated_html();
+}
+add_filter('render_block', 'farmtree_native_defer_platform_animation', 12, 2);
+
+/**
  * Responsive documentary exports. Saved core Image blocks stay editor-owned.
  * Only existing, same-theme, precompiled documentary sets are transformed.
  * Replacing an image in the editor with other media leaves core output alone.
@@ -204,7 +232,14 @@ function farmtree_native_documentary_picture(string $html, array $block, ?WP_Blo
         return $html;
     }
     [, $slug, $variant] = $match;
-    foreach (['hero', 'content', 'card', 'preview'] as $size) {
+    // Blog lead/cards have verified responsive geometry. Keep the existing
+    // candidates for full-height cover heroes, whose crop needs more pixels.
+    $medium = $featured && is_page('blog');
+    $variants = ['hero', 'content', 'card', 'preview'];
+    if ($medium) {
+        $variants[] = 'medium';
+    }
+    foreach ($variants as $size) {
         foreach (['jpg', 'webp', 'avif'] as $format) {
             if (!is_file(get_theme_file_path("assets/images/documentary/{$slug}-{$size}.{$format}"))) {
                 return $html;
@@ -235,9 +270,10 @@ function farmtree_native_documentary_picture(string $html, array $block, ?WP_Blo
             ? '(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc(50vw - 36px), 400px'
             : '(max-width: 767px) calc(100vw - 48px), (max-width: 1199px) 90vw, 1200px';
     }
-    $set = static function (string $format) use ($base, $slug, $hero): string {
+    $set = static function (string $format) use ($base, $slug, $hero, $medium): string {
+        $intermediate = $medium ? "{$base}{$slug}-medium.{$format} 800w, " : '';
         return $hero ? "{$base}{$slug}-hero.{$format} 1920w"
-            : "{$base}{$slug}-preview.{$format} 480w, {$base}{$slug}-content.{$format} 1200w";
+            : "{$base}{$slug}-preview.{$format} 480w, {$intermediate}{$base}{$slug}-content.{$format} 1200w";
     };
     $processor->set_attribute('srcset', $set('jpg'));
     $processor->set_attribute('sizes', $sizes);

@@ -33,7 +33,8 @@ mkdir stage
 tar -xzf theme.tar.gz --no-same-owner --no-same-permissions -C stage
 test "$(find stage -type l | wc -l)" -eq 0
 (cd stage && sha256sum -c --quiet "$base/target.sha256")
-while IFS= read -r -d '' source; do php -l "$source"; done < <(find stage -name '*.php' -type f -print0) > php-lint.txt
+while IFS= read -r -d '' source; do php -l "$source"; done < <(find stage -name '*.php' -type f -print0) > "$base/php-lint.txt"
+test -f "$base/php-lint.txt"
 find stage -type d -exec chmod 755 {} +
 find stage -type f -exec chmod 644 {} +
 cd "$root"
@@ -58,7 +59,7 @@ test "$(wp db query --batch --skip-column-names "SELECT COUNT(*) FROM ${prefix}p
 test "$(wp db query --batch --skip-column-names "SELECT COUNT(*) FROM ${prefix}posts WHERE ID=(SELECT option_value FROM ${prefix}options WHERE option_name='page_on_front') AND post_type='page' AND post_status='publish' AND post_password='';")" = 1
 tar -czf "$base/theme-before.tar.gz" wp-content/themes/farmtree-native
 test -s "$base/theme-before.tar.gz"; tar -tzf "$base/theme-before.tar.gz" >/dev/null
-(cd "$base" && sha256sum theme-before.tar.gz current.sha256 legacy.sha256 plugin.sha256 state-before.txt > backup.sha256 && sha256sum -c --quiet backup.sha256)
+(cd "$base" && sha256sum theme-before.tar.gz current.sha256 legacy.sha256 plugin.sha256 state-before.txt php-lint.txt > backup.sha256 && sha256sum -c --quiet backup.sha256)
 test "$(stat -c %d "$base/stage")" = "$(stat -c %d wp-content/themes)"
 rollback() {
   code=$?
@@ -85,6 +86,7 @@ test "$status" = 200
 if grep -Eqi 'Coming Soon|<meta[^>]+name=.robots.[^>]+content=.[^>]*noindex' "$base/http.html" || grep -Eqi '^x-robots-tag:.*noindex' "$base/http.headers"; then exit 1; fi
 snapshot > "$base/state-after.txt"
 cmp "$base/state-before.txt" "$base/state-after.txt"
+(cd "$base" && sha256sum -c --quiet backup.sha256)
 trap - EXIT HUP INT TERM
 echo "THEME_RELEASE_VERIFIED $sha"
 echo "BACKUP_REFERENCE $release"

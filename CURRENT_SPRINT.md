@@ -7,10 +7,29 @@ Navigation cleanup is deployed. Native/Content are active; English site public,
 indexing enabled, Coming Soon OFF and FT Bot OFF. Older entries retain their
 historical checkpoint context. Thirty independent AI role perspectives are in
 `docs/audit/live-360/assessments/`, not human research or certification.
-The confirmed production P1 prose-link distinction issue passes local remediation;
-production closure awaits guarded release. Safe metadata, release tooling and
-documentation are also under remediation. Progress and fixed acceptance are in
+The confirmed production P1 prose-link distinction issue is resolved in the
+first guarded release. Motion/accessibility and animation delivery are under
+local remediation. Progress and fixed acceptance are in
 `docs/audit/live-360/state.json` and `docs/audit/live-360/ACCEPTANCE.md`.
+
+First Live360 theme batch `a23441ba6f72d120f8bd2aac5ada0adcf3bb8546` is now
+deployed with fresh verified rollback backup. Production release-specific
+navigation/CTA/LCP/prose/metadata/header suite passes; indexing/public-state and
+plugin/legacy hashes preserved. Prose distinction and News image reservation
+findings are closed within their tested scope. Motion controls are the next
+local batch; remaining content, performance and manual/organisational evidence
+are not declared complete.
+
+Resume checkpoint: local motion and exact-asset GIF viewport deferral pass core
+tests, isolated WordPress scope checks and anonymous40route/104link validation.
+Final browser rerun passes, including66representative views and six-width
+testimonial regression. Blog-only medium responsive candidates pass six cold
+selection/geometry contexts; full core/WP/anonymous checks pass again.
+Fresh public crawl passes46routes/46internal
+destinations. Cold production lab baseline exposes three failed route/viewport
+groups (Homepage mobile incomplete load, Homepage desktop late LCP, Blog mobile
+LCP); remediation evidence is in PERFORMANCE-MATRIX.md and RELEASE-02.md.
+No new release from this resumed work has been pushed or deployed yet.
 
 ## Mobile pointer verification — local, 2026-09-19
 

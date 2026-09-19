@@ -1,4 +1,4 @@
-# First remediation batch — theme-only, pre-deployment record
+# First remediation batch — theme-only, scoped production QA passed
 
 Baseline: `6b01611b1d87edd8190b54f405beefddf33ebf27`, source/remote/live manifest
 verified. Explicit Live360 programme authority covers this scoped release; it is
@@ -65,8 +65,33 @@ mutation. No new scripts, fonts, assets, tracking or external requests in runtim
 
 ## Required release evidence
 
+Deployed source/origin SHA: `a23441ba6f72d120f8bd2aac5ada0adcf3bb8546`.
+Clean exact-source build/audit PASS:217 runtime files,114 excluded source files;
+artifact manifest digest `4ed863ea9de3e9e7e83fec11b7e0b99611199b171a078e3c14cea8bb01aeb726`.
+Fresh off-webroot recovery reference:
+`live360-a23441ba6f72d120f8bd2aac5ada0adcf3bb8546-1789834663137`.
+Runner reports PUBLIC_STATE_GATES_PASS and THEME_RELEASE_VERIFIED. Independent
+read-only verification confirms backup readable/nonzero/checksummed, exact live
+theme, plugin/legacy unchanged and protected before/after snapshot equality.
+No runner database writes; no rollback required. Full release-specific browser
+suite PASS:33menuviews/22realInvestor navigations;200trustedpointeractivations
+pluskeyboard at320/360/390/414;162CTAviews;42LCPviews;10proseviews;
+19metadataresponses;6headerresponses. No reported console errors/overflow.
+Production maximum observed image-suite CLS0.03234232083333334. Held News image
+before/after geometry is338×253.5 and copytop669.4375 at390px: zero displacement.
+The owned News duplicate now correctly canonicalizes to `/blog/` on production.
+LCP evidence SHA256 `121c7b43cd46b9861756bba3b7af4a7865b6d344a45f91633c738a449622813c`;
+prose evidence SHA256 `e664bf8033da1fb950553ec243cca2cd5c6a8e838e90147e3063bd8adc3fbc56`.
+Independent backup size52,164,322bytes; archive SHA256
+`1f6c06b940da50253dca0f183adf47a259595290d450369cf4c4cc696ef90acb`.
+Fresh live read-only PHP syntax checks pass5/5. Original expected `php-lint.txt`
+was not present at inspection despite matching deployed runner bytes; cause
+unknown, recorded as OPS-003. No cleanup was performed. Current PHP fatal logs
+are unavailable; syntax/browser checks do not prove absence of server-log errors.
+Sanitized independent evidence: `qa/live-360/security/release-a23441-verification.json`.
+
 Record source SHA, origin SHA, audited artifact digest, fresh backup reference,
 deployed checksums, protected state equality and live semantic/browser retests.
-Until then all production findings remain OPEN. Remaining content, motion,
+The above release-specific findings now have real production evidence. Remaining content, motion,
 performance, manual accessibility and organisational evidence are separate work,
 not hidden by this batch or a premature perfect score.

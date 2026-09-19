@@ -9,6 +9,14 @@ checkpoints, not current production instructions. See `docs/audit/live-360/`
 for the active audit/remediation loop. No final perfect score or standards
 certification is claimed.
 
+First Live360 release `a23441b`: exact217-file artifact audited; Native-only
+guarded swap completed after fresh off-webroot backup, no runner DB writes.
+Production33menuviews/200pointeractivations/162CTAviews/42imageviews/
+10proseviews/19metadataresponses/6headerresponses pass. News cold-image geometry
+is stable and image-suite maxCLS0.03234. Server fatal-log coverage remains
+unavailable, and original lint-output retention is an open observability finding;
+independent live5-file syntax check passes. See RELEASE-01 for provenance.
+
 ## 320px pointer diagnostic — local, 2026-09-19
 
 Reproduced the original pointer-test timeout at exactly 320px. At timeout the

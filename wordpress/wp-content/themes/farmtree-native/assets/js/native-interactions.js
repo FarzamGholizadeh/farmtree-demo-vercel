@@ -17,6 +17,99 @@
     const worldLandUrl = interactionScriptUrl
         ? new URL('../data/world-land-110m.json', interactionScriptUrl)
         : null;
+    const motionControls = new WeakMap();
+    let motionControlIndex = 0;
+
+    function addMotionControl(owner, label, onChange, hero = false) {
+        if (motionControls.has(owner)) {
+            return;
+        }
+        if (!owner.id) {
+            do {
+                motionControlIndex += 1;
+            } while (document.getElementById(`ft-motion-owner-${motionControlIndex}`));
+            owner.id = `ft-motion-owner-${motionControlIndex}`;
+        }
+        const row = document.createElement('div');
+        row.className = `ft-motion-control-row${hero ? ' ft-motion-control-row--hero' : ''}`;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'ft-motion-toggle';
+        button.textContent = `Pause ${label}`;
+        const state = document.createElement('span');
+        state.className = 'ft-motion-toggle-state';
+        state.setAttribute('aria-hidden', 'true');
+        button.append(state);
+        button.setAttribute('aria-controls', owner.id);
+        button.dataset.ftMotionControl = label;
+        row.append(button);
+        if (hero) {
+            owner.append(row);
+        } else {
+            owner.after(row);
+        }
+        let userPaused = false;
+        const update = () => {
+            const paused = userPaused || reducedMotionQuery.matches;
+            button.setAttribute('aria-pressed', String(paused));
+            state.textContent = paused ? 'Paused' : 'Playing';
+            button.disabled = reducedMotionQuery.matches;
+            button.title = reducedMotionQuery.matches ? 'Paused by your reduced-motion preference' : '';
+            owner.dataset.ftMotionPaused = String(paused);
+            onChange(paused);
+        };
+        button.addEventListener('click', () => {
+            userPaused = !userPaused;
+            update();
+        });
+        reducedMotionQuery.addEventListener?.('change', update);
+        motionControls.set(owner, button);
+        update();
+    }
+
+    function initialisePlatformMotion() {
+        document.querySelectorAll('.ft-platform-media-frame').forEach((frame) => {
+            const image = frame.querySelector('.ft-platform-gif img');
+            const poster = frame.querySelector('.ft-platform-poster img');
+            if (!image || !poster) {
+                return;
+            }
+            const animatedSource = image.dataset.ftAnimationSrc;
+            if (!animatedSource) {
+                return; // Nonmatching editor-owned media is never substituted.
+            }
+            let visible = false;
+            let motionPaused = reducedMotionQuery.matches;
+            const updateSource = () => {
+                // Keep an already-playing image when it leaves view. A paused
+                // image resumed off-screen waits for the next viewport entry.
+                const source = motionPaused ? poster.src : visible ? animatedSource : null;
+                if (source && image.getAttribute('src') !== source) {
+                    image.setAttribute('src', source);
+                }
+            };
+            addMotionControl(frame, 'Platform animation', (paused) => {
+                motionPaused = paused;
+                updateSource();
+            });
+            const checkVisibility = () => {
+                const bounds = frame.getBoundingClientRect();
+                visible = bounds.bottom > 0 && bounds.top < window.innerHeight
+                    && bounds.right > 0 && bounds.left < window.innerWidth;
+                updateSource();
+            };
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver((entries) => {
+                    visible = entries.some((entry) => entry.isIntersecting);
+                    updateSource();
+                }, { rootMargin: '0px', threshold: 0.01 }).observe(frame);
+            } else {
+                window.addEventListener('scroll', checkVisibility, { passive: true });
+                window.addEventListener('resize', checkVisibility);
+                checkVisibility();
+            }
+        });
+    }
 
     function initialiseHero(hero, heroIndex) {
         const slides = Array.from(hero.querySelectorAll(heroSlideSelector));
@@ -92,6 +185,7 @@
         let animationFrame = null;
         let autoAdvanceTimer = null;
         let interactionPaused = false;
+        let motionPaused = reducedMotionQuery.matches;
 
         function stopAutoAdvance() {
             window.clearTimeout(autoAdvanceTimer);
@@ -100,7 +194,7 @@
 
         function scheduleAutoAdvance() {
             stopAutoAdvance();
-            if (reducedMotionQuery.matches || interactionPaused || document.hidden) {
+            if (motionPaused || interactionPaused || document.hidden) {
                 return;
             }
             autoAdvanceTimer = window.setTimeout(() => {
@@ -246,6 +340,10 @@
         document.addEventListener('visibilitychange', scheduleAutoAdvance);
         reducedMotionQuery.addEventListener?.('change', scheduleAutoAdvance);
 
+        addMotionControl(hero, 'hero slides', (paused) => {
+            motionPaused = paused;
+            scheduleAutoAdvance();
+        }, true);
         selectSlide(currentIndex);
         scheduleAutoAdvance();
     }
@@ -318,15 +416,22 @@
     function initialiseFooterQuotes() {
         const shell = document.querySelector('[data-ft-footer-quotes]');
         const quotes = Array.from(shell?.querySelectorAll('p') || []);
-        if (!shell || quotes.length < 2 || reducedMotionQuery.matches) {
+        if (!shell || quotes.length < 2) {
             return;
         }
         let index = 0;
-        window.setInterval(() => {
-            quotes[index].hidden = true;
-            index = (index + 1) % quotes.length;
-            quotes[index].hidden = false;
-        }, 7000);
+        let timer = null;
+        addMotionControl(shell, 'field quotes', (paused) => {
+            window.clearInterval(timer);
+            timer = null;
+            if (!paused) {
+                timer = window.setInterval(() => {
+                    quotes[index].hidden = true;
+                    index = (index + 1) % quotes.length;
+                    quotes[index].hidden = false;
+                }, 7000);
+            }
+        });
     }
 
     function initialiseMotion() {
@@ -374,6 +479,9 @@
     function initialiseMovingRails() {
         document.querySelectorAll('.ft-partner-logos, .ft-testimonial-cards').forEach((rail) => {
             const isTestimonialRail = rail.classList.contains('ft-testimonial-cards');
+            addMotionControl(rail, isTestimonialRail ? 'testimonials' : 'partner logos', (paused) => {
+                rail.classList.toggle('is-motion-paused', paused);
+            });
             if (isTestimonialRail && reducedMotionQuery.matches) {
                 rail.tabIndex = 0;
                 rail.setAttribute('role', 'region');
@@ -756,6 +864,19 @@
             let resumeStrength = 1;
             let activated = false;
             let isActivating = false;
+            let motionPaused = reducedMotionQuery.matches;
+            addMotionControl(shell, 'globe animation', (paused) => {
+                motionPaused = paused;
+                if (frame !== null) {
+                    window.cancelAnimationFrame(frame);
+                    frame = null;
+                }
+                lastFrameTime = 0;
+                if (context) {
+                    draw();
+                    requestRender();
+                }
+            });
 
             function resizeCanvas() {
                 const displaySize = Math.max(240, Math.round(canvas.getBoundingClientRect().width));
@@ -876,7 +997,7 @@
                 });
                 context.strokeStyle = 'rgba(226, 129, 48, 0.64)';
                 context.lineWidth = Math.max(1.08 * ratio, 1);
-                if (!reducedMotionQuery.matches) {
+                if (!motionPaused) {
                     context.setLineDash([7 * ratio, 5 * ratio]);
                     context.lineDashOffset = -(((time * 0.018) + (arcIndex * 9)) % (24 * ratio));
                 }
@@ -952,7 +1073,7 @@
                     context.arc(x, y, 4.15 * ratio, 0, Math.PI * 2);
                     context.stroke();
 
-                    if (!reducedMotionQuery.matches) {
+                    if (!motionPaused) {
                         const pulse = 5.3 + ((Math.sin((time / 420) + markerIndex) + 1) * 1.05);
                         context.strokeStyle = 'rgba(236, 143, 61, 0.28)';
                         context.beginPath();
@@ -969,18 +1090,18 @@
                 }
                 const elapsed = lastFrameTime ? Math.min(40, time - lastFrameTime) : (1000 / 60);
                 lastFrameTime = time;
-                if (!reducedMotionQuery.matches && !isDragging) {
+                if (!motionPaused && !isDragging) {
                     resumeStrength = Math.min(1, resumeStrength + (elapsed / 1800));
                     rotation += rotationPerFrame * (elapsed / (1000 / 60)) * resumeStrength;
                 }
                 draw(time);
-                if (!reducedMotionQuery.matches) {
+                if (!motionPaused) {
                     frame = window.requestAnimationFrame(render);
                 }
             }
 
             function requestRender() {
-                if (frame === null && isVisible && !document.hidden) {
+                if (frame === null && isVisible && !document.hidden && !motionPaused) {
                     frame = window.requestAnimationFrame(render);
                 }
             }
@@ -1415,11 +1536,7 @@
     }
 
     function initialise() {
-        if (reducedMotionQuery.matches && interactionScriptUrl) {
-            document.querySelectorAll('.ft-platform-gif img').forEach((image) => {
-                image.src = new URL('../media/final-tools-review-11s-to-40s-poster.png', interactionScriptUrl).href;
-            });
-        }
+        initialisePlatformMotion();
         document.querySelectorAll(heroSelector).forEach(initialiseHero);
         initialiseLanguageSelector();
         initialiseBentoGroups();
@@ -1428,6 +1545,9 @@
         initialiseQuotationDialog();
         initialiseMotion();
         initialiseMovingRails();
+        reducedMotionQuery.addEventListener?.('change', () => {
+            initialiseMovingRails();
+        });
         initialiseGlobes();
         initialiseCounters();
         initialiseHeaderState();

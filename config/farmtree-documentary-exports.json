@@ -1189,6 +1189,303 @@
       "height": 360,
       "bytes": 56941,
       "sha256": "9ac9cb79818c2df3a7edcf44a5e3ff3a3e8c1ba0fe624d986d8ca03f9cbf8acf"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 32509,
+      "sha256": "0fe99f0dfbc9ae3473e83e43c9116e2a8b687164896d57072d4dc910c01da0c9"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 60202,
+      "sha256": "41e6f82a48ecbdd44e6989453634bf702f4df3e801fedb22f8242da40e110c31"
+    },
+    {
+      "number": 1,
+      "sourceSha256": "582d8ab694c8e31e6ca0d46a1006257043ef6d49177efaaca1f7ec0e9f057848",
+      "filename": "farmtree-dryland-field-context-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 91250,
+      "sha256": "3b0488e342bdda1b410719091b893301b489dcfffccfea3a2f7bc61219026a7f"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 60301,
+      "sha256": "abe74dc6966d202ca60966d4fa43b44117d69d4efc4b1e7a885a2374db4fcfda"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 115430,
+      "sha256": "150d2e224cf861fd8bcb05c2020698524d08a8de03227858111a57db44e1972f"
+    },
+    {
+      "number": 2,
+      "sourceSha256": "220ef24101aecb10dbb6e034bcf36d77f18c402e511e015919690260dc133c76",
+      "filename": "farmtree-community-field-visit-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 152078,
+      "sha256": "3f98405a1324133f18bf9e4c76953796081cf8ef68a682c11534629f3fabc4cb"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 57787,
+      "sha256": "9d993f4e8dcb30e4a0fe3daf1c9cf6c25f9a76016c24d3d2ac1c624d4ae9b078"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 118284,
+      "sha256": "f7eedaa59ad417bbf2c9cc3fd416cc432b1e8b8f82f0f1045ec0511dca3779d6"
+    },
+    {
+      "number": 8,
+      "sourceSha256": "95bb77d475ec077d6cb0777e1391eee8ead0d42a534263b8589df195cbc0a0bd",
+      "filename": "farmtree-onion-harvest-under-trees-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 152225,
+      "sha256": "951fd789f0d32cd9c7ecfce1f897f3fde234d1be19b572fd4af5c5fea3af0681"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 38774,
+      "sha256": "88fe850a48bd992d4db9e7920026b5c4cdf70a25baf3797fda1ec1ad6e7f95a2"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 69546,
+      "sha256": "6b8f225c60eb1e53cc12132bab510418bf90fd681018ff73ebb4a2fdd4b8e289"
+    },
+    {
+      "number": 10,
+      "sourceSha256": "d659e67d3f7bf453ef1b186ed8fc18a125104ca48d0e75c1bbef5359b5b87687",
+      "filename": "farmtree-plant-observation-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 107022,
+      "sha256": "4560d7704a5615b8495e1a1d3d837b208d7d8413d0ea7783ff4627b5a7012f48"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 46257,
+      "sha256": "5496a55a9a0e3c8ead7f411c933e67d5085ade34836ff15b4cff0c7b132eb121"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 97700,
+      "sha256": "c436e28e8c2925216190bae99053ce57de841b5bb7740e2f0577ab5752f949a2"
+    },
+    {
+      "number": 11,
+      "sourceSha256": "f63ee48b64258602df946ecb0f46b888cffa9d92a6714840899e86290aafcbff",
+      "filename": "farmtree-agroforestry-field-system-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 125802,
+      "sha256": "fe113e52a31df3589c6146721dde97ff3399fe300b193f40659dd352d9b2dd62"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 37959,
+      "sha256": "d9cc1a601461fc6502f69f2751f0fd8a13f6ee955ea9d74ee4f425797f0ab54c"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 75308,
+      "sha256": "7e6a7b0a61437739de8def8f1122cc190173ccbf18be4365fb0df102ceee3b11"
+    },
+    {
+      "number": 12,
+      "sourceSha256": "6ba07a5a48f8ced58982e1b3e876454e6c49668ac171f0870a0fc71f399c1908",
+      "filename": "farmtree-dryland-tree-landscape-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 106291,
+      "sha256": "d05bb20df56859e24d21e5ffabad9c32791b6a1e94f12a570e88e5ae34a9ee2b"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 19460,
+      "sha256": "e0d981796f86ac41b5e6f99b303b6375ced813453510b1348a5b3afdbc072b8d"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 30750,
+      "sha256": "4a9dea33050370dcbb5a9972d06ad02e9ea86b93aababeb0bd2d36aa944e3cc9"
+    },
+    {
+      "number": 14,
+      "sourceSha256": "e78fa7c2561498fb04db6e0c56127905f0c40d3ac7563793f41cd32833c22864",
+      "filename": "farmtree-green-field-climate-context-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 58826,
+      "sha256": "a57a1127fca99736a730afdb889f21031b40ff415051591227681dc374a5161b"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 55701,
+      "sha256": "be3d2b59433b186f266680d0b90083ad9cb17b105aed9a3ac9b445c5ff3a809b"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 112942,
+      "sha256": "a449eef97f961b36f938449d3bc755b7d28d05464a3763542ec820b6cc19f529"
+    },
+    {
+      "number": 15,
+      "sourceSha256": "787c685061d602b06b24658502f90e8ae8f7af18b74dc88ca90ca2fab7f89e9e",
+      "filename": "farmtree-integrated-agroforestry-cropping-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 144096,
+      "sha256": "14e6be3a480fa7c593eb6e456bf376a0a83a277386aaa467c5c6404f60c381c2"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 63443,
+      "sha256": "5174f1617c570f4189b2e80ea89147b0e1b157cb6cf3b16545eae4214ab8af6b"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 131936,
+      "sha256": "2dcffaa41ddc855c8d7a5896dec5717a51b47c53d8d2ede7f94476fee5ecc270"
+    },
+    {
+      "number": 17,
+      "sourceSha256": "723f2a826e8dc7ba71e23794034831afb0d8947f0243a5abd98662eef38c9bb8",
+      "filename": "farmtree-mixed-garden-papaya-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 164217,
+      "sha256": "832d6313ff69c10529e719bc459a9e92dfbb2d520deada19b92abc2f99bdcd79"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 51936,
+      "sha256": "3fd457da37841421e7b868803c72606b08707c129ab8fb9f518106abb0641a03"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 105482,
+      "sha256": "3d5a1b4b8ef70002b30299c1fb8efb9506812f84ffe9e56441588b0cbbff5ca6"
+    },
+    {
+      "number": 19,
+      "sourceSha256": "78c591c5020d74092066dec9b56c8c592d042fb83296a53d94896e179c0bb891",
+      "filename": "farmtree-mixed-agricultural-landscape-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 138496,
+      "sha256": "73cdfb2de42aaf88cf31c63c8fc85cc2c8abb039df729fa4e51b49ce2264fd26"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 62983,
+      "sha256": "1a0f4c01ac70629e67f9cc5895ddf3364960858795ed44ceb4cd60f0d28fe07f"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 140044,
+      "sha256": "4d8ee0ea3e97b0aeb29009a3f87d1de30c7cc4a805ff7c8d256a451a6b846bd7"
+    },
+    {
+      "number": 20,
+      "sourceSha256": "528693461febe5ecb50c3b3b0bfc46e0a1daccb3834adbc1ca8b6109e2d10688",
+      "filename": "farmtree-structured-field-plots-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 167019,
+      "sha256": "a87f3ad61b20a394e39c1b8f68ed2ca7ecb5f21e9ccd5964a55eb8a72088d2dd"
     }
   ]
 }

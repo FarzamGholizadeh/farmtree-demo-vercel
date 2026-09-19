@@ -2,6 +2,10 @@
   "schemaVersion": 1,
   "policy": "Upload-order numbering is authoritative. Descriptions corrected from visible photographs. No location, species (except visible papaya/onions), identity, project attribution or outcome is inferred. Originals remain outside the deployable tree. Selected exports strip metadata; no generative editing, retouching, object removal or tonal changes.",
   "variants": {
+    "medium": {
+      "width": 800,
+      "height": 600
+    },
     "hero": {
       "width": 1920,
       "height": 1080

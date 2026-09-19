@@ -10,7 +10,7 @@ const release = JSON.parse(await readFile('config/farmtree-native-release-files.
 const root = 'wordpress/wp-content/themes/farmtree-native/assets/images/documentary/';
 assert.deepEqual(plan.images.map((image) => image.number), Array.from({ length: 20 }, (_, i) => i + 1));
 const selected = plan.images.filter((image) => image.selected);
-assert.equal(exports.files.length, selected.length * 12);
+assert.equal(exports.files.length, selected.length * Object.keys(plan.variants).length * plan.formats.length);
 assert.equal(new Set(exports.files.map((file) => file.filename)).size, exports.files.length);
 assert.deepEqual((await readdir(root)).sort(), exports.files.map((file) => file.filename).sort());
 let totalBytes = 0;

@@ -20,9 +20,14 @@
     "content:manifest": "node scripts/generate-managed-content-manifest.mjs",
     "images:prepare": "node scripts/prepare-documentary-images.mjs",
     "validate:documentary": "node scripts/validate-documentary-images.mjs",
+    "validate:documentary:medium": "node scripts/validate-documentary-medium.cjs",
     "validate:agents": "node scripts/validate-agent-system.mjs",
     "validate:browser": "node scripts/validate-browser-regressions.mjs",
     "audit:browser": "node scripts/validate-live360-browser.cjs",
+    "audit:routes": "node scripts/audit-live-routes.cjs",
+    "validate:motion": "node scripts/validate-motion-controls.cjs",
+    "validate:platform-animation": "node scripts/validate-platform-animation-render.mjs",
+    "validate:live360-syntax": "node --check scripts/audit-live-routes.cjs && node --check scripts/audit-performance.cjs && node --check scripts/build-repository-inventory.mjs && node --check scripts/build-route-inventory.cjs && node --check scripts/validate-motion-controls.cjs && node --check scripts/validate-platform-animation-render.mjs && node --check wordpress/wp-content/themes/farmtree-native/assets/js/native-interactions.js",
     "validate:metadata": "node scripts/validate-discovery-metadata.cjs",
     "validate:headers": "node scripts/validate-security-headers.mjs",
     "validate:theme-release": "node scripts/validate-theme-release.mjs",
@@ -41,7 +46,7 @@
     "release:audit": "node scripts/build-native-release.mjs --audit",
     "lint:js": "node --check scripts/start-local-wordpress.mjs && node --check scripts/bootstrap-local-wordpress.mjs && node --check scripts/generate-managed-content-manifest.mjs && node --check scripts/build-native-release.mjs && node --check scripts/validate-farmtree-content-safety.mjs && node --check scripts/validate-farmtree-runtime-side-effects.mjs && node --check scripts/validate-farmtree-postconditions.mjs && node --check scripts/validate-local-anonymous.mjs && node --check scripts/validate-wordpress-state-safety.mjs && node --check scripts/preview-native-homepage.mjs && node --check scripts/validate-agent-system.mjs && node --check scripts/validate-native-foundation.mjs && node --check scripts/validate-native-workflows.mjs && node --check scripts/validate-visual-baseline.mjs && node --check stylelint.config.mjs",
     "lint:css": "stylelint \"wordpress/wp-content/themes/farmtree-native/**/*.css\"",
-    "test": "npm run validate:agents && npm run validate:documentary && npm run validate:content-manifest && npm run validate:content-safety && npm run validate:wordpress-state-safety && npm run validate:native && npm run validate:preview && npm run validate:visual && npm run validate:workflows && npm run release:check && npm run lint:js && npm run lint:css"
+    "test": "npm run validate:agents && npm run validate:documentary && npm run validate:content-manifest && npm run validate:content-safety && npm run validate:wordpress-state-safety && npm run validate:native && npm run validate:preview && npm run validate:visual && npm run validate:workflows && npm run release:check && npm run lint:js && npm run validate:live360-syntax && npm run lint:css"
   },
   "overrides": {
     "express": {
