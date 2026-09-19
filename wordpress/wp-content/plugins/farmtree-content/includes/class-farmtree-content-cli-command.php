@@ -34,6 +34,7 @@ final class FarmTree_Content_CLI_Command
     private const PRIVATE_REVIEW_CONFIRMATION = 'MATERIALIZE ENGLISH CONTENT AS PRIVATE REVIEW';
     private const PROTECTION_CONFIRMATION = 'COMING SOON AND NOINDEX VERIFIED';
     private const POST_LAUNCH_CONFIRMATION = 'APPLY SIX PAGE DOCUMENTARY CONTENT UPDATES';
+    private const EDITORIAL_CONFIRMATION = 'APPLY APPROVED EDITORIAL DOCUMENTARY UPDATES';
     private const PUBLICATION_CONFIRMATION = 'PRESERVE EXISTING PUBLICATION AND ROUTING';
     private const PUBLIC_STATE_CONFIRMATION = 'PUBLIC INDEXING ON AND COMING SOON OFF VERIFIED';
 
@@ -53,6 +54,9 @@ final class FarmTree_Content_CLI_Command
      *
      * [--post-launch-images]
      * : Opt in to six-page, owned, published content-only updates; preserve public settings.
+     *
+     * [--post-launch-editorial]
+     * : Opt in to the exact approved 09ddf530 editorial/media transition; preserve public settings.
      *
      * [--plan-digest=<sha256>]
      * : Exact plan digest. Required with --apply.
@@ -95,6 +99,7 @@ final class FarmTree_Content_CLI_Command
             $apply = isset($assoc_args['apply']);
             $options = [
                 'post_launch_images' => isset($assoc_args['post-launch-images']),
+                'post_launch_editorial' => isset($assoc_args['post-launch-editorial']),
                 'set_front_page' => isset($assoc_args['set-front-page']),
                 'expected_site' => isset($assoc_args['expected-site']) ? (string) $assoc_args['expected-site'] : '',
                 'expected_theme' => isset($assoc_args['expected-theme']) ? (string) $assoc_args['expected-theme'] : '',
@@ -367,7 +372,7 @@ final class FarmTree_Content_CLI_Command
             'apply', 'dry-run', 'plan-digest', 'source-commit', 'expected-site',
             'expected-theme', 'backup-digest', 'confirmation',
             'publication-confirmation', 'protection-confirmation',
-            'set-front-page', 'format', 'post-launch-images',
+            'set-front-page', 'format', 'post-launch-images', 'post-launch-editorial',
         ];
         $unknown = array_diff(array_keys($assoc_args), $allowed);
         if ($unknown) {
@@ -378,6 +383,9 @@ final class FarmTree_Content_CLI_Command
         }
         if (isset($assoc_args['post-launch-images'], $assoc_args['set-front-page'])) {
             throw new InvalidArgumentException('Post-launch image mode cannot change the front page.');
+        }
+        if (isset($assoc_args['post-launch-editorial']) && (isset($assoc_args['set-front-page']) || isset($assoc_args['post-launch-images']))) {
+            throw new InvalidArgumentException('Editorial mode cannot combine with front-page changes or another release scope.');
         }
         if (isset($assoc_args['format']) && 'json' !== strtolower((string) $assoc_args['format'])) {
             throw new InvalidArgumentException('Only --format=json is supported.');
@@ -406,8 +414,9 @@ final class FarmTree_Content_CLI_Command
         if (!preg_match('/^[0-9a-f]{64}$/', strtolower((string) $args['backup-digest']))) {
             throw new InvalidArgumentException('--backup-digest must be a 64-character SHA-256.');
         }
-        $public_mode = isset($args['post-launch-images']);
-        if (($public_mode ? self::POST_LAUNCH_CONFIRMATION : self::APPLY_CONFIRMATION) !== (string) $args['confirmation']) {
+        $public_mode = isset($args['post-launch-images']) || isset($args['post-launch-editorial']);
+        $confirmation = isset($args['post-launch-editorial']) ? self::EDITORIAL_CONFIRMATION : ($public_mode ? self::POST_LAUNCH_CONFIRMATION : self::APPLY_CONFIRMATION);
+        if ($confirmation !== (string) $args['confirmation']) {
             throw new InvalidArgumentException('The apply confirmation text is not exact.');
         }
         if (($public_mode ? self::PUBLICATION_CONFIRMATION : self::PRIVATE_REVIEW_CONFIRMATION) !== (string) $args['publication-confirmation']) {

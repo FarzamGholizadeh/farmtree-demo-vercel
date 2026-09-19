@@ -11,6 +11,11 @@ try {
   // Freeze the already-audited six-page contract independently of future content.
   await writeFile(resolve(temporary, 'approved.php'), execFileSync('git', ['show', '47313843c47ef0e43dbdb80f0ec76dfd2dc2cff1:wordpress/wp-content/plugins/farmtree-content/includes/managed-content-manifest.php'], { cwd: root }));
   const harness = await readFile(resolve(root, process.argv.includes('--editorial') ? 'scripts/fixtures/editorial-migration.php' : 'scripts/fixtures/post-launch-images.php'), 'utf8');
+  if (process.argv.includes('--editorial')) {
+    const approved = execFileSync('git', ['show', '09ddf53098213e7e5a8cb51de57723f1fba0bc8e:wordpress/wp-content/plugins/farmtree-content/includes/managed-content-manifest.php'], { cwd: root });
+    if (!approved.equals(await readFile(resolve(root, 'wordpress/wp-content/plugins/farmtree-content/includes/managed-content-manifest.php')))) throw new Error('Editorial content differs from the approved 09ddf530 source');
+    await writeFile(resolve(temporary, 'staged-runner.php'), await readFile(resolve(root, 'scripts/run-staged-editorial.php')));
+  }
   await writeFile(resolve(temporary, 'blueprint.json'), JSON.stringify({
     preferredVersions: { php: '8.3', wp: '7.1' }, steps: [{ step: 'runPHP', code: harness }]
   }));

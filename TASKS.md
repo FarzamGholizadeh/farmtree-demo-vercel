@@ -240,3 +240,10 @@ dispatch.
 - [x] Complete anonymous route/link, responsive, interaction and testimonial QA.
 - [x] Remove Coming Soon/release noindex; enable public indexing; keep NL/DE and FT Bot off.
 - [ ] Optional human check: staff LinkedIn profiles block automated requests (HTTP 999).
+# Editorial release safety — 2026-09-19
+
+- [x] Push explicitly approved 09ddf530 source.
+- [x] Add an independent exact editorial/media scope; preserve six-page guard.
+- [x] Validate local scoped migration, ownership rejection and public-state rollback.
+- [ ] Finish audited safety commit/artifact, then real production dry-run/APPLY,
+  checksum-verified deployment and public production QA under the explicit approval.

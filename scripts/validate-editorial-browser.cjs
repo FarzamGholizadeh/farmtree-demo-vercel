@@ -1,4 +1,4 @@
-// Local-only visual and editorial regression. Uses the repository QA toolchain.
+// Read-only local/production editorial regression. Uses the repository QA toolchain.
 const { createRequire } = require('node:module');
 const path = require('node:path');
 const fs = require('node:fs');
@@ -6,7 +6,11 @@ const assert = require('node:assert/strict');
 const qa = createRequire(path.resolve(__dirname, '../qa/tools/package.json'));
 const puppeteer = qa('puppeteer-core');
 const { pathToFileURL } = require('node:url');
-const out = path.resolve(__dirname, '../qa/screenshots/editorial-audit');
+const base = process.argv[2] || 'http://localhost:8888/';
+assert.ok(['http://localhost:8888/', 'https://farmtree.eu/'].includes(base));
+const production = base === 'https://farmtree.eu/';
+const widths = production ? [390, 768, 1024, 1440, 1920] : [320, 375, 390, 430, 768, 1024, 1280, 1440, 1920];
+const out = path.resolve(__dirname, `../qa/screenshots/editorial-${production ? 'production' : 'audit'}`);
 fs.mkdirSync(out, { recursive: true });
 (async () => {
   const { proofPhotographs, newsPhotographs } = await import(pathToFileURL(path.join(__dirname, 'editorial-photographs.mjs')));
@@ -17,16 +21,16 @@ fs.mkdirSync(out, { recursive: true });
   const evidence = [];
   try {
     const page = await browser.newPage();
-    await page.setCookie({ name: 'playground_auto_login_already_happened', value: '1', domain: 'localhost', path: '/' });
+    if (!production) await page.setCookie({ name: 'playground_auto_login_already_happened', value: '1', domain: 'localhost', path: '/' });
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
     const errors = [];
     page.on('pageerror', e => errors.push(e.message));
     page.on('console', e => { if (e.type() === 'error') errors.push(e.text()); });
-    for (const width of [320, 375, 390, 430, 768, 1024, 1280, 1440, 1920]) {
+    for (const width of widths) {
       await page.setViewport({ width, height: 950 });
       for (const route of routes) {
         errors.length = 0;
-        const response = await page.goto(`http://localhost:8888/${route}`, { waitUntil: 'networkidle0' });
+        const response = await page.goto(`${base}${route}`, { waitUntil: 'networkidle2', timeout: 60000 });
         assert.equal(response.status(), 200, route);
         await page.evaluate(async () => {
           await document.fonts.ready;
@@ -66,6 +70,6 @@ fs.mkdirSync(out, { recursive: true });
       }
     }
     fs.writeFileSync(`${out}/report.json`, JSON.stringify(evidence, null, 2));
-    console.log(JSON.stringify({ status: 'pass', views: evidence.length, widths: 9, routes: routes.length, overflow: 0, consoleErrors: 0, screenshots: out }));
+    console.log(JSON.stringify({ status: 'pass', views: evidence.length, widths: widths.length, routes: routes.length, overflow: 0, consoleErrors: 0, screenshots: out }));
   } finally { await browser.close(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });

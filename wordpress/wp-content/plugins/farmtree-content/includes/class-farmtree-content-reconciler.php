@@ -38,6 +38,46 @@ final class FarmTree_Content_Reconciler
     private const META_ASSET_SHA = '_farmtree_content_asset_sha256';
     private const META_BACKUP_EVIDENCE = '_farmtree_content_backup_evidence_sha256';
 
+    // Exact 47313843 source fingerprints/fields -> pinned 09ddf530 manifest.
+    // Source hashes are portable; WordPress save filters differ by environment.
+    private const EDITORIAL_MANIFEST_SHA256 = '8c5e249f3a9b323fa2d024bb528bc9e465b8b8871f8dab3e99f6298e38dab790';
+    private const EDITORIAL_POSTS = [
+        "page.en.home" => ["072aac231313ae35b182729674a447dd57126538547bba846a5094f337dc1e13", ["post_content"]],
+        "customer_segment.en.development_banks_donor_organisations" => ["2dbce45f114be936e87cd7ffbd7b421e3f8142bdee938f5d7613f8ac19d90ef2", ["post_content"]],
+        "customer_segment.en.ngos_conservation_organisations" => ["82700a55bccaf0be19caae40fd55c1ac63ad169ebbde07c9d2d8af90a16637cd", ["post_content"]],
+        "customer_segment.en.industry_associations_multi_stakeholder_platforms" => ["06af4097ac57e6817490c23e9757d10b9991e3d2dfadcb770f0d8381953c5424", ["post_content"]],
+        "post.en.farmtree_water_erosion_microclimate_model_update_2026" => ["f70c36a2a5370a9439d28af0d612903d511d53a0d6828aa36617dcf39f915894", ["featured_asset_key", "post_content"]],
+        "post.en.eu_carbon_farming_methodologies_agroforestry_2026" => ["51310f6d1c967939e76cc5696edaf3ce361444feaa06742acda0c43c7fa2bccc", ["featured_asset_key", "post_content"]],
+        "post.en.eudr_2026_agroforestry_data_readiness" => ["8426f56ebcc0366a5a60a9c3f7ee120bb46c98d47ce13272cfc297095b7b6bcc", ["featured_asset_key", "post_content"]],
+        "post.en.verra_vm0042_v22_agricultural_land_management" => ["d97ea5939cf26cfaeb24ba40111013453183cdc86edeb5c6e6a9c7592de6552a", ["featured_asset_key", "post_content"]],
+        "post.en.verra_vm0042_v30_consultation_lessons" => ["661d10f442963c0eea82ba24006c99a15f92a06c8c1e1aee62fbdd41c3eb7aec", ["featured_asset_key", "post_content"]],
+        "post.en.smallholder_agroforestry_wood_production_lessons_2025" => ["b0b0a8543f3e80b0441282ad5c9b32a4405aca713534c67d44b8350582976f9e", ["featured_asset_key", "post_content"]],
+        "post.en.carbon_pricing_2026_nature_project_quality" => ["f4191d6ea9729430b90ed52f74b1f46aa59e7e5f0ef7612de5ec200a9539e149", ["featured_asset_key", "post_content"]],
+        "post.en.agroforestry_species_data_switchboard_2025" => ["3018d627e58b67da59595b923bb6487bbeb857de502c6485d9b0acc6f1e777db", ["featured_asset_key", "post_content", "post_excerpt"]],
+        "post.en.nature_restoration_plans_report_once_agroforestry_2025" => ["ce25b1927433f47abb9353f401682c953744bfb12555e19218fbf44f306671fb", ["featured_asset_key", "post_content"]],
+        "proof_story.en.carbon_planning" => ["01deda0f8559eb77a28e56506e3c4b9521f5e0224e39705a841bb36e07183c05", ["featured_asset_key", "post_content"]],
+        "proof_story.en.farm_value" => ["39b24f8aee6f1338a86061852b298cbd17aef1eb8b815aacef706d8320dd0e08", ["featured_asset_key", "post_content"]],
+        "proof_story.en.cocoa_scenario" => ["5e1909eb045172525a00fc87443786701b3295cfe259133f98fca75f568653a4", ["featured_asset_key", "post_content"]],
+        "proof_story.en.landscape_hydrology" => ["2d7f6194e95739260ebb9a041ffb2469d6d13bbb34253f262a2d39a54ce7cfc2", ["featured_asset_key", "post_content"]],
+        "page.en.proof_stories" => ["ed5c0e6e7eab84eb22eb7b49dfaa82e111c525342a336323eb55383e99c2ba3b", ["post_content"]],
+        "page.en.case_studies" => ["b1f4e9db4a8e56c81a8494d267190274ad0423cb33f0ffc29718aab1a6de680b", ["post_content"]],
+        "page.en.vacancies" => ["e703534205fc40b2f560b57b57fcc97d8a16473f5b853135cf45f68ff493d3c2", ["post_content"]],
+        "page.en.acknowledgements" => ["2f6c92440632134e182136587aa164c5b362fd113a135ff74d6aa8c229606203", ["post_content"]],
+        "page.en.licenses" => ["c92170ed91bb395754e79aaef30fff93d5ac34c942d0c5306b47cdd8a4813320", ["post_content"]],
+        "page.en.user_videos" => ["ca535d275a201738a5209815f9b329057151dadcb99bc7d19ac26137d3d417a9", ["post_content"]],
+    ];
+    private const EDITORIAL_MEDIA = [
+        "asset.documentary.farmtree-agroforestry-field-system" => ["f24b15bf98f464ed041150d9b602b95d7f918f93f5fb4ebeafbe3ba457607ff2"],
+        "asset.documentary.farmtree-community-field-visit" => ["02bef3e95af0fbcebc1925bfa3f1cda053b62bc0f7c39771f5086f89089fc28f"],
+        "asset.documentary.farmtree-dryland-tree-landscape" => ["131afa75a15ea0cbb4fcca22e4666ecc9fc2f2b3778b140817cead32d6db3583"],
+        "asset.documentary.farmtree-green-field-climate-context" => ["2e37dab2bc45d698c8464ccd61d22bbcc2b5549072eb91c1294a13821628a780"],
+        "asset.documentary.farmtree-integrated-agroforestry-cropping" => ["6103386c710a28129b36c48ee96660418eb07d4bdfbf0b6cc8c745df1cdc95cd"],
+        "asset.documentary.farmtree-mixed-agricultural-landscape" => ["e6ccc9bd41d092b7813d32df4e839182bcedea30dbea342234943a0fa9288478"],
+        "asset.documentary.farmtree-onion-harvest-under-trees" => ["7f7dc9388b520d5b38a721a97ae4f1ef401acf154da10d65ef3363e6e71e161e"],
+        "asset.documentary.farmtree-plant-observation" => ["b186a6f427c39ab6c4a979a6e1fc823e411c31d05d13f62e0abb0d654fdc61ab"],
+        "asset.documentary.farmtree-structured-field-plots" => ["74de664e7b8f3b06b94d8d4eee40b615bcdf6144ddf37eed9b5e302de6af36fc"],
+    ];
+
     /** @var array<string,mixed> */
     private array $manifest;
     private string $theme_root = '';
@@ -79,6 +119,7 @@ final class FarmTree_Content_Reconciler
             'expected_theme' => '',
             'source_commit' => '',
             'post_launch_images' => false,
+            'post_launch_editorial' => false,
         ]);
         $site_url = trailingslashit(home_url('/'));
         $theme = get_stylesheet();
@@ -149,9 +190,13 @@ final class FarmTree_Content_Reconciler
         $ops['options'][] = $this->plan_rewrite_rules();
 
         $public_state = null;
-        if (!empty($options['post_launch_images'])) {
+        if (!empty($options['post_launch_images']) || !empty($options['post_launch_editorial'])) {
             $public_state = $this->post_launch_state();
-            foreach (array_merge($public_state['errors'], $this->post_launch_scope_errors($ops, (bool) $options['set_front_page'])) as $error) {
+            $scope_errors = !empty($options['post_launch_editorial'])
+                ? $this->editorial_scope_errors($ops, (bool) $options['set_front_page'])
+                : $this->post_launch_scope_errors($ops, (bool) $options['set_front_page']);
+            if (!empty($options['post_launch_images']) && !empty($options['post_launch_editorial'])) $scope_errors[] = 'mutually_exclusive_release_scopes';
+            foreach (array_merge($public_state['errors'], $scope_errors) as $error) {
                 $ops['checks'][] = $this->op('runtime', 'post-launch:' . $error, 'conflict', $error);
             }
         }
@@ -188,6 +233,10 @@ final class FarmTree_Content_Reconciler
             $plan['post_launch_images'] = true;
             $plan['public_state_sha256'] = $public_state['sha256'];
         }
+        if (!empty($options['post_launch_editorial'])) {
+            $plan['post_launch_editorial'] = true;
+            $plan['public_state_sha256'] = $public_state['sha256'];
+        }
         $plan['plan_digest'] = $this->hash($plan);
         return $plan;
     }
@@ -215,6 +264,39 @@ final class FarmTree_Content_Reconciler
                     || ($op['before']['post_status'] ?? '') !== 'publish' || ($op['desired']['post_status'] ?? '') !== 'publish') {
                     $errors[] = 'out_of_scope:' . $op['key'];
                 }
+            }
+        }
+        return $errors;
+    }
+
+    /** Exact approved snapshots, not a general editorial permission. No writes. */
+    private function editorial_scope_errors(array $operations, bool $set_front_page): array
+    {
+        $errors = $set_front_page ? ['front_page_change_forbidden'] : [];
+        if (!hash_equals(self::EDITORIAL_MANIFEST_SHA256, $this->hash($this->manifest))) $errors[] = 'editorial_manifest_not_approved';
+        foreach ($operations as $group => $items) {
+            foreach ($items as $op) {
+                if ('unchanged' === $op['action']) continue;
+                if ('checks' === $group && 'reserved-locale' === ($op['kind'] ?? '')
+                    && in_array($op['key'], ['nl', 'de'], true) && 'skipped' === $op['action']
+                    && 'reserved_locale_unpublished_untouched' === $op['reason']) continue;
+                if ('options' === $group && 'front-page' === $op['key'] && 'skipped' === $op['action']
+                    && 'set_front_page_not_requested' === $op['reason']) continue;
+                $approved = self::EDITORIAL_POSTS[$op['key']] ?? null;
+                if ('posts' === $group && $approved && 'update' === $op['action']
+                    && 'owned_update' === $op['reason'] && !empty($op['id'])
+                    && ($op['managed_metadata_write']['before'][self::META_SOURCE_HASH] ?? []) === [$approved[0]]
+                    && hash_equals((string) ($op['current_hash'] ?? ''), $this->hash($op['before'] ?? []))
+                    && hash_equals((string) ($op['applied_hash'] ?? ''), (string) ($op['current_hash'] ?? ''))
+                    && hash_equals((string) ($op['desired_hash'] ?? ''), $this->hash($op['desired'] ?? []))
+                    && ($op['before']['post_status'] ?? '') === 'publish'
+                    && ($op['desired']['post_status'] ?? '') === 'publish'
+                    && array_keys($op['changes'] ?? []) === $approved[1]) continue;
+                $asset = self::EDITORIAL_MEDIA[$op['key']] ?? null;
+                if ('media' === $group && $asset && 'create' === $op['action']
+                    && 'missing' === $op['reason'] && empty($op['id'])
+                    && hash_equals($asset[0], $this->hash($op['desired'] ?? []))) continue;
+                $errors[] = 'editorial_out_of_scope:' . $op['key'];
             }
         }
         return $errors;
@@ -363,8 +445,14 @@ final class FarmTree_Content_Reconciler
             throw new RuntimeException('A conflicted or undigested plan cannot be applied.');
         }
         $this->assert_plan_shape_and_actions($plan);
-        $public_mode = !empty($plan['post_launch_images']);
-        if ($public_mode && $this->post_launch_scope_errors($plan['operations'], (bool) $plan['set_front_page'])) {
+        $editorial_mode = !empty($plan['post_launch_editorial']);
+        $image_mode = !empty($plan['post_launch_images']);
+        $public_mode = $image_mode || $editorial_mode;
+        if ($image_mode && $editorial_mode) throw new RuntimeException('Release scopes are mutually exclusive.');
+        if ($editorial_mode && $this->editorial_scope_errors($plan['operations'], (bool) $plan['set_front_page'])) {
+            throw new RuntimeException('Editorial plan exceeds the exact approved transition.');
+        }
+        if ($image_mode && $this->post_launch_scope_errors($plan['operations'], (bool) $plan['set_front_page'])) {
             throw new RuntimeException('Post-launch image plan exceeds the six-page content-only scope.');
         }
         $gate_errors = $this->runtime_gate_errors((string) $plan['site_url'], (string) $plan['active_theme'], $public_mode);
@@ -402,7 +490,8 @@ final class FarmTree_Content_Reconciler
             $stage = 'locked-preflight';
             $this->lock_and_refresh_reconciliation_state();
             $fresh = $this->build_plan([
-                'post_launch_images' => $public_mode,
+                'post_launch_images' => $image_mode,
+                'post_launch_editorial' => $editorial_mode,
                 'set_front_page' => (bool) $plan['set_front_page'],
                 'expected_site' => (string) $plan['site_url'],
                 'expected_theme' => (string) $plan['active_theme'],
@@ -459,7 +548,8 @@ final class FarmTree_Content_Reconciler
             $stage = 'postcondition';
             $stage_key = '';
             $final_plan = $this->build_plan([
-                'post_launch_images' => $public_mode,
+                'post_launch_images' => $image_mode,
+                'post_launch_editorial' => $editorial_mode,
                 'set_front_page' => (bool) $plan['set_front_page'],
                 'expected_site' => (string) $plan['site_url'],
                 'expected_theme' => (string) $plan['active_theme'],

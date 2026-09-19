@@ -1,5 +1,30 @@
 # FT-NATIVE-002 Sprint Report
 
+## Editorial release-safety preparation — 2026-09-19
+
+- Explicit source push completed: `09ddf53098213e7e5a8cb51de57723f1fba0bc8e`.
+- New `--post-launch-editorial` pins the approved manifest, 23 baseline source
+  fingerprints, exact per-entity changed fields and nine media hashes. Six-page
+  scope unchanged; no adoptions, arbitrary updates or protected-state changes.
+- WordPress saved-HTML serialization differs between environments; portable
+  source pins match all 23 production baseline entities. Current/applied canonical
+  hash checks still independently reject any manual drift.
+- Disposable scoped APPLY: 9 creates / 23 updates / 0 adoptions, then 102
+  unchanged. Negative tests and hook-induced indexing rollback pass. Off-webroot
+  candidate runner leaves the installed plugin active for public requests.
+- Full core/static, local WordPress, anonymous routes, documentary, old six-page,
+  postcondition and lifecycle checks pass. One anonymous image fetch timed out;
+  the full anonymous rerun passed (40 routes, 104 links, zero broken links).
+- Production baseline remains public/healthy and unchanged. Real candidate
+  dry-run, verified fresh backups, APPLY, artifact swap and production QA are
+  subsequent authorized steps, not claimed complete by this preparation record.
+- Responsive editorial browser checks pass 171 views / 19 routes / nine widths,
+  with zero overflow or console errors. Browser CLI unavailable; existing
+  Puppeteer toolchain used. Navigation waits use networkidle2 plus explicit font
+  readiness and image decoding; networkidle0 timed out despite HTTP-200 pages.
+- Testimonial seamless LEFT-to-RIGHT regression passes at
+  320/390/768/1024/1440/1920 with no failures.
+
 ## Editorial/documentary local refinement — 2026-09-18
 
 - Local-only implementation; production baseline read-only: 93 unchanged, no

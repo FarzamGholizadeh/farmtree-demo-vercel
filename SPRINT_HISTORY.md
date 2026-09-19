@@ -72,3 +72,11 @@ globe controls and left-to-right seamless testimonials pass. Coming Soon off,
 blog_public=1, release noindex removed; NL/DE absent and FT Bot off. Rollback
 theme verified byte-for-byte unchanged against backup. Individual LinkedIn
 profile destinations remain unverified because of provider automation blocking.
+# 2026-09-19 — editorial post-launch release-safety preparation
+
+Explicitly approved source 09ddf530 pushed. Separate pinned editorial scope and
+off-webroot CLI runner prepared; old six-page scope retained. Local transition
+9 media creates / 23 updates / 0 conflicts, then 102 unchanged; manual drift,
+unapproved scope and hook-induced indexing changes rejected. Public production
+baseline read-only: 93 unchanged, no conflicts. Authorized production release
+continues only after exact artifact audit, verified backups and real dry-run.

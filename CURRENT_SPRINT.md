@@ -1,5 +1,15 @@
 # Current FarmTree Sprint
 
+## Authorized editorial post-launch release — 2026-09-19
+
+Approved source `09ddf53098213e7e5a8cb51de57723f1fba0bc8e` pushed to the feature
+branch. A separate exact-manifest editorial scope preserves the existing six-page
+guard. Local scoped migration: 9 media creates / 23 owned updates / 0 conflicts,
+then 102 unchanged; public-state rollback and ownership guards pass. Production
+baseline read-only: 93 unchanged / 0 conflicts, indexing ON, Coming Soon OFF.
+See `docs/FT-EDITORIAL-POST-LAUNCH-RELEASE.md`. Production APPLY/deployment and final
+QA remain gated by fresh verified backups and the real scoped dry-run.
+
 ## Editorial/documentary refinement — local pre-release, 2026-09-18
 
 Whole-site language review and approved photo placement implemented locally.
