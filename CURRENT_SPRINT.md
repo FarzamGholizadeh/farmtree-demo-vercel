@@ -1,5 +1,11 @@
 # Current FarmTree Sprint
 
+## Shared menu link cleanup — local, 2026-09-19
+
+Explicitly approved removal of only For Investors / For Advisors from the
+FARMTREE menu card, including mobile. All Customer Segments links and other
+header bytes preserved. Footer, routing, content and public state untouched.
+
 ## Shared full-width pre-footer CTA — local, 2026-09-19
 
 The shared Call To Action pattern now declares core `align: full` with matching

@@ -1,5 +1,23 @@
 # FT-NATIVE-002 Sprint Report
 
+## Shared menu cleanup — local, 2026-09-19
+
+Removed two complete navigation-link blocks from header.html's FARMTREE card.
+Exact source comparison confirms every other header byte is unchanged, including
+all ten Customer Segments links. No CSS, footer or content changes. Existing
+list flow naturally closes the removed rows without empty markup.
+Regression: `node scripts/validate-menu-links.cjs`; evidence/screenshots in
+`qa/screenshots/menu-links/`. npm test, wp:verify and wp:verify:anonymous pass;
+40 routes and 104 internal links checked with zero broken links. No deployment.
+Browser matrix passed 27 views (Homepage, Proof Story, Investors) at 320, 375,
+390, 430, 768, 1024, 1280, 1440 and 1920px; 18 keyboard activations of the
+preserved Investors link reached HTTP 200. Zero console/page errors, horizontal
+overflow or empty menu items. Mobile/desktop screenshots visually reviewed.
+Limitation: automated pointer activation at 320px timed out even when targeting
+the link text; keyboard activation passed at that width and pointer activation
+passed at 390px. The cause is not established. No unrelated navigation behavior
+was changed; 320px pointer interaction needs follow-up before release.
+
 ## Shared CTA layout correction — local, 2026-09-19
 
 Root cause: the shared pattern omitted full alignment, so constrained inner

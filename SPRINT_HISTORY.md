@@ -1,5 +1,12 @@
 # FarmTree Sprint History
 
+## 2026-09-19 — local menu duplicate-link cleanup
+
+User clarified the requested items belong to the shared header menu, not footer,
+and explicitly approved removal on mobile too. Removed only the two FARMTREE
+entries; retained the separate Investors and Consultancy & Agroforestry Advisors
+Customer Segments links. No production changes.
+
 ## 2026-09-19 — local shared CTA full-width correction
 
 Added native full alignment to the common Call To Action pattern. Inner detail

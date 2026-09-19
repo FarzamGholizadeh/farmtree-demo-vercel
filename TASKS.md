@@ -1,5 +1,11 @@
 # FarmTree Tasks
 
+## Shared FARMTREE menu cleanup — 2026-09-19
+
+- [x] Remove only For Investors / For Advisors, including the shared mobile menu.
+- [x] Preserve all Customer Segments links and all unrelated navigation.
+- [ ] Production release requires separate explicit approval.
+
 ## Shared CTA layout — local, 2026-09-19
 
 - [x] Fix the shared outer block alignment without changing inner design/copy.
