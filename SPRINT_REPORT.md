@@ -1,5 +1,40 @@
 # FT-NATIVE-002 Sprint Report
 
+## 320px pointer diagnostic — local, 2026-09-19
+
+Reproduced the original pointer-test timeout at exactly 320px. At timeout the
+browser had already reached `/customer-segments/investors/`, document readiness
+was `complete`, and the menu was closed. Both networkidle2 and DOMContentLoaded
+navigation lifecycle waits produced false negatives in this local runtime.
+The cause of the reported activation failure is the harness's lifecycle-wait
+assertion; no UI activation failure was observed. The underlying browser/runtime
+lifecycle-event mismatch was not attributed to a specific upstream component.
+
+DOM evidence: Investors measured 226x38 CSS px at x=47, y=605.875; center
+hit-testing returned the anchor, pointer-events was auto, ancestors were not
+inert, and the open overlay measured 320x1000 with z-index 1000000. No covering
+interactive layer or horizontal overflow. Default and reduced motion both
+navigated successfully. Runtime source and menu content are unchanged.
+
+`validate-menu-links.cjs` now asserts actual URL, complete document, closed menu
+and HTTP 200 instead of lifecycle silence. `validate-menu-pointer.cjs` checks
+every menu anchor with trusted mouse/touch events and real hit-testing, then
+performs unblocked Investors navigation, full tab order/wrap, Escape/focus return
+and keyboard activation. The all-anchor event probe prevents default actions
+to avoid opening external accounts/mail clients; Investors navigation is tested
+separately without interception. Anonymous checks validate internal destinations.
+Targets are checked against the WCAG 2.2 AA 24x24 CSS-pixel minimum:
+https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
+
+Responsive menu regression: 33 views, 11 widths, 22 real pointer navigations,
+zero console/page errors. npm test, wp:verify and wp:verify:anonymous passed;
+40 routes and 104 internal links, zero broken links. Pointer matrix report:
+`qa/screenshots/menu-links/pointer-report.json`. No push or deployment.
+Final pointer matrix: 320/360/390/414px, mouse and emulated touch, 25 links per
+case (200 trusted activations). All eight cases passed real Investors navigation,
+keyboard activation, complete focus order/wrap, Escape and focus restoration.
+All link targets exceeded 24x24; zero blocked targets, overflow or console errors.
+
 ## Shared menu cleanup — local, 2026-09-19
 
 Removed two complete navigation-link blocks from header.html's FARMTREE card.

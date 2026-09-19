@@ -1,5 +1,11 @@
 # Current FarmTree Sprint
 
+## Mobile pointer verification — local, 2026-09-19
+
+The earlier 320px timeout was a Puppeteer lifecycle-wait false negative, not a
+blocked link. Destination URL/document/menu-state assertions replace that wait.
+No theme, navigation content, styling or production changes are needed.
+
 ## Shared menu link cleanup — local, 2026-09-19
 
 Explicitly approved removal of only For Investors / For Advisors from the

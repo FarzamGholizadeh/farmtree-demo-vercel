@@ -12,7 +12,7 @@ const segments = JSON.parse(fs.readFileSync('wordpress/wp-content/plugins/farmtr
     await page.setCookie({ name: 'playground_auto_login_already_happened', value: '1', domain: 'localhost', path: '/' });
     page.on('pageerror', e => errors.push(e.message));
     page.on('console', e => { if (e.type() === 'error') errors.push(e.text()); });
-    for (const width of [320, 375, 390, 430, 768, 1024, 1280, 1440, 1920]) {
+    for (const width of [320, 360, 375, 390, 414, 430, 768, 1024, 1280, 1440, 1920]) {
       await page.setViewport({ width, height: 1000 });
       for (const route of ['/', '/proof-stories/farm-value-projection/', '/customer-segments/investors/']) {
         assert.equal((await page.goto('http://localhost:8888' + route, { waitUntil: 'networkidle2' })).status(), 200);
@@ -40,9 +40,11 @@ const segments = JSON.parse(fs.readFileSync('wordpress/wp-content/plugins/farmtr
         await new Promise(resolve => setTimeout(resolve, 600));
         if (route !== '/customer-segments/investors/') {
           console.log(`Checking Investors navigation: ${width}px ${route}`);
-          await page.focus(investor);
-          const [response] = await Promise.all([page.waitForNavigation({ waitUntil: 'networkidle2' }), page.keyboard.press('Enter')]);
-          assert.equal(response.status(), 200);
+          // The local runtime can complete pointer navigation without satisfying
+          // Puppeteer's lifecycle watcher. Check the actual destination instead.
+          await page.click(investor);
+          await page.waitForFunction(() => location.pathname === '/customer-segments/investors/' && document.readyState === 'complete' && !document.querySelector('.wp-block-navigation__responsive-container.is-menu-open'));
+          assert.equal(await page.evaluate(async () => (await fetch(location.href)).status), 200);
         }
         assert.equal(new URL(page.url()).pathname, '/customer-segments/investors/');
         rows.push({ width, route, ...row });
@@ -50,6 +52,6 @@ const segments = JSON.parse(fs.readFileSync('wordpress/wp-content/plugins/farmtr
     }
     assert.deepEqual(errors, []);
     fs.writeFileSync(`${out}/report.json`, JSON.stringify({ rows, errors }, null, 2));
-    console.log(JSON.stringify({ views: rows.length, investorKeyboardActivations: rows.filter(r => r.route !== '/customer-segments/investors/').length, errors }));
+    console.log(JSON.stringify({ views: rows.length, investorPointerActivations: rows.filter(r => r.route !== '/customer-segments/investors/').length, errors }));
   } finally { await browser.close(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });

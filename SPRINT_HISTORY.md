@@ -1,5 +1,12 @@
 # FarmTree Sprint History
 
+## 2026-09-19 — mobile pointer harness correction
+
+Resolved the previously recorded 320px uncertainty: pointer navigation succeeded
+while Puppeteer's navigation lifecycle wait timed out. Replaced that assertion
+with destination-state checks and added all-menu mouse/touch hit-target and
+keyboard coverage. No theme/runtime, content, layout or production changes.
+
 ## 2026-09-19 — local menu duplicate-link cleanup
 
 User clarified the requested items belong to the shared header menu, not footer,

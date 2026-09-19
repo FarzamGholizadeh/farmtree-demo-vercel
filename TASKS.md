@@ -1,5 +1,11 @@
 # FarmTree Tasks
 
+## 320px pointer diagnostic — 2026-09-19
+
+- [x] Reproduce timeout and distinguish completed navigation from watcher failure.
+- [x] Fix the test only; preserve all runtime/menu content and styling.
+- [x] Complete four-width mouse/touch/focus matrix before local commit.
+
 ## Shared FARMTREE menu cleanup — 2026-09-19
 
 - [x] Remove only For Investors / For Advisors, including the shared mobile menu.
