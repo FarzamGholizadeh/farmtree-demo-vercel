@@ -67,3 +67,15 @@ and exact YouTube links; the reserved space is removed when scripting is disable
 Release uses the existing theme-only checksum/state gates, fresh off-webroot
 backup and rollback-protected directory swap. No reconciliation or APPLY.
 Production QA must pass before completion. Existing workspaces remain intact.
+
+## Attempt 2 — production pattern-discovery cache
+
+The first release passed local checks but production retained a theme-version
+keyed pattern inventory that did not contain the new pattern. The page template
+and script loaded, but its pattern content was absent. The prior 6a63d14 runtime
+was restored and checksum-verified before correction.
+
+The correction explicitly registers this one pattern at init priority 20 only
+when absent. It uses WordPress's native filePath registration and does not clear
+the pattern cache, update options, change the theme version or mutate content.
+This is the final permitted remediation attempt.

@@ -2,6 +2,22 @@
 /** Scoped Platform learning presentation; the library is editable as core blocks. */
 if (!defined('ABSPATH')) { exit; }
 
+// Production caches theme pattern discovery by theme version. Register this
+// bounded addition in memory even when that older discovery cache is present.
+// Do not clear transients, alter options or overwrite an existing registration.
+function farmtree_native_register_learning_pattern(): void
+{
+    $name = 'farmtree-native/platform-learning';
+    if (WP_Block_Patterns_Registry::get_instance()->is_registered($name)) { return; }
+    register_block_pattern($name, [
+        'title' => 'FarmTree Platform learning library',
+        'categories' => ['featured'],
+        'inserter' => false,
+        'filePath' => __DIR__ . '/../patterns/platform-learning.php',
+    ]);
+}
+add_action('init', 'farmtree_native_register_learning_pattern', 20);
+
 add_filter('document_title_separator', static function (string $separator): string {
     return is_page('user-videos') ? '|' : $separator;
 });
