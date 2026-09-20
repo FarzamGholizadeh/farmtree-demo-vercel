@@ -23,3 +23,9 @@ The approved GIF sequence, photograph/crop, alt text, WordPress content ownershi
 and autoplay timing remain intact. An unavailable field service or a known
 approved-UX trade-off earns no verified scoring credit. New local accessibility
 candidates are not counted as deployed performance evidence.
+# Latest follow-up
+
+See [PERFORMANCE-5104687.md](PERFORMANCE-5104687.md):29 observations before a
+terminal browser disconnect plus7 disjoint continuation observations. All original
+errors retained; Homepage mobile transport errors and desktop late LCP still fail.
+This supersedes the older incomplete sample count below, not its historical evidence.
