@@ -1,5 +1,10 @@
 # FT-NATIVE-002 Sprint Report
 
+## Motion UI source removal
+
+Shared control factory/panel and obsolete CSS removed; existing surfaces retain
+keyboard/reduced-motion support. See `docs/editorial/MOTION-DOM-REMOVAL.md`.
+
 ## Motion-only release preparation
 
 Only Native motion JS/CSS change; all Content and collection-navigation changes

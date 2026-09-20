@@ -1,5 +1,10 @@
 # Current FarmTree Sprint
 
+## Bounded motion UI removal
+
+Remove controls from source/DOM without replacing them with hidden panels.
+Scope and validation: `docs/editorial/MOTION-DOM-REMOVAL.md`. No Live360 continuation.
+
 ## Approved bounded motion-only release
 
 Separate baseline-derived release; no unrelated Live360 continuation. See

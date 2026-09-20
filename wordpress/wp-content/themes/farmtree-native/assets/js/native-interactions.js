@@ -17,58 +17,30 @@
     const worldLandUrl = interactionScriptUrl
         ? new URL('../data/world-land-110m.json', interactionScriptUrl)
         : null;
-    const motionControls = new WeakMap();
-    let motionControlIndex = 0;
+    const motionSurfaces = new WeakSet();
 
-    function addMotionControl(owner, label, onChange, hero = false) {
-        if (motionControls.has(owner)) {
-            return;
-        }
-        if (!owner.id) {
-            do {
-                motionControlIndex += 1;
-            } while (document.getElementById(`ft-motion-owner-${motionControlIndex}`));
-            owner.id = `ft-motion-owner-${motionControlIndex}`;
-        }
-        const row = document.createElement('div');
-        row.className = `ft-motion-control-row${hero ? ' ft-motion-control-row--hero' : ''}`;
-        if (!hero && label !== 'Platform animation') {
-            row.classList.add('ft-motion-control-row--contextual');
-            owner.classList.add('ft-motion-context-owner');
-        }
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'ft-motion-toggle';
-        button.setAttribute('aria-label', `Pause ${label}`);
-        const state = document.createElement('span');
-        state.className = 'ft-motion-toggle-state';
-        state.setAttribute('aria-hidden', 'true');
-        button.append(state);
-        button.setAttribute('aria-controls', owner.id);
-        button.dataset.ftMotionControl = label;
-        row.append(button);
-        if (hero) {
-            owner.append(row);
-        } else {
-            owner.after(row);
-        }
+    function bindMotionSurface(owner, label, onChange, surface = owner) {
+        if (motionSurfaces.has(owner)) return;
+        motionSurfaces.add(owner);
+        // Keep stop/restart available on the existing surface, without adding UI.
+        surface.tabIndex = 0;
+        surface.dataset.ftMotionSurface = '';
+        if (!surface.hasAttribute('role')) surface.setAttribute('role', 'region');
+        if (!surface.hasAttribute('aria-label')) surface.setAttribute('aria-label', label);
+        surface.setAttribute('aria-description', 'Press Space to stop or restart movement.');
         let userPaused = false;
         const update = () => {
             const paused = userPaused || reducedMotionQuery.matches;
-            button.setAttribute('aria-pressed', String(paused));
-            state.textContent = paused ? '▶' : 'Ⅱ';
-            button.setAttribute('aria-label', `${paused ? 'Resume' : 'Pause'} ${label}`);
-            button.disabled = reducedMotionQuery.matches;
-            button.title = reducedMotionQuery.matches ? 'Paused by your reduced-motion preference' : '';
             owner.dataset.ftMotionPaused = String(paused);
             onChange(paused);
         };
-        button.addEventListener('click', () => {
+        surface.addEventListener('keydown', (event) => {
+            if (event.target !== surface || event.key !== ' ' || event.repeat) return;
+            event.preventDefault();
             userPaused = !userPaused;
             update();
         });
         reducedMotionQuery.addEventListener?.('change', update);
-        motionControls.set(owner, button);
         update();
     }
 
@@ -93,7 +65,7 @@
                     image.setAttribute('src', source);
                 }
             };
-            addMotionControl(frame, 'Platform animation', (paused) => {
+            bindMotionSurface(frame, 'Platform animation', (paused) => {
                 motionPaused = paused;
                 updateSource();
             });
@@ -362,10 +334,10 @@
             capture: true, passive: true
         }));
 
-        addMotionControl(hero, 'hero slides', (paused) => {
+        bindMotionSurface(hero, 'Hero slides', (paused) => {
             motionPaused = paused;
             scheduleAutoAdvance();
-        }, true);
+        });
         selectSlide(currentIndex);
         scheduleAutoAdvance();
     }
@@ -452,7 +424,7 @@
         }
         let index = 0;
         let timer = null;
-        addMotionControl(shell, 'field quotes', (paused) => {
+        bindMotionSurface(shell, 'Field quotes', (paused) => {
             window.clearInterval(timer);
             timer = null;
             if (!paused) {
@@ -510,7 +482,7 @@
     function initialiseMovingRails() {
         document.querySelectorAll('.ft-partner-logos, .ft-testimonial-cards').forEach((rail) => {
             const isTestimonialRail = rail.classList.contains('ft-testimonial-cards');
-            addMotionControl(rail, isTestimonialRail ? 'testimonials' : 'partner logos', (paused) => {
+            bindMotionSurface(rail, isTestimonialRail ? 'Testimonials' : 'Partner logos', (paused) => {
                 rail.classList.toggle('is-motion-paused', paused);
             });
             if (isTestimonialRail && reducedMotionQuery.matches) {
@@ -896,7 +868,7 @@
             let activated = false;
             let isActivating = false;
             let motionPaused = reducedMotionQuery.matches;
-            addMotionControl(shell, 'globe animation', (paused) => {
+            bindMotionSurface(shell, 'Interactive globe', (paused) => {
                 motionPaused = paused;
                 if (frame !== null) {
                     window.cancelAnimationFrame(frame);
@@ -907,15 +879,7 @@
                     draw();
                     requestRender();
                 }
-            });
-            // Reserve adjacent control geometry before asynchronous activation.
-            // Buttons are exposed only after the canvas renderer is usable.
-            const directionControls = document.createElement('div');
-            directionControls.className = 'ft-globe-direction-controls';
-            directionControls.setAttribute('role', 'group');
-            directionControls.setAttribute('aria-label', 'Rotate globe without dragging');
-            directionControls.setAttribute('aria-hidden', 'true');
-            motionControls.get(shell).parentElement.after(directionControls);
+            }, canvas);
 
             function resizeCanvas() {
                 const displaySize = Math.max(240, Math.round(canvas.getBoundingClientRect().width));
@@ -1226,23 +1190,6 @@
                     rotateManually(event.key === 'ArrowLeft' ? -0.1 : event.key === 'ArrowRight' ? 0.1 : 0,
                         event.key === 'ArrowUp' ? 0.1 : event.key === 'ArrowDown' ? -0.1 : 0);
                 });
-                [
-                    ['left', 'Left', 'Rotate globe left', -0.1, 0],
-                    ['right', 'Right', 'Rotate globe right', 0.1, 0],
-                    ['up', 'Up', 'Tilt globe up', 0, 0.1],
-                    ['down', 'Down', 'Tilt globe down', 0, -0.1]
-                ].forEach(([direction, label, accessibleLabel, horizontal, vertical]) => {
-                    const button = document.createElement('button');
-                    button.type = 'button';
-                    button.className = 'ft-motion-toggle ft-globe-direction';
-                    button.textContent = label;
-                    button.setAttribute('aria-label', accessibleLabel);
-                    button.setAttribute('aria-controls', shell.id);
-                    button.dataset.ftGlobeDirection = direction;
-                    button.addEventListener('click', () => rotateManually(horizontal, vertical));
-                    directionControls.append(button);
-                });
-                directionControls.removeAttribute('aria-hidden');
                 if ('ResizeObserver' in window) {
                     new ResizeObserver(() => draw()).observe(shell);
                 }

@@ -5326,124 +5326,12 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 
 /* stylelint-enable no-duplicate-selectors, no-descending-specificity */
 
-/* Compact primary controls; ambient controls appear only in interaction context. */
-.ft-motion-control-row {
-  display: flex;
-  min-height: 44px;
-  justify-content: center;
-  margin-block: 0.75rem;
-  padding-inline: 1rem;
-}
-
-.ft-motion-toggle {
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0.55rem 1rem;
-  border: 1px solid currentcolor;
-  border-radius: 999px;
-  background: var(--ft-approved-cream);
-  color: var(--ft-approved-green);
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1.25;
-  cursor: pointer;
-}
-
-.ft-motion-toggle:focus-visible {
+/* Existing motion surfaces remain keyboard-operable without extra controls. */
+[data-ft-motion-surface]:focus-visible {
   outline: 3px solid var(--ft-approved-gold);
-  outline-offset: 3px;
-}
-
-.ft-motion-toggle[aria-pressed="true"] {
-  background: var(--ft-approved-green);
-  color: var(--ft-approved-white);
-}
-
-.ft-motion-toggle:disabled {
-  cursor: default;
-}
-
-.ft-motion-toggle-state {
-  display: inline-block;
-  width: 1em;
-  font-size: 1rem;
-  text-align: center;
-}
-
-.ft-motion-control-row .ft-motion-toggle {
-  width: 44px;
-  padding: 0;
-  border-radius: 50%;
-}
-
-.ft-motion-control-row--contextual {
-  position: relative;
-  z-index: 5;
-  height: 0;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-}
-
-.ft-motion-control-row--contextual .ft-motion-toggle {
-  position: absolute;
-  right: 1rem;
-  bottom: 0.25rem;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.ft-globe-direction-controls {
-  display: flex;
-  flex-wrap: wrap;
-  min-height: 44px;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-block: 0.75rem;
-  padding-inline: 0;
-  opacity: 0;
-}
-
-.ft-globe-direction-controls:focus-within,
-.ft-globe-direction-controls:hover,
-.ft-motion-context-owner:hover ~ .ft-globe-direction-controls,
-.ft-motion-context-owner:focus-within ~ .ft-globe-direction-controls {
-  opacity: 1;
-}
-
-.ft-globe-direction {
-  flex-shrink: 0;
-  padding-inline: 0.3rem;
-  white-space: nowrap;
+  outline-offset: -3px;
 }
 
 .ft-moving-rail.is-motion-paused[data-ft-motion-paused="true"] .ft-moving-rail-track {
   animation-play-state: paused;
-}
-
-.ft-motion-control-row--hero {
-  position: absolute;
-  z-index: 5;
-  right: 0;
-  bottom: 0.5rem;
-  left: 0;
-  margin: 0;
-  pointer-events: none;
-}
-
-.ft-motion-control-row--hero .ft-motion-toggle {
-  pointer-events: auto;
-}
-
-.ft-home-hero:has(.ft-motion-control-row--hero) .ft-home-hero-dots {
-  bottom: 4rem;
-}
-
-.ft-motion-control-row--contextual:focus-within .ft-motion-toggle,
-.ft-motion-control-row--contextual .ft-motion-toggle:hover,
-.ft-motion-context-owner:hover + .ft-motion-control-row--contextual .ft-motion-toggle,
-.ft-motion-context-owner:focus-within + .ft-motion-control-row--contextual .ft-motion-toggle {
-  opacity: 1;
-  pointer-events: auto;
 }
