@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
 }
 
 require_once __DIR__ . '/inc/editorial-hub.php';
+require_once __DIR__ . '/inc/platform-learning.php';
 
 /**
  * Register the minimum theme supports required by the native foundation.
@@ -25,7 +26,7 @@ function farmtree_native_setup(): void
     add_theme_support('title-tag');
     add_theme_support('wp-block-styles');
 
-    add_editor_style(['style.css', 'assets/css/editor.css']);
+    add_editor_style(['style.css', 'assets/css/editor.css', 'assets/css/platform-learning.css']);
 }
 add_action('after_setup_theme', 'farmtree_native_setup');
 

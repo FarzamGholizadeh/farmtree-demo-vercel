@@ -1,0 +1,394 @@
+{
+  "source": "https://www.youtube.com/@farmtree8168/videos?hl=en",
+  "channelId": "UCYz-zoEsltMhWprHLIKcvMw",
+  "verifiedAt": "2026-09-20T20:21:07.981Z",
+  "excluded": [
+    {
+      "id": "sXlkv_raii8",
+      "title": "Mindu Dam Catchment Area 2023",
+      "reason": "Field documentary, not Platform instruction"
+    },
+    {
+      "id": "SIiw5AuVZQg",
+      "title": "Agroforestry practices for conservation of Mindu dam catchment area in Morogoro, Tanzania",
+      "reason": "Field documentary, not Platform instruction"
+    }
+  ],
+  "videos": [
+    {
+      "id": "HS9B74tx2iE",
+      "title": "FarmTree Platform",
+      "url": "https://www.youtube.com/watch?v=HS9B74tx2iE",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/HS9B74tx2iE/hqdefault.jpg?sqp=-oaymwE9COADEI4CSFryq4qpAy8IARUAAAAAGAElAADIQj0AgKJDeAHwAQH4Af4JgALQBYoCDAgAEAEYWiBlKF4wDw==&rs=AOn4CLBy2-OyQGvqp9s9a6alPrOdSjlQ1A",
+        "width": 480,
+        "height": 270
+      },
+      "duration": "1:06",
+      "module": "Getting started",
+      "description": "A short introduction to the FarmTree Platform and its features.",
+      "order": 1,
+      "poster": "assets/images/videos/HS9B74tx2iE.jpg"
+    },
+    {
+      "id": "Sqxry5mQgec",
+      "title": "Instruction video - FarmTree Tool Overview",
+      "url": "https://www.youtube.com/watch?v=Sqxry5mQgec",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/Sqxry5mQgec/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYESByKD8wDw==&rs=AOn4CLDwmMSE3kQlJiKrDa_7bFDZ3zvF2A",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "1:36",
+      "module": "Getting started",
+      "description": "Build scenarios, define plots, add species and run simulations in the FarmTree Tool.",
+      "order": 2,
+      "poster": "assets/images/videos/Sqxry5mQgec.jpg"
+    },
+    {
+      "id": "6Ppp_8b4qSE",
+      "title": "Instruction video - Scenarios page",
+      "url": "https://www.youtube.com/watch?v=6Ppp_8b4qSE",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/6Ppp_8b4qSE/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYESByKD8wDw==&rs=AOn4CLAXE3rPwAD0RHS5KdTjEc8S2hf5Tw",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "1:38",
+      "module": "Planning workflows",
+      "description": "Organise scenarios with folders and tags, and find the scenarios you need.",
+      "order": 3,
+      "poster": "assets/images/videos/6Ppp_8b4qSE.jpg"
+    },
+    {
+      "id": "V1r6Ww1AJ54",
+      "title": "Instruction video - Survey Tool",
+      "url": "https://www.youtube.com/watch?v=V1r6Ww1AJ54",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/V1r6Ww1AJ54/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYESByKEEwDw==&rs=AOn4CLArTJjR8e62MGTDKOBhFpy41lZdYQ",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "2:11",
+      "module": "Planning workflows",
+      "description": "Create and upload field surveys to monitor project activity and assess impact.",
+      "order": 4,
+      "poster": "assets/images/videos/V1r6Ww1AJ54.jpg"
+    },
+    {
+      "id": "zaPfRYsBiXY",
+      "title": "Instruction video - Polygons",
+      "url": "https://www.youtube.com/watch?v=zaPfRYsBiXY",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/zaPfRYsBiXY/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYESByKD8wDw==&rs=AOn4CLCm_jnBRHbs-NwqcaN8ZJUObOsyTg",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "0:51",
+      "module": "Planning workflows",
+      "description": "Upload, create and manage plot polygons for use in your scenarios.",
+      "order": 5,
+      "poster": "assets/images/videos/zaPfRYsBiXY.jpg"
+    },
+    {
+      "id": "PSlD-VpPEsk",
+      "title": "Instruction video - Multiplot Tool",
+      "url": "https://www.youtube.com/watch?v=PSlD-VpPEsk",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/PSlD-VpPEsk/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYESByKD8wDw==&rs=AOn4CLB08R5zPXpfiljBpmqH7OYYmQd7mg",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "0:47",
+      "module": "Planning workflows",
+      "description": "Run multiple scenarios, select metrics, analyse outputs and export results.",
+      "order": 6,
+      "poster": "assets/images/videos/PSlD-VpPEsk.jpg"
+    },
+    {
+      "id": "YlGmhqPkn4I",
+      "title": "Instruction video - Comparison Tool (update 2026)",
+      "url": "https://www.youtube.com/watch?v=YlGmhqPkn4I",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/YlGmhqPkn4I/hqdefault.jpg?sqp=-oaymwE9COADEI4CSFryq4qpAy8IARUAAAAAGAElAADIQj0AgKJDeAHwAQH4Af4JgALQBYoCDAgAEAEYESByKD0wDw==&rs=AOn4CLD8yUce9Z1v9Oq5rGdJ-UdTH_WD8A",
+        "width": 480,
+        "height": 270
+      },
+      "duration": "3:28",
+      "module": "Planning workflows",
+      "description": "Compare project scenarios with business-as-usual across financial, carbon, social and environmental metrics.",
+      "order": 7,
+      "poster": "assets/images/videos/YlGmhqPkn4I.jpg"
+    },
+    {
+      "id": "Gi3NwwrPWdY",
+      "title": "Instruction video - Team Management",
+      "url": "https://www.youtube.com/watch?v=Gi3NwwrPWdY",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/Gi3NwwrPWdY/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYESByKD8wDw==&rs=AOn4CLASU0LKZTEMzmDRRjbSPjvYLSQITg",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "1:03",
+      "module": "Planning workflows",
+      "description": "Invite team members, review roles and remove inactive users.",
+      "order": 8,
+      "poster": "assets/images/videos/Gi3NwwrPWdY.jpg"
+    },
+    {
+      "id": "07ilVjP90rQ",
+      "title": "Watershed Tool - NWB Fund & FarmTree",
+      "url": "https://www.youtube.com/watch?v=07ilVjP90rQ",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/07ilVjP90rQ/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA-Z0xwPXfq2w3pm3sgFrzgRU9GJg",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "9:03",
+      "module": "Landscape planning",
+      "description": "An introduction to planning agroforestry interventions with the Watershed Tool.",
+      "order": 9,
+      "poster": "assets/images/videos/07ilVjP90rQ.jpg"
+    },
+    {
+      "id": "MiA7fllbe4k",
+      "title": "User instruction video - Soil fertility",
+      "url": "https://www.youtube.com/watch?v=MiA7fllbe4k",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/MiA7fllbe4k/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYESByKEIwDw==&rs=AOn4CLAPe6Xkdb5ReutnNGHwpbKNfwDPJA",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "9:13",
+      "module": "Modelling tutorials",
+      "description": "Explore the soil fertility functions in the FarmTree Tool.",
+      "order": 10,
+      "poster": "assets/images/videos/MiA7fllbe4k.jpg"
+    },
+    {
+      "id": "TCejsqXmTYE",
+      "title": "User instruction video - Planting density",
+      "url": "https://www.youtube.com/watch?v=TCejsqXmTYE",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/TCejsqXmTYE/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYVyBlKGUwDw==&rs=AOn4CLCE-o8C8T83GvKzVQHoZ6NThiTIpw",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "5:50",
+      "module": "Modelling tutorials",
+      "description": "Define planting density for species in an agroforestry scenario.",
+      "order": 11,
+      "poster": "assets/images/videos/TCejsqXmTYE.jpg"
+    },
+    {
+      "id": "igzaprkVYSE",
+      "title": "User instruction video - Production potential",
+      "url": "https://www.youtube.com/watch?v=igzaprkVYSE",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/igzaprkVYSE/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYESByKD0wDw==&rs=AOn4CLDkhorzghiLUSjPf8c14idWFDbxww",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "8:43",
+      "module": "Modelling tutorials",
+      "description": "Interpret the integrated production potential of plant species.",
+      "order": 12,
+      "poster": "assets/images/videos/igzaprkVYSE.jpg"
+    },
+    {
+      "id": "vY3GxB2ZKQs",
+      "title": "User instructions video - Biomass and Carbon",
+      "url": "https://www.youtube.com/watch?v=vY3GxB2ZKQs",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/vY3GxB2ZKQs/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYESByKDwwDw==&rs=AOn4CLCnhOMuZ8tKoL19FzQhQJOOI7kEug",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "6:42",
+      "module": "Modelling tutorials",
+      "description": "Interpret biomass and carbon graphs in the FarmTree Tool.",
+      "order": 13,
+      "poster": "assets/images/videos/vY3GxB2ZKQs.jpg"
+    },
+    {
+      "id": "fOS4_Ity6Wg",
+      "title": "User instruction video - Uncertainties",
+      "url": "https://www.youtube.com/watch?v=fOS4_Ity6Wg",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/fOS4_Ity6Wg/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBlKGUwDw==&rs=AOn4CLBZtUsxQQCQ79TNUl4b0GK7lWCB1w",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "8:14",
+      "module": "Modelling tutorials",
+      "description": "Understand uncertainty margins for annual carbon sequestration by individual trees.",
+      "order": 14,
+      "poster": "assets/images/videos/fOS4_Ity6Wg.jpg"
+    },
+    {
+      "id": "v90mSmPKWQ4",
+      "title": "User instruction video - Biodiversity",
+      "url": "https://www.youtube.com/watch?v=v90mSmPKWQ4",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/v90mSmPKWQ4/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYLyBOKH8wDw==&rs=AOn4CLANh7hxepmaLs9onRoFPTsH33eC3g",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "4:23",
+      "module": "Modelling tutorials",
+      "description": "Interpret the biodiversity indicator in the FarmTree Tool.",
+      "order": 15,
+      "poster": "assets/images/videos/v90mSmPKWQ4.jpg"
+    },
+    {
+      "id": "VV1uH1lYdm4",
+      "title": "User instruction video - Finances",
+      "url": "https://www.youtube.com/watch?v=VV1uH1lYdm4",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/VV1uH1lYdm4/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYWSBhKGUwDw==&rs=AOn4CLBgGNYE0fnbieoGdRTcngL4Ot8Xhw",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "6:00",
+      "module": "Modelling tutorials",
+      "description": "Define prices, costs and labour settings, and review financial projections.",
+      "order": 16,
+      "poster": "assets/images/videos/VV1uH1lYdm4.jpg"
+    },
+    {
+      "id": "AzuhfVvZz9o",
+      "title": "User instruction video - Climate",
+      "url": "https://www.youtube.com/watch?v=AzuhfVvZz9o",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/AzuhfVvZz9o/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYWyBlKFYwDw==&rs=AOn4CLAjGtyi9LsC5z2BMWYOWXPTe6DYMg",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "4:32",
+      "module": "Modelling tutorials",
+      "description": "Link scenarios to climate data and explore climate-change effects.",
+      "order": 17,
+      "poster": "assets/images/videos/AzuhfVvZz9o.jpg"
+    },
+    {
+      "id": "_dKBc1g6enE",
+      "title": "User instruction video - Hydrology",
+      "url": "https://www.youtube.com/watch?v=_dKBc1g6enE",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/_dKBc1g6enE/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYZSBlKGUwDw==&rs=AOn4CLCFpPDM9X4IGU-J87m5choi87YtBA",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "3:16",
+      "module": "Modelling tutorials",
+      "description": "Explore water inflows and outflows through soil layers.",
+      "order": 18,
+      "poster": "assets/images/videos/_dKBc1g6enE.jpg"
+    },
+    {
+      "id": "AH_7jO2z7f8",
+      "title": "User instruction video - Irrigation",
+      "url": "https://www.youtube.com/watch?v=AH_7jO2z7f8",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/AH_7jO2z7f8/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYfyAsKEcwDw==&rs=AOn4CLCb8_XVKq2ndN5PUbLunUYMMIl9AQ",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "4:00",
+      "module": "Modelling tutorials",
+      "description": "Simulate irrigation and review species water requirements.",
+      "order": 19,
+      "poster": "assets/images/videos/AH_7jO2z7f8.jpg"
+    },
+    {
+      "id": "U0ixAfal_Q0",
+      "title": "Create your FarmTree Tool account",
+      "url": "https://www.youtube.com/watch?v=U0ixAfal_Q0",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/U0ixAfal_Q0/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4AbYJgALQBYoCDAgAEAEYQiBlKFswDw==&rs=AOn4CLAepHZmgpkfZ-BXJ8OzS2Tu4GUPYA",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "1:49",
+      "module": "Earlier walkthroughs",
+      "description": "A walkthrough of creating a FarmTree Tool account.",
+      "order": 20,
+      "poster": "assets/images/videos/U0ixAfal_Q0.jpg"
+    },
+    {
+      "id": "MgkG2aXE6uA",
+      "title": "User instruction video - Interface FarmTreeTool",
+      "url": "https://www.youtube.com/watch?v=MgkG2aXE6uA",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/MgkG2aXE6uA/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYWyBkKGUwDw==&rs=AOn4CLDARWAxwji_8txPq_sfjR1z-8g6aA",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "4:43",
+      "module": "Earlier walkthroughs",
+      "description": "Explore the FarmTree Tool interface and its scenario-design functions.",
+      "order": 21,
+      "poster": "assets/images/videos/MgkG2aXE6uA.jpg"
+    },
+    {
+      "id": "isffI5OZ5YY",
+      "title": "Instruction video - Comparison Tool",
+      "url": "https://www.youtube.com/watch?v=isffI5OZ5YY",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/isffI5OZ5YY/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYESByKD8wDw==&rs=AOn4CLBswRHZh8fLvSZc7GOMtytmBBOzMw",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "0:56",
+      "module": "Earlier walkthroughs",
+      "description": "An earlier overview of side-by-side scenario comparison. For the updated workflow, use the 2026 lesson.",
+      "order": 22,
+      "poster": "assets/images/videos/isffI5OZ5YY.jpg"
+    },
+    {
+      "id": "AbGBX_5rJWg",
+      "title": "FarmTree Tool Demo (Jan 2023)",
+      "url": "https://www.youtube.com/watch?v=AbGBX_5rJWg",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/AbGBX_5rJWg/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYXCBlKEkwDw==&rs=AOn4CLAQwl9OP0XXMkkjG601XMm6HHY3yQ",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "2:57",
+      "module": "Earlier walkthroughs",
+      "description": "A demonstration of the FarmTree Tool recorded in January 2023.",
+      "order": 23,
+      "poster": "assets/images/videos/AbGBX_5rJWg.jpg"
+    },
+    {
+      "id": "1wR6Gg_UteE",
+      "title": "FarmTree Platform - release announcement",
+      "url": "https://www.youtube.com/watch?v=1wR6Gg_UteE",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/1wR6Gg_UteE/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYWiBlKF0wDw==&rs=AOn4CLAeS99sGCD4VfT0-7MxPIOTZEMUTQ",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "1:08",
+      "module": "Earlier walkthroughs",
+      "description": "The FarmTree Platform release announcement.",
+      "order": 24,
+      "poster": "assets/images/videos/1wR6Gg_UteE.jpg"
+    },
+    {
+      "id": "HqlibR62zvw",
+      "title": "Introducción a FarmTree (spanish)",
+      "url": "https://www.youtube.com/watch?v=HqlibR62zvw",
+      "thumbnail": {
+        "url": "https://i.ytimg.com/vi/HqlibR62zvw/hq720.jpg?sqp=-oaymwExCNAFEJQDSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYciA4KGYwDw==&rs=AOn4CLBh7rxo8_0W0nBdIbUflUTwMEY9hA",
+        "width": 720,
+        "height": 404
+      },
+      "duration": "13:29",
+      "module": "Spanish introduction",
+      "description": "A Spanish-language introduction to FarmTree tools for agroforestry projects.",
+      "order": 25,
+      "poster": "assets/images/videos/HqlibR62zvw.jpg"
+    }
+  ]
+}

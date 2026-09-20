@@ -1,5 +1,11 @@
 # Current FarmTree Sprint
 
+## Bounded Platform learning hub
+
+25 source-verified videos, editable core-block template, click-to-load player and
+minimal runtime privacy disclosure. Scope: docs/editorial/PLATFORM-LEARNING-RELEASE.md.
+Theme-only release; no Live360 continuation or database migration.
+
 ## Bounded motion UI removal
 
 Remove controls from source/DOM without replacing them with hidden panels.

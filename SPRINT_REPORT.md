@@ -1,5 +1,12 @@
 # FT-NATIVE-002 Sprint Report
 
+## Platform learning hub
+
+Dedicated User Videos template with 25 verified lessons, first-party posters,
+responsive classroom and optional privacy-enhanced YouTube playback. Core-block
+serialization and local responsive/accessibility/playback checks validated.
+Release evidence: docs/editorial/PLATFORM-LEARNING-RELEASE.md and qa/video-hub/.
+
 ## Motion UI source removal
 
 Shared control factory/panel and obsolete CSS removed; existing surfaces retain

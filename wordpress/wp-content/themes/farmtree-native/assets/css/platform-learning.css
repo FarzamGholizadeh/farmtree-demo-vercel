@@ -1,0 +1,343 @@
+.ft-learning-page {
+    --learning-ink: #173c2e;
+    --learning-green: #006344;
+    --learning-cream: #f6f2e9;
+
+    color: var(--learning-ink);
+    background: var(--learning-cream);
+    padding: calc(90px + clamp(2rem, 5vw, 5rem)) 0 clamp(2rem, 5vw, 5rem);
+}
+
+.ft-learning-hero,
+.ft-learning-classroom,
+.ft-learning-overview {
+    width: min(1200px, calc(100% - 2rem));
+    margin-inline: auto;
+}
+
+.ft-learning-hero {
+    margin-bottom: 3rem;
+}
+
+.ft-learning-hero h1 {
+    font-size: clamp(2.2rem, 5vw, 4.25rem);
+    line-height: 1.08;
+    max-width: 850px;
+}
+
+.ft-learning-overview > p {
+    max-width: 750px;
+}
+
+.ft-learning-hero > p:not(.ft-learning-eyebrow) {
+    max-width: 700px;
+    font-size: 1.125rem;
+}
+
+.ft-learning-eyebrow {
+    letter-spacing: .16em;
+    font-size: .8rem;
+    font-weight: 800;
+    color: var(--learning-green);
+}
+
+.ft-learning-classroom {
+    scroll-margin-top: 110px;
+    min-height: 760px;
+}
+
+@media (scripting: none) {
+    .ft-learning-classroom {
+        min-height: 0;
+    }
+}
+
+.ft-learning-classroom.is-enhanced {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.ft-learning-classroom > * {
+    margin-block: 0;
+}
+
+.ft-learning-active {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px #173c2e0d;
+}
+
+.ft-learning-player {
+    aspect-ratio: 16/9;
+    position: relative;
+    display: grid;
+    place-items: center;
+    background: #123d30;
+    isolation: isolate;
+}
+
+.ft-learning-player > img,
+.ft-learning-player > iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: contain;
+    margin: 0;
+}
+
+.ft-learning-player > button {
+    position: relative;
+    z-index: 1;
+    max-width: calc(100% - 2rem);
+    box-shadow: 0 2px 16px #0005;
+}
+
+.ft-learning-info {
+    padding: clamp(1rem, 3vw, 2rem);
+}
+
+.ft-learning-info h2 {
+    margin: .7rem 0;
+    font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.ft-learning-module {
+    color: #4c6458;
+    font-size: .8rem;
+    font-weight: 750;
+    letter-spacing: .03em;
+}
+
+.ft-learning-step {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: .7rem;
+    margin-block: 1.5rem;
+}
+
+.ft-learning-privacy {
+    font-size: .8rem;
+    line-height: 1.6;
+    color: #4c6458;
+    border-top: 1px solid #dce4dc;
+    padding-top: 1rem;
+}
+
+.ft-learning-navigation {
+    grid-column: 1;
+    grid-row: 1;
+    border: 1px solid #d5dfd5;
+    border-radius: 20px;
+    padding: 1rem;
+    background: #fff9;
+}
+
+.ft-learning-navigation summary {
+    font-weight: 800;
+    cursor: pointer;
+    min-height: 44px;
+    padding: .65rem;
+}
+
+.ft-learning-navigation nav {
+    max-height: 700px;
+    overflow-y: auto;
+    padding: .2rem;
+}
+
+.ft-learning-nav-group h3 {
+    font-size: .82rem;
+    margin: 1rem .6rem .5rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.ft-learning-nav-group ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ft-learning-page button {
+    font: inherit;
+    font-size: .875rem;
+    font-weight: 700;
+    border: 1px solid var(--learning-green);
+    border-radius: 24px;
+    background: var(--learning-green);
+    color: white;
+    padding: .8rem 1.1rem;
+    min-height: 44px;
+    cursor: pointer;
+}
+
+.ft-learning-nav-group button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--learning-ink);
+    border-radius: 10px;
+    padding: .8rem;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.ft-learning-page button:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+.ft-learning-nav-group button:hover {
+    background: #e9efe6;
+}
+
+.ft-learning-nav-group button[aria-current] {
+    background: var(--learning-green);
+    color: white;
+    font-weight: 750;
+}
+
+.ft-learning-page :is(button, a, summary, h2):focus-visible {
+    outline: 3px solid #a46c12;
+    outline-offset: 4px;
+}
+
+.ft-learning-page a {
+    color: var(--learning-green);
+    text-decoration: underline;
+    text-underline-offset: .2em;
+}
+
+.ft-learning-page .wp-block-button a {
+    text-decoration: none;
+}
+
+.ft-learning-hero .wp-block-button:not(.is-style-outline) a {
+    color: white;
+}
+
+.ft-learning-overview {
+    margin-top: 4rem;
+}
+
+.ft-learning-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.ft-learning-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    border: 1px solid #dde3d8;
+    border-radius: 20px;
+    background: white;
+    padding: 1.2rem;
+    gap: .7rem;
+    margin: 0 !important;
+}
+
+.ft-learning-card > * {
+    margin: 0;
+}
+
+.ft-learning-card figure {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #123d30;
+}
+
+.ft-learning-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.ft-learning-card h3 {
+    font-size: 1.2rem;
+    line-height: 1.3;
+}
+
+.ft-learning-description {
+    font-size: .95rem;
+    line-height: 1.65;
+}
+
+.ft-learning-duration {
+    font-size: .8rem;
+    color: #4c6458;
+}
+
+.ft-learning-youtube {
+    margin-top: auto;
+    font-size: .875rem;
+}
+
+.ft-learning-channel {
+    margin-top: 2rem;
+    font-weight: 750;
+}
+
+@media (width <= 899px) {
+    .ft-learning-classroom.is-enhanced {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+    .ft-learning-active {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+    .ft-learning-navigation {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+    .ft-learning-navigation nav {
+    max-height: 440px;
+}
+
+    .ft-learning-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+}
+
+@media (width <= 540px) {
+    .ft-learning-grid {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+    .ft-learning-hero {
+    margin-bottom: 1.5rem;
+}
+
+    .ft-learning-hero .wp-block-buttons {
+    gap: .75rem;
+}
+
+    .ft-learning-page button {
+    font-size: .8rem;
+}
+
+    .ft-learning-step button {
+    padding-inline: .8rem;
+}
+}
