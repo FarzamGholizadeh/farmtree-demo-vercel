@@ -35,3 +35,31 @@ Evidence:
 Next: diagnose recurring default-profile Homepage transport errors and browser
 disconnect without assuming a source cause. Preserve approved hero autoplay
 until an explicit product decision. Do not retry any rejected reconciler path.
+
+## Browser-local transport isolation — 2026-09-20
+
+Four fresh Chrome153.0.8010.52 processes; Homepage390x900/DPR2, cache disabled,
+CPU4x in every case,12s observation after DOMContentLoaded. Only browser-local
+network emulation and QUIC availability varied. One observation per combination:
+
+| Network emulation | QUIC disabled in browser | Protocols observed | Failed requests |
+|---|---|---|---:|
+|150ms/1.6Mbps|No|h2,h3|5|
+|150ms/1.6Mbps|Yes|h2|0|
+|None|No|h2,h3|0|
+|None|Yes|h2|0|
+
+The five failures are the same testimonial portrait URLs and report
+ERR_QUIC_PROTOCOL_ERROR; five corresponding console errors. All four documents
+reached complete. This reproduces an interaction between the default transport
+path and emulation in this browser setup; it does not establish which underlying
+component is faulty or prove all real networks are unaffected. No hosting,
+production HTTP/3, application code, assets or performance thresholds changed.
+Disabling QUIC for diagnosis is not a production fix or replacement passing score.
+The original failed default-profile audit remains failed; browser disconnect is
+a separate unresolved diagnostic, not explained by this four-case observation.
+
+Evidence:qa/live-360/quic-matrix-5104687.json; SHA256
+72ac55ab15b51c2e84db107fad85908e6788f5eeeeb789404a55166759dfdd1c.
+The reproducible diagnostic is qa/live-360/diagnose-quic-matrix.cjs. Both are
+ignored local QA artifacts; maintain controlled retention, not public webroot.
