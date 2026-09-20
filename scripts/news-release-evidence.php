@@ -69,7 +69,9 @@ function news_capture(string $prefix, ?array $plan): array {
             if (count($ids) !== count(array_unique($ids))) throw new RuntimeException('Duplicate managed key evidence');
             $scope[$destination] = array_merge($scope[$destination], array_map('intval', $ids));
         }
-        $scope['allowedTermIds'] = array_values(array_unique(array_merge($scope['termIds'], array_map(static fn ($op) => (int) ($op['id'] ?? 0), $plan['operations']['terms']))));
+        $references = $plan['reference_term_ids'] ?? [];
+        if (array_keys($references) !== ['category.en.policy-standards'] || !is_int($references['category.en.policy-standards']) || $references['category.en.policy-standards'] < 1) throw new RuntimeException('Unexpected existing category reference');
+        $scope['allowedTermIds'] = array_values(array_unique(array_merge($scope['termIds'], array_values($references))));
     }
     $postIds = news_list($scope['postIds']); $termIds = news_list($scope['termIds']);
     $metaKeys = ['_farmtree_content_managed_key', '_farmtree_content_manifest_version', '_farmtree_content_source_hash', '_farmtree_content_applied_hash', '_farmtree_content_release_commit', '_farmtree_content_asset_sha256', '_farmtree_content_backup_evidence_sha256', '_thumbnail_id', '_wp_attached_file', '_wp_attachment_metadata', '_wp_attachment_image_alt'];
@@ -175,7 +177,7 @@ if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') === __FILE__) {
                 if (($counts['post'] ?? 0) !== 12 || ($counts['media'] ?? 0) !== 12 || ($counts['term'] ?? 0) !== 5) throw new RuntimeException('Wrong APPLY create kinds');
             } else {
                 $initial = in_array($phase, ['preflight', 'dry-run'], true);
-                if (($summary['conflict'] ?? -1) !== 0 || ($summary['update'] ?? -1) !== 0 || ($summary['create'] ?? -1) !== ($initial ? 29 : 0) || ($summary['unchanged'] ?? -1) !== ($initial ? 102 : 131) || ($summary['skipped'] ?? -1) !== 1 || empty($receipt['post_launch_news12'])) throw new RuntimeException('Unexpected dry-run scope');
+                if (($summary['conflict'] ?? -1) !== 0 || ($summary['update'] ?? -1) !== 0 || ($summary['create'] ?? -1) !== ($initial ? 29 : 0) || ($summary['unchanged'] ?? -1) !== ($initial ? 0 : 29) || ($summary['skipped'] ?? -1) !== 0 || empty($receipt['post_launch_news12']) || ($receipt['profile'] ?? '') !== 'news12') throw new RuntimeException('Unexpected dry-run scope');
             }
             $result = ['ok' => true, 'source_commit' => $sha, 'phase' => $phase, 'summary' => $summary];
         }

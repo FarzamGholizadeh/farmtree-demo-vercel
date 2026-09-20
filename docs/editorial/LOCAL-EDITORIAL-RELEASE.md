@@ -1,5 +1,68 @@
 # News & Insights local release candidate
 
+## Isolated News12 authorization and implementation — 20 September 2026
+
+The latest explicit request authorizes a gated News-only production release,
+superseding the local-only brief below. The implementation is based exactly on
+50677539690c52130b5a489b8b8f36a8c2a418c3 in a separate clone. No original
+worktree files or Git refs are changed. Its unrelated Hero file SHA256 is
+940e757ac896613738a05cae4435405625e889bb319578ba7882c95fb3a7bc81;
+the complete binary diff SHA256 is
+bf0e746177b8b419378311c3c5e0c0e87bda896df47fead969d28f5a46551f7c.
+
+`news12-content-manifest.php` is now standalone with profile `news12`, pinned
+canonical SHA256 94a5ae70330affae4361fe5167be7234b0b6aa482de1821a1d392282f8316050.
+It has exactly twelve article keys, twelve media keys and five category keys.
+There is no global manifest include, wildcard or all-content fallback. Exact
+ordered group membership is enforced even for unchanged operations. No Pages,
+Team, Proof Stories, Customer Segments, embedded entries or options are targets.
+IDs439/463/464/465/470/475 are excluded; their drift is not reconciled.
+Public-state observations remain separate safety gates, not managed operations.
+
+The approved articles also reference the **existing** Policy & Standards
+category. This is a read-only relationship dependency, not a thirtieth target:
+its existing unique owned identity and exact definition must resolve or the
+operation fails. Its ID is digest-bound. No adoption, definition or metadata
+write is allowed; only the exact count increment caused by the new article
+relationships is permitted by whole-database evidence. Five new categories
+remain the complete category-create scope.
+
+The existing `page-blog.html` uses the dynamic editorial-hub block, not a
+post-content block. Theme deployment therefore renders the hub without any
+Page470 body or metadata update. Posts remain WordPress editable. No new theme,
+copy, source article or image changes were needed in this isolation commit.
+
+Local evidence: disposable WP7.1/PHP8.3 with intentional drift on all six Pages
+reports create29/update0/unchanged0/conflict0/skipped0, then
+create0/update0/unchanged29/conflict0/skipped0. Full existing row comparisons
+preserve their bodies/metadata and all unrelated content. SQL-firewalled dry-run
+has an identical database snapshot. Collision/stale digest/unknown unchanged
+target tests reject; injected indexing and unrelated post/option/custom-table
+writes roll back. No new cron/ping work is created. Core category cache churn is
+limited to its already-audited option_id-only replacement; value/autoload stay
+exact, and no such exception exists for dry-run.
+
+Local WordPress and anonymous checks pass (40 original routes,122 internal
+destinations,zero broken links). Existing local frontend theme is identical to
+this candidate except for the separately excluded Hero script; the changed
+plugin is additionally exercised directly in the isolated disposable fixture.
+Editorial browser checks pass320/360/390/414/768/1024/1280/1440/1920/2560,
+all12 article routes at390/1440,60 destinations,21 unique cards/images/decks,
+five groups,keyboard,axe,loading priority/formats/metadata,zero overflow/console
+errors. These are local laboratory checks, not production or human certification.
+Release guard tests pass15 mutation fixtures,33 filesystem cases and20 exact
+preflight gate fixtures. Source write-API audit retains the same apply-only API
+counts and zero lifecycle/scheduling hooks.
+
+Production sequence remains: exact clean commit artifact/audit and feature-only
+push; fresh verified off-webroot database/Native/Content backups; prospective
+scoped preflight; rollback-protected runtime-first swap; old-nine hub QA; fresh
+scoped dry-run; exact reviewed-digest APPLY; final29-unchanged plan; production
+QA and original Hero hash comparison. Every operation retains full database,
+uploads/runtime, public-state and prospective cron diagnostics. No global
+reconciler, historical dry-run replay or blanket cron exception is permitted.
+Production completion is pending and must be evidenced separately.
+
 ## Current brief — local redesign only, 20 September 2026
 
 The latest request explicitly prohibits automatic deployment. This refinement

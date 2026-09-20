@@ -35,16 +35,17 @@ for(const a of articles) {
   additions.assets.push({key:assetKey,slug:imageSlug,relative_path:path,title:a.image.alt,alt:a.image.alt,mime_type:'image/jpeg',sha256:sha(await readFile(new URL('wordpress/wp-content/themes/farmtree-native/'+path,root)))});
   additions.entities.push({key:`post.en.${a.slug.replaceAll('-','_')}`,post_type:'post',slug:a.slug,legacy_slugs:[],fields:{post_title:a.title,post_name:a.slug,post_status:'publish',post_excerpt:a.deck,post_content:a.content,comment_status:'closed',ping_status:'closed',menu_order:0},featured_asset_key:assetKey,category_keys:[terms.get(a.category)],child_keys:[]});
 }
-const manifest=structuredClone(base);
+const referenceTerms=base.terms.filter(t=>additions.entities.some(e=>e.category_keys.includes(t.key)));
+assert.equal(referenceTerms.length,1);
+assert.equal(referenceTerms[0].name,'Policy & Standards');
+const manifest={manifest_version:base.manifest_version,profile:'news12',team_member_keys:[],reference_terms:referenceTerms,...additions};
 for(const kind of Object.keys(additions)) {
   const oldKeys=new Set(base[kind].map(x=>x.key));
   for(const x of additions[kind])assert(!oldKeys.has(x.key),'Existing identity collision');
-  manifest[kind].push(...additions[kind]);
 }
 manifest.news12_keys=Object.fromEntries(Object.entries(additions).map(([kind,items])=>[kind,items.map(x=>x.key)]));
-const literal=JSON.stringify(additions).replaceAll('\\','\\\\').replaceAll("'","\\'");
-const keyLiteral=JSON.stringify(manifest.news12_keys).replaceAll('\\','\\\\').replaceAll("'","\\'");
-const output=`<?php\n/** Generated: node scripts/build-news12-manifest.mjs. Explicit News12 profile only. */\nif (!defined('ABSPATH')) { exit; }\n$manifest = require __DIR__ . '/managed-content-manifest.php';\n$additions = json_decode('${literal}', true, 512, JSON_THROW_ON_ERROR);\nforeach ($additions as $kind => $items) { $manifest[$kind] = array_merge($manifest[$kind], $items); }\n$manifest['news12_keys'] = json_decode('${keyLiteral}', true, 512, JSON_THROW_ON_ERROR);\nreturn $manifest;\n`;
+const literal=JSON.stringify(manifest).replaceAll('\\','\\\\').replaceAll("'","\\'");
+const output=`<?php\n/** Generated: node scripts/build-news12-manifest.mjs. Isolated exact News12 scope; no global manifest fallback. */\nif (!defined('ABSPATH')) { exit; }\nreturn json_decode('${literal}', true, 512, JSON_THROW_ON_ERROR);\n`;
 const path=new URL(plugin+'news12-content-manifest.php',root);
 if(process.argv.includes('--check'))assert.equal(await readFile(path,'utf8'),output,'Stale News12 manifest');
 else await writeFile(path,output);

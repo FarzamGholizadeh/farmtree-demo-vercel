@@ -14,7 +14,7 @@ const reconcilerPath = `${pluginPrefix}includes/class-farmtree-content-reconcile
 const managedManifestPath = `${pluginPrefix}includes/managed-content-manifest.php`;
 const news12ManifestPath = `${pluginPrefix}includes/news12-content-manifest.php`;
 const exactPluginRuntime = [mainPath, cliPath, reconcilerPath, managedManifestPath, news12ManifestPath].sort();
-const auditedRuntimeSourceSha256 = '3dca1fa0272f35bdcfbca7631100550c3ef8015d74e6cd2d14db2281414232de';
+const auditedRuntimeSourceSha256 = '297715b37602f308af4ec056cd3db99faf32186995c5440d398d9e3bb8174574';
 
 function fail(message, details = []) {
   const suffix = details.length === 0
@@ -713,7 +713,7 @@ const reviewedRequireCounts = {
   [cliPath]: 0,
   [reconcilerPath]: 2,
   [managedManifestPath]: 0,
-  [news12ManifestPath]: 1
+  [news12ManifestPath]: 0
 };
 for (const file of files) {
   const requireCount = [...file.masked.matchAll(/\brequire(?:_once)?\b/g)].length;
@@ -728,8 +728,8 @@ if (!reconcilerFile.source.includes('$manifest = require $file;')
   || !reconcilerFile.source.includes("require_once ABSPATH . 'wp-admin/includes/image.php';")) {
   fail('Reconciler may require only its validated manifest and WordPress image API.');
 }
-if (!filesByPath.get(news12ManifestPath).source.includes("$manifest = require __DIR__ . '/managed-content-manifest.php';")) {
-  fail('News12 manifest may require only the unchanged baseline manifest.');
+if (filesByPath.get(news12ManifestPath).source.includes('managed-content-manifest.php')) {
+  fail('News12 manifest must be isolated from the global manifest.');
 }
 for (const file of [cliFile, reconcilerFile]) {
   const topLevelCharacters = [...file.masked];

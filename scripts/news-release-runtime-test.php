@@ -45,6 +45,12 @@ try {
     $expectedHomeSlugs = ['farmtree-water-erosion-microclimate-model-update-2026','eu-carbon-farming-methodologies-agroforestry-2026','carbon-pricing-2026-nature-project-quality']; sort($expectedHomeSlugs);
     ft_news_assert($homeSlugs === $expectedHomeSlugs, 'Candidate Homepage must preserve its approved old three cards');
     $wp_query = $savedQuery;
+    $excluded = ['page.en.home','page.en.platform','page.en.proof_stories','page.en.customer_segments','page.en.blog','page.en.solutions'];
+    foreach ($old->build_plan($options)['operations']['posts'] as $op) {
+        if (in_array($op['key'], $excluded, true)) wp_update_post(['ID'=>$op['id'], 'post_content'=>get_post($op['id'])->post_content . "\n<!-- intentional unrelated production edit -->"]);
+    }
+    $template = file_get_contents(get_theme_file_path('templates/page-blog.html'));
+    ft_news_assert(str_contains($template, 'farmtree/editorial-hub') && !str_contains($template, 'wp:post-content'), 'Blog presentation must not consume or reconcile Page body');
     add_filter('pre_http_request', static fn () => ['response' => ['code' => 200], 'headers' => [], 'body' => '<main class="ft-native-home">FarmTree</main>', 'cookies' => []]);
     $r = new FarmTree_Content_Reconciler(true); $options['post_launch_news12'] = true;
     $cli = new FarmTree_Content_CLI_Command(); $dry = new ReflectionMethod($cli, 'build_dry_run_plan');
@@ -66,6 +72,14 @@ try {
     $before = $snapshot(); $plan = $dry->invoke($cli, $r, $options);
     ft_news_assert($before === $snapshot(), 'Dry-run changed database');
     ft_news_assert($plan['summary']['conflict'] === 0 && $plan['summary']['update'] === 0, 'Unexpected plan: ' . wp_json_encode($plan['conflicts']));
+    ft_news_assert($plan['summary'] === ['create'=>29,'update'=>0,'unchanged'=>0,'conflict'=>0,'skipped'=>0], 'News-only initial totals');
+    $manifest = require FARMTREE_CONTENT_DIR . 'includes/news12-content-manifest.php';
+    foreach (['terms'=>'terms','media'=>'assets','posts'=>'entities'] as $group=>$collection) ft_news_assert(array_column($plan['operations'][$group], 'key') === $manifest['news12_keys'][$collection], 'Exact News12 allowlist');
+    ft_news_assert(!$plan['operations']['checks'] && !$plan['operations']['options'] && !$plan['operations']['embedded'], 'No unrelated operations');
+    foreach ($excluded as $key) ft_news_assert(!str_contains(wp_json_encode($plan), $key), 'Excluded Page in plan');
+    $scopeCheck = new ReflectionMethod($r, 'news12_scope_errors');
+    $foreign = $plan['operations']; $foreign['posts'][] = ['key'=>'page.en.home','action'=>'unchanged','reason'=>'exact','id'=>$home];
+    ft_news_assert((bool) $scopeCheck->invoke($r, $foreign, false), 'Unknown unchanged target bypassed scope');
     ft_news_assert(count(array_filter($plan['operations']['posts'], fn ($op) => $op['action'] === 'create')) === 12, 'Expected twelve post creates');
     ft_news_assert(count(array_filter($plan['operations']['media'], fn ($op) => $op['action'] === 'create')) === 12, 'Expected twelve image creates');
     $tampered = $plan; $tampered['plan_digest'] = str_repeat('0', 64);
@@ -163,7 +177,8 @@ try {
     ft_news_assert($final['summary']['conflict'] === 0 && $final['summary']['create'] === 0 && $final['summary']['update'] === 0, 'Not idempotent');
     ft_news_assert($protected === $final['public_state_sha256'], 'Protected state changed');
     $oldFinal = $old->build_plan(array_diff_key($options, ['post_launch_news12' => 1]));
-    ft_news_assert($oldFinal['summary']['conflict'] === 0 && $oldFinal['summary']['create'] === 0 && $oldFinal['summary']['update'] === 0, 'Old manifest drift');
+    ft_news_assert($oldFinal['summary']['conflict'] === 6 && $oldFinal['summary']['create'] === 0 && $oldFinal['summary']['update'] === 0, 'Excluded six Page edits were not preserved');
+    ft_news_assert($final['summary'] === ['create'=>0,'update'=>0,'unchanged'=>29,'conflict'=>0,'skipped'=>0], 'Exact News-only idempotence totals');
     $new = array_values(array_filter($final['operations']['posts'], fn ($op) => in_array($op['key'], array_column(array_filter($plan['operations']['posts'], fn ($op) => $op['action'] === 'create'), 'key'), true)));
     foreach ($new as $newOperation) {
         $post = get_post($newOperation['id']);

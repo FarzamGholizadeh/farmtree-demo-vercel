@@ -82,7 +82,7 @@ final class FarmTree_Content_Reconciler
     private array $manifest;
     private bool $news12_mode = false;
     private ?Closure $news12_commit_guard = null;
-    private const NEWS12_MANIFEST_SHA256 = 'a89519048cdd7ac8fd71980178b8e45a614e1888a3f5e91ae8f59cc7f943d0d9';
+    private const NEWS12_MANIFEST_SHA256 = '94a5ae70330affae4361fe5167be7234b0b6aa482de1821a1d392282f8316050';
     private string $theme_root = '';
     private string $theme_uri = '';
     /** @var array<string,string> */
@@ -152,9 +152,17 @@ final class FarmTree_Content_Reconciler
             $ops['checks'][] = $this->op('runtime', 'source-commit', 'conflict', 'invalid_source_commit');
         }
         $ops['checks'] = array_merge($ops['checks'], $this->reserved_locale_safety_operations());
+        if ($this->news12_mode) {
+            foreach ($ops['checks'] as $check) {
+                if ('conflict' === $check['action']) throw new RuntimeException('News12 safety gate: ' . $check['reason']);
+            }
+            // Safety observations are not managed targets in this isolated plan.
+            $ops['checks'] = [];
+        }
 
-        $term_ids = [];
+        $term_ids = $this->news12_reference_term_ids();
         $term_id_keys = [];
+        foreach ($term_ids as $key => $id) $term_id_keys[$id] = $key;
         foreach ($this->items('terms') as $term) {
             $operation = $this->plan_term($term);
             $operation = $this->with_managed_metadata_disclosure(
@@ -201,9 +209,11 @@ final class FarmTree_Content_Reconciler
                 $entity_ids[(string) $entity['key']] = (int) $operation['id'];
             }
         }
-        $ops['embedded'] = $this->plan_embedded_members($ops['posts']);
-        $ops['options'][] = $this->plan_front_page((bool) $options['set_front_page'], $entity_ids, $ops['posts']);
-        $ops['options'][] = $this->plan_rewrite_rules();
+        if (!$this->news12_mode) {
+            $ops['embedded'] = $this->plan_embedded_members($ops['posts']);
+            $ops['options'][] = $this->plan_front_page((bool) $options['set_front_page'], $entity_ids, $ops['posts']);
+            $ops['options'][] = $this->plan_rewrite_rules();
+        }
 
         $public_state = null;
         if (!empty($options['post_launch_images']) || !empty($options['post_launch_editorial']) || $this->news12_mode) {
@@ -214,6 +224,7 @@ final class FarmTree_Content_Reconciler
             if ($this->news12_mode && (!empty($options['post_launch_images']) || !empty($options['post_launch_editorial']))) $scope_errors[] = 'mutually_exclusive_release_scopes';
             if (!empty($options['post_launch_images']) && !empty($options['post_launch_editorial'])) $scope_errors[] = 'mutually_exclusive_release_scopes';
             foreach (array_merge($public_state['errors'], $scope_errors) as $error) {
+                if ($this->news12_mode) throw new RuntimeException('News12 safety gate: ' . $error);
                 $ops['checks'][] = $this->op('runtime', 'post-launch:' . $error, 'conflict', $error);
             }
         }
@@ -257,6 +268,7 @@ final class FarmTree_Content_Reconciler
         if ($this->news12_mode) {
             $plan['post_launch_news12'] = true;
             $plan['public_state_sha256'] = $public_state['sha256'];
+            $plan['reference_term_ids'] = $this->news12_reference_term_ids();
         }
         $plan['plan_digest'] = $this->hash($plan);
         return $plan;
@@ -268,16 +280,35 @@ final class FarmTree_Content_Reconciler
         $errors = $set_front_page ? ['news12_front_page_change_forbidden'] : [];
         if (!hash_equals(self::NEWS12_MANIFEST_SHA256, $this->hash($this->manifest))) $errors[] = 'news12_manifest_not_approved';
         $keys = (array) ($this->manifest['news12_keys'] ?? []);
-        if (12 !== count($keys['entities'] ?? []) || 12 !== count($keys['assets'] ?? [])) $errors[] = 'news12_exact_twelve_posts_and_images_required';
+        if (5 !== count($keys['terms'] ?? []) || 12 !== count($keys['entities'] ?? []) || 12 !== count($keys['assets'] ?? [])) $errors[] = 'news12_exact_allowlist_required';
+        foreach (['checks'=>null, 'terms'=>'terms', 'media'=>'assets', 'posts'=>'entities', 'embedded'=>null, 'options'=>null] as $group => $collection) {
+            if (array_column($operations[$group] ?? [], 'key') !== ($collection ? $keys[$collection] : [])) $errors[] = 'news12_group_coverage:' . $group;
+        }
         foreach ($operations as $group => $items) foreach ($items as $op) {
-            if ('unchanged' === $op['action']) continue;
-            if ('checks' === $group && 'reserved-locale' === ($op['kind'] ?? '') && in_array($op['key'], ['nl', 'de'], true) && 'skipped' === $op['action'] && 'reserved_locale_unpublished_untouched' === $op['reason']) continue;
-            if ('options' === $group && 'front-page' === $op['key'] && 'skipped' === $op['action'] && 'set_front_page_not_requested' === $op['reason']) continue;
             $collection = ['terms' => 'terms', 'media' => 'assets', 'posts' => 'entities'][$group] ?? '';
-            if ($collection && in_array($op['key'], $keys[$collection] ?? [], true) && 'create' === $op['action'] && 'missing' === $op['reason'] && empty($op['id'])) continue;
+            if ($collection && in_array($op['key'], $keys[$collection] ?? [], true)) {
+                if ('conflict' === $op['action']) continue; // Report owned-target conflicts; APPLY rejects them.
+                if ('unchanged' === $op['action'] && 'exact' === $op['reason'] && !empty($op['id'])) continue;
+                if ('create' === $op['action'] && 'missing' === $op['reason'] && empty($op['id'])) continue;
+            }
             $errors[] = 'news12_out_of_scope:' . $op['key'];
         }
         return $errors;
+    }
+
+    /** Existing category dependency only: never planned, created, adopted or updated. */
+    private function news12_reference_term_ids(): array
+    {
+        if (!$this->news12_mode) return [];
+        $ids = [];
+        foreach ($this->items('reference_terms') as $term) {
+            $operation = $this->plan_term($term);
+            if ('unchanged' !== $operation['action'] || 'exact' !== $operation['reason'] || empty($operation['id'])) {
+                throw new RuntimeException('News12 existing category reference is missing, ambiguous or changed.');
+            }
+            $ids[$term['key']] = (int) $operation['id'];
+        }
+        return $ids;
     }
 
     /** Pure, fail-closed scope check; no creates, adoptions, relationships or option changes. */
@@ -546,7 +577,7 @@ final class FarmTree_Content_Reconciler
             }
             $this->assert_revision_preconditions($fresh['operations']['posts']);
 
-            $term_ids = [];
+            $term_ids = $this->news12_reference_term_ids();
             $stage = 'terms';
             foreach ($this->items('terms') as $i => $term) {
                 $stage_key = (string) $term['key'];
@@ -581,13 +612,15 @@ final class FarmTree_Content_Reconciler
                 $stage_key = (string) $operation['key'];
                 $results[] = $this->apply_embedded_member($operation, $entity_ids);
             }
-            $stage = 'options';
-            $stage_key = 'front-page';
-            $results[] = $this->apply_front_page($plan['operations']['options'][0], $entity_ids);
+            if (!$news12_mode) {
+                $stage = 'options';
+                $stage_key = 'front-page';
+                $results[] = $this->apply_front_page($plan['operations']['options'][0], $entity_ids);
 
-            $stage = 'rewrite-finalization';
-            $stage_key = 'rewrite-rules';
-            $results[] = $this->finalize_rewrite_rules($plan['operations']['options'][1]);
+                $stage = 'rewrite-finalization';
+                $stage_key = 'rewrite-rules';
+                $results[] = $this->finalize_rewrite_rules($plan['operations']['options'][1]);
+            }
 
             $stage = 'postcondition';
             $stage_key = '';
@@ -1038,6 +1071,10 @@ final class FarmTree_Content_Reconciler
                 }
             }
         }
+        if ($this->news12_mode) {
+            $this->assert_plan_shape_and_actions($final_plan);
+            return;
+        }
         $option = $final_plan['operations']['options'][0] ?? [];
         if (!in_array((string) ($option['action'] ?? ''), ['unchanged', 'skipped'], true)) {
             throw new RuntimeException('The final front-page option state is not idempotent.');
@@ -1146,7 +1183,7 @@ final class FarmTree_Content_Reconciler
     {
         $checks = [];
         $this->asset_paths = [];
-        if ('private-review' !== ($this->manifest['profile'] ?? '')) {
+        if (($this->news12_mode ? 'news12' : 'private-review') !== ($this->manifest['profile'] ?? '')) {
             $checks[] = $this->op('manifest', 'profile', 'conflict', 'manifest_profile_is_not_private_review');
         }
         $theme = wp_get_theme('farmtree-native');
@@ -1173,7 +1210,7 @@ final class FarmTree_Content_Reconciler
             }
         }
         $team_keys = array_values(array_map('strval', (array) ($this->manifest['team_member_keys'] ?? [])));
-        if (10 !== count($team_keys) || count($team_keys) !== count(array_unique($team_keys, SORT_STRING))) {
+        if (($this->news12_mode ? 0 : 10) !== count($team_keys) || count($team_keys) !== count(array_unique($team_keys, SORT_STRING))) {
             $checks[] = $this->op('manifest', 'team-members', 'conflict', 'team_member_keys_must_be_exactly_ten_unique_keys');
         }
         foreach ($team_keys as $team_key) {
@@ -1197,7 +1234,7 @@ final class FarmTree_Content_Reconciler
         }
         $term_keys = [];
         $term_slugs = [];
-        foreach ($this->items('terms') as $term) {
+        foreach (array_merge($this->items('terms'), $this->news12_mode ? $this->items('reference_terms') : []) as $term) {
             $term_key = (string) $term['key'];
             $taxonomy = (string) ($term['taxonomy'] ?? '');
             $term_keys[$term_key] = $taxonomy;
@@ -3724,7 +3761,7 @@ final class FarmTree_Content_Reconciler
             || count($plan['operations']['media']) !== count($this->items('assets'))
             || count($plan['operations']['posts']) !== count($this->items('entities'))
             || count($plan['operations']['embedded']) !== count((array) ($this->manifest['team_member_keys'] ?? []))
-            || 2 !== count($plan['operations']['options'])) {
+            || ($this->news12_mode ? 0 : 2) !== count($plan['operations']['options'])) {
             throw new RuntimeException('The supplied plan operation coverage is incomplete.');
         }
 
@@ -3779,6 +3816,14 @@ final class FarmTree_Content_Reconciler
                 ],
             ], (string) $team_key);
             $this->assert_operation_disclosure($operation, (string) $team_key);
+        }
+        if ($this->news12_mode) {
+            if ($this->news12_scope_errors($plan['operations'], (bool) ($plan['set_front_page'] ?? false))
+                || ($plan['profile'] ?? '') !== 'news12'
+                || ($plan['reference_term_ids'] ?? []) !== $this->news12_reference_term_ids()) {
+                throw new RuntimeException('The supplied News12 plan exceeds its exact scope.');
+            }
+            return;
         }
         $option = $plan['operations']['options'][0];
         if ('option' !== ($option['kind'] ?? '') || 'front-page' !== ($option['key'] ?? '')) {

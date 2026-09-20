@@ -18,7 +18,7 @@ if(name==='wp'){
  const i=a.indexOf('eval-file'),sha=a[i+3],mode=a[i+4];if(!process.env.FT_CRON_DIAGNOSTICS_STAGE||!a.some(x=>x.startsWith('--require='))||!a.includes('--skip-plugins=farmtree-content'))process.exit(9);
  const file=process.env.FT_CRON_DIAGNOSTICS_FILE;fs.writeFileSync(file,'{"type":"window_start","pre_bootstrap":true}\\n{"type":"window_end"}\\n{"type":"process_end"}\\n');fs.writeFileSync(path.join(path.dirname(file),'executed'),'1');
  if(mode==='apply'&&(!/^[a-f0-9]{64}$/.test(a[i+5]||'')||!/^[a-f0-9]{64}$/.test(a[i+6]||'')))process.exit(9);
- console.log(JSON.stringify({source_commit:sha,post_launch_news12:true,plan_digest:'d'.repeat(64),summary:{create:29,update:0,unchanged:102,conflict:0,skipped:1}}));process.exit(process.env.MOCK_CLI_FAIL==='1'?2:0)
+ console.log(JSON.stringify({source_commit:sha,post_launch_news12:true,plan_digest:'d'.repeat(64),summary:{create:29,update:0,unchanged:0,conflict:0,skipped:0}}));process.exit(process.env.MOCK_CLI_FAIL==='1'?2:0)
 }
 if(name==='php'){
  if(a[0]==='-r'){const p=JSON.parse(fs.readFileSync(a[2]));process.exit(p.plan_digest===a[3]?0:1)}

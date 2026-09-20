@@ -13,7 +13,7 @@ const prepareRunner=readFileSync(new URL('news-release-prepare.sh',import.meta.u
 const sha='a'.repeat(40), hash=value=>createHash('sha256').update(value).digest('hex');
 const theme='wp-content/themes/farmtree-native/',plugin='wp-content/plugins/farmtree-content/';
 const preflightBundle=()=>{
-  const summary={create:29,update:0,unchanged:102,conflict:0,skipped:1};
+  const summary={create:29,update:0,unchanged:0,conflict:0,skipped:0};
   return {'command.json':{mode:'dry-run',source_commit:sha,post_launch_news12:true,summary,plan_digest:'b'.repeat(64)},'verified.json':{ok:true,source_commit:sha,phase:'preflight',summary},'database-verification.json':{ok:true,database:'unchanged'},'diagnostics-verification.json':{ok:true,cron_activity:'none'},'command.exit':'0\n'};
 };
 assert(!/[<>]\s*\(/.test(runner));

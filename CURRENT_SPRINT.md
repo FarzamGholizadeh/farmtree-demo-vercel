@@ -1,5 +1,15 @@
 # Current FarmTree Sprint
 
+## Isolated News12 release — 20 September 2026
+
+Current explicit authorization supersedes the local-only hub brief below.
+Work is isolated from 5067753; the original Hero worktree is untouched.
+News12 now loads a standalone pinned 29-target manifest, not global content.
+All six existing Page conflicts are excluded. Local scope/rollback/idempotence,
+WordPress and ten-width editorial checks pass. Production remains pending
+fresh backups, exact scoped dry-run, reviewed digest and final QA.
+See `docs/editorial/LOCAL-EDITORIAL-RELEASE.md`.
+
 ## News hub refinement — local only, 20 September 2026
 
 Latest brief supersedes deployment continuation: refine the existing hub into

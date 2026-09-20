@@ -1,5 +1,14 @@
 # FT-NATIVE-002 Sprint Report
 
+## Isolated News12 reconciliation — 20 September 2026
+
+Standalone News12 profile removes all global Page/embedded/option targets and
+front-page/rewrite APPLY paths. Exact ordered allowlist is checked before action
+classification, including unchanged records. Default global/private behavior is
+unchanged. Disposable WordPress verifies 29 creates then 29 unchanged while six
+deliberately drifted Pages and all existing rows/metadata remain intact.
+Production release and production QA are not claimed by this local commit.
+
 ## News hub refinement — local only, 20 September 2026
 
 Shared theme presentation now uses the requested five topic groups, clearer

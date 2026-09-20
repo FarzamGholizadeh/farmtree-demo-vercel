@@ -1,5 +1,14 @@
 # FarmTree Tasks
 
+## Isolated News12 release — 20 September 2026
+
+- [x] Isolate exact twelve posts/twelve media/five category targets.
+- [x] Exclude all six Pages; preserve dedicated Blog template independence.
+- [x] Verify zero-write dry-run, exact idempotence and failure rollback locally.
+- [x] Verify local WordPress, anonymous routes and ten-width editorial browser QA.
+- [ ] Push audited commit; verify fresh production backups and exact News12 plan.
+- [ ] Apply reviewed digest only after all gates; verify production and Hero preservation.
+
 ## 320px pointer diagnostic — 2026-09-19
 
 - [x] Reproduce timeout and distinguish completed navigation from watcher failure.
