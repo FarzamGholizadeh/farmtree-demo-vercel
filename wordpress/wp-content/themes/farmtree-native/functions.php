@@ -9,6 +9,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+require_once __DIR__ . '/inc/editorial-hub.php';
+
 /**
  * Register the minimum theme supports required by the native foundation.
  */
@@ -204,8 +206,11 @@ function farmtree_native_documentary_picture(string $html, array $block, ?WP_Blo
     if (!$processor->next_tag('img')) {
         return $html;
     }
-    $base = trailingslashit(get_theme_file_uri()) . 'assets/images/documentary/';
     $source = (string) $processor->get_attribute('src');
+    $attachment_id = $featured ? get_post_thumbnail_id((int) ($instance->context['postId'] ?? 0)) : (int) ($block['attrs']['id'] ?? 0);
+    $attachment_file = $attachment_id ? get_attached_file($attachment_id) : false;
+    $directory = str_contains($source, '/farmtree-evidence-chain-') || ($attachment_file && basename($attachment_file) === 'farmtree-evidence-chain-content.jpg') ? 'editorial' : 'documentary';
+    $base = trailingslashit(get_theme_file_uri()) . 'assets/images/' . $directory . '/';
     // Match the editor-selected attachment by bytes, never by post slug or title.
     // Replacing/cropping media opts out; old attachments are never rewritten.
     if (!str_starts_with($source, $base)) {
@@ -214,7 +219,7 @@ function farmtree_native_documentary_picture(string $html, array $block, ?WP_Blo
         if (!$file || !preg_match('/^farmtree-[a-z-]+-content\.jpg$/D', basename($file))) {
             return $html;
         }
-        $original = get_theme_file_path('assets/images/documentary/' . basename($file));
+        $original = get_theme_file_path('assets/images/' . $directory . '/' . basename($file));
         static $matches = array();
         $cache_key = $file . ':' . $original;
         if (!isset($matches[$cache_key])) {
@@ -241,7 +246,7 @@ function farmtree_native_documentary_picture(string $html, array $block, ?WP_Blo
     }
     foreach ($variants as $size) {
         foreach (['jpg', 'webp', 'avif'] as $format) {
-            if (!is_file(get_theme_file_path("assets/images/documentary/{$slug}-{$size}.{$format}"))) {
+            if (!is_file(get_theme_file_path("assets/images/{$directory}/{$slug}-{$size}.{$format}"))) {
                 return $html;
             }
         }
@@ -269,6 +274,17 @@ function farmtree_native_documentary_picture(string $html, array $block, ?WP_Blo
         $sizes = ($block['attrs']['aspectRatio'] ?? '') === '4/3'
             ? '(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc(50vw - 36px), 400px'
             : '(max-width: 767px) calc(100vw - 48px), (max-width: 1199px) 90vw, 1200px';
+    }
+    $editorial_class = (string) ($block['attrs']['className'] ?? '');
+    if ($featured && is_page('blog') && str_contains($editorial_class, 'ft-editorial-image')) {
+        $sizes = '(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc(50vw - 36px), (max-width: 1328px) calc((100vw - 96px) / 3), 411px';
+        if (str_contains($editorial_class, 'ft-editorial-image--lead')) {
+            $sizes = '(max-width: 1023px) calc(100vw - 48px), (max-width: 1328px) calc((100vw - 72px) * 0.592), 744px';
+            $processor->set_attribute('loading', 'eager');
+            $processor->set_attribute('fetchpriority', 'high');
+        } elseif (str_contains($editorial_class, 'ft-editorial-image--support')) {
+            $sizes = '(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc((100vw - 48px) * 0.4), 205px';
+        }
     }
     $set = static function (string $format) use ($base, $slug, $hero, $medium): string {
         $intermediate = $medium ? "{$base}{$slug}-medium.{$format} 800w, " : '';
@@ -552,6 +568,7 @@ function farmtree_native_render_discovery_metadata(): void
             // administrator identity or imply an unshown editorial review date.
             $content_schema['headline'] = single_post_title('', false);
             $content_schema['datePublished'] = get_the_date(DATE_W3C);
+            $content_schema['dateModified'] = get_the_modified_date(DATE_W3C);
             $image = farmtree_native_social_image();
             if (has_post_thumbnail() && $image !== []) {
                 $content_schema['image'] = $image['url'];

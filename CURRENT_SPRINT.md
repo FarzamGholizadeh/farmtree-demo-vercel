@@ -1,5 +1,13 @@
 # Current FarmTree Sprint
 
+## News editorial local work — 2026-09-20
+
+Twelve source-led articles and the shared editorial hub are implemented locally.
+Production remains blocked by UNRESOLVED cron attribution; no new dry-run or APPLY.
+See `docs/editorial/LOCAL-EDITORIAL-RELEASE.md` and
+`docs/audit/live-360/CRON-EVIDENCE-INVESTIGATION.md`. Existing Hero changes remain
+separate. Local work proceeds independently of the production safety gate.
+
 ## Latest approved production release
 
 5104687 is now pushed and deployed with fresh verified rollback backup following

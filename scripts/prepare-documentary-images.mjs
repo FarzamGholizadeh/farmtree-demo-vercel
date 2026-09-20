@@ -8,17 +8,18 @@ const plan = JSON.parse(await readFile('config/farmtree-documentary-images.json'
 const sourceDirectory = process.argv[2];
 if (!sourceDirectory) throw new Error('Usage: node scripts/prepare-documentary-images.mjs /absolute/photo/directory');
 const variantArgument = process.argv[3];
-if (variantArgument && !/^--variant=[a-z]+$/.test(variantArgument)) throw new Error('Invalid variant argument');
-const onlyVariant = variantArgument?.slice('--variant='.length);
+const newOnly = variantArgument === '--new-only';
+if (variantArgument && !newOnly && !/^--variant=[a-z]+$/.test(variantArgument)) throw new Error('Invalid variant argument');
+const onlyVariant = newOnly ? undefined : variantArgument?.slice('--variant='.length);
 if (onlyVariant && !Object.hasOwn(plan.variants, onlyVariant)) throw new Error('Unknown variant');
-const previous = onlyVariant
+const previous = onlyVariant || newOnly
   ? JSON.parse(await readFile('config/farmtree-documentary-exports.json', 'utf8'))
   : null;
 const output = resolve('wordpress/wp-content/themes/farmtree-native/assets/images/documentary');
 // Incremental compilation preserves prior evidence; full compilation can bootstrap.
 // Read every selected original before any output write in either mode.
 const sources = new Map();
-for (const entry of plan.images.filter(image => image.selected)) {
+for (const entry of plan.images.filter(image => image.selected && (!newOnly || !previous.files.some(file => file.number === image.number)))) {
   const source = await readFile(resolve(sourceDirectory, entry.source));
   const sourceSha256 = createHash('sha256').update(source).digest('hex');
   if (onlyVariant) {
@@ -27,7 +28,7 @@ for (const entry of plan.images.filter(image => image.selected)) {
   }
   sources.set(entry.number, source);
 }
-if (onlyVariant) {
+if (onlyVariant || newOnly) {
   for (const file of previous.files) {
     const bytes = await readFile(resolve(output, file.filename));
     if (createHash('sha256').update(bytes).digest('hex') !== file.sha256) throw new Error(`Existing export mismatch: ${file.filename}`);
@@ -35,8 +36,8 @@ if (onlyVariant) {
   if (previous.sharp !== sharp.versions.sharp) throw new Error('Sharp version mismatch for incremental compilation');
 }
 await mkdir(output, { recursive: true });
-const evidence = onlyVariant ? { ...previous, files: previous.files.filter(file => !file.filename.endsWith(`-${onlyVariant}.avif`) && !file.filename.endsWith(`-${onlyVariant}.webp`) && !file.filename.endsWith(`-${onlyVariant}.jpg`)) } : { schemaVersion: 1, sharp: sharp.versions.sharp, files: [] };
-for (const entry of plan.images.filter((image) => image.selected)) {
+const evidence = newOnly ? { ...previous, files: [...previous.files] } : onlyVariant ? { ...previous, files: previous.files.filter(file => !file.filename.endsWith(`-${onlyVariant}.avif`) && !file.filename.endsWith(`-${onlyVariant}.webp`) && !file.filename.endsWith(`-${onlyVariant}.jpg`)) } : { schemaVersion: 1, sharp: sharp.versions.sharp, files: [] };
+for (const entry of plan.images.filter((image) => sources.has(image.number))) {
   const source = sources.get(entry.number);
   const sourceSha256 = createHash('sha256').update(source).digest('hex');
   for (const [variant, dimensions] of Object.entries(plan.variants)) {

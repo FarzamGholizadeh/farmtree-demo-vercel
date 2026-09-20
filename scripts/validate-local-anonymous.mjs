@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { loadEditorialArticles } from './news-editorial-content.mjs';
 
 const baseUrl = new URL(process.env.FARMTREE_LOCAL_WP_URL ?? 'http://localhost:8888');
 if (!['127.0.0.1', 'localhost', '::1'].includes(baseUrl.hostname)) {
@@ -75,8 +76,12 @@ const blog = routeResults.find(({ path }) => path === '/blog/')?.body ?? '';
 for (const article of articles) {
   if (!blog.includes(`/${article.slug}/`)) throw new Error(`Blog omits: ${article.slug}`);
 }
-if ((blog.match(/class="[^"\n]*ft-blog-featured-card/g) ?? []).length !== 1 || (blog.match(/class="[^"\n]*ft-news-item/g) ?? []).length !== 8) {
-  throw new Error('Blog must render one featured article and eight editorial cards.');
+const newArticles = await loadEditorialArticles();
+for (const article of newArticles) {
+  if (!blog.includes(`/${article.slug}/`)) throw new Error(`Blog omits new article: ${article.slug}`);
+}
+if ((blog.match(/data-ft-story=/g) ?? []).length !== 21 || (blog.match(/class="ft-editorial-card ft-editorial-card--lead"/g) ?? []).length !== 1) {
+  throw new Error('Blog must render 21 distinct editorial cards including one lead.');
 }
 
 const team = routeResults.find(({ path }) => path === '/team/')?.body ?? '';
@@ -176,7 +181,7 @@ console.log(JSON.stringify({
   routeStatus: Object.fromEntries(routeResults.map(({ path, status }) => [path, status])),
   published: { pages: pages.length + 2, proofStories: proofs.length, customerSegments: segments.length, news: articles.length },
   homepageNews: { cards: 3, featuredImages: 3, topics: 3, excerpts: 3, dates: 3, ctas: 3, responsiveImages: true },
-  blog: { featured: 1, cards: 8, total: 9 },
+  blog: { featured: 3, total: 21 },
   team: { members: teamCardCount, portraits: teamPortraitCount, fallbackPortraits: 0 },
   segmentHeroes: segments.length,
   checkedInternalLinks: linkResults.length,

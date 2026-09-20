@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 const base = new URL(process.env.FARMTREE_LOCAL_WP_URL ?? 'http://localhost:8888');
 assert.ok(['localhost', '127.0.0.1', '[::1]'].includes(base.hostname), 'This verification is loopback-only');
 let count = 0;
-for (const [route, expected] of [['/', 11], ['/platform/', 1], ['/solutions/', 2], ['/proof-stories/', 2], ['/customer-segments/', 2], ['/blog/', 10]]) {
+for (const [route, expected] of [['/', 11], ['/platform/', 1], ['/solutions/', 2], ['/proof-stories/', 2], ['/customer-segments/', 2], ['/blog/', 21]]) {
   const response = await fetch(new URL(route, base), {
     redirect: 'manual', signal: AbortSignal.timeout(30000),
     // Skip Playground auto-login without supplying any authentication cookie.
@@ -27,7 +27,7 @@ for (const [route, expected] of [['/', 11], ['/platform/', 1], ['/solutions/', 2
       for (const format of ['avif', 'webp', 'jpg']) {
         assert.ok(picture.includes(`-preview.${format} 480w`), `${route}: ${format} preview`);
         // Only Blog featured blocks opt in; its final core Image stays unchanged.
-        const mediumExpected = route === '/blog/' && index < 9;
+        const mediumExpected = route === '/blog/';
         assert.equal(picture.includes(`-medium.${format} 800w`), mediumExpected, `${route}: ${format} medium scope`);
         assert.ok(picture.includes(`-content.${format} 1200w`), `${route}: ${format} content`);
       }

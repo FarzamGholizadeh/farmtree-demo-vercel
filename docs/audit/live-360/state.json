@@ -5,7 +5,7 @@
   "started": "2026-09-19",
   "baselineCommit": "6b01611b1d87edd8190b54f405beefddf33ebf27",
   "lastVerifiedRuntimeCommit": "5104687c27b7b6aa69b100e55d905a8107726ec7",
-  "phase": "release03_production_qa_complete_programme_in_progress",
+  "phase": "news_editorial_local_validation_production_gate_blocked",
   "releaseCandidateCommit": "5104687c27b7b6aa69b100e55d905a8107726ec7",
   "productionMutationsThisProgramme": [
     {
@@ -41,11 +41,11 @@
   "unknownIsPass": false,
   "blockedPaths": [
     {
-      "path": "fresh production reconciler dry-run",
-      "reason": "Execution approval reviewer rejected active-plugin bootstrap before scoped SQL firewall for a23441b; no command executed. Exact bounded approval requested; no retry or workaround."
+      "path": "production release after approved single reconciler dry-run",
+      "reason": "Subsequent explicit approval was consumed by one dry-run against 5104687. Command exited 0: create 0, update 0, unchanged 102, conflict 0, skipped 1. Protected state and runtime hashes matched, but the cron option changed. Attribution is unresolved; only its pre-run hash was captured. Do not repeat the consumed authorization or classify this as a passed zero-mutation gate. Evidence: qa/live-360/security/approved-dryrun-510.report.json."
     }
   ],
-  "next": "Release03 deployed and scoped production QA passed; see RELEASE-03-PRODUCTION.md. Wider performance, content/reconciler authorization, acceptance-group adjudication and human evidence remain incomplete. Re-audit broader risk counts rather than infer overall completion from the scoped release.",
+  "next": "Twelve editorial articles, responsive hub and loopback preview are implemented; local test evidence is in qa/live-360/news-editorial and docs/editorial/LOCAL-EDITORIAL-RELEASE.md. Production attribution remains UNRESOLVED: exact historic serialized cron pair and execution/ownership evidence are missing. No new dry-run, APPLY, push, deployment or production publication occurred. The source inventory is non-executable and publication dates remain unset. Separate Hero change remains outside this workstream. Build and audit the focused local commit in a clean detached worktree; production remains blocked.",
   "preserve": [
     "English public",
     "Homepage public",

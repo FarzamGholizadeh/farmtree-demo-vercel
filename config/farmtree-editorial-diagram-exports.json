@@ -1,0 +1,110 @@
+{
+  "source": "Original abstract SVG defined in scripts/prepare-editorial-diagram.mjs",
+  "files": [
+    {
+      "filename": "farmtree-evidence-chain-medium.avif",
+      "width": 800,
+      "height": 600,
+      "bytes": 7288,
+      "sha256": "f5822ff0fdaf47702c5aec665241c50480ed443945a15a67a5eec754fbac426a"
+    },
+    {
+      "filename": "farmtree-evidence-chain-medium.webp",
+      "width": 800,
+      "height": 600,
+      "bytes": 7206,
+      "sha256": "9865a126a47dcbe487eee5a08aa654c72415ba63891fdedc75f6f94849dc70ed"
+    },
+    {
+      "filename": "farmtree-evidence-chain-medium.jpg",
+      "width": 800,
+      "height": 600,
+      "bytes": 18532,
+      "sha256": "a2c40a9a6f2631cbbe3aeb042990608f684607c6d3776c35bf604c35f393da9d"
+    },
+    {
+      "filename": "farmtree-evidence-chain-hero.avif",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 14411,
+      "sha256": "74363d4d9ffc0ff4958b6f6357a88414879484307269cbdc74b0b685ed0c1000"
+    },
+    {
+      "filename": "farmtree-evidence-chain-hero.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 18288,
+      "sha256": "e1792e10755afdcb5acd967451e66f301dc2a5a03f2a169e79324025e0c237f9"
+    },
+    {
+      "filename": "farmtree-evidence-chain-hero.jpg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 55888,
+      "sha256": "483aeff238425f0aa2ec6ee012829c2cfb07bcb1813c2d9efb3dde3ee0198f63"
+    },
+    {
+      "filename": "farmtree-evidence-chain-content.avif",
+      "width": 1200,
+      "height": 900,
+      "bytes": 9442,
+      "sha256": "bb92058105ad6bfe03880e50826209d92264fd0471b951c128682502cb1771d6"
+    },
+    {
+      "filename": "farmtree-evidence-chain-content.webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 11120,
+      "sha256": "1fe5974dbae6628141f3719839dc057782c5d786d0074fc178867854ebe3d202"
+    },
+    {
+      "filename": "farmtree-evidence-chain-content.jpg",
+      "width": 1200,
+      "height": 900,
+      "bytes": 31427,
+      "sha256": "af45722b2aaff9a7c1400f74bb42d12a8d8591a0e7dea3b4b0de997b6d7228c8"
+    },
+    {
+      "filename": "farmtree-evidence-chain-card.avif",
+      "width": 800,
+      "height": 800,
+      "bytes": 7552,
+      "sha256": "18f5f3bd90584d2f78cf0fa83d541fcb77ec7111b3e92d8bfe2185b01ada71cc"
+    },
+    {
+      "filename": "farmtree-evidence-chain-card.webp",
+      "width": 800,
+      "height": 800,
+      "bytes": 8054,
+      "sha256": "64b3b692e29d7f8823a2f1c138a72c5e07e63148ab9f91119bbde8376ce0f026"
+    },
+    {
+      "filename": "farmtree-evidence-chain-card.jpg",
+      "width": 800,
+      "height": 800,
+      "bytes": 23146,
+      "sha256": "d2231adab51c461f2cbe7e2a91c96beb05eed8b7523e96edf4f0ca13d474c9d4"
+    },
+    {
+      "filename": "farmtree-evidence-chain-preview.avif",
+      "width": 480,
+      "height": 360,
+      "bytes": 4632,
+      "sha256": "2e27920a8257007fa1d6596f7e39f529588c30157ea6eecddd9e5f944e5fccb8"
+    },
+    {
+      "filename": "farmtree-evidence-chain-preview.webp",
+      "width": 480,
+      "height": 360,
+      "bytes": 4328,
+      "sha256": "120fcef7acfe68af1979ab9fa9049850e8dc5f366f671a05e62a207614a4dfbc"
+    },
+    {
+      "filename": "farmtree-evidence-chain-preview.jpg",
+      "width": 480,
+      "height": 360,
+      "bytes": 10597,
+      "sha256": "25d858829b2807b396a11970eb85ecc0212b41031ff18b07b1ea9c51a7863fce"
+    }
+  ]
+}

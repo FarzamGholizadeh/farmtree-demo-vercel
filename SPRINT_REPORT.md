@@ -1,5 +1,14 @@
 # FT-NATIVE-002 Sprint Report
 
+## News editorial local work — 2026-09-20
+
+Implemented a CSS-grid News hub and twelve source-led editable articles with
+unique primary visuals, an internal non-executable source inventory and loopback
+preview tooling. Existing production content/manifest remains unchanged.
+Cron investigation is UNRESOLVED, not PASS; exact historic cron values and
+execution attribution are missing. Local evidence and limitations are recorded
+in `docs/editorial/LOCAL-EDITORIAL-RELEASE.md`; no News deployment occurred.
+
 ## Live360 handoff checkpoint — 2026-09-19
 
 Candidate5104687 completed local validation and exact artifact audit; no push or
