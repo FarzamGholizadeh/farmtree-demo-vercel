@@ -1,5 +1,11 @@
 # FT-NATIVE-002 Sprint Report
 
+## User Videos UI cleanup
+
+Existing thumbnail replaces the separate visible load control; cards now expose
+one Play Video action and classroom labels match the approved copy. Focused
+browser/Gutenberg checks pass; exact-commit artifact and live gates remain required.
+
 ## Platform learning hub
 
 Dedicated User Videos template with 25 verified lessons, first-party posters,

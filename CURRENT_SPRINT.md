@@ -1,5 +1,10 @@
 # Current FarmTree Sprint
 
+## Bounded User Videos UI cleanup
+
+Page-only labels and controls simplified; thumbnails, data, playback and privacy
+behavior retained. Scope/evidence: docs/editorial/PLATFORM-LEARNING-RELEASE.md.
+
 ## Bounded Platform learning hub
 
 25 source-verified videos, editable core-block template, click-to-load player and

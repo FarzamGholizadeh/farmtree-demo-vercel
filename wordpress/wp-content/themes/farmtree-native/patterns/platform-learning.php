@@ -12,7 +12,7 @@ $lessons = json_decode(file_get_contents(__DIR__ . '/../inc/platform-videos.json
 <!-- wp:paragraph {"className":"ft-learning-eyebrow"} --><p class="ft-learning-eyebrow">PLATFORM LEARNING</p><!-- /wp:paragraph -->
 <!-- wp:heading {"level":1} --><h1 class="wp-block-heading">FarmTree Platform Videos</h1><!-- /wp:heading -->
 <!-- wp:paragraph --><p>Learn the FarmTree Platform through practical video walkthroughs, from setting up scenarios to comparing results and working with project data.</p><!-- /wp:paragraph -->
-<!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#platform-classroom">Start learning</a></div><!-- /wp:button --><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="https://www.youtube.com/@farmtree8168" target="_blank" rel="noopener noreferrer">View on YouTube ↗</a></div><!-- /wp:button --></div><!-- /wp:buttons -->
+<!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="https://www.youtube.com/@farmtree8168" target="_blank" rel="noopener noreferrer">View on YouTube ↗</a></div><!-- /wp:button --></div><!-- /wp:buttons -->
 </div><!-- /wp:group -->
 <!-- wp:group {"anchor":"platform-classroom","className":"ft-learning-classroom","layout":{"type":"default"}} -->
 <div id="platform-classroom" class="wp-block-group ft-learning-classroom"><!-- wp:paragraph --><p>Choose a lesson below to watch on YouTube. With JavaScript enabled, you can also load the video here.</p><!-- /wp:paragraph --></div><!-- /wp:group -->
@@ -31,7 +31,7 @@ $lessons = json_decode(file_get_contents(__DIR__ . '/../inc/platform-videos.json
 <!-- wp:heading {"level":3} --><h3 class="wp-block-heading"><?php echo esc_html($lesson['title']); ?></h3><!-- /wp:heading -->
 <!-- wp:paragraph {"className":"ft-learning-description"} --><p class="ft-learning-description"><?php echo esc_html($lesson['description']); ?></p><!-- /wp:paragraph -->
 <!-- wp:paragraph {"className":"ft-learning-duration"} --><p class="ft-learning-duration"><?php echo esc_html($lesson['duration']); ?></p><!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"ft-learning-youtube"} --><p class="ft-learning-youtube"><a href="<?php echo esc_url($lesson['url']); ?>" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"ft-learning-youtube"} --><p class="ft-learning-youtube"><a href="<?php echo esc_url($lesson['url']); ?>" target="_blank" rel="noopener noreferrer">Play Video</a></p><!-- /wp:paragraph -->
 </div><!-- /wp:group -->
 <?php endforeach; ?>
 </div><!-- /wp:group -->

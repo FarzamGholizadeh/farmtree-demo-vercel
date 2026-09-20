@@ -41,13 +41,13 @@
     const policy = el('a', 'Privacy Policy'); policy.href = '/privacy/'; privacy.append(policy);
     const controls = el('div', '', 'ft-learning-step');
     let current = 0;
-    const previous = button('← Previous lesson', () => select(current - 1, true));
-    const next = button('Next lesson →', () => select(current + 1, true));
+    const previous = button('← Previous Video', () => select(current - 1, true));
+    const next = button('Next Video →', () => select(current + 1, true));
     controls.append(previous, next);
     info.append(meta, heading, description, external, controls, privacy);
     main.append(player, info);
     const navigation = el('details', '', 'ft-learning-navigation');
-    const summary = el('summary', 'Lessons · ' + unique.length);
+    const summary = el('summary', 'FarmTree Videos');
     const nav = el('nav'); nav.setAttribute('aria-label', 'Platform video lessons');
     navigation.append(summary, nav);
     const navButtons = [];
@@ -62,9 +62,14 @@
         const choice = button(String(index + 1).padStart(2, '0') + '  ' + record.title, () => select(index, true));
         choice.setAttribute('aria-controls', 'ft-learning-title');
         item.append(choice); groups.get(record.module).append(item); navButtons.push(choice);
-        const play = button('Play lesson', () => select(index, true));
-        play.setAttribute('aria-label', 'Play lesson: ' + record.title);
-        record.card.append(play);
+        const play = record.card.querySelector('.ft-learning-youtube a');
+        play.textContent = 'Play Video';
+        play.setAttribute('aria-label', 'Play Video: ' + record.title);
+        play.addEventListener('click', event => {
+            if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+            event.preventDefault();
+            select(index, true);
+        });
         if (record.image) record.image.loading = 'lazy';
     });
     function select(index, focus = false) {
@@ -72,13 +77,7 @@
         current = index;
         const record = unique[index];
         player.replaceChildren(); // Destroys the previous iframe and stops playback.
-        if (record.image) {
-            const poster = record.image.cloneNode();
-            poster.removeAttribute('id'); poster.alt = ''; poster.loading = 'eager';
-            poster.setAttribute('fetchpriority', index === 0 ? 'high' : 'auto');
-            player.append(poster);
-        }
-        const load = button('▶ Load YouTube player', () => {
+        const posterControl = button('', () => {
             const iframe = document.createElement('iframe');
             iframe.title = record.title + ' — YouTube video';
             iframe.src = 'https://www.youtube-nocookie.com/embed/' + record.id + '?autoplay=0&rel=0';
@@ -89,8 +88,15 @@
             player.replaceChildren(iframe);
             iframe.focus();
         });
-        load.setAttribute('aria-label', 'Load YouTube player: ' + record.title);
-        player.append(load);
+        posterControl.className = 'ft-learning-poster';
+        posterControl.setAttribute('aria-label', 'Load YouTube player: ' + record.title);
+        if (record.image) {
+            const poster = record.image.cloneNode();
+            poster.removeAttribute('id'); poster.alt = ''; poster.loading = 'eager';
+            poster.setAttribute('fetchpriority', index === 0 ? 'high' : 'auto');
+            posterControl.append(poster);
+        }
+        player.append(posterControl);
         meta.textContent = record.module + (record.duration ? ' · ' + record.duration : '');
         heading.textContent = record.title;
         description.textContent = record.description;

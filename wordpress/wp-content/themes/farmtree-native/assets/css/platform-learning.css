@@ -82,7 +82,7 @@
     isolation: isolate;
 }
 
-.ft-learning-player > img,
+.ft-learning-poster > img,
 .ft-learning-player > iframe {
     position: absolute;
     inset: 0;
@@ -91,13 +91,6 @@
     border: 0;
     object-fit: contain;
     margin: 0;
-}
-
-.ft-learning-player > button {
-    position: relative;
-    z-index: 1;
-    max-width: calc(100% - 2rem);
-    box-shadow: 0 2px 16px #0005;
 }
 
 .ft-learning-info {
@@ -169,7 +162,14 @@
     padding: 0;
 }
 
-.ft-learning-page button {
+.ft-learning-page a {
+    color: var(--learning-green);
+    text-decoration: underline;
+    text-underline-offset: .2em;
+}
+
+.ft-learning-page button,
+.ft-learning-page .ft-learning-youtube a {
     font: inherit;
     font-size: .875rem;
     font-weight: 700;
@@ -180,6 +180,29 @@
     padding: .8rem 1.1rem;
     min-height: 44px;
     cursor: pointer;
+}
+
+.ft-learning-page .ft-learning-youtube a {
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    color: white;
+    text-decoration: none;
+}
+
+.ft-learning-page .ft-learning-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.ft-learning-page .ft-learning-poster:focus-visible {
+    outline-offset: -4px;
 }
 
 .ft-learning-nav-group button {
@@ -213,12 +236,6 @@
 .ft-learning-page :is(button, a, summary, h2):focus-visible {
     outline: 3px solid #a46c12;
     outline-offset: 4px;
-}
-
-.ft-learning-page a {
-    color: var(--learning-green);
-    text-decoration: underline;
-    text-underline-offset: .2em;
 }
 
 .ft-learning-page .wp-block-button a {

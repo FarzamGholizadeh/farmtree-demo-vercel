@@ -7,7 +7,7 @@ const pause=ms=>new Promise(r=>setTimeout(r,ms));
 const title=text=>text.replace(/–/g,'-'); // Core wptexturize typographic punctuation.
 (async()=>{
  const browser=await puppeteer.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
- const rows=[],errors=[],requests=[];
+ const rows=[],errors=[],requests=[],links=[];
  try{
   for(const width of [320,360,390,414,768,1024,1440,1920]){
    const page=await browser.newPage();await page.setViewport({width,height:950,hasTouch:width<900});
@@ -22,6 +22,11 @@ const title=text=>text.replace(/–/g,'-'); // Core wptexturize typographic punc
    assert.equal(await page.title(),production?'FarmTree Platform Videos | FarmTree':'FarmTree Platform Videos | FarmTree Native Local');
    assert.deepEqual(await page.$$eval('h1',es=>es.map(e=>e.textContent)),['FarmTree Platform Videos']);
    assert.equal(await page.$$eval('.ft-learning-card',es=>es.length),videos.length);
+   assert.equal(await page.$eval('.ft-learning-navigation summary',e=>e.textContent),'FarmTree Videos');
+   assert.equal(await page.$$eval('a',es=>es.filter(e=>e.textContent.trim()==='Start learning').length),0);
+   assert.equal(await page.$$eval('.ft-learning-player button',es=>es.filter(e=>e.textContent.trim()).length),0,'No separate visible load-player button');
+   assert.deepEqual(await page.$$eval('.ft-learning-step button',es=>es.map(e=>e.textContent)),['← Previous Video','Next Video →']);
+   assert.deepEqual(await page.$$eval('.ft-learning-youtube a',es=>es.map(e=>e.textContent)),videos.map(()=> 'Play Video'));
    assert.equal(await page.$$eval('iframe',es=>es.length),0);
    assert.deepEqual(thirdParty,[],'Zero third-party requests before consent');
    const initialCLS=await page.evaluate(()=>window.learningCLS);assert.ok(initialCLS<=0.1,'Initial layout shift: '+initialCLS);
@@ -29,6 +34,11 @@ const title=text=>text.replace(/–/g,'-'); // Core wptexturize typographic punc
    assert.ok(await page.$$eval('.ft-learning-card img',async es=>(await Promise.all(es.map(e=>new Promise(resolve=>{const probe=new Image();probe.onload=()=>resolve(probe.naturalWidth>0);probe.onerror=()=>resolve(false);probe.src=e.src;})))).every(Boolean)));
    await page.$eval('.ft-learning-classroom',e=>e.scrollIntoView({block:'start',behavior:'instant'}));
    if(width<900){assert.equal(await page.$eval('.ft-learning-navigation',e=>e.open),false);await page.click('.ft-learning-navigation summary');}
+   for(let i=0;i<videos.length;i++){
+    const card=(await page.$$('.ft-learning-youtube a'))[i];
+    await card.evaluate(e=>e.scrollIntoView({block:'center',behavior:'instant'}));await card.click();
+    assert.equal(title(await page.$eval('#ft-learning-title',e=>e.textContent)),videos[i].title);
+   }
    for(let i=0;i<videos.length;i++){
     const button=(await page.$$('.ft-learning-nav-group button'))[i];
     await button.evaluate(e=>e.scrollIntoView({block:'center',behavior:'instant'}));await button.click();
@@ -49,8 +59,26 @@ const title=text=>text.replace(/–/g,'-'); // Core wptexturize typographic punc
    const axe=await page.evaluate(async()=>await axe.run('.ft-learning-page',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));
    assert.deepEqual(axe.violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})),[]);
    await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:`qa/video-hub/${production?'production':'local'}-${width}.png`,fullPage:false});
+   if([390,1440].includes(width)){
+    await page.$eval('.ft-learning-classroom',e=>e.scrollIntoView({block:'start',behavior:'instant'}));
+    await page.screenshot({path:`qa/video-hub/${production?'production':'local'}-classroom-${width}.png`});
+    await page.$eval('.ft-learning-grid',e=>e.scrollIntoView({block:'center',behavior:'instant'}));
+    await page.screenshot({path:`qa/video-hub/${production?'production':'local'}-cards-${width}.png`});
+   }
+   if(width===1440){
+    const urls=await page.$$eval('a[href]',es=>[...new Set(es.map(e=>new URL(e.href)).filter(u=>u.origin===location.origin).map(u=>u.origin+u.pathname))]);
+    for(const url of urls){
+     const response=await fetch(url,production?{}:{headers:{Cookie:'playground_auto_login_already_happened=1'}});
+     assert.equal(response.status,200,url);links.push({url,status:response.status});
+    }
+   }
    if(width===390){
-    await page.click('.ft-learning-player button');
+    await page.$eval('.ft-learning-poster',e=>e.scrollIntoView({block:'center',behavior:'instant'}));
+    await page.tap('.ft-learning-poster');
+    assert.equal(await page.$$eval('iframe',es=>es.length),1,'Thumbnail touch loads player');
+    await page.click('.ft-learning-step button:last-child');
+    await page.click('.ft-learning-step button:first-child');
+    await page.focus('.ft-learning-poster');await page.keyboard.press('Enter');
     assert.equal(await page.$$eval('iframe',es=>es.length),1);
     const iframe=await page.$('iframe');assert.ok((await iframe.evaluate(e=>e.src)).includes('youtube-nocookie.com/embed/'+videos[0].id+'?autoplay=0'));
     const frame=await iframe.contentFrame();await frame.waitForSelector('video',{timeout:30000});await pause(1500);
@@ -70,6 +98,6 @@ const title=text=>text.replace(/–/g,'-'); // Core wptexturize typographic punc
    console.log(width+': PASS');await page.close();
   }
   assert.deepEqual(errors,[]);
-  fs.writeFileSync(`qa/video-hub/${production?'production':'local'}.json`,JSON.stringify({rows,requests,errors},null,2));
+  fs.writeFileSync(`qa/video-hub/${production?'production':'local'}.json`,JSON.stringify({rows,requests,errors,links},null,2));
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

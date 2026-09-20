@@ -26,7 +26,8 @@ User Videos page template (page-user-videos). Use List View to find the
 - Module paragraph: grouping.
 - Description paragraph: lesson description.
 - Duration paragraph: optional verified time; remove if unknown.
-- “Watch on YouTube” link: exact HTTPS watch URL or youtu.be URL.
+- “Play Video” card link: exact HTTPS watch URL or youtu.be URL; enhanced
+  navigation selects the matching classroom video without changing its stored URL.
 - Image block: replace the poster through the ordinary Media Library interface.
   Keep posters in the FarmTree Media Library to avoid third-party thumbnail requests.
 - Reorder, duplicate or remove a complete lesson-card Group using List View.
@@ -41,7 +42,8 @@ or additional CPT/database migration are introduced.
 ## Privacy and playback
 
 Posters are first-party theme assets. No MP4 files were downloaded. No third-party
-requests occur before “Load YouTube player.” Only one privacy-enhanced iframe is
+requests occur before activating the existing thumbnail (accessible name:
+“Load YouTube player”). Only one privacy-enhanced iframe is
 created, with autoplay=0 and a meaningful title; switching destroys it. The exact
 YouTube backlink remains available if embedding fails. Loading the player is
 explicitly disclosed as sending technical request information to YouTube/Google.
@@ -79,3 +81,21 @@ The correction explicitly registers this one pattern at init priority 20 only
 when absent. It uses WordPress's native filePath registration and does not clear
 the pattern cache, update options, change the theme version or mutate content.
 This is the final permitted remediation attempt.
+
+## Bounded User Videos UI cleanup
+
+Based on deployed 3bea33c. Remove Start learning and the separate visible
+load-player overlay; the existing thumbnail is a native keyboard/touch button
+with no extra visible UI. Sidebar heading is FarmTree Videos; navigation is
+Previous Video / Next Video. Cards expose one Play Video link, selecting the
+existing classroom record; without JavaScript it retains the exact YouTube
+fallback. The active classroom backlink is unchanged.
+
+Video JSON, posters, order, titles, descriptions, privacy disclosure, other pages,
+Content runtime and database remain unchanged. No Live360 continuation.
+Validation: eight-width focused browser checks, all 25 card/nav selections,
+keyboard and real playback, Gutenberg serialization, registration regression,
+JS syntax and scoped CSS lint. Release build/audit and live QA gate deployment.
+The existing broad foundation validator still requires the generic page-main
+class (and contains an obsolete globe arc expectation). These unrelated test
+contracts are not changed or claimed passing by this scoped UI release.
