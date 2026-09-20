@@ -656,12 +656,6 @@
             { name: 'Jordan', coordinates: [36.24, 30.59] }
         ];
         const markerCoordinates = globeLocations.map(({ coordinates }) => coordinates);
-        const arcPairs = [
-            [13, 0], [13, 3], [13, 8], [13, 9], [13, 10],
-            [13, 11], [13, 12], [13, 14], [13, 15], [13, 16],
-            [13, 17], [13, 18], [13, 19], [13, 20], [13, 21],
-            [0, 1], [0, 2], [5, 4], [5, 6], [5, 7]
-        ];
 
         function pointInPolygon(longitude, latitude, polygon) {
             let inside = false;
@@ -775,33 +769,6 @@
             };
         }
 
-        function arcBetween(start, end) {
-            const startVector = vectorFor(...start);
-            const endVector = vectorFor(...end);
-            const dot = Math.max(-1, Math.min(1,
-                (startVector.x * endVector.x) +
-                (startVector.y * endVector.y) +
-                (startVector.z * endVector.z)
-            ));
-            const angle = Math.acos(dot);
-            const sine = Math.sin(angle) || 1;
-            return Array.from({ length: 42 }, (_, index) => {
-                const progress = index / 41;
-                const a = Math.sin((1 - progress) * angle) / sine;
-                const b = Math.sin(progress * angle) / sine;
-                const vector = {
-                    x: (startVector.x * a) + (endVector.x * b),
-                    y: (startVector.y * a) + (endVector.y * b),
-                    z: (startVector.z * a) + (endVector.z * b)
-                };
-                const length = Math.hypot(vector.x, vector.y, vector.z) || 1;
-                return {
-                    vector: { x: vector.x / length, y: vector.y / length, z: vector.z / length },
-                    altitude: 1 + (Math.sin(progress * Math.PI) * 0.11)
-                };
-            });
-        }
-
         async function loadEarthTexture(url) {
             if (!url) {
                 return null;
@@ -851,7 +818,6 @@
             let earthTexture = null;
             let landPoints = [];
             let markers = [];
-            let arcs = [];
             let sphereBuffer = null;
             let sphereContext = null;
             let sphereImage = null;
@@ -979,35 +945,6 @@
                 return true;
             }
 
-            function drawArc(arc, centre, radius, ratio, time, arcIndex) {
-                context.save();
-                context.beginPath();
-                let drawing = false;
-                arc.forEach(({ vector, altitude }) => {
-                    const point = rotateVector(vector, rotation, pitch, altitude);
-                    if (point.z <= 0.015) {
-                        drawing = false;
-                        return;
-                    }
-                    const x = centre + (point.x * radius);
-                    const y = centre - (point.y * radius);
-                    if (!drawing) {
-                        context.moveTo(x, y);
-                        drawing = true;
-                    } else {
-                        context.lineTo(x, y);
-                    }
-                });
-                context.strokeStyle = 'rgba(226, 129, 48, 0.64)';
-                context.lineWidth = Math.max(1.08 * ratio, 1);
-                if (!motionPaused) {
-                    context.setLineDash([7 * ratio, 5 * ratio]);
-                    context.lineDashOffset = -(((time * 0.018) + (arcIndex * 9)) % (24 * ratio));
-                }
-                context.stroke();
-                context.restore();
-            }
-
             function draw(time = performance.now()) {
                 if (!context) {
                     return;
@@ -1057,8 +994,6 @@
                         context.fill();
                     });
                 }
-
-                arcs.forEach((arc, arcIndex) => drawArc(arc, centre, radius, ratio, time, arcIndex));
                 markers.forEach((vector, markerIndex) => {
                     const point = rotateVector(vector, rotation, pitch, 1.015);
                     if (point.z <= 0.02) {
@@ -1138,7 +1073,6 @@
                     }
                 }
                 markers = markerCoordinates.map((coordinates) => vectorFor(...coordinates));
-                arcs = arcPairs.map(([from, to]) => arcBetween(markerCoordinates[from], markerCoordinates[to]));
                 activated = true;
                 isActivating = false;
                 shell.dataset.ftGlobeState = reducedMotionQuery.matches ? 'reduced' : 'ready';
