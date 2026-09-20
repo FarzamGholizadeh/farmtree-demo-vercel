@@ -1,8 +1,55 @@
 # News & Insights local release candidate
 
-Production is blocked: **UNRESOLVED** cron attribution. No broad volatility
-exception, new dry-run, APPLY, deployment or production publication is included.
-See `../audit/live-360/CRON-EVIDENCE-INVESTIGATION.md` for the missing evidence.
+## Current brief — local redesign only, 20 September 2026
+
+The latest request explicitly prohibits automatic deployment. This refinement
+keeps the existing twelve source-led drafts and changes the shared editorial
+presentation, not any article body, slug, publication state or managed hash.
+The earlier production attempt stopped on six existing Page integrity conflicts;
+historical cron attribution is deferred, not the current deployment blocker.
+No production operation is included in this local redesign.
+
+HubSpot's blog (https://blog.hubspot.com/, inspected 20 September 2026) is used
+only for the lead/companion, topic-section and discovery structure. FarmTree's
+cream/green palette, typography, card geometry and shared header/footer remain.
+The five groups are Agroforestry Planning, Carbon & Finance, Policy & Standards,
+Landscape & Hydrology, and FarmTree Platform / Product Insights. Existing WP
+categories map to these presentation groups without taxonomy/database changes.
+Sections retain up to two stories before allocating Featured/Latest; each story
+appears once. Descriptive topic cards link to real section anchors rather than
+invented archive routes. Single-story topics remain visible.
+
+The lower-page stay-connected panel is intentionally **not a working newsletter
+subscription**: it opens the approved info@farmtree.earth mailbox and explicitly
+discloses that no automatic subscription occurs. A provider/list and approved
+subscription/privacy workflow are needed before adding email collection. No form,
+fake success state, third-party script or new visitor-data storage is introduced.
+
+Article drafts: `content/news/` (12 existing sources, 933–1072 body words), unique
+titles/decks/images, editable core blocks, source sections and internal links.
+Source provenance and evidence limitations remain in `news-source-register.md`.
+No new scientific, product, financial or regulatory claims were introduced here.
+
+Local preview: http://localhost:8888/blog/. Browser evidence is regenerated in
+`qa/live-360/news-editorial/`; tests assert all five populated groups, topic-card
+anchors, lead/companions, honest email CTA, no form, responsive images, keyboard
+access, axe, console, overflow, internal destinations and twelve article routes.
+Separate pre-existing Hero JavaScript work is excluded from this change.
+
+### Current validation result
+
+Local WordPress verification and anonymous checks passed: 40 original routes,
+122 internal destinations, zero broken links; reserved /nl/ and /de/ remain404.
+The News browser matrix passed at320/360/390/414/768/1024/1280/1440/1920/2560:
+21 unique cards/images/decks, five populated groups and working topic anchors,
+twelve article routes at390/1440, sixty destinations, zero console errors,
+overflow or axe violations. Maximum observed initial CLS was0.03901 in this
+loopback run, not a production performance score. One primary high-priority
+image, below-fold lazy loading, no duplicate image preload, dimensions and
+AVIF/WebP/JPEG srcset/sizes passed. Desktop/mobile captures were inspected.
+Static/native block and managed-content checks remain part of `npm test`.
+
+## Earlier implementation record
 
 ## Ownership and reproducibility
 
@@ -29,7 +76,7 @@ Markdown `metaDescription` is an editorial alternative, not a hidden override.
 Native BlogPosting metadata uses actual WordPress publication/modification dates
 and organisation publisher, with no invented human author.
 
-The theme owns the CSS-only asymmetric layout, topic allocation and seven topic
+The original theme implementation owned the CSS-only asymmetric layout, topic allocation and seven topic
 groups. Each post is allocated once. At least one story remains in each available
 topic; the six newest eligible stories fill Featured and Latest. Explore topics
 uses section anchors, not incomplete first-alias category archives. The approved

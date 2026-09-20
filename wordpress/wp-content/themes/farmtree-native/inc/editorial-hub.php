@@ -20,13 +20,11 @@ add_action('wp_enqueue_scripts', static function (): void {
 function farmtree_native_editorial_topics(): array
 {
     return [
-        'carbon' => ['Carbon, MRV & Standards', ['Carbon & MRV', 'Data & Evidence']],
-        'policy' => ['Policy & Regulation', ['Policy & Standards', 'Policy & Regulation', 'Policy & Restoration', 'Landscape Planning']],
-        'economics' => ['Farm Economics & Investment', ['Farm Economics', 'Farm Economics & Investment', 'Policy & Finance', 'Project Finance']],
-        'science' => ['Agroforestry Science & Resilience', ['Climate Resilience', 'Agroforestry Science', 'Species & Design']],
-        'data' => ['Data, Monitoring & Modelling', ['Data & Monitoring', 'Data & Governance', 'Monitoring & Decision Support']],
-        'practice' => ['Field Practice & Implementation', ['Agroforestry Practice']],
-        'updates' => ['FarmTree Updates', ['FarmTree Updates']],
+        'planning' => ['Agroforestry Planning', ['Agroforestry Science', 'Species & Design', 'Agroforestry Practice', 'Data & Monitoring', 'Data & Governance', 'Monitoring & Decision Support'], 'Design choices, field evidence and monitoring for context-specific farm plans.'],
+        'carbon' => ['Carbon & Finance', ['Carbon & MRV', 'Data & Evidence', 'Farm Economics', 'Farm Economics & Investment', 'Policy & Finance', 'Project Finance'], 'Carbon evidence, Farm Valuation and the assumptions behind an investment case.'],
+        'policy' => ['Policy & Standards', ['Policy & Standards', 'Policy & Regulation', 'Policy & Restoration'], 'Read the requirements, distinguish proposals from rules, and plan the evidence.'],
+        'landscape' => ['Landscape & Hydrology', ['Climate Resilience', 'Landscape Planning'], 'Water, erosion, biodiversity and the trade-offs that connect farms to landscapes.'],
+        'updates' => ['FarmTree Platform / Product Insights', ['FarmTree Updates'], 'Explore modelling capabilities and how to interpret their outputs.'],
     ];
 }
 
@@ -81,8 +79,8 @@ function farmtree_native_render_editorial_hub(): string
         'ignore_sticky_posts' => true, 'suppress_filters' => false]);
     $images = [];
     $topics = farmtree_native_editorial_topics();
-    // Reserve one story per available topic before allocating the six newest
-    // feature/latest positions. Small topics must not disappear from the hub.
+    // Reserve up to two stories per topic before allocating the six newest
+    // feature/latest positions. Single-story topics remain visible too.
     $counts = [];
     foreach ($posts as $post) {
         $topic = farmtree_native_editorial_topic($post);
@@ -90,9 +88,11 @@ function farmtree_native_render_editorial_hub(): string
     }
     $promoted = [];
     $remaining = [];
+    $reserve_limit = count($posts) >= 12 ? 2 : 1;
+    $reserved = array_map(static fn($count) => min($reserve_limit, $count), $counts);
     foreach ($posts as $post) {
         $topic = farmtree_native_editorial_topic($post);
-        if (count($promoted) < 6 && $counts[$topic] > 1) {
+        if (count($promoted) < 6 && $counts[$topic] > $reserved[$topic]) {
             $promoted[] = $post;
             $counts[$topic]--;
         } else { $remaining[] = $post; }
@@ -103,22 +103,28 @@ function farmtree_native_render_editorial_hub(): string
     foreach ($topics as $key => [$label]) { $labels[$key] = $label; }
     $html = '<div class="ft-editorial-hub"><p class="ft-editorial-intro">Research, policy and field knowledge for the people planning, financing and managing agroforestry.</p>';
     $html .= '<nav class="ft-editorial-topics" aria-label="On this page">';
-    $short_labels = ['carbon' => 'Carbon & MRV', 'policy' => 'Policy', 'economics' => 'Farm economics', 'science' => 'Climate resilience', 'data' => 'Data & monitoring', 'practice' => 'Field practice', 'updates' => 'FarmTree updates'];
+    $short_labels = ['planning' => 'Agroforestry planning', 'carbon' => 'Carbon & finance', 'policy' => 'Policy & standards', 'landscape' => 'Landscape & hydrology', 'updates' => 'Platform insights'];
     foreach ($short_labels as $key => $label) {
         if (!empty($sections[$key])) { $html .= '<a href="#insights-' . esc_attr($key) . '">' . esc_html($label) . '</a>'; }
     }
     $html .= '</nav>';
     foreach ($labels as $key => $label) {
         if (empty($sections[$key])) { continue; }
-        $html .= '<section id="insights-' . esc_attr($key) . '" aria-labelledby="insights-title-' . esc_attr($key) . '"><h2 id="insights-title-' . esc_attr($key) . '">' . esc_html($label) . '</h2><div class="ft-editorial-grid' . ($key === 'featured' ? ' ft-editorial-grid--featured' : '') . '">';
+        $html .= '<section id="insights-' . esc_attr($key) . '" aria-labelledby="insights-title-' . esc_attr($key) . '"><h2 id="insights-title-' . esc_attr($key) . '">' . esc_html($label) . '</h2>';
+        if (isset($topics[$key])) { $html .= '<p class="ft-editorial-section-deck">' . esc_html($topics[$key][2]) . '</p>'; }
+        $html .= '<div class="ft-editorial-grid' . ($key === 'featured' ? ' ft-editorial-grid--featured' : '') . '">';
         foreach ($sections[$key] as $index => $post) { $html .= farmtree_native_editorial_card($post, $key === 'featured' && $index === 0, $images, $key === 'featured' && $index > 0); }
         $html .= '</div></section>';
     }
-    $html .= '<section class="ft-editorial-explore"><h2>Explore topics</h2><nav class="ft-editorial-topics" aria-label="Explore all insights by topic">';
-    foreach ($topics as $key => [$label]) {
-        if (!empty($sections[$key])) { $html .= '<a href="#insights-' . esc_attr($key) . '">' . esc_html($label) . '</a>'; }
+    $html .= '<section class="ft-editorial-explore"><h2>Explore more topics</h2><nav class="ft-editorial-topic-cards" aria-label="Explore all insights by topic">';
+    foreach ($topics as $key => [$label, , $description]) {
+        if (!empty($sections[$key])) { $html .= '<a href="#insights-' . esc_attr($key) . '"><strong>' . esc_html($label) . '</strong><span>' . esc_html($description) . '</span><span class="ft-editorial-topic-action">Explore articles <span aria-hidden="true">↗</span></span></a>'; }
     }
-    return $html . '</nav></section></div>';
+    $html .= '</nav></section>';
+    // No newsletter provider is configured. Do not collect addresses or imply
+    // automatic subscription. This uses the approved mailto-only contact model.
+    $html .= '<section class="ft-editorial-subscribe" aria-labelledby="insights-stay-informed"><div><p class="ft-editorial-eyebrow">Stay connected</p><h2 id="insights-stay-informed">Keep agroforestry intelligence in view.</h2><p>Interested in future FarmTree updates? Tell us which research, policy or platform topics matter to your work.</p><p class="ft-editorial-subscribe-note">This opens your email app. It does not automatically subscribe you to a mailing list.</p></div><a class="wp-element-button" href="mailto:info@farmtree.earth?subject=Interest%20in%20FarmTree%20updates">Ask about updates</a></section>';
+    return $html . '</div>';
 }
 
 add_action('init', static function (): void {

@@ -79,6 +79,17 @@
   line-height: 1.3;
 }
 
+.ft-editorial-topic-cards > a {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #d5ded4;
+  border-radius: 1.25rem;
+  background: #fffdf7;
+  text-decoration: none;
+}
+
 .ft-editorial-card h3 a {
   text-decoration: none;
 }
@@ -139,7 +150,7 @@
 
 .ft-editorial-topics[aria-label="On this page"] {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .ft-editorial-topics[aria-label="On this page"] a {
@@ -151,6 +162,66 @@
   text-align: center;
 }
 
+.ft-editorial-section-deck {
+  max-width: 46rem;
+  margin-block: -0.25rem 1.75rem;
+  color: #425849;
+}
+
+.ft-editorial-topic-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.ft-editorial-topic-cards strong {
+  font-size: 1.125rem;
+}
+
+.ft-editorial-topic-action {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  font-weight: 600;
+}
+
+.ft-editorial-topic-cards a:focus-visible,
+.ft-editorial-subscribe a:focus-visible {
+  outline: 3px solid #805400;
+  outline-offset: 4px;
+}
+
+.ft-editorial-subscribe {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid #d5ded4;
+  border-radius: 1.25rem;
+  background: #eaf0e7;
+}
+
+.ft-editorial-subscribe > div {
+  max-width: 44rem;
+}
+
+.ft-editorial-subscribe .wp-element-button {
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.ft-editorial-eyebrow {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ft-editorial-subscribe-note {
+  font-size: 0.875rem;
+}
+
 @media (width <= 1199px) {
   .ft-editorial-topics[aria-label="On this page"] {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -158,6 +229,15 @@
 }
 
 @media (width <= 1023px) {
+  .ft-editorial-topic-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ft-editorial-subscribe {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .ft-editorial-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -172,6 +252,10 @@
 }
 
 @media (width <= 767px) {
+  .ft-editorial-topic-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .ft-editorial-topics[aria-label="On this page"] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

@@ -1,5 +1,14 @@
 # Current FarmTree Sprint
 
+## News hub refinement — local only, 20 September 2026
+
+Latest brief supersedes deployment continuation: refine the existing hub into
+five requested topic groups, descriptive discovery cards and an honest mailto
+updates-interest panel; retain all twelve source-led drafts and WordPress
+editability. No automatic deployment. Existing production Page conflicts remain
+untouched. See `docs/editorial/LOCAL-EDITORIAL-RELEASE.md`; older cron-blocked
+entries below are historical, superseded by the Live360 risk register.
+
 ## News editorial local work — 2026-09-20
 
 Twelve source-led articles and the shared editorial hub are implemented locally.

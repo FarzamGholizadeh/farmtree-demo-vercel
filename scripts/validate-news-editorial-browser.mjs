@@ -67,6 +67,27 @@ try {
       links: [...document.querySelectorAll('a[href]')].map(e => e.href).filter(href => href.startsWith(location.origin)),
       h1: document.querySelectorAll('h1').length
     }));
+    const discovery = await page.evaluate(() => ({
+      topics: ['planning', 'carbon', 'policy', 'landscape', 'updates'].map(key => ({
+        key, heading: document.querySelector(`#insights-title-${key}`)?.textContent,
+        stories: document.querySelectorAll(`#insights-${key} [data-ft-story]`).length
+      })),
+      topicCards: document.querySelectorAll('.ft-editorial-topic-cards > a').length,
+      brokenAnchors: [...document.querySelectorAll('.ft-editorial-hub a[href^="#"]')].filter(a => !document.getElementById(a.hash.slice(1))).length,
+      subscription: document.querySelector('.ft-editorial-subscribe a')?.getAttribute('href'),
+      subscriptionDisclosure: document.querySelector('.ft-editorial-subscribe-note')?.textContent,
+      forms: document.querySelectorAll('.ft-editorial-hub form, .ft-editorial-hub input').length,
+      lead: document.querySelectorAll('#insights-featured .ft-editorial-card--lead').length,
+      companions: document.querySelectorAll('#insights-featured .ft-editorial-card:not(.ft-editorial-card--lead)').length
+    }));
+    assert.ok(discovery.topics.every(topic => topic.heading && topic.stories > 0), 'All five topic groups remain discoverable');
+    assert.equal(discovery.topicCards, 5);
+    assert.equal(discovery.brokenAnchors, 0);
+    assert.equal(discovery.lead, 1);
+    assert.equal(discovery.companions, 2);
+    assert.ok(discovery.subscription?.startsWith('mailto:info@farmtree.earth?'));
+    assert.ok(discovery.subscriptionDisclosure?.includes('does not automatically subscribe'));
+    assert.equal(discovery.forms, 0, 'No unconfigured subscription capture');
     assert.equal(data.ids.length, expectedCards);
     assert.equal(new Set(data.ids).size, expectedCards);
     assert.equal(new Set(data.decks).size, expectedCards);
@@ -77,7 +98,7 @@ try {
     for (const image of data.images) assert.ok(image.loaded && image.alt && image.sizes && image.srcset && image.width && image.height && image.formats.includes('image/avif') && image.formats.includes('image/webp'));
     data.links.forEach(link => links.add(link.split('#')[0]));
     await page.screenshot({ path: `${out}/hub-${width}.png`, fullPage: true });
-    results.push({ width, ...initial, cards: data.ids.length, images: data.images.length, overflow: data.overflow });
+    results.push({ width, ...initial, cards: data.ids.length, images: data.images.length, overflow: data.overflow, discovery });
   }
   for (const article of staged ? [] : articles) {
     for (const width of [390, 1440]) {

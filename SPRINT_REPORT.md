@@ -1,5 +1,14 @@
 # FT-NATIVE-002 Sprint Report
 
+## News hub refinement — local only, 20 September 2026
+
+Shared theme presentation now uses the requested five topic groups, clearer
+section decks, descriptive Explore more topics cards and a lower-page email
+interest CTA. Existing twelve article drafts are reused, not duplicated. No
+newsletter provider is configured, so no subscription capture is claimed.
+Article bodies, routes, managed hashes and production state remain unchanged.
+Validation and screenshots: `docs/editorial/LOCAL-EDITORIAL-RELEASE.md`.
+
 ## News editorial local work — 2026-09-20
 
 Implemented a CSS-grid News hub and twelve source-led editable articles with
