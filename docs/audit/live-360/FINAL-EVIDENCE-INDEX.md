@@ -1,5 +1,30 @@
 # Evidence handoff index
 
+## Current continuation — 20 September 2026
+
+Production baseline is `5104687`; the older checkpoint below is historical.
+News candidate `5068cf9` is locally validated, not yet published. Prospective
+guarded-operation tests now cover semantic cron diagnostics and sanitized caller
+attribution, exact News12 creates, transaction rollback, private evidence,
+all-table/upload comparisons and paired runtime replacement rollback.
+
+- `npm run news:release:test`: disposable WordPress integration; no production.
+- `npm run news:release:guards`: isolated PHP comparisons and filesystem/shell
+  fixtures; mocked services are explicitly identified in each test output.
+- `node scripts/validate-cron-diagnostics.mjs`: isolated PHP observer/redaction
+  tests, including validated off-webroot FarmTree source attribution.
+- `qa/live-360/news-editorial/report.json`: current local browser rerun, ten
+  widths, twelve article routes, sixty internal destinations, zero broken links,
+  console errors or tested axe violations. This is not production acceptance.
+- `qa/live-360/news12-read-only-capture.json`: production SELECT/file-hash reader
+  integration, 23 database tables and 231 upload files; no WordPress bootstrap,
+  reconciler or remote file write. Fingerprints contain no raw row values.
+
+The historical cron event is **DEFERRED / EVIDENCE UNRECOVERABLE**, not PASS.
+New production plan/APPLY/runtime and QA receipts remain pending.
+
+## Historical checkpoint
+
 Programme: **IN_PROGRESS**. Live66134c6; release-specific aggregate QA completed,
 with cold performance and expanded accessibility coverage still in progress.
 Follow-up:40-route/11-width browser matrix is now complete; manual accessibility

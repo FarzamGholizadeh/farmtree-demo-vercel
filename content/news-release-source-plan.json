@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "executable": false,
-  "gate": "UNRESOLVED cron attribution; no production runner or publication authorization encoded here",
+  "gate": "Non-executable inventory; the separately pinned News12 profile requires prospective diagnostics, exact production dry-run scope, reviewed digest and verified backups",
   "purpose": "Deterministic internal source inventory, not a production dry-run or ownership verdict",
   "productionRequirements": [
     "fresh exact ownership preflight",

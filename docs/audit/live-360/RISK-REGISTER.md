@@ -3,6 +3,25 @@
 Thirty independent role perspectives are complete (three separate AI reviewers).
 No issue is closed from source review alone when its acceptance concerns production.
 
+Fast-track checkpoint (20 September 2026): the News hub and **all twelve**
+articles are already locally validated and committed as `5068cf92b9d9875a032e25988d7d9a594f6298e9`;
+exact-source build/audit passed. The brief's eight-draft count is superseded.
+Do not repeat that work. Production has not received this commit. The cron
+review is closed by the owner's subsequent decision as **UNRESOLVED HISTORICAL
+VOLATILITY — DEFERRED / EVIDENCE UNRECOVERABLE**. No further reconstruction of
+unavailable historical values is permitted. This is not a BENIGN PASS.
+There was no observed FarmTree content mutation, protected configuration mutation
+or FarmTree runtime file mutation; no APPLY was performed, and there is no evidence
+that the historical cron delta affected release-critical state. This bounded
+operational uncertainty remains disclosed, not converted into proof of absence.
+**FUTURE DETECTION COVERAGE = IMPLEMENTED** (local isolated-PHP tests passed;
+production execution remains pending). Existing write firewalls, ownership/digest/state comparisons,
+backup and rollback controls remain mandatory. New unexplained or release-critical
+mutations still stop the affected operation. This historical event alone no longer
+blocks Live360, and the consumed historical dry-run is not repeated.
+This decision supersedes older blocked checkpoint wording in sprint/state files;
+the five concise Live360 handoff documents carry the current continuation status.
+
 | ID | Discipline | Severity | Evidence / affected surface | Root cause | Remediation / acceptance | Status |
 |---|---|---|---|---|---|---|
 | EXP-A11Y-01 | Accessibility | P1 | Platform/Solutions/Investors prose links, axe link-in-text-block; colour distinction1.85:1 | Global link decoration none | Scoped permanent inner-page prose underline; local440views no violations | Resolved in a23441b; live10proseviews PASS |
@@ -26,7 +45,31 @@ No issue is closed from source review alone when its acceptance concerns product
 | PERF-BLOG | Performance | P2 | Blog mobile cold-lab medianLCP3284ms, three runs |1200px valid4:3 lead plus competing near-viewport images; lead already high priority/non-lazy | Rejected redundant priority override; same-crop800px Blog-only candidate |66134c6 live selection/geometry PASS; cold performance retest pending |
 | PERF-HERO | Performance / approved UX | P2 | Desktop Homepage no-input medianLCP5632ms; timelineH1LCP5752ms follows slide change5715ms | Existing approved5s autoplay replaces headline after initial page is visible | Preserve approved timing; report actual lateLCP; different default-autoplay behaviour requires product approval | Known design/performance trade-off; not performance PASS |
 | A11Y-MANUAL | Accessibility | Manual-verify | No actual screen-reader listening/browser-zoom session | Tool evidence does not equal AT/user research | Retain per-criterion unknowns; equivalent reflow and keyboard checked | Manual verification required |
-| WP-IDEMPOTENCE | Back-end verification | Approval blocker | Fresh production dry-run attempt rejected before process creation | Active-plugin bootstrap precedes scoped SQL firewall; execution reviewer requires exact approval | Bounded dry-run/bootstrap-risk approval requested; no APPLY/activation/content write permitted | Not run; no workaround; other safe work continues |
+| WP-IDEMPOTENCE | Back-end verification | Bounded historical evidence limitation | Approved single dry-run: 0 create/update/conflict, 102 unchanged, 1 skipped; only cron fingerprint changed; no APPLY | Exact historical event values/caller evidence were not retained and cannot be recovered | Preserve historical evidence; implement prospective semantic snapshots and scoped sanitized caller diagnostics; no broad cron exception | UNRESOLVED HISTORICAL VOLATILITY; DEFERRED / EVIDENCE UNRECOVERABLE; not PASS; historical event alone no longer blocks programme per owner decision |
+
+Scoring treatment approved by the owner: this historical evidence item receives
+no PASS. Do not deduct production-quality points for it when current production
+health is verified, future detection is implemented, and subsequent guarded
+operations show no release-critical mutation. Those conditions require evidence;
+they are not assumed from the historical snapshots.
+
+Future guarded CLI operations load `scripts/cron-diagnostics-bootstrap.php` before
+WordPress. The opt-in observer records semantic before/after event inventories,
+hook identities, timestamps, recurrence/interval and SHA256 argument hashes,
+registered callback source ownership where derivable, argument-free relative-path
+caller stacks, proposed/successful option updates and window receipts. Output is
+exclusive mode-0600 JSONL outside the webroot; write/capacity failures stop execution.
+No raw SQL, argument values, credentials or arbitrary error messages are logged.
+The theme-only runner independently captures cron semantics via database-only
+SELECTs, without loading WordPress, and rejects new differences. Its regression
+fixtures cover unreadable evidence before replacement and rollback on new delta.
+
+Coverage boundary: update-option hooks observe the same guarded PHP process, not
+concurrent requests, direct SQL or option creation/deletion. External semantic
+snapshots detect persistent differences outside that boundary but cannot invent
+caller attribution. Unconfirmed proposals and unknown owners remain explicit.
+Instrumentation is diagnostic, not a replacement for the SQL firewall or state
+gates, and does not trigger cron. The historical reconciler has not been rerun.
 
 Each expanded finding must include affected URL/files, reproduction/evidence,
 root cause, risk, source fix, regression, release/backup IDs, production result

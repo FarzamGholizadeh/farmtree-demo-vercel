@@ -80,6 +80,9 @@ final class FarmTree_Content_Reconciler
 
     /** @var array<string,mixed> */
     private array $manifest;
+    private bool $news12_mode = false;
+    private ?Closure $news12_commit_guard = null;
+    private const NEWS12_MANIFEST_SHA256 = 'a89519048cdd7ac8fd71980178b8e45a614e1888a3f5e91ae8f59cc7f943d0d9';
     private string $theme_root = '';
     private string $theme_uri = '';
     /** @var array<string,string> */
@@ -92,9 +95,10 @@ final class FarmTree_Content_Reconciler
     private array $touched_term_ids = [];
     private string $backup_evidence_digest = '';
 
-    public function __construct()
+    public function __construct(bool $news12_mode = false)
     {
-        $file = FARMTREE_CONTENT_DIR . 'includes/managed-content-manifest.php';
+        $this->news12_mode = $news12_mode;
+        $file = FARMTREE_CONTENT_DIR . 'includes/' . ($news12_mode ? 'news12-content-manifest.php' : 'managed-content-manifest.php');
         if (!is_readable($file)) {
             throw new RuntimeException('The managed content manifest is not readable.');
         }
@@ -105,6 +109,13 @@ final class FarmTree_Content_Reconciler
         $this->manifest = $manifest;
     }
 
+    /** Supplied only by the audited off-webroot CLI operation adapter. */
+    public function set_news12_commit_guard(Closure $guard): void
+    {
+        if (!$this->news12_mode) throw new RuntimeException('Commit guard is restricted to News12 mode.');
+        $this->news12_commit_guard = $guard;
+    }
+
     /**
      * Build a deterministic plan. This method performs no writes.
      *
@@ -113,6 +124,9 @@ final class FarmTree_Content_Reconciler
      */
     public function build_plan(array $options = []): array
     {
+        if ($this->news12_mode && !hash_equals(self::NEWS12_MANIFEST_SHA256, $this->hash($this->manifest))) {
+            throw new RuntimeException('News12 manifest does not match the audited source.');
+        }
         $options = wp_parse_args($options, [
             'set_front_page' => false,
             'expected_site' => '',
@@ -120,7 +134,9 @@ final class FarmTree_Content_Reconciler
             'source_commit' => '',
             'post_launch_images' => false,
             'post_launch_editorial' => false,
+            'post_launch_news12' => false,
         ]);
+        if ((bool) $options['post_launch_news12'] !== $this->news12_mode) throw new RuntimeException('News12 constructor and plan mode must match.');
         $site_url = trailingslashit(home_url('/'));
         $theme = get_stylesheet();
         $ops = ['checks' => [], 'terms' => [], 'media' => [], 'posts' => [], 'embedded' => [], 'options' => []];
@@ -190,11 +206,12 @@ final class FarmTree_Content_Reconciler
         $ops['options'][] = $this->plan_rewrite_rules();
 
         $public_state = null;
-        if (!empty($options['post_launch_images']) || !empty($options['post_launch_editorial'])) {
+        if (!empty($options['post_launch_images']) || !empty($options['post_launch_editorial']) || $this->news12_mode) {
             $public_state = $this->post_launch_state();
-            $scope_errors = !empty($options['post_launch_editorial'])
+            $scope_errors = $this->news12_mode ? $this->news12_scope_errors($ops, (bool) $options['set_front_page']) : (!empty($options['post_launch_editorial'])
                 ? $this->editorial_scope_errors($ops, (bool) $options['set_front_page'])
-                : $this->post_launch_scope_errors($ops, (bool) $options['set_front_page']);
+                : $this->post_launch_scope_errors($ops, (bool) $options['set_front_page']));
+            if ($this->news12_mode && (!empty($options['post_launch_images']) || !empty($options['post_launch_editorial']))) $scope_errors[] = 'mutually_exclusive_release_scopes';
             if (!empty($options['post_launch_images']) && !empty($options['post_launch_editorial'])) $scope_errors[] = 'mutually_exclusive_release_scopes';
             foreach (array_merge($public_state['errors'], $scope_errors) as $error) {
                 $ops['checks'][] = $this->op('runtime', 'post-launch:' . $error, 'conflict', $error);
@@ -237,8 +254,30 @@ final class FarmTree_Content_Reconciler
             $plan['post_launch_editorial'] = true;
             $plan['public_state_sha256'] = $public_state['sha256'];
         }
+        if ($this->news12_mode) {
+            $plan['post_launch_news12'] = true;
+            $plan['public_state_sha256'] = $public_state['sha256'];
+        }
         $plan['plan_digest'] = $this->hash($plan);
         return $plan;
+    }
+
+    /** New News records may only be created; all existing content remains exact. */
+    private function news12_scope_errors(array $operations, bool $set_front_page): array
+    {
+        $errors = $set_front_page ? ['news12_front_page_change_forbidden'] : [];
+        if (!hash_equals(self::NEWS12_MANIFEST_SHA256, $this->hash($this->manifest))) $errors[] = 'news12_manifest_not_approved';
+        $keys = (array) ($this->manifest['news12_keys'] ?? []);
+        if (12 !== count($keys['entities'] ?? []) || 12 !== count($keys['assets'] ?? [])) $errors[] = 'news12_exact_twelve_posts_and_images_required';
+        foreach ($operations as $group => $items) foreach ($items as $op) {
+            if ('unchanged' === $op['action']) continue;
+            if ('checks' === $group && 'reserved-locale' === ($op['kind'] ?? '') && in_array($op['key'], ['nl', 'de'], true) && 'skipped' === $op['action'] && 'reserved_locale_unpublished_untouched' === $op['reason']) continue;
+            if ('options' === $group && 'front-page' === $op['key'] && 'skipped' === $op['action'] && 'set_front_page_not_requested' === $op['reason']) continue;
+            $collection = ['terms' => 'terms', 'media' => 'assets', 'posts' => 'entities'][$group] ?? '';
+            if ($collection && in_array($op['key'], $keys[$collection] ?? [], true) && 'create' === $op['action'] && 'missing' === $op['reason'] && empty($op['id'])) continue;
+            $errors[] = 'news12_out_of_scope:' . $op['key'];
+        }
+        return $errors;
     }
 
     /** Pure, fail-closed scope check; no creates, adoptions, relationships or option changes. */
@@ -447,7 +486,11 @@ final class FarmTree_Content_Reconciler
         $this->assert_plan_shape_and_actions($plan);
         $editorial_mode = !empty($plan['post_launch_editorial']);
         $image_mode = !empty($plan['post_launch_images']);
-        $public_mode = $image_mode || $editorial_mode;
+        $news12_mode = !empty($plan['post_launch_news12']);
+        if ($news12_mode !== $this->news12_mode || ($news12_mode && ($image_mode || $editorial_mode))) throw new RuntimeException('News12 apply mode mismatch.');
+        if ($news12_mode && $this->news12_scope_errors($plan['operations'], (bool) $plan['set_front_page'])) throw new RuntimeException('News12 plan exceeds the exact create-only scope.');
+        if ($news12_mode && !$this->is_loopback() && !$this->news12_commit_guard) throw new RuntimeException('News12 production APPLY requires the same-connection precommit evidence guard.');
+        $public_mode = $image_mode || $editorial_mode || $news12_mode;
         if ($image_mode && $editorial_mode) throw new RuntimeException('Release scopes are mutually exclusive.');
         if ($editorial_mode && $this->editorial_scope_errors($plan['operations'], (bool) $plan['set_front_page'])) {
             throw new RuntimeException('Editorial plan exceeds the exact approved transition.');
@@ -492,6 +535,7 @@ final class FarmTree_Content_Reconciler
             $fresh = $this->build_plan([
                 'post_launch_images' => $image_mode,
                 'post_launch_editorial' => $editorial_mode,
+                'post_launch_news12' => $news12_mode,
                 'set_front_page' => (bool) $plan['set_front_page'],
                 'expected_site' => (string) $plan['site_url'],
                 'expected_theme' => (string) $plan['active_theme'],
@@ -550,6 +594,7 @@ final class FarmTree_Content_Reconciler
             $final_plan = $this->build_plan([
                 'post_launch_images' => $image_mode,
                 'post_launch_editorial' => $editorial_mode,
+                'post_launch_news12' => $news12_mode,
                 'set_front_page' => (bool) $plan['set_front_page'],
                 'expected_site' => (string) $plan['site_url'],
                 'expected_theme' => (string) $plan['active_theme'],
@@ -558,6 +603,9 @@ final class FarmTree_Content_Reconciler
             $this->assert_final_plan($final_plan);
             if ($public_mode && !hash_equals((string) $plan['public_state_sha256'], (string) $final_plan['public_state_sha256'])) {
                 throw new RuntimeException('Public release settings changed during the content update.');
+            }
+            if ($news12_mode && $this->news12_commit_guard) {
+                ($this->news12_commit_guard)($plan, $results);
             }
             if (false === $wpdb->query('COMMIT')) {
                 throw new RuntimeException('The database transaction could not be committed.');
@@ -2089,6 +2137,9 @@ final class FarmTree_Content_Reconciler
         if (isset($fields['comment_status'])) {
             $state['comment_status'] = (string) $fields['comment_status'];
         }
+        if (isset($fields['ping_status'])) {
+            $state['ping_status'] = (string) $fields['ping_status'];
+        }
         sort($state['category_keys'], SORT_STRING);
         if (!empty($fields['post_date'])) {
             $state['post_date'] = (string) $fields['post_date'];
@@ -2143,6 +2194,9 @@ final class FarmTree_Content_Reconciler
         ];
         if (isset($entity['fields']['comment_status'])) {
             $state['comment_status'] = (string) $post->comment_status;
+        }
+        if (isset($entity['fields']['ping_status'])) {
+            $state['ping_status'] = (string) $post->ping_status;
         }
         if (!empty($entity['fields']['post_date'])) {
             $state['post_date'] = (string) $post->post_date;
@@ -2938,6 +2992,9 @@ final class FarmTree_Content_Reconciler
         if (isset($write_desired['comment_status'])) {
             $postarr['comment_status'] = (string) $write_desired['comment_status'];
         }
+        if (isset($write_desired['ping_status'])) {
+            $postarr['ping_status'] = (string) $write_desired['ping_status'];
+        }
         if (isset($write_desired['post_date'])) {
             $postarr['post_date'] = (string) $write_desired['post_date'];
         }
@@ -2956,7 +3013,22 @@ final class FarmTree_Content_Reconciler
                 (int) $desired['post_parent'],
                 $key
             );
-            $id = wp_insert_post(wp_slash($postarr), true);
+            // Core queues enclosure/ping work even when ping_status is closed.
+            // These twelve text-only editorial posts intentionally have no ping
+            // workflow. Suppress only that known core callback in this process
+            // for this insertion, then restore its exact registered priority.
+            $ping_priority = false;
+            if ($this->news12_mode) {
+                $ping_priority = has_action('publish_post', '_publish_post_hook');
+                if (false !== $ping_priority && !remove_action('publish_post', '_publish_post_hook', $ping_priority)) {
+                    throw new RuntimeException('Could not isolate the News12 core ping callback.');
+                }
+            }
+            try {
+                $id = wp_insert_post(wp_slash($postarr), true);
+            } finally {
+                if (false !== $ping_priority) add_action('publish_post', '_publish_post_hook', $ping_priority, 1);
+            }
             if (is_wp_error($id)) {
                 throw new RuntimeException('Post create failed for ' . $key . ': ' . $id->get_error_message());
             }

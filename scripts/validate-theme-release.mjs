@@ -59,7 +59,13 @@ function fixture(mode) {
   writeFileSync(join(base,'state-gates.php'),'mock');
   const mock=(name,code)=>{const p=join(bin,name);writeFileSync(p,`#!${process.execPath}\n${code}`);chmodSync(p,0o755);};
   mock('stat',"console.log('1')");
-  mock('php',`if(process.argv[2]==='-l'){console.log('PHP_MOCK '+process.argv[3]);process.exit(${mode==='lint-fail'?1:0});}console.log('STATE_GATE_MOCK');`);
+  mock('php',`if(process.argv[2]==='-l'){console.log('PHP_MOCK '+process.argv[3]);process.exit(${mode==='lint-fail'?1:0});}
+    if(process.argv[2].endsWith('cron-diagnostics-snapshot.php')) {
+      const fs=require('node:fs'), marker=${JSON.stringify(join(base,'cron-test-count'))};
+      const after=fs.existsSync(marker);fs.writeFileSync(marker,'1');
+      if(${mode==='cron-read-fail'}) process.exit(1);
+      console.log(JSON.stringify({events:after&&${mode==='cron-change'}?['changed-hook']:[]}));
+    } else console.log('STATE_GATE_MOCK');`);
   mock('flock',`process.exit(${mode==='lock'?1:0})`);
   mock('wp',`const s=process.argv.slice(2).join(' ');if(s==='db prefix')console.log('ft_');else if(s.includes('post_name IN'))console.log('0');else if(s.includes('SELECT COUNT(*)'))console.log('1');else console.log('stable-state');`);
   mock('curl',`const fs=require('node:fs'),a=process.argv;fs.writeFileSync(a[a.indexOf('-D')+1],'HTTP/2 200');fs.writeFileSync(a[a.indexOf('-o')+1],'<html>Public</html>');console.log('${mode==='smoke-fail'?'503':'200'}');`);
@@ -76,7 +82,11 @@ function fixture(mode) {
     const record=readFileSync(join(base,'backup.sha256'),'utf8').split('\n').find(line=>line.endsWith('  php-lint.txt'));
     assert.equal(record,`${hash(lint)}  php-lint.txt`, 'Retained lint evidence checksum must match');
   }
-  else {assert.notEqual(result.status,0);assert.equal(readFileSync(join(site,themePrefix+'style.css'),'utf8'),'old');if(mode==='smoke-fail')assert.match(result.stderr,/THEME_ROLLED_BACK/);}
+  else {assert.notEqual(result.status,0);assert.equal(readFileSync(join(site,themePrefix+'style.css'),'utf8'),'old');if(['smoke-fail','cron-change'].includes(mode))assert.match(result.stderr,/THEME_ROLLED_BACK/);}
+  if(mode==='cron-change') {
+    assert.notEqual(readFileSync(join(base,'cron-before.json'),'utf8'),readFileSync(join(base,'cron-after.json'),'utf8'));
+  }
+  if(mode==='cron-read-fail') assert.ok(!existsSync(join(base,'pre-theme')));
   if(mode!=='success') assert.equal(readFileSync(join(site,themePrefix+'functions.php'),'utf8'),oldPhp);
   if(mode==='lint-fail') {
     assert.match(readFileSync(join(base,'php-lint.txt'),'utf8'),/PHP_MOCK .*functions\.php/);
@@ -85,5 +95,5 @@ function fixture(mode) {
   assert.equal(readFileSync(join(site,'wp-content/themes/farmtree/style.css'),'utf8'),'legacy');
   assert.equal(readFileSync(join(site,'wp-content/plugins/farmtree-content/plugin.php'),'utf8'),'plugin');
 }
-for(const mode of ['success','lint-fail','drift','traversal','symlink','lock','smoke-fail'])fixture(mode);
+for(const mode of ['success','lint-fail','drift','traversal','symlink','lock','smoke-fail','cron-change','cron-read-fail'])fixture(mode);
 console.log('THEME_RELEASE_TESTS_PASS: source mismatch/dirty; path traversal; symlink; baseline drift; simulated lock contention; real filesystem swap/rollback; legacy/plugin preserved. PHP/WP/HTTP/flock are mocked, production verification remains required.');

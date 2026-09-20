@@ -8,7 +8,8 @@
   "requiredRuntime": [
     "wordpress/wp-content/plugins/farmtree-content/includes/class-farmtree-content-cli-command.php",
     "wordpress/wp-content/plugins/farmtree-content/includes/class-farmtree-content-reconciler.php",
-    "wordpress/wp-content/plugins/farmtree-content/includes/managed-content-manifest.php"
+    "wordpress/wp-content/plugins/farmtree-content/includes/managed-content-manifest.php",
+    "wordpress/wp-content/plugins/farmtree-content/includes/news12-content-manifest.php"
   ],
   "materializerSourceImages": [
     "wordpress/wp-content/themes/farmtree-native/assets/images/documentary/farmtree-agroforestry-field-system-content.jpg",
@@ -60,6 +61,7 @@
     "wordpress/wp-content/plugins/farmtree-content/includes/class-farmtree-content-cli-command.php",
     "wordpress/wp-content/plugins/farmtree-content/includes/class-farmtree-content-reconciler.php",
     "wordpress/wp-content/plugins/farmtree-content/includes/managed-content-manifest.php",
+    "wordpress/wp-content/plugins/farmtree-content/includes/news12-content-manifest.php",
     "wordpress/wp-content/themes/farmtree-native/assets/css/editor.css",
     "wordpress/wp-content/themes/farmtree-native/assets/css/editorial.css",
     "wordpress/wp-content/themes/farmtree-native/assets/data/world-land-110m.json",

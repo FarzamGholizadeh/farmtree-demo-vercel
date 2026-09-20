@@ -29,7 +29,8 @@ const requiredSourceRoots = [
 const requiredRuntime = [
   'wordpress/wp-content/plugins/farmtree-content/includes/class-farmtree-content-cli-command.php',
   'wordpress/wp-content/plugins/farmtree-content/includes/class-farmtree-content-reconciler.php',
-  'wordpress/wp-content/plugins/farmtree-content/includes/managed-content-manifest.php'
+  'wordpress/wp-content/plugins/farmtree-content/includes/managed-content-manifest.php',
+  'wordpress/wp-content/plugins/farmtree-content/includes/news12-content-manifest.php'
 ];
 const requiredMaterializerPathSetSha256 = 'dc637a20b56ed35fd1bdd03849b86bf074eaabacef91f47cf90b1510ae3efdbe';
 const privatePluginDataPrefix = 'wordpress/wp-content/plugins/farmtree-content/data/';

@@ -5,7 +5,9 @@
   "engines": { "node": ">=22.12.0" },
   "description": "Repository-side validation for the FarmTree native WordPress rebuild.",
   "scripts": {
-    "pretest": "node scripts/validate-news-editorial.mjs && node scripts/build-editorial-source-plan.mjs --check",
+    "pretest": "node scripts/validate-news-editorial.mjs && node scripts/build-editorial-source-plan.mjs --check && node scripts/build-news12-manifest.mjs --check && node scripts/validate-cron-diagnostics.mjs",
+    "news:release:test": "node scripts/news-release-runtime-test.mjs",
+    "news:release:guards": "node scripts/news-release-evidence-test.mjs && node scripts/news-release-operation-test.mjs && node scripts/validate-news-runtime-swap.mjs",
     "news:preview": "node scripts/bootstrap-editorial-local.mjs",
     "news:verify": "node scripts/validate-news-editorial.mjs && node scripts/bootstrap-editorial-local.mjs --verify",
     "news:verify:browser": "node scripts/validate-news-editorial-browser.mjs",

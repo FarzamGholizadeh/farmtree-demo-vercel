@@ -13,7 +13,7 @@ const entities = await Promise.all(articles.map(async article => ({
   image: { ...article.image, sha256: createHash('sha256').update(await readFile(new URL(`../wordpress/wp-content/themes/farmtree-native/assets/images/${article.image.directory}/${article.image.filename}`, import.meta.url))).digest('hex') }
 })));
 const plan = { schemaVersion: 1, executable: false,
-  gate: 'UNRESOLVED cron attribution; no production runner or publication authorization encoded here',
+  gate: 'Non-executable inventory; the separately pinned News12 profile requires prospective diagnostics, exact production dry-run scope, reviewed digest and verified backups',
   purpose: 'Deterministic internal source inventory, not a production dry-run or ownership verdict',
   productionRequirements: ['fresh exact ownership preflight', 'actual publication date', 'reviewed independent plan and digest', 'valid off-webroot recovery backup', 'unchanged unrelated content and release-critical state'],
   entities };
@@ -22,4 +22,4 @@ const path = new URL('../content/news-release-source-plan.json', import.meta.url
 if (process.argv.includes('--check')) {
   if (await readFile(path, 'utf8') !== output) throw new Error('Editorial source plan is stale');
 } else { await writeFile(path, output); }
-console.log('Editorial source plan: twelve entities; non-executable; production blocked');
+console.log('Editorial source plan: twelve entities; non-executable; guarded production plan required');

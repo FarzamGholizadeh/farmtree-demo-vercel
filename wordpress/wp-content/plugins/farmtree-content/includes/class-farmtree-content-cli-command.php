@@ -31,6 +31,7 @@ final class FarmTree_Content_Dry_Run_Write_Exception extends RuntimeException
 final class FarmTree_Content_CLI_Command
 {
     private const APPLY_CONFIRMATION = 'APPLY FARMTREE PRIVATE REVIEW CONTENT';
+    private const NEWS12_CONFIRMATION = 'CREATE TWELVE APPROVED FARMTREE NEWS ARTICLES';
     private const PRIVATE_REVIEW_CONFIRMATION = 'MATERIALIZE ENGLISH CONTENT AS PRIVATE REVIEW';
     private const PROTECTION_CONFIRMATION = 'COMING SOON AND NOINDEX VERIFIED';
     private const POST_LAUNCH_CONFIRMATION = 'APPLY SIX PAGE DOCUMENTARY CONTENT UPDATES';
@@ -57,6 +58,9 @@ final class FarmTree_Content_CLI_Command
      *
      * [--post-launch-editorial]
      * : Opt in to the exact approved 09ddf530 editorial/media transition; preserve public settings.
+     *
+     * [--post-launch-news12]
+     * : Create only the exact twelve approved News articles and their dependencies; preserve public state.
      *
      * [--plan-digest=<sha256>]
      * : Exact plan digest. Required with --apply.
@@ -96,16 +100,25 @@ final class FarmTree_Content_CLI_Command
     {
         try {
             $this->validate_arguments((array) $args, (array) $assoc_args);
+            if (isset($assoc_args['post-launch-news12'])
+                && !in_array(strtolower((string) wp_parse_url(home_url('/'), PHP_URL_HOST)), ['localhost', '127.0.0.1', '::1', '[::1]'], true)
+                && true !== ($GLOBALS['farmtree_cron_diagnostics_active'] ?? false)) {
+                throw new RuntimeException('News12 production operations require the guarded pre-bootstrap cron diagnostics entrypoint.');
+            }
             $apply = isset($assoc_args['apply']);
             $options = [
                 'post_launch_images' => isset($assoc_args['post-launch-images']),
                 'post_launch_editorial' => isset($assoc_args['post-launch-editorial']),
+                'post_launch_news12' => isset($assoc_args['post-launch-news12']),
                 'set_front_page' => isset($assoc_args['set-front-page']),
                 'expected_site' => isset($assoc_args['expected-site']) ? (string) $assoc_args['expected-site'] : '',
                 'expected_theme' => isset($assoc_args['expected-theme']) ? (string) $assoc_args['expected-theme'] : '',
                 'source_commit' => isset($assoc_args['source-commit']) ? strtolower((string) $assoc_args['source-commit']) : '',
             ];
-            $reconciler = new FarmTree_Content_Reconciler();
+            $reconciler = new FarmTree_Content_Reconciler(isset($assoc_args['post-launch-news12']));
+            if (isset($assoc_args['post-launch-news12']) && isset($GLOBALS['farmtree_news12_commit_guard']) && $GLOBALS['farmtree_news12_commit_guard'] instanceof Closure) {
+                $reconciler->set_news12_commit_guard($GLOBALS['farmtree_news12_commit_guard']);
+            }
 
             if (!$apply) {
                 $plan = $this->build_dry_run_plan($reconciler, $options);
@@ -372,7 +385,7 @@ final class FarmTree_Content_CLI_Command
             'apply', 'dry-run', 'plan-digest', 'source-commit', 'expected-site',
             'expected-theme', 'backup-digest', 'confirmation',
             'publication-confirmation', 'protection-confirmation',
-            'set-front-page', 'format', 'post-launch-images', 'post-launch-editorial',
+            'set-front-page', 'format', 'post-launch-images', 'post-launch-editorial', 'post-launch-news12',
         ];
         $unknown = array_diff(array_keys($assoc_args), $allowed);
         if ($unknown) {
@@ -380,6 +393,9 @@ final class FarmTree_Content_CLI_Command
         }
         if (isset($assoc_args['apply'], $assoc_args['dry-run'])) {
             throw new InvalidArgumentException('--apply and --dry-run are mutually exclusive.');
+        }
+        if (isset($assoc_args['post-launch-news12']) && (isset($assoc_args['set-front-page']) || isset($assoc_args['post-launch-images']) || isset($assoc_args['post-launch-editorial']))) {
+            throw new InvalidArgumentException('News12 mode cannot combine with front-page changes or another release scope.');
         }
         if (isset($assoc_args['post-launch-images'], $assoc_args['set-front-page'])) {
             throw new InvalidArgumentException('Post-launch image mode cannot change the front page.');
@@ -414,8 +430,8 @@ final class FarmTree_Content_CLI_Command
         if (!preg_match('/^[0-9a-f]{64}$/', strtolower((string) $args['backup-digest']))) {
             throw new InvalidArgumentException('--backup-digest must be a 64-character SHA-256.');
         }
-        $public_mode = isset($args['post-launch-images']) || isset($args['post-launch-editorial']);
-        $confirmation = isset($args['post-launch-editorial']) ? self::EDITORIAL_CONFIRMATION : ($public_mode ? self::POST_LAUNCH_CONFIRMATION : self::APPLY_CONFIRMATION);
+        $public_mode = isset($args['post-launch-images']) || isset($args['post-launch-editorial']) || isset($args['post-launch-news12']);
+        $confirmation = isset($args['post-launch-news12']) ? self::NEWS12_CONFIRMATION : (isset($args['post-launch-editorial']) ? self::EDITORIAL_CONFIRMATION : ($public_mode ? self::POST_LAUNCH_CONFIRMATION : self::APPLY_CONFIRMATION));
         if ($confirmation !== (string) $args['confirmation']) {
             throw new InvalidArgumentException('The apply confirmation text is not exact.');
         }

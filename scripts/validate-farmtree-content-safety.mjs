@@ -12,8 +12,9 @@ const mainPath = `${pluginPrefix}farmtree-content.php`;
 const cliPath = `${pluginPrefix}includes/class-farmtree-content-cli-command.php`;
 const reconcilerPath = `${pluginPrefix}includes/class-farmtree-content-reconciler.php`;
 const managedManifestPath = `${pluginPrefix}includes/managed-content-manifest.php`;
-const exactPluginRuntime = [mainPath, cliPath, reconcilerPath, managedManifestPath].sort();
-const auditedRuntimeSourceSha256 = '8530d40da8ea5dad0f898f2c3336af257abc8a17f001122939b32d5f7230f5a7';
+const news12ManifestPath = `${pluginPrefix}includes/news12-content-manifest.php`;
+const exactPluginRuntime = [mainPath, cliPath, reconcilerPath, managedManifestPath, news12ManifestPath].sort();
+const auditedRuntimeSourceSha256 = '3dca1fa0272f35bdcfbca7631100550c3ef8015d74e6cd2d14db2281414232de';
 
 function fail(message, details = []) {
   const suffix = details.length === 0
@@ -380,7 +381,7 @@ const classifiedPluginRuntime = releaseClassification.runtime
   .filter((path) => path.startsWith(pluginPrefix))
   .sort();
 if (!arraysEqual(classifiedPluginRuntime, exactPluginRuntime)) {
-  fail('Deployable farmtree-content runtime is not the exact audited four-file set.', [
+  fail('Deployable farmtree-content runtime is not the exact audited five-file set.', [
     ...exactPluginRuntime.filter((path) => !classifiedPluginRuntime.includes(path)).map((path) => `missing: ${path}`),
     ...classifiedPluginRuntime.filter((path) => !exactPluginRuntime.includes(path)).map((path) => `unexpected: ${path}`)
   ]);
@@ -711,7 +712,8 @@ const reviewedRequireCounts = {
   [mainPath]: 2,
   [cliPath]: 0,
   [reconcilerPath]: 2,
-  [managedManifestPath]: 0
+  [managedManifestPath]: 0,
+  [news12ManifestPath]: 1
 };
 for (const file of files) {
   const requireCount = [...file.masked.matchAll(/\brequire(?:_once)?\b/g)].length;
@@ -725,6 +727,9 @@ for (const file of files) {
 if (!reconcilerFile.source.includes('$manifest = require $file;')
   || !reconcilerFile.source.includes("require_once ABSPATH . 'wp-admin/includes/image.php';")) {
   fail('Reconciler may require only its validated manifest and WordPress image API.');
+}
+if (!filesByPath.get(news12ManifestPath).source.includes("$manifest = require __DIR__ . '/managed-content-manifest.php';")) {
+  fail('News12 manifest may require only the unchanged baseline manifest.');
 }
 for (const file of [cliFile, reconcilerFile]) {
   const topLevelCharacters = [...file.masked];

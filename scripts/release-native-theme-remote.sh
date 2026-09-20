@@ -58,12 +58,18 @@ SELECT ID,SHA2(CONCAT_WS('|',post_author,post_date,post_date_gmt,post_content,po
 SELECT meta_id,SHA2(CONCAT_WS('|',post_id,meta_key,meta_value),256) FROM ${prefix}postmeta ORDER BY meta_id;"
 }
 snapshot > "$base/state-before.txt"
+# Database-only command: retain semantic cron evidence without bootstrapping
+# WordPress or persisting serialized arguments. pipefail protects both readers.
+cron_snapshot() {
+  wp db query --batch --skip-column-names "SELECT HEX(option_value) FROM ${prefix}options WHERE option_name='cron';" | php "$base/cron-diagnostics-snapshot.php"
+}
+cron_snapshot > "$base/cron-before.json"
 wp db query --batch --skip-column-names "SELECT option_name,HEX(option_value) FROM ${prefix}options WHERE option_name IN ('stylesheet','template','active_plugins','blog_public','show_on_front','page_on_front','seedprod_settings','ft_ai_settings');" | php "$base/state-gates.php"
 test "$(wp db query --batch --skip-column-names "SELECT COUNT(*) FROM ${prefix}posts WHERE post_name IN ('nl','de') AND post_status='publish';")" = 0
 test "$(wp db query --batch --skip-column-names "SELECT COUNT(*) FROM ${prefix}posts WHERE ID=(SELECT option_value FROM ${prefix}options WHERE option_name='page_on_front') AND post_type='page' AND post_status='publish' AND post_password='';")" = 1
 tar -czf "$base/theme-before.tar.gz" wp-content/themes/farmtree-native
 test -s "$base/theme-before.tar.gz"; tar -tzf "$base/theme-before.tar.gz" >/dev/null
-(cd "$base" && sha256sum theme-before.tar.gz current.sha256 legacy.sha256 plugin.sha256 state-before.txt php-lint.txt > backup.sha256 && sha256sum -c --quiet backup.sha256)
+(cd "$base" && sha256sum theme-before.tar.gz current.sha256 legacy.sha256 plugin.sha256 state-before.txt cron-before.json php-lint.txt > backup.sha256 && sha256sum -c --quiet backup.sha256)
 test "$(stat -c %d "$base/stage")" = "$(stat -c %d wp-content/themes)"
 rollback() {
   code=$?
@@ -89,7 +95,11 @@ status=$(curl -sS --max-time 30 -D "$base/http.headers" -o "$base/http.html" -w 
 test "$status" = 200
 if grep -Eqi 'Coming Soon|<meta[^>]+name=.robots.[^>]+content=.[^>]*noindex' "$base/http.html" || grep -Eqi '^x-robots-tag:.*noindex' "$base/http.headers"; then exit 1; fi
 snapshot > "$base/state-after.txt"
+cron_snapshot > "$base/cron-after.json"
 cmp "$base/state-before.txt" "$base/state-after.txt"
+# No blanket volatility allowance: a new semantic delta stops this release and
+# retains both inventories for attribution, even if a concurrent request caused it.
+cmp "$base/cron-before.json" "$base/cron-after.json"
 (cd "$base" && sha256sum -c --quiet backup.sha256)
 trap - EXIT HUP INT TERM
 echo "THEME_RELEASE_VERIFIED $sha"

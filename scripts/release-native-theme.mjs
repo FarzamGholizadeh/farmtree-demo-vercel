@@ -59,8 +59,8 @@ function main() {
   writeFileSync(join(out,'baseline.sha256'),format(baseline));
   writeFileSync(join(out,'paths.txt'),[...theme.keys()].sort().join('\n')+'\n');
   run('tar',['-czf',join(out,'theme.tar.gz'),'-C',join(root,'.release/wordpress'),'-T',join(out,'paths.txt')]);
-  for (const [source,dest] of [['release-native-theme-remote.sh','runner.sh'],['release-native-state-gates.php','state-gates.php']]) writeFileSync(join(out,dest),readFileSync(join(root,'scripts',source)));
-  const names=['theme.tar.gz','target.sha256','baseline.sha256','runner.sh','state-gates.php'];
+  for (const [source,dest] of [['release-native-theme-remote.sh','runner.sh'],['release-native-state-gates.php','state-gates.php'],['cron-diagnostics-snapshot.php','cron-diagnostics-snapshot.php'],['lib/cron-diagnostics.php','cron-diagnostics.php']]) writeFileSync(join(out,dest),readFileSync(join(root,'scripts',source)));
+  const names=['theme.tar.gz','target.sha256','baseline.sha256','runner.sh','state-gates.php','cron-diagnostics-snapshot.php','cron-diagnostics.php'];
   const digests=Object.fromEntries(names.map(name=>[name,hash(readFileSync(join(out,name)))]));
   writeFileSync(join(out,'package.json'),JSON.stringify({sha:options.sha,digests},null,2));
   console.log(`PREPARED ${out}`);

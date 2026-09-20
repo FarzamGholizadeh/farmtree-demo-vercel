@@ -1,5 +1,39 @@
 # FarmTree Live360 — technical handoff draft
 
+## Current continuation — 20 September 2026
+
+The owner has deferred the unrecoverable historical cron evidence as
+**UNRESOLVED HISTORICAL VOLATILITY**, not a benign PASS. The risk register states
+the observed limits and conditional scoring treatment. This historical item no
+longer blocks Live360. Future scoped diagnostics are locally implemented/tested;
+they preserve—not replace—the existing mutation controls.
+
+News hub and twelve source-led articles were completed in `5068cf9`. The new
+explicit News12 release profile reuses the existing public-state, ownership,
+SQL-firewall, reviewed-digest and transaction guards. Disposable WordPress tests
+produce 29 creates (12 posts, 12 media, five categories), no updates/conflicts,
+then 131 unchanged. All existing managed records remain unchanged; manual edits
+and stale plans stop. Injected indexing mutation rolls back database and newly
+created media. Production News publication and final programme QA remain pending.
+
+The prospective News gate also verifies unrelated database rows and uploads before
+COMMIT through the same transaction connection. A narrowly evidenced core cache
+effect is accounted for only during the five approved category creations:
+`category_children` may receive a new `option_id` after delete/reinsert, while its
+name, value, autoload and all other columns must remain identical. No other option
+identity change is allowed, and dry-run/runtime-swap comparisons remain exact.
+This is not a cron exception or permission to change protected configuration.
+
+Release order is off-webroot preparation/backups → guarded News preflight →
+verified runtime replacement → fresh guarded News plan → reviewed-digest APPLY →
+idempotence and production QA. Runtime-first is required because the live baseline
+Homepage selects the newest posts, while the candidate pins its three approved
+cards; publishing first would create an unintended interim Homepage change.
+These are prospective News operations, not a replay of the historical dry-run.
+
+The separate uncommitted Hero interaction change is preserved and is not silently
+included in the News artifact. No historic dry-run was repeated.
+
 Historical handoff checkpoint: subsequent release5104687 and its scoped production
 QA are complete; see [RELEASE-03-PRODUCTION.md](RELEASE-03-PRODUCTION.md). Statements
 below describing an unpushed candidate or release authorization refer to the
