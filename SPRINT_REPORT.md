@@ -1,5 +1,10 @@
 # FT-NATIVE-002 Sprint Report
 
+## Motion-only release preparation
+
+Only Native motion JS/CSS change; all Content and collection-navigation changes
+excluded. Scoped validation and release gates: `docs/editorial/MOTION-ONLY-RELEASE.md`.
+
 ## Isolated News12 reconciliation — 20 September 2026
 
 Standalone News12 profile removes all global Page/embedded/option targets and

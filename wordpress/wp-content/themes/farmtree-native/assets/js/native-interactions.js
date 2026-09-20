@@ -32,10 +32,14 @@
         }
         const row = document.createElement('div');
         row.className = `ft-motion-control-row${hero ? ' ft-motion-control-row--hero' : ''}`;
+        if (!hero && label !== 'Platform animation') {
+            row.classList.add('ft-motion-control-row--contextual');
+            owner.classList.add('ft-motion-context-owner');
+        }
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'ft-motion-toggle';
-        button.textContent = `Pause ${label}`;
+        button.setAttribute('aria-label', `Pause ${label}`);
         const state = document.createElement('span');
         state.className = 'ft-motion-toggle-state';
         state.setAttribute('aria-hidden', 'true');
@@ -52,7 +56,8 @@
         const update = () => {
             const paused = userPaused || reducedMotionQuery.matches;
             button.setAttribute('aria-pressed', String(paused));
-            state.textContent = paused ? 'Paused' : 'Playing';
+            state.textContent = paused ? '▶' : 'Ⅱ';
+            button.setAttribute('aria-label', `${paused ? 'Resume' : 'Pause'} ${label}`);
             button.disabled = reducedMotionQuery.matches;
             button.title = reducedMotionQuery.matches ? 'Paused by your reduced-motion preference' : '';
             owner.dataset.ftMotionPaused = String(paused);
@@ -186,6 +191,7 @@
         let autoAdvanceTimer = null;
         let interactionPaused = false;
         let motionPaused = reducedMotionQuery.matches;
+        let visitorInteracted = false;
 
         function stopAutoAdvance() {
             window.clearTimeout(autoAdvanceTimer);
@@ -194,7 +200,7 @@
 
         function scheduleAutoAdvance() {
             stopAutoAdvance();
-            if (motionPaused || interactionPaused || document.hidden) {
+            if (!visitorInteracted || motionPaused || interactionPaused || document.hidden) {
                 return;
             }
             autoAdvanceTimer = window.setTimeout(() => {
@@ -340,6 +346,22 @@
         document.addEventListener('visibilitychange', scheduleAutoAdvance);
         reducedMotionQuery.addEventListener?.('change', scheduleAutoAdvance);
 
+        // Keep the initial LCP slide stable until genuine visitor input. Do not
+        // use scroll events: restoration or script-driven scrolling is not input.
+        const activationEvents = ['pointerdown', 'touchstart', 'keydown', 'wheel'];
+        function activateAfterInput(event) {
+            if (!event.isTrusted || (event.type === 'keydown' &&
+                ['Shift', 'Control', 'Alt', 'Meta', 'CapsLock'].includes(event.key))) {
+                return;
+            }
+            visitorInteracted = true;
+            activationEvents.forEach((type) => document.removeEventListener(type, activateAfterInput, true));
+            scheduleAutoAdvance();
+        }
+        activationEvents.forEach((type) => document.addEventListener(type, activateAfterInput, {
+            capture: true, passive: true
+        }));
+
         addMotionControl(hero, 'hero slides', (paused) => {
             motionPaused = paused;
             scheduleAutoAdvance();
@@ -356,25 +378,28 @@
         }
 
         const finalValues = values.map((value) => value.textContent.trim());
-        const alreadyAnimated = window.sessionStorage?.getItem('ft-metrics-animated') === 'true';
-        if (reducedMotionQuery.matches || alreadyAnimated || !('IntersectionObserver' in window)) {
+        if (reducedMotionQuery.matches || !('IntersectionObserver' in window)) {
             values.forEach((value, index) => { value.textContent = finalValues[index]; });
             return;
         }
 
+        values.forEach((value) => { value.textContent = '0'; });
         const observer = new IntersectionObserver((entries) => {
             if (!entries.some((entry) => entry.isIntersecting)) {
                 return;
             }
             observer.disconnect();
-            window.sessionStorage?.setItem('ft-metrics-animated', 'true');
             values.forEach((value, index) => {
                 const original = finalValues[index];
                 const target = Number(original.replace(/[^0-9]/g, ''));
                 const prefix = original.startsWith('+') ? '+' : '';
                 const start = performance.now() + (index * 90);
-                const duration = 1100;
+                const duration = 1400;
                 function frame(now) {
+                    if (reducedMotionQuery.matches) {
+                        value.textContent = original;
+                        return;
+                    }
                     const progress = Math.max(0, Math.min(1, (now - start) / duration));
                     const eased = 1 - Math.pow(1 - progress, 3);
                     value.textContent = `${prefix}${Math.round(target * eased).toLocaleString('en-GB')}`;
@@ -386,8 +411,14 @@
                 }
                 window.requestAnimationFrame(frame);
             });
-        }, { threshold: 0.35 });
+        }, { threshold: 0 });
         observer.observe(section);
+        reducedMotionQuery.addEventListener?.('change', () => {
+            if (reducedMotionQuery.matches) {
+                observer.disconnect();
+                values.forEach((value, index) => { value.textContent = finalValues[index]; });
+            }
+        });
     }
 
     function initialiseHeaderState() {

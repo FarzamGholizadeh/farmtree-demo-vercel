@@ -5326,7 +5326,7 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 
 /* stylelint-enable no-duplicate-selectors, no-descending-specificity */
 
-/* Local motion controls: visible, touch-friendly and outside moving tracks. */
+/* Compact primary controls; ambient controls appear only in interaction context. */
 .ft-motion-control-row {
   display: flex;
   min-height: 44px;
@@ -5366,11 +5366,32 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 
 .ft-motion-toggle-state {
   display: inline-block;
-  width: 4.5em;
-  margin-inline-start: 0.5em;
-  border-inline-start: 1px solid currentcolor;
-  font-size: 0.75rem;
+  width: 1em;
+  font-size: 1rem;
   text-align: center;
+}
+
+.ft-motion-control-row .ft-motion-toggle {
+  width: 44px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.ft-motion-control-row--contextual {
+  position: relative;
+  z-index: 5;
+  height: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.ft-motion-control-row--contextual .ft-motion-toggle {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.25rem;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .ft-globe-direction-controls {
@@ -5381,6 +5402,14 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
   gap: 0.5rem;
   margin-block: 0.75rem;
   padding-inline: 0;
+  opacity: 0;
+}
+
+.ft-globe-direction-controls:focus-within,
+.ft-globe-direction-controls:hover,
+.ft-motion-context-owner:hover ~ .ft-globe-direction-controls,
+.ft-motion-context-owner:focus-within ~ .ft-globe-direction-controls {
+  opacity: 1;
 }
 
 .ft-globe-direction {
@@ -5409,4 +5438,12 @@ body.admin-bar .ft-native-menu-trigger .wp-block-navigation__responsive-containe
 
 .ft-home-hero:has(.ft-motion-control-row--hero) .ft-home-hero-dots {
   bottom: 4rem;
+}
+
+.ft-motion-control-row--contextual:focus-within .ft-motion-toggle,
+.ft-motion-control-row--contextual .ft-motion-toggle:hover,
+.ft-motion-context-owner:hover + .ft-motion-control-row--contextual .ft-motion-toggle,
+.ft-motion-context-owner:focus-within + .ft-motion-control-row--contextual .ft-motion-toggle {
+  opacity: 1;
+  pointer-events: auto;
 }

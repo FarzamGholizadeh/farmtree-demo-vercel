@@ -1,5 +1,10 @@
 # Current FarmTree Sprint
 
+## Approved bounded motion-only release
+
+Separate baseline-derived release; no unrelated Live360 continuation. See
+`docs/editorial/MOTION-ONLY-RELEASE.md`. Existing workspaces are preserved.
+
 ## Isolated News12 release — 20 September 2026
 
 Current explicit authorization supersedes the local-only hub brief below.
