@@ -8,8 +8,8 @@ the current programme has finished.
 | Item | Current evidence status |
 |---|---|
 | Historical cron attribution | UNRESOLVED HISTORICAL VOLATILITY; DEFERRED / EVIDENCE UNRECOVERABLE; never PASS |
-| Future cron detection | IMPLEMENTED; isolated PHP and guarded-runner tests; production execution pending |
-| News hub and twelve articles | Local implementation/source/browser checks pass; production pending |
+| Future cron detection | IMPLEMENTED; local tests and production preflight observer executed; no scheduling mutation observed |
+| News hub and twelve articles | Local checks pass; approved47cafe8 preflight stopped on six existing Page conflicts plus mirrored scope checks; no deployment/APPLY |
 | Public state | Last verified Native active, Homepage public, indexing enabled; all guarded release checks remain required |
 | Remaining Live360 production acceptance | Pending release-specific QA, remaining P0/P1 checks and final re-audit |
 

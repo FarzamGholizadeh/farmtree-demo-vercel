@@ -2,6 +2,19 @@
 
 ## Current continuation — 20 September 2026
 
+Latest gate: approved `47cafe845e58ed42e0dda898cca4359275fb1f20` was pushed,
+artifact-audited (404 runtime files, 114 excluded) and staged off-webroot with
+fresh verified database/runtime backups. Production preflight stopped:
+**29 create, 0 update, 96 unchanged, 12 conflict, 1 skipped**. Six existing
+Pages report `owned_item_changed_since_apply`: Homepage439, Platform463,
+Proof Stories464, Customer Segments465, Blog470 and Solutions475; six additional
+scope checks mirror these conflicts. Attribution is not established.
+Database/uploads, runtime files, protected public state and cron were unchanged
+across the operation; diagnostics recorded no scheduling activity. No runtime
+swap or APPLY occurred. Production remains5104687. Do not bypass the failed gate.
+Recovery: `news12-47cafe845e58ed42e0dda898cca4359275fb1f20-1789903453230`.
+The preparation status below predates this execution result.
+
 The owner has deferred the unrecoverable historical cron evidence as
 **UNRESOLVED HISTORICAL VOLATILITY**, not a benign PASS. The risk register states
 the observed limits and conditional scoring treatment. This historical item no

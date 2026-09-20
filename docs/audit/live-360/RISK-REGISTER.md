@@ -3,6 +3,16 @@
 Thirty independent role perspectives are complete (three separate AI reviewers).
 No issue is closed from source review alone when its acceptance concerns production.
 
+Latest gate: approved47cafe8 is staged off-webroot with verified backups, not
+deployed. News12 preflight reports six existing Page conflicts
+(439,463,464,465,470,475; `owned_item_changed_since_apply`) plus six mirrored
+scope conflicts. Attribution of record differences is not established.
+No overwrite, runtime swap or APPLY occurred. Database/uploads, runtime and cron
+comparisons passed unchanged; protected public state passed. Future diagnostics
+executed successfully with no observed scheduling activity. This new content
+integrity gate is unrelated to the deferred historical cron event. Existing Pages
+remain untouched; the failed plan must not be applied.
+
 Fast-track checkpoint (20 September 2026): the News hub and **all twelve**
 articles are already locally validated and committed as `5068cf92b9d9875a032e25988d7d9a594f6298e9`;
 exact-source build/audit passed. The brief's eight-draft count is superseded.

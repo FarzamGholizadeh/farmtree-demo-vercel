@@ -2,6 +2,16 @@
 
 ## Current continuation — 20 September 2026
 
+- Approved47cafe8 production preflight: `qa/live-360/news12-preflight-plan.json`
+  and `qa/live-360/news12-production-preflight-47cafe8/` sanitized receipts.
+  Plan digest `9169528c9917c2c2e6b4ab352b4f3921a37dc39550f78473add47148935be27f`.
+  29creates/0updates/96unchanged/12conflicts/1skipped; CLI exit2.
+  Database/uploads/runtime/cron unchanged; no scheduling activity;
+  public-state gates passed. No swap/APPLY. Private recovery reference:
+  `news12-47cafe845e58ed42e0dda898cca4359275fb1f20-1789903453230`.
+  Backup-manifest SHA256:
+  `5a4a994e2626af5d891e94de83b6058279b69bf2a0c321f37fbda9b68f84a78f`.
+
 Production baseline is `5104687`; the older checkpoint below is historical.
 News candidate `5068cf9` is locally validated, not yet published. Prospective
 guarded-operation tests now cover semantic cron diagnostics and sanitized caller
